@@ -2,13 +2,26 @@
   "name": "suyan-education",
   "version": "0.1.0",
   "private": true,
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:studio": "prisma studio",
+    "prisma:seed": "prisma db seed"
   },
   "dependencies": {
+    "@prisma/client": "5.15.1",
+    "bcryptjs": "^3.0.3",
+    "cloudinary": "^2.8.0",
+    "framer-motion": "^12.23.26",
+    "jsonwebtoken": "^9.0.3",
+    "lucide-react": "^0.562.0",
     "next": "16.1.1",
     "react": "19.2.3",
     "react-dom": "19.2.3"
@@ -17,6 +30,7 @@
     "@tailwindcss/postcss": "^4",
     "eslint": "^9",
     "eslint-config-next": "16.1.1",
+    "prisma": "5.15.1",
     "tailwindcss": "^4"
   }
 }

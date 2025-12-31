@@ -1,0 +1,132 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model SiteSettings {
+  id              String   @id @default(cuid())
+  siteName        String
+  tagline         String?
+  primaryPhone    String?
+  whatsappNumber  String?
+  primaryEmail    String?
+  address         String?
+  googleMapLink   String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model GalleryImage {
+  id          String   @id @default(cuid())
+  title       String?
+  url         String
+  category    String?  
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+}
+
+model Testimonial {
+  id          String   @id @default(cuid())
+  name        String
+  message     String
+  imageUrl    String?
+  country     String?      
+  program     String?      
+  year        String?   
+  highlight   String?     
+  isFeatured  Boolean      @default(false)
+  createdAt   DateTime     @default(now())
+}
+
+model University {
+  id          String   @id @default(cuid())
+  name        String
+  country     String
+  websiteUrl  String?
+  city        String?
+  createdAt   DateTime @default(now())
+
+  @@index([country])
+}
+
+model Destination {
+  id            String   @id @default(cuid())
+  slug          String   @unique
+  country       String
+  description   String?
+  whyPoints     String?  
+  education     String?
+  popularFields String?  
+  visaUpdates   String?
+  createdAt     DateTime @default(now())
+}
+
+
+
+model Service {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  summary     String?
+  content     String?  
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+}
+
+model BlogPost {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  excerpt     String?
+  content     String   
+  coverImage  String?
+  publishedAt DateTime?
+  createdAt   DateTime @default(now())
+  @@index([publishedAt])
+}
+
+model Certificate {
+  id          String   @id @default(cuid())
+  title       String
+  issuer      String?
+  imageUrl    String
+  issuedYear  Int?
+  createdAt   DateTime @default(now())
+}
+
+model AdminUser {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+}
+
+model GalleryAlbum {
+  id          String   @id @default(uuid())
+  slug        String   @unique
+  title       String
+  description String?
+  albumDate   DateTime // the date you want to display/sort by (NOT createdAt)
+  coverImage  String?  // Cloudinary URL (optional; can be first photo)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  photos      GalleryPhoto[]
+  @@index([albumDate])
+  @@map("gallery_albums")
+}
+
+model GalleryPhoto {
+  id        String   @id @default(uuid())
+  imageUrl  String   // Cloudinary secure_url
+  publicId  String   // Cloudinary public_id (needed for deletion)
+  createdAt DateTime @default(now())
+  caption   String? 
+  albumId   String
+  album     GalleryAlbum @relation(fields: [albumId], references: [id], onDelete: Cascade)
+  @@index([albumId])
+  @@map("gallery_photos")
+}
