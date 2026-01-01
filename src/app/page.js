@@ -1,12 +1,14 @@
 import prisma from "@/lib/prisma";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import GlobalReachSection from "@/components/GlobalReachSection";
 import TestPreparationPreview from "@/components/TestPreparationPreview";
 import Footer from "@/components/Footer";
 import DestinationPreview from "@/components/DestinationsPreview";
 import SuccessStoriesPreview from "@/components/SuccessStoriesPreview";
 import Testimonials from "@/components/Testimonials";
+import dynamic from "next/dynamic";
+import GlobalReachSection from "@/components/GlobalReachSection";
+
 
 
 export default async function HomePage() {

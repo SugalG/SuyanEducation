@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 const ROUTES = [
     { label: "Japan", to: { x: 1668, y: 410 } },
@@ -18,6 +19,53 @@ function arcPath(from, to) {
     return `M ${from.x} ${from.y} Q ${mx} ${my} ${to.x} ${to.y}`;
 }
 
+// Animation variants
+const fadeInLeft = {
+    hidden: { opacity: 0, x: -50 },
+    show: {
+        opacity: 1,
+        x: 0,
+        transition: { duration: 0.8, ease: "easeOut" }
+    }
+};
+
+const fadeInRight = {
+    hidden: { opacity: 0, x: 50 },
+    show: {
+        opacity: 1,
+        x: 0,
+        transition: { duration: 0.8, ease: "easeOut" }
+    }
+};
+
+const fadeInUp = {
+    hidden: { opacity: 0, y: 30 },
+    show: {
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.6, ease: "easeOut" }
+    }
+};
+
+const staggerChildren = {
+    hidden: {},
+    show: {
+        transition: {
+            staggerChildren: 0.15,
+            delayChildren: 0.1
+        }
+    }
+};
+
+const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    show: {
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.5, ease: "easeOut" }
+    }
+};
+
 export default function GlobalReachSection() {
     const [index, setIndex] = useState(0);
 
@@ -33,22 +81,38 @@ export default function GlobalReachSection() {
     const path = arcPath(ORIGIN, route.to);
 
     return (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 sm:mt-10 md:mt-14 lg:mt-20 xl:mt-24">
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 sm:mt-20 md:mt-24 lg:mt-28 xl:mt-32">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                 
-                {/* LEFT CONTENT */}
-                <div className="order-2 lg:order-1">
+                {/* LEFT CONTENT - Slides in from left */}
+                <motion.div 
+                    className="order-2 lg:order-1"
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={{ once: true, margin: "-100px" }}
+                    variants={fadeInLeft}
+                >
                     <div className="max-w-xl mx-auto lg:mx-0">
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-bold text-red-600 leading-tight">
+                        <motion.h2 
+                            variants={fadeInUp}
+                            className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-bold text-red-600 leading-tight"
+                        >
                             Our Global Reach
-                        </h2>
-                        <p className="mt-4 sm:mt-5 md:mt-6 text-base sm:text-lg md:text-xl lg:text-xl xl:text-2xl text-gray-600 leading-relaxed">
+                        </motion.h2>
+                        
+                        <motion.p 
+                            variants={fadeInUp}
+                            className="mt-4 sm:mt-5 md:mt-6 text-base sm:text-lg md:text-xl lg:text-xl xl:text-2xl text-gray-600 leading-relaxed"
+                        >
                             From Nepal to the world — we connect students with top educational 
                             opportunities across continents with a primary focus on Japan.
-                        </p>
+                        </motion.p>
                         
-                        <div className="mt-8 sm:mt-10 space-y-4 sm:space-y-5">
-                            <div className="flex items-start space-x-3">
+                        <motion.div 
+                            className="mt-8 sm:mt-10 space-y-4 sm:space-y-5"
+                            variants={staggerChildren}
+                        >
+                            <motion.div variants={itemVariants} className="flex items-start space-x-3">
                                 <div className="h-6 w-6 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0 mt-1">
                                     <div className="h-3 w-3 rounded-full bg-red-600"></div>
                                 </div>
@@ -58,9 +122,9 @@ export default function GlobalReachSection() {
                                         Deep knowledge of Japanese education system, culture, and visa processes.
                                     </p>
                                 </div>
-                            </div>
+                            </motion.div>
                             
-                            <div className="flex items-start space-x-3">
+                            <motion.div variants={itemVariants} className="flex items-start space-x-3">
                                 <div className="h-6 w-6 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0 mt-1">
                                     <div className="h-3 w-3 rounded-full bg-red-600"></div>
                                 </div>
@@ -70,9 +134,9 @@ export default function GlobalReachSection() {
                                         Proven track record with student visa approvals across multiple countries.
                                     </p>
                                 </div>
-                            </div>
+                            </motion.div>
                             
-                            <div className="flex items-start space-x-3">
+                            <motion.div variants={itemVariants} className="flex items-start space-x-3">
                                 <div className="h-6 w-6 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0 mt-1">
                                     <div className="h-3 w-3 rounded-full bg-red-600"></div>
                                 </div>
@@ -82,9 +146,9 @@ export default function GlobalReachSection() {
                                         Comprehensive guidance from university selection to pre-departure preparation.
                                     </p>
                                 </div>
-                            </div>
+                            </motion.div>
                             
-                            <div className="flex items-start space-x-3">
+                            <motion.div variants={itemVariants} className="flex items-start space-x-3">
                                 <div className="h-6 w-6 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0 mt-1">
                                     <div className="h-3 w-3 rounded-full bg-red-600"></div>
                                 </div>
@@ -94,13 +158,19 @@ export default function GlobalReachSection() {
                                         Partnerships with universities and institutions worldwide, with strong focus on Asia-Pacific.
                                     </p>
                                 </div>
-                            </div>
-                        </div>
+                            </motion.div>
+                        </motion.div>
                     </div>
-                </div>
+                </motion.div>
 
-                {/* RIGHT - MAP */}
-                <div className="order-1 lg:order-2">
+                {/* RIGHT - MAP - Slides in from right */}
+                <motion.div 
+                    className="order-1 lg:order-2"
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={{ once: true, margin: "-100px" }}
+                    variants={fadeInRight}
+                >
                     <div className="relative w-full h-[400px] sm:h-[480px] md:h-[560px] lg:h-[620px] xl:h-[680px]">
                         {/* World Map Background */}
                         <div className="absolute inset-0 z-0">
@@ -200,7 +270,12 @@ export default function GlobalReachSection() {
                         </svg>
 
                         {/* Current Destination Indicator */}
-                        <div className="absolute bottom-4 left-4 right-4 z-20">
+                        <motion.div 
+                            className="absolute bottom-4 left-4 right-4 z-20"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 1, duration: 0.5 }}
+                        >
                             <div className="bg-white/90 backdrop-blur-sm rounded-lg p-3 sm:p-4 shadow-lg max-w-xs mx-auto">
                                 <div className="flex items-center justify-center space-x-2">
                                     <div className="h-3 w-3 rounded-full bg-red-600 animate-pulse"></div>
@@ -209,30 +284,39 @@ export default function GlobalReachSection() {
                                     </span>
                                 </div>
                             </div>
-                        </div>
+                        </motion.div>
                     </div>
-                </div>
+                </motion.div>
             </div>
 
-            {/* Stats Bar */}
-            <div className="mt-12 sm:mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-                <div className="bg-white rounded-xl p-4 sm:p-6 text-center border border-gray-200 shadow-sm">
+            {/* Stats Bar - Fades up from bottom */}
+            <motion.div
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, margin: "-50px" }}
+                variants={staggerChildren}
+                className="mt-12 sm:mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6"
+            >
+                <motion.div variants={itemVariants} className="bg-white rounded-xl p-4 sm:p-6 text-center border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300">
                     <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-red-600">4+</div>
                     <div className="text-sm sm:text-base text-gray-600 mt-2">Destinations</div>
-                </div>
-                <div className="bg-white rounded-xl p-4 sm:p-6 text-center border border-gray-200 shadow-sm">
+                </motion.div>
+                
+                <motion.div variants={itemVariants} className="bg-white rounded-xl p-4 sm:p-6 text-center border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300">
                     <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-red-600">95%</div>
                     <div className="text-sm sm:text-base text-gray-600 mt-2">Visa Success</div>
-                </div>
-                <div className="bg-white rounded-xl p-4 sm:p-6 text-center border border-gray-200 shadow-sm">
+                </motion.div>
+                
+                <motion.div variants={itemVariants} className="bg-white rounded-xl p-4 sm:p-6 text-center border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300">
                     <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-red-600">500+</div>
                     <div className="text-sm sm:text-base text-gray-600 mt-2">Students Helped</div>
-                </div>
-                <div className="bg-white rounded-xl p-4 sm:p-6 text-center border border-gray-200 shadow-sm">
+                </motion.div>
+                
+                <motion.div variants={itemVariants} className="bg-white rounded-xl p-4 sm:p-6 text-center border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300">
                     <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-red-600">50+</div>
                     <div className="text-sm sm:text-base text-gray-600 mt-2">Partner Institutes</div>
-                </div>
-            </div>
+                </motion.div>
+            </motion.div>
         </section>
     );
 }

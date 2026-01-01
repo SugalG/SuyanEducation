@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 const COUNTRIES = [
   { name: "Japan", desc: "Language schools, colleges, and universities across Japan.", slug: "japan" },
