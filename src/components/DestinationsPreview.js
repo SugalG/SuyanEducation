@@ -25,7 +25,7 @@ const fadeInUp = {
 
 export default function UniversitiesPreview() {
   return (
-    <section className="max-w-7xl mx-auto px-4 pb-6 sm:px-6 lg:px-8 mt-16 sm:mt-20 md:mt-24 lg:mt-28 xl:mt-32">
+    <section className="px-4 pb-6 sm:px-6 lg:px-8 mt-16 sm:mt-20 md:mt-24 lg:mt-28 xl:mt-32">
       {/* Header */}
       <motion.div 
         className="text-center max-w-4xl mx-auto px-4"

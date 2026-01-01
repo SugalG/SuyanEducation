@@ -38,7 +38,7 @@ export default function Footer({ settings }) {
           quality={90}
         />
         {/* Dark overlay for better text readability */}
-        <div className="absolute inset-0 bg-gray-700/80 backdrop-blur-sm"></div>
+        <div className="absolute inset-0 bg-gray-900/10 backdrop-blur-sm"></div>
         {/* Gradient from top to control fading */}
         <div className="absolute inset-0 bg-gradient-to-b from-gray-900 via-gray-900/70 to-gray-900"></div>
       </div>
