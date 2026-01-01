@@ -64,41 +64,31 @@ const staggerContainer = {
   hidden: {},
   show: {
     transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.1
-    }
-  }
-};
-
-const cardStaggerContainer = {
-  hidden: {},
-  show: {
-    transition: {
       staggerChildren: 0.12,
-      delayChildren: 0.2
+      delayChildren: 0.1
     }
   }
 };
 
 export default function ServicesPreview() {
   return (
-    <motion.section
-      className="max-w-7xl mx-auto px-6 mt-28"
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, margin: "-120px" }}
-      variants={staggerContainer}
-    >
-      {/* Header - Animates first */}
+    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 sm:mt-20 md:mt-24 lg:mt-28 xl:mt-32">
+      {/* Header */}
       <motion.div 
-        className="text-center max-w-3xl mx-auto"
+        className="text-center max-w-4xl mx-auto px-4"
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, margin: "-50px 0px -50px 0px" }}
         variants={fadeInUp}
       >
-        <h2 className="text-4xl font-bold text-red-600">
+        {/* Main Heading - Responsive scaling */}
+        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-bold text-red-600 leading-tight">
           Our Services
         </h2>
+        
+        {/* Subtitle - Responsive scaling */}
         <motion.p 
-          className="mt-5 text-lg text-gray-600"
+          className="mt-4 sm:mt-5 md:mt-6 text-base sm:text-lg md:text-xl lg:text-xl xl:text-2xl text-gray-600 leading-relaxed"
           variants={fadeInUp}
         >
           We provide end-to-end guidance for students planning to study abroad,
@@ -106,10 +96,13 @@ export default function ServicesPreview() {
         </motion.p>
       </motion.div>
 
-      {/* Services Grid - Animates second with staggered cards */}
+      {/* Cards Grid */}
       <motion.div
-        className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10"
-        variants={cardStaggerContainer}
+        className="mt-12 sm:mt-14 md:mt-16 lg:mt-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10"
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, margin: "-50px 0px -50px 0px" }}
+        variants={staggerContainer}
       >
         {SERVICES.map((service) => {
           const Icon = service.icon;
@@ -117,33 +110,36 @@ export default function ServicesPreview() {
           return (
             <motion.div
               key={service.slug}
-              variants={fadeInUp} // Each card fades in
+              variants={fadeInUp}
               whileHover={{
-                y: -10,
-                rotate: -4,
+                y: -8,
+                rotate: -2,
                 boxShadow: "0px 16px 32px rgba(0,0,0,0.12)",
                 transition: { duration: 0.5, ease: "easeOut" }
               }}
-              className="bg-white border border-gray-200 rounded-2xl px-7 py-9 text-center cursor-default group"
+              className="bg-white border border-gray-200 rounded-xl sm:rounded-2xl px-5 sm:px-6 lg:px-7 py-6 sm:py-8 lg:py-9 text-center cursor-default group"
             >
-              {/* Icon */}
-              <div className="flex justify-center mb-6">
-                <div className="w-16 h-16 flex items-center justify-center rounded-full bg-red-50 text-red-700 group-hover:scale-125 group-hover:rotate-12 transition-transform duration-500 ease-out">
-                  <Icon className="w-8 h-8" />
+              {/* Icon - Responsive sizing */}
+              <div className="flex justify-center mb-4 sm:mb-5 lg:mb-6">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 flex items-center justify-center rounded-full bg-red-50 text-red-700 group-hover:scale-125 group-hover:rotate-12 transition-transform duration-500 ease-out">
+                  <Icon className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8" />
                 </div>
               </div>
 
-              <h3 className="text-xl font-semibold text-gray-900">
+              {/* Service Title - Responsive */}
+              <h3 className="text-lg sm:text-xl lg:text-xl xl:text-2xl font-semibold text-gray-900 leading-snug">
                 {service.title}
               </h3>
 
-              <p className="mt-4 text-base text-gray-600 leading-relaxed">
+              {/* Service Description - Responsive */}
+              <p className="mt-3 sm:mt-4 text-sm sm:text-base lg:text-base xl:text-lg text-gray-600 leading-relaxed">
                 {service.desc}
               </p>
 
+              {/* Learn More Link - Responsive */}
               <Link
                 href={`/services/${service.slug}`}
-                className="inline-block mt-6 text-red-700 font-medium hover:underline"
+                className="inline-block mt-4 sm:mt-5 lg:mt-6 text-red-700 font-medium hover:underline text-sm sm:text-base lg:text-base"
               >
                 Learn more →
               </Link>
@@ -152,18 +148,21 @@ export default function ServicesPreview() {
         })}
       </motion.div>
 
-      {/* CTA Button - Animates last */}
+      {/* CTA Button */}
       <motion.div
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, margin: "-50px 0px -50px 0px" }}
         variants={fadeInUp}
-        className="mt-20 text-center"
+        className="mt-12 sm:mt-14 md:mt-16 lg:mt-20 text-center"
       >
         <Link
           href="/services"
-          className="inline-block bg-red-700 text-white px-10 py-4 rounded-md text-lg font-semibold hover:bg-red-800 transition"
+          className="inline-block bg-red-700 text-white px-6 sm:px-8 md:px-10 py-3 sm:py-4 rounded-lg sm:rounded-md text-base sm:text-lg md:text-lg font-semibold hover:bg-red-800 transition-all duration-300 transform hover:scale-105"
         >
           View All Services
         </Link>
       </motion.div>
-    </motion.section>
+    </section>
   );
 }

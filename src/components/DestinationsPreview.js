@@ -11,7 +11,7 @@ const COUNTRIES = [
 
 export default function UniversitiesPreview() {
   return (
-    <section className="max-w-7xl mx-auto px-6 mt-24">
+    <section className="mx-auto p-6 mt-10">
       {/* Header */}
       <div className="text-center max-w-3xl mx-auto">
         <h2 className="text-3xl font-bold text-red-500">
@@ -29,10 +29,10 @@ export default function UniversitiesPreview() {
           {[...COUNTRIES, ...COUNTRIES].map((country, i) => (
             <div
               key={`${country.slug}-${i}`}
-              className="group w-[280px] bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex-shrink-0"
+              className="group w-[360px] bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex-shrink-0"
             >
               {/* Image */}
-              <div className="relative h-44 w-full overflow-hidden">
+              <div className="relative h-96 w-full overflow-hidden">
                 <Image
                   src={`/destinations/${country.slug}.webp`}
                   alt={country.name}
