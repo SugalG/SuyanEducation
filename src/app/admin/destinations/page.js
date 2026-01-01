@@ -20,6 +20,11 @@ export default function AdminDestinations() {
   }
 
   useEffect(() => {
+    async function load() {
+      const res = await fetch("/api/admin/destinations");
+      setItems(await res.json());
+    }
+  
     load();
   }, []);
 
