@@ -50,51 +50,66 @@ const SERVICES = [
   },
 ];
 
-/* Stagger container */
-const containerVariants = {
-  hidden: {},
-  show: {
-    transition: {
-      staggerChildren: 0.18,
-      delayChildren: 0.15,
-    },
-  },
-};
-
-/* Card reveal for scroll animation */
-const cardVariants = {
-  hidden: { opacity: 0, y: 40 },
+/* Animation variants */
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
   show: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.65, ease: "easeOut" },
-  },
+    transition: { duration: 0.6, ease: "easeOut" }
+  }
+};
+
+const staggerContainer = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.1
+    }
+  }
+};
+
+const cardStaggerContainer = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.12,
+      delayChildren: 0.2
+    }
+  }
 };
 
 export default function ServicesPreview() {
   return (
     <motion.section
       className="max-w-7xl mx-auto px-6 mt-28"
-      variants={containerVariants}
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, margin: "-120px" }}
+      variants={staggerContainer}
     >
-      {/* Header */}
-      <div className="text-center max-w-3xl mx-auto">
+      {/* Header - Animates first */}
+      <motion.div 
+        className="text-center max-w-3xl mx-auto"
+        variants={fadeInUp}
+      >
         <h2 className="text-4xl font-bold text-red-600">
           Our Services
         </h2>
-        <p className="mt-5 text-lg text-gray-600">
+        <motion.p 
+          className="mt-5 text-lg text-gray-600"
+          variants={fadeInUp}
+        >
           We provide end-to-end guidance for students planning to study abroad,
           with a strong focus on Japan.
-        </p>
-      </div>
+        </motion.p>
+      </motion.div>
 
-      {/* Services Grid */}
+      {/* Services Grid - Animates second with staggered cards */}
       <motion.div
         className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10"
-        variants={containerVariants}
+        variants={cardStaggerContainer}
       >
         {SERVICES.map((service) => {
           const Icon = service.icon;
@@ -102,7 +117,7 @@ export default function ServicesPreview() {
           return (
             <motion.div
               key={service.slug}
-              variants={cardVariants} // Scroll animation
+              variants={fadeInUp} // Each card fades in
               whileHover={{
                 y: -10,
                 rotate: -4,
@@ -111,14 +126,11 @@ export default function ServicesPreview() {
               }}
               className="bg-white border border-gray-200 rounded-2xl px-7 py-9 text-center cursor-default group"
             >
-              {/* Icon - CSS transition triggered by parent hover */}
+              {/* Icon */}
               <div className="flex justify-center mb-6">
-                <motion.div
-                  initial={{ scale: 1, rotate: 0 }}
-                  className="w-16 h-16 flex items-center justify-center rounded-full bg-red-50 text-red-700 group-hover:scale-125 group-hover:rotate-12 transition-transform duration-500 ease-out"
-                >
+                <div className="w-16 h-16 flex items-center justify-center rounded-full bg-red-50 text-red-700 group-hover:scale-125 group-hover:rotate-12 transition-transform duration-500 ease-out">
                   <Icon className="w-8 h-8" />
-                </motion.div>
+                </div>
               </div>
 
               <h3 className="text-xl font-semibold text-gray-900">
@@ -140,9 +152,9 @@ export default function ServicesPreview() {
         })}
       </motion.div>
 
-      {/* CTA */}
+      {/* CTA Button - Animates last */}
       <motion.div
-        variants={cardVariants}
+        variants={fadeInUp}
         className="mt-20 text-center"
       >
         <Link
