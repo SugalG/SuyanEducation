@@ -3,20 +3,28 @@ import prisma from "@/lib/prisma";
 import { getAdmin } from "@/lib/auth";
 import cloudinary from "@/lib/cloudinary";
 
-export async function DELETE(req, { params }) {
+/* ---------------- DELETE ALBUM ---------------- */
+
+export async function DELETE(req, context) {
   try {
     const admin = await getAdmin();
     if (!admin) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { slug } = params;
+    // ✅ FIX: await params
+    const { slug } = await context.params;
+
+    if (!slug) {
+      return NextResponse.json(
+        { error: "Invalid album slug" },
+        { status: 400 }
+      );
+    }
 
     const album = await prisma.galleryAlbum.findUnique({
       where: { slug },
-      include: {
-        photos: true,
-      },
+      include: { photos: true },
     });
 
     if (!album) {
@@ -26,14 +34,14 @@ export async function DELETE(req, { params }) {
       );
     }
 
-    // 1️⃣ Delete all photos from Cloudinary
+    // 🔥 Delete photos from Cloudinary
     for (const photo of album.photos) {
       if (photo.publicId) {
         await cloudinary.uploader.destroy(photo.publicId);
       }
     }
 
-    // 2️⃣ Delete album (photos cascade delete in DB)
+    // 🔥 Delete album (DB cascade deletes photos)
     await prisma.galleryAlbum.delete({
       where: { slug },
     });

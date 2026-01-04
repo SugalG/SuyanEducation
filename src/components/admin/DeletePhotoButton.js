@@ -18,7 +18,14 @@ export default function DeletePhotoButton({ photoId }) {
   return (
     <button
       onClick={handleDelete}
-      className="absolute top-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition"
+      className="
+        flex-1
+        bg-red-600 text-white text-xs font-semibold
+        px-3 py-2 rounded-md
+        hover:bg-red-700
+        cursor-pointer
+        transition
+      "
     >
       Delete
     </button>

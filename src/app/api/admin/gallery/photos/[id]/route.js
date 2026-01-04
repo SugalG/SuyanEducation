@@ -3,14 +3,24 @@ import prisma from "@/lib/prisma";
 import { getAdmin } from "@/lib/auth";
 import cloudinary from "@/lib/cloudinary";
 
-export async function DELETE(req, { params }) {
+/* ---------------- DELETE PHOTO ---------------- */
+
+export async function DELETE(req, context) {
   try {
     const admin = await getAdmin();
     if (!admin) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { id } = params;
+    // ✅ FIX: params must be awaited
+    const { id } = await context.params;
+
+    if (!id) {
+      return NextResponse.json(
+        { error: "Invalid photo id" },
+        { status: 400 }
+      );
+    }
 
     const photo = await prisma.galleryPhoto.findUnique({
       where: { id },
@@ -24,15 +34,17 @@ export async function DELETE(req, { params }) {
       );
     }
 
-    // Delete from Cloudinary
-    await cloudinary.uploader.destroy(photo.publicId);
+    // 🔥 Delete from Cloudinary
+    if (photo.publicId) {
+      await cloudinary.uploader.destroy(photo.publicId);
+    }
 
-    // Delete from DB
+    // 🔥 Delete from DB
     await prisma.galleryPhoto.delete({
       where: { id },
     });
 
-    // If this photo was cover image, reset cover
+    // 🔁 Reset cover if needed
     if (photo.album.coverImage === photo.imageUrl) {
       const nextPhoto = await prisma.galleryPhoto.findFirst({
         where: { albumId: photo.albumId },
@@ -41,7 +53,9 @@ export async function DELETE(req, { params }) {
 
       await prisma.galleryAlbum.update({
         where: { id: photo.albumId },
-        data: { coverImage: nextPhoto?.imageUrl || null },
+        data: {
+          coverImage: nextPhoto?.imageUrl || null,
+        },
       });
     }
 
@@ -55,17 +69,28 @@ export async function DELETE(req, { params }) {
   }
 }
 
-export async function PATCH(req, { params }) {
+/* ---------------- UPDATE CAPTION ---------------- */
+
+export async function PATCH(req, context) {
   try {
     const admin = await getAdmin();
     if (!admin) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    // ✅ FIX: params must be awaited
+    const { id } = await context.params;
     const { caption } = await req.json();
 
+    if (!id) {
+      return NextResponse.json(
+        { error: "Invalid photo id" },
+        { status: 400 }
+      );
+    }
+
     await prisma.galleryPhoto.update({
-      where: { id: params.id },
+      where: { id },
       data: { caption },
     });
 

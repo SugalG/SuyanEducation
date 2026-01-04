@@ -13,20 +13,29 @@ export default async function RootLayout({ children }) {
     where: { id: "site-settings" },
   });
 
+  
+  const destinations = await prisma.destination.findMany({
+    select: {
+      country: true,
+      slug: true,
+    },
+    orderBy: { country: "asc" },
+  });
+
   return (
     <html lang="en">
       <body>
-        {/* Global upper background */}
+       
         <div className="site-frame" />
 
-        {/* All scrollable content */}
+      
         <div className="site-content">
-          <Navbar settings={settings} />
+         
+          <Navbar settings={settings} destinations={destinations} />
+
           <main className="min-h-screen">{children}</main>
-          
-          
+
           <Footer settings={settings} />
-          
         </div>
       </body>
     </html>

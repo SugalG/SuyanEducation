@@ -1,28 +1,37 @@
 import Link from "next/link";
 import Image from "next/image";
+import prisma from "@/lib/prisma";
+import { getAdmin } from "@/lib/auth";
+import DeleteAlbumButton from "@/components/admin/DeleteAlbumButton";
 
-async function getAlbums() {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL || ""}/api/gallery/albums`,
-    { cache: "no-store" }
-  );
-
-  if (!res.ok) throw new Error("Failed to fetch albums");
-  return res.json();
-}
+export const dynamic = "force-dynamic";
 
 export default async function AdminGalleryPage() {
-  const albums = await getAlbums();
+  const admin = await getAdmin();
+  if (!admin) {
+    return (
+      <div className="pt-32 text-center text-red-600 font-semibold">
+        Unauthorized
+      </div>
+    );
+  }
+
+  const albums = await prisma.galleryAlbum.findMany({
+    orderBy: { albumDate: "desc" },
+    include: {
+      photos: { select: { id: true } },
+    },
+  });
 
   return (
-    <section className="max-w-7xl mx-auto px-6 py-10">
+    <section className="max-w-7xl mx-auto px-6 pt-32 pb-16">
       {/* Header */}
-      <div className="flex items-center justify-between mb-8">
-        <h1 className="text-2xl font-bold">Gallery</h1>
+      <div className="flex items-center justify-between mb-10">
+        <h1 className="text-3xl font-bold text-gray-900">Gallery</h1>
 
         <Link
           href="/admin/gallery/new"
-          className="bg-red-700 text-white px-5 py-2 rounded-md font-semibold hover:bg-red-800 transition"
+          className="bg-red-700 text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-red-800 transition"
         >
           Create Album
         </Link>
@@ -36,30 +45,37 @@ export default async function AdminGalleryPage() {
           {albums.map((album) => (
             <div
               key={album.id}
-              className="bg-white rounded-xl overflow-hidden shadow hover:shadow-lg transition"
+              className="bg-white rounded-xl overflow-hidden border shadow-sm hover:shadow-lg transition"
             >
-              {/* Cover */}
-              <div className="relative h-44 bg-gray-100">
-                {album.coverImage ? (
-                  <Image
-                    src={album.coverImage}
-                    alt={album.title}
-                    fill
-                    className="object-cover"
-                  />
-                ) : (
-                  <div className="flex items-center justify-center h-full text-sm text-gray-400">
-                    No cover image
-                  </div>
-                )}
-              </div>
+              {/* Image → clickable */}
+              <Link href={`/admin/gallery/${album.slug}`}>
+                <div className="relative h-44 bg-gray-100 cursor-pointer overflow-hidden">
+                  {album.coverImage ? (
+                    <Image
+                      src={album.coverImage}
+                      alt={album.title}
+                      fill
+                      className="object-cover hover:scale-105 transition-transform duration-300"
+                    />
+                  ) : (
+                    <div className="flex items-center justify-center h-full text-sm text-gray-400">
+                      No cover image
+                    </div>
+                  )}
+                </div>
+              </Link>
 
               {/* Info */}
               <div className="p-5">
-                <h3 className="font-semibold text-lg">{album.title}</h3>
+                <Link href={`/admin/gallery/${album.slug}`}>
+                  <h3 className="font-semibold text-lg text-gray-900 hover:underline cursor-pointer">
+                    {album.title}
+                  </h3>
+                </Link>
+
                 <p className="text-sm text-gray-500 mt-1">
                   {new Date(album.albumDate).toLocaleDateString()} ·{" "}
-                  {album.photoCount} photos
+                  {album.photos.length} photos
                 </p>
 
                 <div className="mt-4 flex items-center justify-between">
@@ -70,6 +86,7 @@ export default async function AdminGalleryPage() {
                     Manage →
                   </Link>
 
+                  {/* Delete button works now */}
                   <DeleteAlbumButton slug={album.slug} />
                 </div>
               </div>
@@ -78,31 +95,5 @@ export default async function AdminGalleryPage() {
         </div>
       )}
     </section>
-  );
-}
-
-/* Client component */
-function DeleteAlbumButton({ slug }) {
-  async function handleDelete() {
-    if (!confirm("Delete this album and all photos?")) return;
-
-    const res = await fetch(`/api/admin/gallery/albums/${slug}`, {
-      method: "DELETE",
-    });
-
-    if (res.ok) {
-      location.reload();
-    } else {
-      alert("Failed to delete album");
-    }
-  }
-
-  return (
-    <button
-      onClick={handleDelete}
-      className="text-sm text-red-600 hover:underline"
-    >
-      Delete
-    </button>
   );
 }

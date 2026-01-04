@@ -1,10 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { slugify } from "@/lib/slugify";
 
 export default function AdminDestinations() {
   const [items, setItems] = useState([]);
-  const [form, setForm] = useState({
+  const [loading, setLoading] = useState(false);
+  const [editingId, setEditingId] = useState(null);
+
+  const emptyForm = {
     slug: "",
     country: "",
     description: "",
@@ -12,7 +16,9 @@ export default function AdminDestinations() {
     education: "",
     popularFields: "",
     visaUpdates: "",
-  });
+  };
+
+  const [form, setForm] = useState(emptyForm);
 
   async function load() {
     const res = await fetch("/api/admin/destinations");
@@ -20,127 +26,224 @@ export default function AdminDestinations() {
   }
 
   useEffect(() => {
-    async function load() {
-      const res = await fetch("/api/admin/destinations");
-      setItems(await res.json());
-    }
-  
     load();
   }, []);
 
-  async function submit(e) {
-    e.preventDefault();
-
-    await fetch("/api/admin/destinations", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
+  function startEdit(dest) {
+    setEditingId(dest.id);
+    setForm({
+      slug: dest.slug,
+      country: dest.country,
+      description: dest.description || "",
+      whyPoints: dest.whyPoints || "",
+      education: dest.education || "",
+      popularFields: dest.popularFields || "",
+      visaUpdates: dest.visaUpdates || "",
     });
 
-    setForm({
-      slug: "",
-      country: "",
-      description: "",
-      whyPoints: "",
-      education: "",
-      popularFields: "",
-      visaUpdates: "",
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function cancelEdit() {
+    setEditingId(null);
+    setForm(emptyForm);
+  }
+
+  async function submit(e) {
+    e.preventDefault();
+    setLoading(true);
+
+    const method = editingId ? "PUT" : "POST";
+
+    await fetch("/api/admin/destinations", {
+      method,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ...form,
+        id: editingId,
+      }),
+    });
+
+    setLoading(false);
+    cancelEdit();
+    load();
+  }
+
+  async function remove(id, country) {
+    const ok = confirm(`Delete destination "${country}"? This cannot be undone.`);
+    if (!ok) return;
+
+    await fetch("/api/admin/destinations", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id }),
     });
 
     load();
   }
 
   return (
-    <div className="max-w-5xl mx-auto p-8">
-      <h1 className="text-3xl font-bold mb-6">Manage Destinations</h1>
+    <div className="max-w-6xl mx-auto px-6 py-10 mt-10">
+      <h1 className="text-3xl font-bold text-red-500 mb-8">
+        Manage Study Destinations
+      </h1>
 
       {/* FORM */}
       <form
         onSubmit={submit}
-        className="space-y-4 bg-white/80 backdrop-blur p-6 rounded-2xl border"
+        className="bg-white border rounded-3xl p-8 space-y-8 shadow-sm"
       >
-        <input
-          className="w-full border p-2 rounded"
-          placeholder="Slug (e.g. japan)"
-          value={form.slug}
-          onChange={(e) => setForm({ ...form, slug: e.target.value })}
-          required
-        />
+        <h2 className="text-xl font-semibold text-gray-900">
+          {editingId ? "Edit Destination" : "Add New Destination"}
+        </h2>
 
-        <input
-          className="w-full border p-2 rounded"
-          placeholder="Country Name"
-          value={form.country}
-          onChange={(e) => setForm({ ...form, country: e.target.value })}
-          required
-        />
+        {/* COUNTRY */}
+        <section>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Country Name
+          </label>
 
+          <input
+            className="w-full border rounded-lg p-3"
+            placeholder="Country Name (e.g. Japan)"
+            value={form.country}
+            onChange={(e) => {
+              const country = e.target.value;
+              setForm({
+                ...form,
+                country,
+                slug: slugify(country),
+              });
+            }}
+            required
+            disabled={!!editingId}
+          />
+
+          <p className="text-sm text-gray-500 mt-1">
+            URL:{" "}
+            <span className="font-mono">
+              /destinations/{form.slug || "country-name"}
+            </span>
+          </p>
+        </section>
+
+        {/* INTRO */}
         <textarea
-          className="w-full border p-2 rounded"
-          placeholder="Intro description (1–2 lines)"
-          rows={2}
+          className="w-full border rounded-lg p-3"
+          rows={3}
+          placeholder="Intro description"
           value={form.description}
           onChange={(e) =>
             setForm({ ...form, description: e.target.value })
           }
         />
 
+        {/* WHY */}
         <textarea
-          className="w-full border p-2 rounded"
-          placeholder={`Why this country? (one point per line)\nExample:\nGlobally recognized education\nAffordable tuition\nPost-study work`}
+          className="w-full border rounded-lg p-3"
           rows={4}
+          placeholder="Why this country? (one per line)"
           value={form.whyPoints}
           onChange={(e) =>
             setForm({ ...form, whyPoints: e.target.value })
           }
         />
 
+        {/* EDUCATION */}
         <textarea
-          className="w-full border p-2 rounded"
+          className="w-full border rounded-lg p-3"
+          rows={5}
           placeholder="Education system details"
-          rows={4}
           value={form.education}
           onChange={(e) =>
             setForm({ ...form, education: e.target.value })
           }
         />
 
+        {/* FIELDS */}
         <textarea
-          className="w-full border p-2 rounded"
-          placeholder={`Popular fields (one per line)\nBusiness\nIT\nEngineering`}
+          className="w-full border rounded-lg p-3"
           rows={4}
+          placeholder="Popular fields (one per line)"
           value={form.popularFields}
           onChange={(e) =>
             setForm({ ...form, popularFields: e.target.value })
           }
         />
 
+        {/* VISA */}
         <textarea
-          className="w-full border p-2 rounded"
-          placeholder={`Visa & key updates (one per line)\nUpdated visa rules\nScholarships available`}
+          className="w-full border rounded-lg p-3"
           rows={4}
+          placeholder="Visa updates (one per line)"
           value={form.visaUpdates}
           onChange={(e) =>
             setForm({ ...form, visaUpdates: e.target.value })
           }
         />
 
-        <button className="bg-brand-red text-red-500 px-6 py-2 rounded">
-          Save Destination
-        </button>
+        {/* ACTIONS */}
+        <div className="flex gap-4">
+          <button
+            disabled={loading}
+            className="bg-red-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-red-700 transition disabled:opacity-50"
+          >
+            {loading
+              ? "Saving..."
+              : editingId
+              ? "Update Destination"
+              : "Save Destination"}
+          </button>
+
+          {editingId && (
+            <button
+              type="button"
+              onClick={cancelEdit}
+              className="px-6 py-3 rounded-lg border font-medium"
+            >
+              Cancel
+            </button>
+          )}
+        </div>
       </form>
 
       {/* LIST */}
-      <div className="mt-10 space-y-4">
-        {items.map((d) => (
-          <div
-            key={d.id}
-            className="border p-4 rounded bg-white/70"
-          >
-            <p className="font-semibold">{d.country}</p>
-            <p className="text-sm text-gray-500">/destinations/{d.slug}</p>
-          </div>
-        ))}
+      <div className="mt-12">
+        <h2 className="text-xl font-semibold mb-4 text-gray-900">
+          Existing Destinations
+        </h2>
+
+        <div className="space-y-3">
+          {items.map((d) => (
+            <div
+              key={d.id}
+              className="flex justify-between items-center border rounded-xl p-4 bg-white"
+            >
+              <div>
+                <p className="font-semibold">{d.country}</p>
+                <p className="text-sm text-gray-500">
+                  /destinations/{d.slug}
+                </p>
+              </div>
+
+              <div className="flex gap-4">
+                <button
+                  onClick={() => startEdit(d)}
+                  className="text-sm font-medium text-blue-600 hover:underline"
+                >
+                  Edit
+                </button>
+
+                <button
+                  onClick={() => remove(d.id, d.country)}
+                  className="text-sm font-medium text-red-600 hover:underline"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

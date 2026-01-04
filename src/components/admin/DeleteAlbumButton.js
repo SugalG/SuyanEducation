@@ -9,7 +9,7 @@ export default function DeleteAlbumButton({ slug }) {
     });
 
     if (res.ok) {
-      window.location.href = "/admin/gallery";
+      location.reload();
     } else {
       alert("Failed to delete album");
     }
@@ -20,7 +20,7 @@ export default function DeleteAlbumButton({ slug }) {
       onClick={handleDelete}
       className="text-sm text-red-600 hover:underline"
     >
-      Delete album
+      Delete
     </button>
   );
 }

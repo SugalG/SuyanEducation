@@ -1,14 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 export default function PhotoUploader({ albumId }) {
-  const [loading, setLoading] = useState(false);
+  const fileRef = useRef(null);
+  const [uploading, setUploading] = useState(false);
 
   async function handleFiles(files) {
     if (!files.length) return;
 
-    setLoading(true);
+    setUploading(true);
 
     const formData = new FormData();
     formData.append("albumId", albumId);
@@ -22,33 +23,50 @@ export default function PhotoUploader({ albumId }) {
       body: formData,
     });
 
-    setLoading(false);
+    setUploading(false);
 
     if (res.ok) {
       location.reload();
     } else {
-      alert("Failed to upload images");
+      alert("Failed to upload photos");
     }
   }
 
   return (
-    <div>
-      <label className="block text-sm font-medium mb-2">
-        Upload photos
-      </label>
-
+    <div className="flex items-center gap-4">
+      {/* Hidden input */}
       <input
+        ref={fileRef}
         type="file"
         multiple
         accept="image/*"
-        disabled={loading}
+        className="hidden"
         onChange={(e) => handleFiles(e.target.files)}
-        className="block"
       />
 
-      {loading && (
-        <p className="text-sm text-gray-500 mt-2">Uploading…</p>
-      )}
+      {/* REAL button */}
+      <button
+        type="button"
+        onClick={() => fileRef.current.click()}
+        disabled={uploading}
+        className="
+          inline-flex items-center gap-2
+          px-5 py-2.5
+          bg-red-600 text-white
+          rounded-lg font-semibold
+          hover:bg-red-700
+          active:scale-[0.98]
+          transition
+          disabled:opacity-50
+          disabled:cursor-not-allowed
+        "
+      >
+        {uploading ? "Uploading..." : "Upload Photos"}
+      </button>
+
+      <span className="text-sm text-gray-500">
+        JPG, PNG • Multiple allowed
+      </span>
     </div>
   );
 }
