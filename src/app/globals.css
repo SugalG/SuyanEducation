@@ -1,11 +1,131 @@
 /* globals.css */
 @import "tailwindcss";
 
-:root {
-  --brand-red: #d10000;
-  --brand-cream: #fbf3e6;
-  --brand-ink: #111827;
+
+@layer utilities {
+  /* Backgrounds */
+  .bg-background {
+    background-color: var(--color-background);
+  }
+
+  .bg-surface {
+    background-color: var(--color-surface);
+  }
+
+  .bg-accent {
+    background-color: var(--color-accent);
+  }
+
+  .bg-brand-gradient {
+    background-image: var(--gradient-brand);
+  }
+
+  .bg-brand-gradient-strong {
+    background-image: var(--gradient-brand-strong);
+  }
+
+  .bg-soft-gradient {
+    background-image: var(--gradient-soft);
+  }
+
+  /* Text */
+  .text-foreground {
+    color: var(--color-foreground);
+  }
+
+  .text-muted {
+    color: var(--color-muted);
+  }
+
+  .text-primary {
+    color: var(--color-primary);
+  }
+
+  .text-secondary {
+    color: var(--color-secondary);
+  }
+
+  /* Borders */
+  .border-subtle {
+    border-color: var(--color-border);
+  }
+
+   .bg-cta {
+    background-image: linear-gradient(
+      to right,
+      var(--color-primary),
+      var(--color-primary-hover)
+    );
+  }
+
+  .bg-cta-hover {
+    background-image: linear-gradient(
+      to right,
+      var(--color-primary-hover),
+      #991b1b
+    );
+  }
+
+  .shadow-cta {
+    box-shadow: 0 10px 25px rgba(220, 38, 38, 0.25);
+  }
+
+  .shadow-cta-hover {
+    box-shadow: 0 12px 30px rgba(220, 38, 38, 0.35);
+  }
 }
+
+:root {
+  /* =========================
+     BRAND COLORS (identity)
+     ========================= */
+  --brand-red: #dc2626;        /* red-600 */
+  --brand-red-hover: #b91c1c;  /* red-700 */
+
+  --brand-blue: #1e3a8a;       /* blue-800 */
+  --brand-blue-deep: #172554;  /* blue-950 */
+
+  --brand-cream: #fbf3e6;
+  --brand-ink: #111827;        /* gray-900 */
+
+  /* =========================
+     SEMANTIC COLORS (meaning)
+     ========================= */
+  --color-primary: var(--brand-red);
+  --color-primary-hover: var(--brand-red-hover);
+
+  --color-secondary: var(--brand-blue);
+  --color-secondary-hover: var(--brand-blue-deep);
+
+  --color-background: #ffffff;
+  --color-surface: #ffffff;
+  --color-muted: #6b7280;      /* gray-500/600 */
+  --color-foreground: var(--brand-ink);
+  --color-border: #e5e7eb;     /* gray-200 */
+  --color-accent: var(--brand-cream);
+
+  /* =========================
+     GRADIENT TOKENS
+     ========================= */
+  --gradient-brand: linear-gradient(
+    to right,
+    var(--color-primary),
+    var(--color-secondary)
+  );
+
+  --gradient-brand-strong: linear-gradient(
+    to right,
+    var(--color-primary),
+    var(--color-secondary-hover)
+  );
+
+  --gradient-soft: linear-gradient(
+    to right,
+    rgba(220, 38, 38, 0.08),
+    rgba(30, 58, 138, 0.08)
+  );
+}
+
 
 html,
 body {
@@ -15,18 +135,31 @@ body {
   min-height: 100%;
 }
 
-/* === GLOBAL UPPER FRAME (bg-main ONLY) === */
 .site-frame {
   position: fixed;
   inset: 0;
   z-index: -1;
 
-  background-image: url("/bg-main.jpg");
+  background:
+   
+    radial-gradient(1100px 650px at 12% -12%,
+      rgba(251, 243, 230, 0.95),
+      transparent 62%),
+
+ 
+    radial-gradient(1000px 600px at 88% 108%,
+      rgba(30, 64, 175, 0.06),
+      transparent 58%),
+
+    /* Base white */
+    linear-gradient(to bottom,
+      #ffffff,
+      #ffffff);
+
   background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center top;
-  background-color: #ffffff;
 }
+
+
 
 /* Site content */
 .site-content {
@@ -52,6 +185,7 @@ footer {
   from {
     transform: translateX(0);
   }
+
   to {
     transform: translateX(-50%);
   }
@@ -70,4 +204,23 @@ footer {
     background-position: center 20%;
     background-size: cover;
   }
+}
+
+
+@keyframes scroll-x {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll-x {
+  animation: scroll-x 40s linear infinite;
+}
+
+.animate-scroll-x:hover {
+  animation-play-state: paused;
 }

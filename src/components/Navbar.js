@@ -1,11 +1,21 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import { Menu, X, ChevronDown, Phone, Mail, MapPin } from "lucide-react";
 
-export default function Navbar({ settings }) {
+export default function Navbar({ settings, onApplyNow }) {
   const [scrolled, setScrolled] = useState(false);
   const [openMenu, setOpenMenu] = useState(null);
+  
+  // Refs for desktop dropdowns to prevent premature closing
+  const testMenuRef = useRef(null);
+  const destMenuRef = useRef(null);
+
+  // mobile state
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileSub, setMobileSub] = useState(null);
+
   const [destinations, setDestinations] = useState([]);
 
   useEffect(() => {
@@ -14,113 +24,571 @@ export default function Navbar({ settings }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // 🔥 Load destinations from DB
   useEffect(() => {
     async function loadDestinations() {
       try {
         const res = await fetch("/api/destinations");
-        if (res.ok) {
-          setDestinations(await res.json());
-        }
+        if (res.ok) setDestinations(await res.json());
       } catch (err) {
         console.error("Failed to load destinations", err);
       }
     }
-
     loadDestinations();
   }, []);
 
-  const textColor = "text-gray-800";
+  // Close mobile menu when clicking outside or on link
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [mobileOpen]);
 
   return (
-    <header
-      className={`
-        fixed top-0 left-0 w-full z-50
-        transition-all duration-700 ease-in-out
-        ${scrolled ? "bg-white/5 backdrop-blur-md shadow-md" : "bg-transparent"}
-      `}
-    >
-      <nav className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        {/* Logo */}
-        <Link href="/" className="flex items-center">
-          <img
-            src="/logo.png"
-            alt={settings.siteName}
-            className={`
-              transition-all duration-700 ease-in-out
-              ${scrolled ? "h-10" : "h-14"} w-auto
-            `}
-          />
-        </Link>
-
-        {/* Menu */}
-        <div
-          className={`hidden md:flex items-center gap-8 font-medium transition-colors duration-300 ${textColor}`}
-        >
-          <Link href="/" className="hover:text-red-500">Home</Link>
-          <Link href="/about" className="hover:text-red-500">About</Link>
-
-          {/* Test Prep */}
-          <div
-            className="relative"
-            onMouseEnter={() => setOpenMenu("test")}
-            onMouseLeave={() => setOpenMenu(null)}
-          >
-            <button className="hover:text-red-500">Test Preparation</button>
-
-            <div
-              className={`absolute left-0 top-full mt-3 w-56 bg-white text-gray-800 shadow-xl rounded-md transition-all duration-200
-                ${openMenu === "test" ? "opacity-100 visible" : "opacity-0 invisible"}`}
-            >
-              <Link href="/services/jlpt" className="block px-4 py-3 hover:bg-gray-100">JLPT</Link>
-              <Link href="/services/ielts" className="block px-4 py-3 hover:bg-gray-100">IELTS</Link>
-              <Link href="/services/toefl" className="block px-4 py-3 hover:bg-gray-100">TOEFL</Link>
+    <header className="fixed top-0 left-0 w-full z-50">
+      {/* Top Bar with Contact Info */}
+      <div className="bg-gradient-to-r from-blue-950 via-blue-800 to-red-700 text-white">
+        <div className="max-w-7xl mx-auto px-6 py-2">
+          <div className="flex flex-col md:flex-row items-center justify-between text-sm">
+            <div className="flex items-center gap-4 mb-2 md:mb-0">
+              <div className="flex items-center gap-2">
+                <Phone size={14} />
+                <span>+977-1-1234567</span>
+              </div>
+              <div className="hidden sm:flex items-center gap-2">
+                <Mail size={14} />
+                <span>info@suyan.edu.np</span>
+              </div>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
+                <MapPin size={14} />
+                <span>Kathmandu, Nepal</span>
+              </div>
+              <div className="hidden lg:block text-xs opacity-80">
+                Mon-Fri: 9AM-6PM | Sat: 9AM-1PM
+              </div>
             </div>
           </div>
-
-          {/* 🔥 Destinations (Dynamic) */}
-          <div
-            className="relative"
-            onMouseEnter={() => setOpenMenu("dest")}
-            onMouseLeave={() => setOpenMenu(null)}
-          >
-            <button className="hover:text-red-500">Destinations</button>
-
-            <div
-              className={`absolute left-0 top-full mt-3 w-64 bg-white text-gray-800 shadow-xl rounded-md transition-all duration-200
-                ${openMenu === "dest" ? "opacity-100 visible" : "opacity-0 invisible"}`}
-            >
-              {destinations.length === 0 ? (
-                <span className="block px-4 py-3 text-sm text-gray-400">
-                  No destinations yet
-                </span>
-              ) : (
-                destinations.map((d) => (
-                  <Link
-                    key={d.slug}
-                    href={`/destinations/${d.slug}`}
-                    className="block px-4 py-3 hover:bg-gray-100"
-                  >
-                    {d.country}
-                  </Link>
-                ))
-              )}
-            </div>
-          </div>
-
-          <Link href="/gallery" className="hover:text-red-500">Gallery</Link>
-          <Link href="/blog" className="hover:text-red-500">Blog</Link>
-          <Link href="/contact" className="hover:text-red-500">Contact</Link>
         </div>
+      </div>
 
-        {/* WhatsApp */}
-        <a
-          href={`https://wa.me/${settings.whatsappNumber?.replace(/\D/g, "")}`}
-          className="hidden md:inline-block px-5 py-2 rounded-md font-semibold bg-red-500 text-white hover:bg-red-800 transition"
-        >
-          WhatsApp
-        </a>
-      </nav>
+      {/* Main Navigation */}
+      <div className={`
+        transition-all duration-300
+        ${scrolled 
+          ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-100' 
+          : 'bg-white'
+        }
+      `}>
+        <nav className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+          {/* Logo - Left aligned */}
+          <Link href="/" className="flex items-center group flex-shrink-0 mr-4">
+            <div className="relative">
+              <div className="absolute -inset-2 bg-gradient-to-r from-red-600 to-blue-950 rounded-xl opacity-0 group-hover:opacity-20 blur transition-opacity duration-300"></div>
+              <img
+                src="/logo.png"
+                alt={settings?.siteName || "Suyan Education"}
+                className="h-16 w-auto relative transition-transform duration-300 group-hover:scale-105"
+              />
+            </div>
+            {settings?.siteName && (
+              <div className="ml-4 hidden lg:block">
+                <div className="text-lg font-bold bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
+                  {settings.siteName}
+                </div>
+                <div className="text-xs text-gray-500 mt-0.5">Study Abroad Consultants</div>
+              </div>
+            )}
+          </Link>
+
+          {/* DESKTOP MENU - Centered */}
+          <div className="hidden md:flex items-center gap-6 lg:gap-8 font-medium mx-auto">
+            <Link 
+              href="/" 
+              className="relative text-gray-700 hover:text-red-600 transition-colors duration-200 group/nav"
+            >
+              Home
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-red-600 to-blue-950 group-hover/nav:w-full transition-all duration-300"></span>
+            </Link>
+            
+            <Link 
+              href="/about" 
+              className="relative text-gray-700 hover:text-red-600 transition-colors duration-200 group/nav"
+            >
+              About
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-red-600 to-blue-950 group-hover/nav:w-full transition-all duration-300"></span>
+            </Link>
+
+            {/* Test Preparation with Full Images */}
+            <div
+              className="relative"
+              onMouseEnter={() => setOpenMenu("test")}
+              onMouseLeave={(e) => {
+                const relatedTarget = e.relatedTarget;
+                if (testMenuRef.current && !testMenuRef.current.contains(relatedTarget)) {
+                  setOpenMenu(null);
+                }
+              }}
+            >
+              <button 
+                className="relative text-gray-700 hover:text-red-600 transition-colors duration-200 flex items-center gap-1 group/nav"
+                onClick={() => setOpenMenu(openMenu === "test" ? null : "test")}
+              >
+                Test Preparation
+                <ChevronDown size={16} className={`transition-transform duration-200 ${openMenu === "test" ? "rotate-180 text-red-600" : "group-hover/nav:text-red-600"}`} />
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-red-600 to-blue-950 group-hover/nav:w-full transition-all duration-300"></span>
+              </button>
+
+              {/* Gap for smooth hover */}
+              <div className="absolute left-0 top-full h-2"></div>
+              
+              <div
+                ref={testMenuRef}
+                className={`absolute left-0 top-full mt-2 w-56 bg-white rounded-xl shadow-xl border border-gray-100
+                transition-all duration-200 origin-top
+                ${openMenu === "test" 
+                  ? "opacity-100 visible scale-y-100 translate-y-0" 
+                  : "opacity-0 invisible scale-y-95 -translate-y-2"}`}
+                onMouseEnter={() => setOpenMenu("test")}
+                onMouseLeave={() => setOpenMenu(null)}
+              >
+                <div className="p-2">
+                  <div className="px-3 py-2 mb-2">
+                    <div className="text-xs font-semibold text-blue-950 uppercase tracking-wider">Language Tests</div>
+                    <div className="text-xs text-gray-500">International proficiency exams</div>
+                  </div>
+                  
+                  {/* JLPT with Full Image */}
+                  <Link href="/services/jlpt" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 hover:text-red-700 transition-all duration-200 group/item">
+                    <div className="w-10 h-10 rounded-lg flex items-center justify-center group-hover/item:bg-red-50 transition-colors overflow-hidden p-1">
+                      <img 
+                        src="/icons/japan-test-prep.png" 
+                        alt="JLPT" 
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                    <div>
+                      <div className="font-medium">JLPT</div>
+                      <div className="text-xs text-gray-500">Japanese Language</div>
+                    </div>
+                  </Link>
+                  
+                  {/* IELTS with Full Image */}
+                  <Link href="/services/ielts" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 hover:text-red-700 transition-all duration-200 group/item">
+                    <div className="w-10 h-10 rounded-lg flex items-center justify-center group-hover/item:bg-blue-50 transition-colors overflow-hidden p-1">
+                      <img 
+                        src="/icons/ielts.png" 
+                        alt="IELTS" 
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                    <div>
+                      <div className="font-medium">IELTS</div>
+                      <div className="text-xs text-gray-500">English Proficiency</div>
+                    </div>
+                  </Link>
+                  
+                  {/* TOEFL with Full Image */}
+                  <Link href="/services/toefl" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 hover:text-red-700 transition-all duration-200 group/item">
+                    <div className="w-10 h-10 rounded-lg flex items-center justify-center group-hover/item:bg-green-50 transition-colors overflow-hidden p-1">
+                      <img 
+                        src="/icons/tofel-test-prep.png" 
+                        alt="TOEFL" 
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                    <div>
+                      <div className="font-medium">TOEFL</div>
+                      <div className="text-xs text-gray-500">Academic English</div>
+                    </div>
+                  </Link>
+                  
+                  {/* SSW with Full Image */}
+                  <Link href="/services/ssw" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 hover:text-red-700 transition-all duration-200 group/item">
+                    <div className="w-10 h-10 rounded-lg flex items-center justify-center group-hover/item:bg-purple-50 transition-colors overflow-hidden p-1">
+                      <img 
+                        src="/icons/ssw-test-prep.png" 
+                        alt="SSW" 
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                    <div>
+                      <div className="font-medium">SSW</div>
+                      <div className="text-xs text-gray-500">Specialized Skills</div>
+                    </div>
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            {/* Destinations */}
+            <div
+              className="relative"
+              onMouseEnter={() => setOpenMenu("dest")}
+              onMouseLeave={(e) => {
+                const relatedTarget = e.relatedTarget;
+                if (destMenuRef.current && !destMenuRef.current.contains(relatedTarget)) {
+                  setOpenMenu(null);
+                }
+              }}
+            >
+              <button 
+                className="relative text-gray-700 hover:text-red-600 transition-colors duration-200 flex items-center gap-1 group/nav"
+                onClick={() => setOpenMenu(openMenu === "dest" ? null : "dest")}
+              >
+                Destinations
+                <ChevronDown size={16} className={`transition-transform duration-200 ${openMenu === "dest" ? "rotate-180 text-red-600" : "group-hover/nav:text-red-600"}`} />
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-red-600 to-blue-600 group-hover/nav:w-full transition-all duration-300"></span>
+              </button>
+
+              <div className="absolute left-0 top-full h-2"></div>
+              
+              <div
+                ref={destMenuRef}
+                className={`absolute left-0 top-full mt-2 w-64 bg-white rounded-xl shadow-xl border border-gray-100
+                transition-all duration-200 origin-top
+                ${openMenu === "dest" 
+                  ? "opacity-100 visible scale-y-100 translate-y-0" 
+                  : "opacity-0 invisible scale-y-95 -translate-y-2"}`}
+                onMouseEnter={() => setOpenMenu("dest")}
+                onMouseLeave={() => setOpenMenu(null)}
+              >
+                <div className="p-2">
+                  <div className="px-3 py-2 mb-2">
+                    <div className="text-xs font-semibold text-blue-800 uppercase tracking-wider">Popular Destinations</div>
+                    <div className="text-xs text-gray-500">Choose your study country</div>
+                  </div>
+                  
+                  {destinations.slice(0, 6).map((d, index) => (
+                    <Link
+                      key={d.slug}
+                      href={`/destinations/${d.slug}`}
+                      className={`flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 hover:text-red-700 transition-all duration-200 group/item ${
+                        index < 5 ? 'mb-1' : ''
+                      }`}
+                    >
+                      <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-red-100 to-blue-100 flex items-center justify-center group-hover/item:from-red-200 group-hover/item:to-blue-200 transition-all">
+                        <span className="text-gray-700 font-bold text-sm">{d.country.charAt(0)}</span>
+                      </div>
+                      <div className="font-medium">{d.country}</div>
+                    </Link>
+                  ))}
+                  
+                  {destinations.length > 6 && (
+                    <Link
+                      href="/destinations"
+                      className="mt-2 px-4 py-2 text-center text-sm text-blue-700 font-medium hover:text-red-700 hover:bg-blue-50 rounded-lg transition-colors duration-200"
+                    >
+                      View All {destinations.length} Destinations →
+                    </Link>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <Link 
+              href="/gallery" 
+              className="relative text-gray-700 hover:text-red-600 transition-colors duration-200 group/nav"
+            >
+              Gallery
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-red-600 to-blue-600 group-hover/nav:w-full transition-all duration-300"></span>
+            </Link>
+            
+            <Link 
+              href="/blog" 
+              className="relative text-gray-700 hover:text-red-600 transition-colors duration-200 group/nav"
+            >
+              Blog
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-red-600 to-blue-600 group-hover/nav:w-full transition-all duration-300"></span>
+            </Link>
+            
+            <Link 
+              href="/contact" 
+              className="relative text-gray-700 hover:text-red-600 transition-colors duration-200 group/nav"
+            >
+              Contact
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-red-600 to-blue-600 group-hover/nav:w-full transition-all duration-300"></span>
+            </Link>
+          </div>
+
+          {/* APPLY NOW (DESKTOP) - Right aligned */}
+          <div className="hidden md:flex items-center ml-auto">
+            <button
+              onClick={onApplyNow}
+              className="relative px-6 py-2.5 rounded-full font-semibold bg-gradient-to-r from-red-600 to-red-700 text-white hover:from-red-700 hover:to-red-800 transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg hover:shadow-red-200 group flex-shrink-0"
+            >
+              Apply Now
+              <div className="absolute -inset-1 bg-gradient-to-r from-red-600 to-blue-800 rounded-full opacity-0 group-hover:opacity-20 blur-md transition-opacity duration-300 -z-10"></div>
+            </button>
+          </div>
+
+          {/* MOBILE HAMBURGER - Right aligned */}
+          <button
+            onClick={() => setMobileOpen(true)}
+            className="md:hidden text-gray-700 p-2 hover:text-red-600 transition-colors duration-200 ml-auto"
+            aria-label="Open menu"
+          >
+            <Menu size={28} />
+          </button>
+        </nav>
+      </div>
+
+      {/* MOBILE MENU */}
+      {mobileOpen && (
+        <div className="md:hidden fixed inset-0 z-50">
+          {/* Backdrop */}
+          <div 
+            className="absolute inset-0 bg-black/30 backdrop-blur-sm"
+            onClick={() => setMobileOpen(false)}
+          />
+          
+          {/* Menu Panel */}
+          <div className="absolute right-0 top-0 bottom-0 w-full max-w-sm bg-white shadow-2xl">
+            {/* Header */}
+            <div className="flex items-center justify-between px-6 h-20 border-b border-gray-100 bg-gradient-to-r from-red-50 to-blue-50">
+              <div className="flex items-center gap-4">
+                <img src="/logo.png" alt="Logo" className="h-10" />
+                <div>
+                  <div className="font-bold text-gray-900">Suyan Education</div>
+                  <div className="text-xs text-gray-600">Study Abroad Experts</div>
+                </div>
+              </div>
+              <button 
+                onClick={() => setMobileOpen(false)}
+                className="p-2 hover:bg-white rounded-lg transition-colors"
+                aria-label="Close menu"
+              >
+                <X size={28} className="text-gray-700" />
+              </button>
+            </div>
+
+            {/* Menu Content */}
+            <div className="px-4 py-6 overflow-y-auto h-[calc(100vh-80px)]">
+              <div className="space-y-1">
+                <Link 
+                  href="/" 
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center gap-3 py-4 px-4 rounded-xl hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 text-gray-800 hover:text-red-700 transition-all duration-200 group"
+                >
+                  <div className="w-10 h-10 rounded-lg bg-red-100 flex items-center justify-center group-hover:bg-red-200">
+                    <span className="text-red-700 font-bold">H</span>
+                  </div>
+                  <span className="font-semibold">Home</span>
+                </Link>
+                
+                <Link 
+                  href="/about" 
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center gap-3 py-4 px-4 rounded-xl hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 text-gray-800 hover:text-red-700 transition-all duration-200 group"
+                >
+                  <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center group-hover:bg-blue-200">
+                    <span className="text-blue-700 font-bold">A</span>
+                  </div>
+                  <span className="font-semibold">About Us</span>
+                </Link>
+
+                {/* Mobile Test Prep with Full Images */}
+                <div className="border-b border-gray-100 last:border-0">
+                  <button
+                    onClick={() => setMobileSub(mobileSub === "test" ? null : "test")}
+                    className="w-full flex items-center justify-between py-4 px-4 rounded-xl hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 text-gray-800 transition-all duration-200 group"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-red-100 to-blue-100 flex items-center justify-center group-hover:from-red-200 group-hover:to-blue-200">
+                        <span className="font-bold bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">T</span>
+                      </div>
+                      <span className="font-semibold">Test Preparation</span>
+                    </div>
+                    <ChevronDown 
+                      size={20} 
+                      className={`transition-transform duration-200 ${mobileSub === "test" ? "rotate-180 text-red-600" : "text-gray-500"}`}
+                    />
+                  </button>
+                  
+                  {mobileSub === "test" && (
+                    <div className="pl-14 pr-4 space-y-1 mt-1 mb-3">
+                      {/* JLPT Mobile with Full Image */}
+                      <Link 
+                        href="/services/jlpt" 
+                        onClick={() => setMobileOpen(false)}
+                        className="flex items-center gap-3 py-3 px-4 rounded-lg hover:bg-red-50 text-gray-700 hover:text-red-700 transition-colors duration-150"
+                      >
+                        <div className="w-10 h-10 rounded-lg flex items-center justify-center overflow-hidden p-1">
+                          <img 
+                            src="/icons/japan-test-prep.png" 
+                            alt="JLPT" 
+                            className="w-full h-full object-contain"
+                          />
+                        </div>
+                        <span>JLPT</span>
+                      </Link>
+                      
+                      {/* IELTS Mobile with Full Image */}
+                      <Link 
+                        href="/services/ielts" 
+                        onClick={() => setMobileOpen(false)}
+                        className="flex items-center gap-3 py-3 px-4 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-blue-700 transition-colors duration-150"
+                      >
+                        <div className="w-10 h-10 rounded-lg flex items-center justify-center overflow-hidden p-1">
+                          <img 
+                            src="/icons/ielts.png" 
+                            alt="IELTS" 
+                            className="w-full h-full object-contain"
+                          />
+                        </div>
+                        <span>IELTS</span>
+                      </Link>
+                      
+                      {/* TOEFL Mobile with Full Image */}
+                      <Link 
+                        href="/services/toefl" 
+                        onClick={() => setMobileOpen(false)}
+                        className="flex items-center gap-3 py-3 px-4 rounded-lg hover:bg-green-50 text-gray-700 hover:text-green-700 transition-colors duration-150"
+                      >
+                        <div className="w-10 h-10 rounded-lg flex items-center justify-center overflow-hidden p-1">
+                          <img 
+                            src="/icons/tofel-test-prep.png" 
+                            alt="TOEFL" 
+                            className="w-full h-full object-contain"
+                          />
+                        </div>
+                        <span>TOEFL</span>
+                      </Link>
+                      
+                      {/* SSW Mobile with Full Image */}
+                      <Link 
+                        href="/services/ssw" 
+                        onClick={() => setMobileOpen(false)}
+                        className="flex items-center gap-3 py-3 px-4 rounded-lg hover:bg-purple-50 text-gray-700 hover:text-purple-700 transition-colors duration-150"
+                      >
+                        <div className="w-10 h-10 rounded-lg flex items-center justify-center overflow-hidden p-1">
+                          <img 
+                            src="/icons/ssw-test-prep.png" 
+                            alt="SSW" 
+                            className="w-full h-full object-contain"
+                          />
+                        </div>
+                        <span>SSW</span>
+                      </Link>
+                    </div>
+                  )}
+                </div>
+
+                {/* Mobile Destinations */}
+                <div className="border-b border-gray-100 last:border-0">
+                  <button
+                    onClick={() => setMobileSub(mobileSub === "dest" ? null : "dest")}
+                    className="w-full flex items-center justify-between py-4 px-4 rounded-xl hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 text-gray-800 transition-all duration-200 group"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-blue-100 to-red-100 flex items-center justify-center group-hover:from-blue-200 group-hover:to-red-200">
+                        <span className="font-bold bg-gradient-to-r from-blue-600 to-red-600 bg-clip-text text-transparent">D</span>
+                      </div>
+                      <span className="font-semibold">Destinations</span>
+                    </div>
+                    <ChevronDown 
+                      size={20} 
+                      className={`transition-transform duration-200 ${mobileSub === "dest" ? "rotate-180 text-red-600" : "text-gray-500"}`}
+                    />
+                  </button>
+                  
+                  {mobileSub === "dest" && (
+                    <div className="pl-14 pr-4 space-y-1 mt-1 mb-3">
+                      {destinations.map((d) => (
+                        <Link
+                          key={d.slug}
+                          href={`/destinations/${d.slug}`}
+                          onClick={() => setMobileOpen(false)}
+                          className="flex items-center justify-between py-3 px-4 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-blue-700 transition-colors duration-150 group"
+                        >
+                          <span>{d.country}</span>
+                          <svg 
+                            xmlns="http://www.w3.org/2000/svg" 
+                            width="16" 
+                            height="16" 
+                            viewBox="0 0 24 24" 
+                            fill="none" 
+                            stroke="currentColor" 
+                            strokeWidth="2" 
+                            className="opacity-0 group-hover:opacity-100 transition-opacity"
+                          >
+                            <path d="m9 18 6-6-6-6"/>
+                          </svg>
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                <Link 
+                  href="/gallery" 
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center gap-3 py-4 px-4 rounded-xl hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 text-gray-800 hover:text-red-700 transition-all duration-200 group"
+                >
+                  <div className="w-10 h-10 rounded-lg bg-yellow-100 flex items-center justify-center group-hover:bg-yellow-200">
+                    <span className="text-yellow-700 font-bold">G</span>
+                  </div>
+                  <span className="font-semibold">Gallery</span>
+                </Link>
+                
+                <Link 
+                  href="/blog" 
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center gap-3 py-4 px-4 rounded-xl hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 text-gray-800 hover:text-red-700 transition-all duration-200 group"
+                >
+                  <div className="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center group-hover:bg-green-200">
+                    <span className="text-green-700 font-bold">B</span>
+                  </div>
+                  <span className="font-semibold">Blog</span>
+                </Link>
+                
+                <Link 
+                  href="/contact" 
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center gap-3 py-4 px-4 rounded-xl hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 text-gray-800 hover:text-red-700 transition-all duration-200 group"
+                >
+                  <div className="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center group-hover:bg-purple-200">
+                    <span className="text-purple-700 font-bold">C</span>
+                  </div>
+                  <span className="font-semibold">Contact Us</span>
+                </Link>
+              </div>
+
+              {/* Mobile CTA Buttons */}
+              <div className="mt-8 px-4 space-y-4">
+                <button
+                  onClick={() => {
+                    setMobileOpen(false);
+                    onApplyNow?.();
+                  }}
+                  className="w-full px-6 py-4 rounded-xl bg-gradient-to-r from-red-600 to-red-700 text-white font-bold text-lg shadow-lg hover:shadow-red-200 transition-all duration-300 active:scale-95"
+                >
+                  Apply Now
+                </button>
+                
+                <div className="pt-6 border-t border-gray-200">
+                  <div className="text-sm text-gray-600 mb-3">Contact Info:</div>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-3 text-gray-700">
+                      <Phone size={16} className="text-red-600" />
+                      <span>+977-1-1234567</span>
+                    </div>
+                    <div className="flex items-center gap-3 text-gray-700">
+                      <Mail size={16} className="text-blue-600" />
+                      <span>info@suyan.edu.np</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 }

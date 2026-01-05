@@ -2,10 +2,7 @@
 
 import { useRef, useState } from "react";
 
-export default function ImageUpload({
-  label = "Upload Image",
-  onUpload,
-}) {
+export default function ImageUpload({ label = "Upload Image", onUpload }) {
   const inputRef = useRef(null);
   const [uploading, setUploading] = useState(false);
 
@@ -15,23 +12,30 @@ export default function ImageUpload({
 
     setUploading(true);
 
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", process.env.NEXT_PUBLIC_CLOUDINARY_PRESET);
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
 
-    const res = await fetch(
-      `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD}/image/upload`,
-      {
+      const res = await fetch("/api/upload", {
         method: "POST",
         body: formData,
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.url) {
+        alert("Image upload failed");
+        console.error(data);
+        return;
       }
-    );
 
-    const data = await res.json();
-    setUploading(false);
-
-    if (data.secure_url) {
-      onUpload(data.secure_url);
+      onUpload(data.url);
+    } catch (err) {
+      console.error(err);
+      alert("Upload failed");
+    } finally {
+      setUploading(false);
+      e.target.value = "";
     }
   }
 
@@ -54,8 +58,7 @@ export default function ImageUpload({
           px-5 py-2.5
           rounded-lg
           font-medium text-sm
-          border
-          border-red-600
+          border border-red-600
           text-red-600
           hover:bg-red-600 hover:text-white
           transition

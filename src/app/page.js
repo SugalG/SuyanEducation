@@ -16,7 +16,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <Navbar settings={settings} />
+      {/* <Navbar settings={settings} /> */}
       <Hero />
    
       <GlobalReachSection />

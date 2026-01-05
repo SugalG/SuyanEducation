@@ -73,6 +73,7 @@ model Service {
   slug        String   @unique
   summary     String?
   content     String?  
+  heroImage   String?
   isActive    Boolean  @default(true)
   createdAt   DateTime @default(now())
 }

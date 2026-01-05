@@ -1,21 +1,26 @@
 import Link from "next/link";
 import Image from "next/image";
 
-export default function DestinationCard({
-  title,
-  description,
-  image,
-  href,
-}) {
+export default function DestinationCard({ title, description, slug }) {
   return (
-    <div className="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300">
+    <div
+      className="
+        bg-white rounded-2xl
+        border border-gray-200
+        overflow-hidden
+        transition
+        hover:shadow-xl
+        hover:border-blue-500
+      "
+    >
       {/* Image */}
-      <div className="relative h-48 w-full overflow-hidden">
+      <div className="relative h-[220px] w-full">
         <Image
-          src={image}
+          src={`/destinations/${slug}.webp`}
           alt={title}
           fill
-          className="object-cover group-hover:scale-105 transition-transform duration-500"
+          className="object-cover"
+          sizes="(max-width: 768px) 100vw, 320px"
         />
       </div>
 
@@ -25,15 +30,19 @@ export default function DestinationCard({
           {title}
         </h3>
 
-        <p className="text-sm text-gray-600 mb-4">
+        <p className="text-gray-600 text-sm leading-relaxed mb-5">
           {description}
         </p>
 
         <Link
-          href={href}
-          className="inline-flex items-center gap-1 text-blue-600 font-medium hover:gap-2 transition-all"
+          href={`/destinations/${slug}`}
+          className="
+            inline-flex items-center gap-2
+            text-blue-600 font-semibold text-sm
+            hover:gap-3 transition-all
+          "
         >
-          Explore {title}
+          EXPLORE {title.toUpperCase()}
           <span aria-hidden>→</span>
         </Link>
       </div>
