@@ -175,14 +175,14 @@ export default function GlobalReachSection() {
             className="text-4xl sm:text-5xl lg:text-6xl font-bold"
             variants={fadeInUp}
           >
-            <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-red-500 to-blue-950 bg-clip-text text-transparent">
               Worldwide Destinations
             </span>
           </motion.h2>
 
           {/* Animated Underline */}
           <motion.div 
-            className="h-1 bg-gradient-to-r from-red-600 to-blue-950 rounded-full w-24"
+            className="h-1 bg-gradient-to-r from-red-500 to-blue-950 rounded-full w-24"
             variants={fadeInUp}
             initial={{ width: 0 }}
             whileInView={{ width: 96 }}
@@ -195,7 +195,7 @@ export default function GlobalReachSection() {
             variants={fadeInUp}
           >
             From Kathmandu to 10+ global destinations. We provide personalized pathways to 
-            <span className="font-semibold text-red-600"> leading educational hubs worldwide</span>,
+            <span className="font-semibold text-red-500"> leading educational hubs worldwide</span>,
             with specialized expertise in Japan.
           </motion.p>
 
@@ -215,7 +215,7 @@ export default function GlobalReachSection() {
               >
                 <div className="flex items-start gap-3">
                   <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-red-50 to-blue-50 flex items-center justify-center group-hover:from-red-100 group-hover:to-blue-100 transition-all flex-shrink-0">
-                    <stat.icon className="w-5 h-5 text-red-600" />
+                    <stat.icon className="w-5 h-5 text-red-500" />
                   </div>
                   <div>
                     <div className="text-2xl font-bold text-gray-900">{stat.value}</div>
@@ -232,7 +232,7 @@ export default function GlobalReachSection() {
             className="space-y-4"
             variants={fadeInUp}
           >
-            <h4 className="font-semibold text-gray-900 text-lg">All 11 Destinations:</h4>
+            <h4 className="font-semibold text-gray-900 text-lg">All 10 Destinations:</h4>
             <div className="flex flex-wrap gap-2">
               {DESTINATIONS.map((dest, index) => (
                 <button
@@ -240,7 +240,7 @@ export default function GlobalReachSection() {
                   onClick={() => setActiveDestination(dest)}
                   className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-300 flex items-center gap-1.5 ${
                     activeDestination?.label === dest.label
-                      ? 'bg-gradient-to-r from-red-600 to-blue-950 text-white shadow-md'
+                      ? 'bg-gradient-to-r from-red-500 to-blue-950 text-white shadow-md'
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   }`}
                 >
@@ -441,7 +441,7 @@ export default function GlobalReachSection() {
                           <h4 className="text-xl font-bold text-gray-900">{activeDestination.label}</h4>
                           <span className={`px-2 py-0.5 text-xs font-medium rounded-full ${
                             activeDestination.focus === "Primary Focus" 
-                              ? "bg-red-100 text-red-700" 
+                              ? "bg-red-100 text-red-500" 
                               : activeDestination.focus === "Popular Choice"
                               ? "bg-blue-100 text-blue-700"
                               : activeDestination.focus === "EU Hub" || activeDestination.focus === "EU Gateway"
@@ -455,7 +455,7 @@ export default function GlobalReachSection() {
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="text-2xl font-bold bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
+                      <div className="text-2xl font-bold bg-gradient-to-r from-red-500 to-blue-950 bg-clip-text text-transparent">
                         {activeDestination.stats}
                       </div>
                       <div className="text-sm text-gray-500">Successful Placements</div>
@@ -474,7 +474,7 @@ export default function GlobalReachSection() {
                     {activeDestination.slug && (
                       <Link
                         href={`/destinations/${activeDestination.slug}`}
-                        className="ml-auto text-sm text-blue-950 hover:text-red-600 font-medium transition-colors"
+                        className="ml-auto text-sm text-blue-950 hover:text-red-500 font-medium transition-colors"
                       >
                         View Details →
                       </Link>
@@ -503,7 +503,7 @@ export default function GlobalReachSection() {
               
               <Link
                 href="/destinations"
-                className="text-blue-950 hover:text-red-600 transition-colors font-medium flex items-center gap-1"
+                className="text-blue-950 hover:text-red-500 transition-colors font-medium flex items-center gap-1"
               >
                 View All Details →
               </Link>

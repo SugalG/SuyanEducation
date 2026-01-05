@@ -148,7 +148,7 @@ export default function ServicesPreview() {
         
         {/* Main Heading */}
         <h2 className="mt-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold">
-          <span className="bg-gradient-to-r from-red-600 to-blue-800 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
             Our Services
           </span>
         </h2>
