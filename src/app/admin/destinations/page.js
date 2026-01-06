@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { slugify } from "@/lib/slugify";
+import AddUniversityModal from "@/components/AddUniversityModal";
 
 export default function AdminDestinations() {
   const router = useRouter();
@@ -22,6 +23,7 @@ export default function AdminDestinations() {
 
   const [form, setForm] = useState(emptyForm);
   const [editingId, setEditingId] = useState(null);
+  const [selectedDestination, setSelectedDestination] = useState(null);
 
   /* =======================
      FETCH DESTINATIONS
@@ -240,9 +242,7 @@ export default function AdminDestinations() {
           >
             <div>
               <p className="font-semibold">{d.country}</p>
-              <p className="text-sm text-gray-500">
-                /destinations/{d.slug}
-              </p>
+              <p className="text-sm text-gray-500">/destinations/{d.slug}</p>
             </div>
 
             <div className="flex gap-4">
@@ -258,10 +258,23 @@ export default function AdminDestinations() {
               >
                 Delete
               </button>
+              <button
+                onClick={() => setSelectedDestination(d)}
+                className="text-green-600 text-sm font-medium"
+              >
+                Add University
+              </button>
             </div>
           </div>
         ))}
       </div>
+      {selectedDestination && (
+        <AddUniversityModal
+          open={!!selectedDestination}
+          destination={selectedDestination}
+          onClose={() => setSelectedDestination(null)}
+        />
+      )}
     </div>
   );
 }

@@ -8,7 +8,7 @@ export async function GET() {
       include: { country: true },
     });
 
-    return NextResponse.json({ success: true, items: universities });
+    return NextResponse.json({ success: true, items: universities }, {status:200});
   } catch (e) {
     console.error("GET /universities error:", e);
     return NextResponse.json(
@@ -34,7 +34,7 @@ export async function POST(req) {
       data: { name, countryId, city, websiteUrl, imageUrl },
     });
 
-    return NextResponse.json({ success: true, university });
+    return NextResponse.json({ success: true, university }, {status: 200});
   } catch (e) {
     console.error("POST /universities error:", e);
     return NextResponse.json(
@@ -61,7 +61,7 @@ export async function PUT(req) {
       data: { name, city, websiteUrl, imageUrl },
     });
 
-    return NextResponse.json({ success: true, university: updated });
+    return NextResponse.json({ success: true, university: updated }, {status:200});
   } catch (e) {
     console.error("PUT /universities error:", e);
     return NextResponse.json(
