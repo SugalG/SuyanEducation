@@ -15,7 +15,8 @@ export async function POST(req) {
                 excerpt: body.excerpt,
                 content: body.content,
                 coverImage: body.coverImage,
-                publishedAt: body.publishedAt
+                publishedAt: body.publishedAt ? new Date(body.publishedAt) : null
+
             }
         })
 
