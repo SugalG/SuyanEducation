@@ -6,6 +6,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { slugify } from "@/lib/slugify";
 import AddUniversityModal from "@/components/AddUniversityModal";
+import UniversitiesDropdown from "@/components/admin/UniversitiesDropdown";
 
 export default function AdminDestinations() {
   const router = useRouter();
@@ -38,7 +39,7 @@ export default function AdminDestinations() {
     queryFn: async () => {
       const res = await fetch("/api/admin/destinations");
       const data = await res.json();
-
+      console.log(data);
       if (!res.ok || !data.success) {
         throw new Error(data.message || "Failed to load destinations");
       }
@@ -238,32 +239,40 @@ export default function AdminDestinations() {
         {destinations.map((d) => (
           <div
             key={d.id}
-            className="flex justify-between items-center border rounded-xl p-4 bg-white"
+            className="border rounded-xl bg-white overflow-hidden"
           >
-            <div>
-              <p className="font-semibold">{d.country}</p>
-              <p className="text-sm text-gray-500">/destinations/{d.slug}</p>
+            {/* Destination header */}
+            <div className="flex justify-between items-center p-4">
+              <div>
+                <p className="font-semibold">{d.country}</p>
+                <p className="text-sm text-gray-500">/destinations/{d.slug}</p>
+              </div>
+
+              <div className="flex gap-4 items-center">
+                <button
+                  onClick={() => startEdit(d)}
+                  className="text-blue-600 text-sm font-medium"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => remove(d.id, d.country)}
+                  className="text-red-600 text-sm font-medium"
+                >
+                  Delete
+                </button>
+                <button
+                  onClick={() => setSelectedDestination(d)}
+                  className="text-green-600 text-sm font-medium"
+                >
+                  Add University
+                </button>
+              </div>
             </div>
 
-            <div className="flex gap-4">
-              <button
-                onClick={() => startEdit(d)}
-                className="text-blue-600 text-sm font-medium"
-              >
-                Edit
-              </button>
-              <button
-                onClick={() => remove(d.id, d.country)}
-                className="text-red-600 text-sm font-medium"
-              >
-                Delete
-              </button>
-              <button
-                onClick={() => setSelectedDestination(d)}
-                className="text-green-600 text-sm font-medium"
-              >
-                Add University
-              </button>
+            {/* Universities dropdown section */}
+            <div className="border-t px-4 py-2 bg-gray-50">
+              <UniversitiesDropdown destination={d} />
             </div>
           </div>
         ))}

@@ -1,14 +1,31 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma"; // Make sure you have prisma client
 
-export async function GET() {
+export async function GET(request) {
   try {
-    const universities = await prisma.university.findMany({
-      orderBy: { createdAt: "desc" },
-      include: { country: true },
-    });
+    const url = new URL(request.url);
+    const destinationId = url.searchParams.get("destinationId");
 
-    return NextResponse.json({ success: true, items: universities }, {status:200});
+    let universities;
+
+    if (destinationId) {
+      // Return only universities for this destination
+      universities = await prisma.university.findMany({
+        where: { countryId: destinationId },
+        orderBy: { createdAt: "desc" },
+      });
+    } else {
+      // Return all universities
+      universities = await prisma.university.findMany({
+        orderBy: { createdAt: "desc" },
+        include: { country: true },
+      });
+    }
+
+    return NextResponse.json(
+      { success: true, items: universities },
+      { status: 200 }
+    );
   } catch (e) {
     console.error("GET /universities error:", e);
     return NextResponse.json(
@@ -25,7 +42,10 @@ export async function POST(req) {
 
     if (!name || !countryId || !imageUrl) {
       return NextResponse.json(
-        { success: false, message: "Name, countryId, and imageUrl are required" },
+        {
+          success: false,
+          message: "Name, countryId, and imageUrl are required",
+        },
         { status: 400 }
       );
     }
@@ -34,7 +54,7 @@ export async function POST(req) {
       data: { name, countryId, city, websiteUrl, imageUrl },
     });
 
-    return NextResponse.json({ success: true, university }, {status: 200});
+    return NextResponse.json({ success: true, university }, { status: 200 });
   } catch (e) {
     console.error("POST /universities error:", e);
     return NextResponse.json(
@@ -61,7 +81,10 @@ export async function PUT(req) {
       data: { name, city, websiteUrl, imageUrl },
     });
 
-    return NextResponse.json({ success: true, university: updated }, {status:200});
+    return NextResponse.json(
+      { success: true, university: updated },
+      { status: 200 }
+    );
   } catch (e) {
     console.error("PUT /universities error:", e);
     return NextResponse.json(
