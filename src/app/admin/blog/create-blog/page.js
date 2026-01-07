@@ -128,7 +128,7 @@ export default function CreateBlog() {
     });
 
     if (files.image) fd.append("image", files.image);
-    if (files.coverImage) fd.append("coverImage".files.coverImage);
+    if (files.coverImage) fd.append("coverImage",files.coverImage);
     createBlogMutation.mutate(fd);
   };
 
@@ -283,10 +283,10 @@ export default function CreateBlog() {
         <div className="text-center mt-6">
           <button
             type="submit"
-            disabled={createBlogMutation.isLoading}
+            disabled={createBlogMutation.isPending}
             className="bg-blue-600 text-white font-semibold px-8 py-3 rounded-lg hover:bg-blue-700 transition shadow-md hover:shadow-lg"
           >
-            {createBlogMutation.isLoading ? "Creating..." : "Create Blog"}
+            {createBlogMutation.isPending ? "Creating..." : "Create Blog"}
           </button>
         </div>
       </form>
