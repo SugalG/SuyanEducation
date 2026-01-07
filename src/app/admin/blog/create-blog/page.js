@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -17,6 +17,8 @@ export default function CreateBlog() {
     content: "",
     publishedAt: "",
   });
+  const imageRef = useRef(null);
+  const coverImageRef = useRef(null);
 
   const [files, setFiles] = useState({
     image: null,
@@ -51,6 +53,12 @@ export default function CreateBlog() {
       image: null,
       coverImage: null,
     });
+    if (imageRef.current) {
+      imageRef.current.value = "";
+    }
+    if (coverImageRef.current) {
+      coverImageRef.current.value = "";
+    }
   };
 
   // Fetch destinations using React Query
@@ -64,7 +72,7 @@ export default function CreateBlog() {
       }
       return data.items;
     },
-    staleTime: 5 * 60 * 1000
+    staleTime: 5 * 60 * 1000,
   });
 
   // Mutation for creating a blog
@@ -89,9 +97,9 @@ export default function CreateBlog() {
       resetForm();
       toast.success("Blog added Successfully");
     },
-    onError:(data) => {
-      toast.error(data.message || "Couldn't add blogs")
-    }
+    onError: (data) => {
+      toast.error(data.message || "Couldn't add blogs");
+    },
   });
 
   const handleChange = (e) => {
@@ -128,7 +136,7 @@ export default function CreateBlog() {
     });
 
     if (files.image) fd.append("image", files.image);
-    if (files.coverImage) fd.append("coverImage",files.coverImage);
+    if (files.coverImage) fd.append("coverImage", files.coverImage);
     createBlogMutation.mutate(fd);
   };
 
@@ -243,6 +251,7 @@ export default function CreateBlog() {
             <input
               type="file"
               name="image"
+              ref={imageRef}
               accept="image/png, image/jpeg"
               onChange={handleFileChange}
               className="border rounded-lg p-3 text-gray-700 bg-gray-100 hover:bg-gray-200 transition cursor-pointer"
@@ -265,6 +274,7 @@ export default function CreateBlog() {
             <input
               type="file"
               name="coverImage"
+              ref={coverImageRef}
               accept="image/png, image/jpeg"
               onChange={handleFileChange}
               className="border rounded-lg p-3 text-gray-700 bg-gray-100 hover:bg-gray-200 transition cursor-pointer"
@@ -284,7 +294,13 @@ export default function CreateBlog() {
           <button
             type="submit"
             disabled={createBlogMutation.isPending}
-            className="bg-blue-600 text-white font-semibold px-8 py-3 rounded-lg hover:bg-blue-700 transition shadow-md hover:shadow-lg"
+            className={`bg-blue-600 text-white font-semibold px-8 py-3 rounded-lg transition shadow-md
+    hover:shadow-lg cursor-pointer
+    ${
+      createBlogMutation.isPending
+        ? "cursor-not-allowed opacity-60 hover:bg-blue-600 hover:shadow-md"
+        : "hover:bg-blue-700"
+    }`}
           >
             {createBlogMutation.isPending ? "Creating..." : "Create Blog"}
           </button>
