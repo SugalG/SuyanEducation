@@ -45,18 +45,21 @@ model Testimonial {
 model University {
   id          String   @id @default(cuid())
   name        String
-  country     String
+  country     Destination @relation(fields:[countryId], references:[id])
+  countryId   String
   websiteUrl  String?
   city        String?
   createdAt   DateTime @default(now())
-
-  @@index([country])
+  imageUrl    String
+  @@index([countryId])
 }
 
 model Destination {
   id            String   @id @default(cuid())
   slug          String   @unique
   country       String
+  universities  University[]
+  blogs         BlogPost[]
   description   String?
   whyPoints     String?  
   education     String?
@@ -82,12 +85,15 @@ model BlogPost {
   id          String   @id @default(cuid())
   title       String
   slug        String   @unique
+  countryId   String
+  country     Destination @relation(fields:[countryId], references:[id])
+  imageUrl    String
   excerpt     String?
   content     String   
   coverImage  String?
   publishedAt DateTime?
   createdAt   DateTime @default(now())
-  @@index([publishedAt])
+  @@index([publishedAt, countryId])
 }
 
 model Certificate {

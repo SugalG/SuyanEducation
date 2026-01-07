@@ -1,12 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 import { slugify } from "@/lib/slugify";
+import AddUniversityModal from "@/components/AddUniversityModal";
+import UniversitiesDropdown from "@/components/admin/UniversitiesDropdown";
 
 export default function AdminDestinations() {
-  const [items, setItems] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [editingId, setEditingId] = useState(null);
+  const router = useRouter();
+  const queryClient = useQueryClient();
 
   const emptyForm = {
     slug: "",
@@ -19,15 +23,95 @@ export default function AdminDestinations() {
   };
 
   const [form, setForm] = useState(emptyForm);
+  const [editingId, setEditingId] = useState(null);
+  const [selectedDestination, setSelectedDestination] = useState(null);
 
-  async function load() {
-    const res = await fetch("/api/admin/destinations");
-    setItems(await res.json());
+  /* =======================
+     FETCH DESTINATIONS
+  ======================= */
+  const {
+    data: destinations = [],
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["destinations"],
+    queryFn: async () => {
+      const res = await fetch("/api/admin/destinations");
+      const data = await res.json();
+      console.log(data);
+      if (!res.ok || !data.success) {
+        throw new Error(data.message || "Failed to load destinations");
+      }
+
+      return data.items;
+    },
+  });
+
+  /* =======================
+     CREATE / UPDATE
+  ======================= */
+  const saveMutation = useMutation({
+    mutationFn: async (payload) => {
+      const res = await fetch("/api/admin/destinations", {
+        method: payload.id ? "PUT" : "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        throw new Error(data.message || "Save failed");
+      }
+
+      return data;
+    },
+    onSuccess: () => {
+      toast.success(editingId ? "Destination updated" : "Destination added");
+      queryClient.invalidateQueries({ queryKey: ["destinations"] });
+      cancelEdit();
+    },
+    onError: (err) => {
+      toast.error(err.message || "Something went wrong");
+    },
+  });
+
+  /* =======================
+     DELETE
+  ======================= */
+  const deleteMutation = useMutation({
+    mutationFn: async ({ id }) => {
+      const res = await fetch("/api/admin/destinations", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        throw new Error(data.message || "Delete failed");
+      }
+
+      return data;
+    },
+    onSuccess: () => {
+      toast.success("Destination deleted");
+      queryClient.invalidateQueries({ queryKey: ["destinations"] });
+    },
+    onError: (err) => {
+      toast.error(err.message || "Delete failed");
+    },
+  });
+
+  /* =======================
+     HANDLERS
+  ======================= */
+  function submit(e) {
+    e.preventDefault();
+    saveMutation.mutate({ ...form, id: editingId });
   }
-
-  useEffect(() => {
-    load();
-  }, []);
 
   function startEdit(dest) {
     setEditingId(dest.id);
@@ -40,7 +124,6 @@ export default function AdminDestinations() {
       popularFields: dest.popularFields || "",
       visaUpdates: dest.visaUpdates || "",
     });
-
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
@@ -49,39 +132,32 @@ export default function AdminDestinations() {
     setForm(emptyForm);
   }
 
-  async function submit(e) {
-    e.preventDefault();
-    setLoading(true);
-
-    const method = editingId ? "PUT" : "POST";
-
-    await fetch("/api/admin/destinations", {
-      method,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        ...form,
-        id: editingId,
-      }),
-    });
-
-    setLoading(false);
-    cancelEdit();
-    load();
-  }
-
-  async function remove(id, country) {
-    const ok = confirm(`Delete destination "${country}"? This cannot be undone.`);
+  function remove(id, country) {
+    const ok = confirm(`Delete "${country}"? This cannot be undone.`);
     if (!ok) return;
-
-    await fetch("/api/admin/destinations", {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id }),
-    });
-
-    load();
+    deleteMutation.mutate({ id });
   }
 
+  /* =======================
+     STATES
+  ======================= */
+  if (isLoading) {
+    return (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/70 backdrop-blur-sm">
+        <div className="h-12 w-12 rounded-full border-4 border-gray-300 border-t-red-600 animate-spin" />
+      </div>
+    );
+  }
+
+  if (isError) {
+    toast.error(error.message || "Access denied");
+    router.replace("/");
+    return null;
+  }
+
+  /* =======================
+     UI
+  ======================= */
   return (
     <div className="max-w-6xl mx-auto px-6 py-10 mt-10">
       <h1 className="text-3xl font-bold text-red-500 mb-8">
@@ -91,104 +167,55 @@ export default function AdminDestinations() {
       {/* FORM */}
       <form
         onSubmit={submit}
-        className="bg-white border rounded-3xl p-8 space-y-8 shadow-sm"
+        className="bg-white border rounded-3xl p-8 space-y-6 shadow-sm"
       >
-        <h2 className="text-xl font-semibold text-gray-900">
+        <h2 className="text-xl font-semibold">
           {editingId ? "Edit Destination" : "Add New Destination"}
         </h2>
 
-        {/* COUNTRY */}
-        <section>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Country Name
-          </label>
+        <input
+          className="w-full border rounded-lg p-3"
+          placeholder="Country Name"
+          value={form.country}
+          disabled={!!editingId}
+          onChange={(e) => {
+            const country = e.target.value;
+            setForm({
+              ...form,
+              country,
+              slug: slugify(country),
+            });
+          }}
+          required
+        />
 
-          <input
+        <p className="text-sm text-gray-500">
+          URL: /destinations/{form.slug || "country-name"}
+        </p>
+
+        {[
+          ["description", "Intro description", 3],
+          ["whyPoints", "Why this country? (one per line)", 4],
+          ["education", "Education system details", 5],
+          ["popularFields", "Popular fields (one per line)", 4],
+          ["visaUpdates", "Visa updates (one per line)", 4],
+        ].map(([key, placeholder, rows]) => (
+          <textarea
+            key={key}
             className="w-full border rounded-lg p-3"
-            placeholder="Country Name (e.g. Japan)"
-            value={form.country}
-            onChange={(e) => {
-              const country = e.target.value;
-              setForm({
-                ...form,
-                country,
-                slug: slugify(country),
-              });
-            }}
-            required
-            disabled={!!editingId}
+            rows={rows}
+            placeholder={placeholder}
+            value={form[key]}
+            onChange={(e) => setForm({ ...form, [key]: e.target.value })}
           />
+        ))}
 
-          <p className="text-sm text-gray-500 mt-1">
-            URL:{" "}
-            <span className="font-mono">
-              /destinations/{form.slug || "country-name"}
-            </span>
-          </p>
-        </section>
-
-        {/* INTRO */}
-        <textarea
-          className="w-full border rounded-lg p-3"
-          rows={3}
-          placeholder="Intro description"
-          value={form.description}
-          onChange={(e) =>
-            setForm({ ...form, description: e.target.value })
-          }
-        />
-
-        {/* WHY */}
-        <textarea
-          className="w-full border rounded-lg p-3"
-          rows={4}
-          placeholder="Why this country? (one per line)"
-          value={form.whyPoints}
-          onChange={(e) =>
-            setForm({ ...form, whyPoints: e.target.value })
-          }
-        />
-
-        {/* EDUCATION */}
-        <textarea
-          className="w-full border rounded-lg p-3"
-          rows={5}
-          placeholder="Education system details"
-          value={form.education}
-          onChange={(e) =>
-            setForm({ ...form, education: e.target.value })
-          }
-        />
-
-        {/* FIELDS */}
-        <textarea
-          className="w-full border rounded-lg p-3"
-          rows={4}
-          placeholder="Popular fields (one per line)"
-          value={form.popularFields}
-          onChange={(e) =>
-            setForm({ ...form, popularFields: e.target.value })
-          }
-        />
-
-        {/* VISA */}
-        <textarea
-          className="w-full border rounded-lg p-3"
-          rows={4}
-          placeholder="Visa updates (one per line)"
-          value={form.visaUpdates}
-          onChange={(e) =>
-            setForm({ ...form, visaUpdates: e.target.value })
-          }
-        />
-
-        {/* ACTIONS */}
         <div className="flex gap-4">
           <button
-            disabled={loading}
-            className="bg-red-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-red-700 transition disabled:opacity-50"
+            disabled={saveMutation.isPending}
+            className="bg-red-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-red-700 disabled:opacity-50"
           >
-            {loading
+            {saveMutation.isPending
               ? "Saving..."
               : editingId
               ? "Update Destination"
@@ -199,7 +226,7 @@ export default function AdminDestinations() {
             <button
               type="button"
               onClick={cancelEdit}
-              className="px-6 py-3 rounded-lg border font-medium"
+              className="px-6 py-3 border rounded-lg"
             >
               Cancel
             </button>
@@ -208,43 +235,55 @@ export default function AdminDestinations() {
       </form>
 
       {/* LIST */}
-      <div className="mt-12">
-        <h2 className="text-xl font-semibold mb-4 text-gray-900">
-          Existing Destinations
-        </h2>
-
-        <div className="space-y-3">
-          {items.map((d) => (
-            <div
-              key={d.id}
-              className="flex justify-between items-center border rounded-xl p-4 bg-white"
-            >
+      <div className="mt-12 space-y-3">
+        {destinations.map((d) => (
+          <div
+            key={d.id}
+            className="border rounded-xl bg-white overflow-hidden"
+          >
+            {/* Destination header */}
+            <div className="flex justify-between items-center p-4">
               <div>
                 <p className="font-semibold">{d.country}</p>
-                <p className="text-sm text-gray-500">
-                  /destinations/{d.slug}
-                </p>
+                <p className="text-sm text-gray-500">/destinations/{d.slug}</p>
               </div>
 
-              <div className="flex gap-4">
+              <div className="flex gap-4 items-center">
                 <button
                   onClick={() => startEdit(d)}
-                  className="text-sm font-medium text-blue-600 hover:underline"
+                  className="text-blue-600 text-sm font-medium"
                 >
                   Edit
                 </button>
-
                 <button
                   onClick={() => remove(d.id, d.country)}
-                  className="text-sm font-medium text-red-600 hover:underline"
+                  className="text-red-600 text-sm font-medium"
                 >
                   Delete
                 </button>
+                <button
+                  onClick={() => setSelectedDestination(d)}
+                  className="text-green-600 text-sm font-medium"
+                >
+                  Add University
+                </button>
               </div>
             </div>
-          ))}
-        </div>
+
+            {/* Universities dropdown section */}
+            <div className="border-t px-4 py-2 bg-gray-50">
+              <UniversitiesDropdown destination={d} />
+            </div>
+          </div>
+        ))}
       </div>
+      {selectedDestination && (
+        <AddUniversityModal
+          open={!!selectedDestination}
+          destination={selectedDestination}
+          onClose={() => setSelectedDestination(null)}
+        />
+      )}
     </div>
   );
 }

@@ -3,6 +3,8 @@ import Footer from "@/components/Footer";
 import prisma from "@/lib/prisma";
 import NavbarApplyWrapper from "@/components/NavbarApplyWrapper";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
+import Providers from "./providers";
+import { Toaster } from "sonner";
 
 export const metadata = {
   title: "Suyan Education",
@@ -25,21 +27,27 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <div className="site-frame" />
+        <Providers>
+          <div className="site-frame" />
 
-        <div className="site-content">
-          {/* 🔥 IMPORTANT: USE THE WRAPPER */}
-          <NavbarApplyWrapper
-            settings={settings}
-            destinations={destinations}
-          />
+          <div className="site-content">
+            {/* 🔥 IMPORTANT: USE THE WRAPPER */}
 
-          <main className="min-h-screen">{children}</main>
+            <NavbarApplyWrapper
+              settings={settings}
+              destinations={destinations}
+            />
 
-          <Footer settings={settings} />
-        </div>
+            <main className="min-h-screen">
+              {children}
+              <Toaster richColors duration={1500} position="top-center" />
+              </main>
 
-        <WhatsAppFloat />
+            <Footer settings={settings} />
+          </div>
+
+          <WhatsAppFloat />
+        </Providers>
       </body>
     </html>
   );
