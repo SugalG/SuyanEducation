@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Facebook, Instagram, Phone, Mail, MapPin } from "lucide-react";
+import { Facebook, Instagram, Phone, Mail, MapPin, MessageSquare, Globe, Users, Target } from "lucide-react";
 
 const cardVariants = {
   hidden: { opacity: 0, y: 30 },
@@ -15,163 +15,342 @@ const cardVariants = {
 
 export default function ContactClient() {
   return (
-    <div className="pt-32 pb-24">
-      {/* HEADER */}
-      <section className="max-w-5xl mx-auto px-6 text-center mb-20">
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-4xl md:text-5xl font-bold text-gray-900 mb-4"
-        >
-          Contact Us
-        </motion.h1>
+    <main className="w-full overflow-hidden">
+      {/* Modern Hero Section */}
+      <section className="relative min-h-[80vh] flex items-center overflow-hidden pt-24">
+        {/* Gradient Background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-white via-red-50 to-blue-50" />
+        
+        {/* Animated Background Elements */}
+        <div className="absolute top-0 left-0 w-1/3 h-full bg-gradient-to-r from-red-100/30 to-transparent" />
+        <div className="absolute bottom-0 right-0 w-1/3 h-full bg-gradient-to-l from-blue-100/30 to-transparent" />
+        
+        {/* Floating Circles */}
+        <div className="absolute top-20 left-10 w-80 h-80 bg-gradient-to-r from-red-200/20 to-pink-200/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-l from-blue-200/20 to-cyan-200/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
 
-        <div className="h-1 w-20 bg-red-500 mx-auto mb-6" />
-
-        <p className="text-gray-700 text-lg max-w-2xl mx-auto">
-          We’re here to guide you every step of your study abroad journey.
-        </p>
-      </section>
-
-      {/* CONTACT CARDS */}
-      <section className="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-8 mb-28">
-        {[
-          {
-            icon: Phone,
-            title: "Call Us",
-            value: "+977 1 5445099",
-            hint: "Sun–Fri, 10AM–6PM",
-          },
-          {
-            icon: Mail,
-            title: "Email",
-            value: "info@suyan.com.np",
-            hint: "We reply within 24 hours",
-          },
-          {
-            icon: MapPin,
-            title: "Visit Office",
-            value: "Kumaripati, Lalitpur",
-            hint: "Nepal",
-          },
-        ].map((item, i) => {
-          const Icon = item.icon;
-
-          return (
+        {/* Hero Content */}
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div
-              key={i}
-              variants={cardVariants}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true }}
-              whileHover={{ y: -6 }}
-              className="
-                group relative rounded-3xl p-8
-                bg-white
-                border border-gray-200
-                shadow-sm hover:shadow-lg
-                transition
-              "
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
             >
-              {/* Accent bar */}
-              <div className="absolute inset-x-0 top-0 h-1 rounded-t-3xl bg-red-500 opacity-0 group-hover:opacity-100 transition" />
-
-              <div className="text-center relative z-10">
-                <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-red-50 text-red-500 group-hover:bg-red-500 group-hover:text-white transition">
-                  <Icon size={26} />
+              <div>
+                {/* Contact Badge */}
+                <div className="inline-flex items-center gap-3 px-6 py-3 rounded-2xl bg-white shadow-lg border border-gray-100 mb-8">
+                  <div className="w-3 h-3 bg-gradient-to-r from-red-500 to-blue-600 rounded-full animate-pulse"></div>
+                  <span className="text-lg font-semibold bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
+                    Get in Touch
+                  </span>
                 </div>
 
-                <h3 className="text-lg font-semibold text-gray-900 mb-1">
-                  {item.title}
-                </h3>
+                {/* Main Heading */}
+                <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-8 leading-tight">
+                  <span className="bg-gradient-to-r from-red-600 via-red-500 to-blue-950 bg-clip-text text-transparent">
+                    Contact Us
+                  </span>
+                </h1>
 
-                <p className="text-gray-700 font-medium">{item.value}</p>
-                <p className="text-sm text-gray-500 mt-2">{item.hint}</p>
+                {/* Decorative Lines */}
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="w-16 h-1 bg-gradient-to-r from-red-500 to-red-400 rounded-full"></div>
+                  <div className="w-8 h-1 bg-gradient-to-r from-blue-400 to-blue-300 rounded-full"></div>
+                  <div className="w-4 h-1 bg-gradient-to-r from-red-300 to-red-200 rounded-full"></div>
+                </div>
+
+                {/* Description */}
+                <p className="text-xl text-gray-700 leading-relaxed mb-10">
+                  We're here to guide you every step of your study abroad journey. 
+                  Get personalized counseling and expert advice from our dedicated team.
+                </p>
+
+                {/* Feature Icons Grid */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-12">
+                  <div className="flex flex-col items-center p-4 bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:border-red-200 transition-all">
+                    <Target className="w-8 h-8 text-red-600 mb-2" />
+                    <span className="text-sm font-semibold text-gray-800 text-center">Personalized Guidance</span>
+                  </div>
+                  <div className="flex flex-col items-center p-4 bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:border-red-200 transition-all">
+                    <Users className="w-8 h-8 text-red-600 mb-2" />
+                    <span className="text-sm font-semibold text-gray-800 text-center">Expert Team</span>
+                  </div>
+                  <div className="flex flex-col items-center p-4 bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:border-red-200 transition-all">
+                    <MessageSquare className="w-8 h-8 text-red-600 mb-2" />
+                    <span className="text-sm font-semibold text-gray-800 text-center">Quick Response</span>
+                  </div>
+                  <div className="flex flex-col items-center p-4 bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:border-red-200 transition-all">
+                    <Globe className="w-8 h-8 text-red-600 mb-2" />
+                    <span className="text-sm font-semibold text-gray-800 text-center">Global Network</span>
+                  </div>
+                </div>
               </div>
             </motion.div>
-          );
-        })}
-      </section>
 
-      {/* SOCIAL MEDIA */}
-      <section className="max-w-5xl mx-auto px-6 mb-28 text-center">
-        <h2 className="text-2xl font-bold text-gray-900 mb-8">
-          Connect With Us
-        </h2>
-
-        <div className="flex justify-center gap-6">
-          <a
-            href="https://www.facebook.com/suyancons07"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="
-              group flex items-center justify-center
-              h-14 w-14 rounded-full
-              border border-gray-300
-              text-gray-600
-              hover:bg-red-500 hover:border-red-500 hover:text-white
-              transition
-            "
-          >
-            <Facebook size={24} />
-          </a>
-
-          <a
-            href="https://www.instagram.com/suyancons07"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="
-              group flex items-center justify-center
-              h-14 w-14 rounded-full
-              border border-gray-300
-              text-gray-600
-              hover:bg-red-500 hover:border-red-500 hover:text-white
-              transition
-            "
-          >
-            <Instagram size={24} />
-          </a>
+            {/* Contact Form Placeholder */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <div className="bg-gradient-to-br from-white to-gray-50 rounded-3xl border-2 border-gray-100 p-10 shadow-2xl">
+                <div className="text-center mb-8">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Start Your Journey Today</h3>
+                  <p className="text-gray-600">Book your free consultation session</p>
+                </div>
+                
+                <div className="space-y-4">
+                  <div className="bg-gradient-to-r from-red-50 to-blue-50 rounded-2xl p-6 text-center">
+                    <Phone className="w-12 h-12 text-red-600 mx-auto mb-4" />
+                    <div className="text-2xl font-bold text-gray-900 mb-2">+977 1 5445099</div>
+                    <p className="text-gray-600">Sun–Fri, 10AM–6PM</p>
+                  </div>
+                  
+                  <a
+                    href="mailto:info@suyan.com.np"
+                    className="block bg-gradient-to-r from-red-600 to-red-500 text-white rounded-2xl p-6 text-center font-semibold hover:shadow-xl hover:scale-105 transition-all duration-300"
+                  >
+                    <Mail className="w-8 h-8 mx-auto mb-3" />
+                    Send Email
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* LOCATION */}
-      <section className="max-w-6xl mx-auto px-6 mb-28">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
-          Our Location
-        </h2>
+      {/* Contact Cards Section */}
+      <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl sm:text-5xl font-bold mb-6">
+            <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
+              Connect With Us
+            </span>
+          </h2>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Multiple ways to reach our expert counselors for personalized guidance
+          </p>
+        </motion.div>
 
-        <div className="rounded-3xl overflow-hidden border border-gray-200 shadow-lg bg-white">
+        <div className="grid md:grid-cols-3 gap-8">
+          {[
+            {
+              icon: Phone,
+              title: "Call Us",
+              value: "+977 1 5445099",
+              hint: "Sun–Fri, 10AM–6PM",
+              color: "from-red-500 to-red-400",
+              action: "tel:+97715445099"
+            },
+            {
+              icon: Mail,
+              title: "Email Us",
+              value: "info@suyan.com.np",
+              hint: "We reply within 24 hours",
+              color: "from-blue-500 to-blue-400",
+              action: "mailto:info@suyan.com.np"
+            },
+            {
+              icon: MapPin,
+              title: "Visit Office",
+              value: "Kumaripati, Lalitpur",
+              hint: "Nepal",
+              color: "from-purple-500 to-purple-400",
+              action: "#location"
+            },
+          ].map((item, i) => {
+            const Icon = item.icon;
+
+            return (
+              <motion.a
+                key={i}
+                href={item.action}
+                variants={cardVariants}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true }}
+                whileHover={{ y: -10, scale: 1.02 }}
+                className="group relative block"
+              >
+                <div className="bg-white rounded-3xl border-2 border-gray-100 p-8 hover:shadow-2xl hover:border-red-300 transition-all duration-500">
+                  {/* Icon Background */}
+                  <div className={`absolute -top-6 left-1/2 -translate-x-1/2 w-16 h-16 bg-gradient-to-br ${item.color} rounded-2xl flex items-center justify-center shadow-lg`}>
+                    <Icon className="w-8 h-8 text-white" />
+                  </div>
+                  
+                  <div className="pt-10 text-center">
+                    <h3 className="text-xl font-bold text-gray-900 mb-4">{item.title}</h3>
+                    <p className="text-lg font-semibold text-gray-700 mb-2">{item.value}</p>
+                    <p className="text-sm text-gray-500">{item.hint}</p>
+                  </div>
+                </div>
+              </motion.a>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Social Media Section */}
+      <section className="relative bg-gradient-to-b from-gray-50/50 to-white py-24">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h3 className="text-4xl sm:text-5xl font-bold mb-6">
+              <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
+                Follow Us
+              </span>
+            </h3>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Stay updated with the latest news, success stories, and study abroad opportunities
+            </p>
+          </motion.div>
+
+          <div className="flex justify-center gap-8">
+            {[
+              {
+                icon: Facebook,
+                href: "https://www.facebook.com/suyancons07",
+                label: "Facebook",
+                color: "from-blue-600 to-blue-500"
+              },
+              {
+                icon: Instagram,
+                href: "https://www.instagram.com/suyancons07",
+                label: "Instagram",
+                color: "from-pink-600 to-pink-500"
+              },
+            ].map((social, i) => {
+              const Icon = social.icon;
+
+              return (
+                <motion.a
+                  key={i}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  transition={{ duration: 0.5, delay: i * 0.1 }}
+                  viewport={{ once: true }}
+                  className="group"
+                >
+                  <div className={`bg-gradient-to-br ${social.color} rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500`}>
+                    <Icon className="w-16 h-16 text-white mb-4 group-hover:scale-110 transition-transform" />
+                    <div className="text-white font-semibold text-lg">{social.label}</div>
+                  </div>
+                </motion.a>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Location Map Section */}
+      <section id="location" className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h3 className="text-4xl sm:text-5xl font-bold mb-6">
+            <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
+              Visit Our Office
+            </span>
+          </h3>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Meet our expert counselors in person for personalized guidance
+          </p>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="bg-gradient-to-br from-white to-gray-50 rounded-3xl border-2 border-gray-100 shadow-2xl overflow-hidden"
+        >
+          {/* Map Header */}
+          <div className="bg-gradient-to-r from-red-600 to-blue-950 text-white p-6 text-center">
+            <h4 className="text-2xl font-bold">Suyan Education Pvt. Ltd.</h4>
+            <p className="text-red-100">Kumaripati, Lalitpur, Nepal</p>
+          </div>
+          
+          {/* Map */}
           <iframe
             title="Suyan Education Pvt. Ltd."
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d777.019390480651!2d85.3192551!3d27.6716318!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb19f116f1ae53%3A0x4a445bf972ec2196!2sSuyan%20Education%20Pvt.%20Ltd.!5e0!3m2!1sen!2snp!4v1736400000000"
-            className="w-full h-[450px] border-0"
+            className="w-full h-[500px] border-0"
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
           />
-        </div>
+        </motion.div>
       </section>
 
-      {/* QR */}
-      <section className="max-w-4xl mx-auto px-6 text-center">
-        <h2 className="text-2xl font-bold text-gray-900 mb-4">
-          Quick Contact
-        </h2>
-
-        <p className="text-gray-600 mb-8">
-          Scan the QR code to quickly reach us.
-        </p>
-
-        <div className="flex justify-center">
-          <Image
-            src="/Pin point Location.png"
-            alt="Contact QR Code"
-            width={260}
-            height={260}
-            className="rounded-2xl border border-gray-200 shadow-lg"
-          />
-        </div>
+      {/* QR Code Section */}
+      <section className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="text-center"
+        >
+          <div className="bg-gradient-to-r from-red-600 to-blue-950 rounded-3xl p-12 shadow-2xl">
+            <h3 className="text-3xl sm:text-4xl font-bold text-white mb-6">
+              Quick Contact
+            </h3>
+            <p className="text-xl text-red-100 mb-10 max-w-2xl mx-auto">
+              Scan the QR code to quickly reach us or save our contact information
+            </p>
+            
+            <div className="flex flex-col md:flex-row items-center justify-center gap-12">
+              <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/20">
+                <Image
+                  src="/Pin point Location.png"
+                  alt="Contact QR Code"
+                  width={260}
+                  height={260}
+                  className="rounded-2xl"
+                />
+              </div>
+              
+              <div className="text-left text-white">
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="text-xl font-bold mb-2">Direct Contact</h4>
+                    <p className="text-red-100">+977 1 5445099</p>
+                  </div>
+                  <div>
+                    <h4 className="text-xl font-bold mb-2">Email Address</h4>
+                    <p className="text-red-100">info@suyan.com.np</p>
+                  </div>
+                  <div>
+                    <h4 className="text-xl font-bold mb-2">Office Hours</h4>
+                    <p className="text-red-100">Sunday - Friday</p>
+                    <p className="text-red-100">10:00 AM - 6:00 PM</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
       </section>
-    </div>
+    </main>
   );
 }
