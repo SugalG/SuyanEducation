@@ -82,34 +82,96 @@ export async function POST(req) {
 
 export async function GET(req) {
   try {
-    const url = new URL(request.url);
-    const destinationId = url.searchParams.get("destinationId");
-    let blogs;
+    const { searchParams } = new URL(req.url);
 
-    if (destinationId) {
-      blogs = await prisma.blogPost.findMany({
-        where: { countryId: destinationId },
-        orderBy: { publishedAt: "desc" },
-      });
-    } else {
+    const destinationId = searchParams.get("destinationId");
+    const all = searchParams.get("all") === "true";
+    const page = parseInt(searchParams.get("page") || "1", 10);
+    const limit = parseInt(searchParams.get("limit") || "10", 10);
+
+    let blogs;
+    let pagination = null;
+
+    // 🔹 Case 3: Fetch ALL blogs explicitly
+    if (all) {
       blogs = await prisma.blogPost.findMany({
         orderBy: { createdAt: "desc" },
-        select: {
+        include: {
           country: {
-            select: {
-              country: true,
-              id: true,
-            },
+            select: { id: true, country: true },
           },
         },
       });
     }
-    return NextResponse.json({ success: true, items: blogs }, { status: 200 });
-  } catch (e) {
-    console.error("GET /blogs  error:", e);
+
+    // 🔹 Case 2: Destination blogs (no pagination)
+    else if (destinationId) {
+      blogs = await prisma.blogPost.findMany({
+        where: { countryId: destinationId },
+        orderBy: { publishedAt: "desc" },
+        include: {
+          country: {
+            select: { id: true, country: true },
+          },
+        },
+      });
+    }
+
+    // 🔹 Case 1: Paginated blogs
+    else {
+      const skip = (page - 1) * limit;
+
+      const [items, total] = await Promise.all([
+        prisma.blogPost.findMany({
+          skip,
+          take: limit,
+          orderBy: { publishedAt: "desc" },
+          select: {
+            id: true,
+            title: true,
+            country: {
+              select: { id: true, country: true },
+            },
+          },
+        }),
+        prisma.blogPost.count(),
+      ]);
+
+      blogs = items;
+      pagination = {
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit),
+      };
+    }
+
     return NextResponse.json(
-      { success: false, message: "Failed to fetch blogs " },
+      { success: true, items: blogs, pagination },
+      { status: 200 }
+    );
+  } catch (e) {
+    console.error("GET /blogs error:", e);
+    return NextResponse.json(
+      { success: false, message: "Failed to fetch blogs" },
       { status: 500 }
     );
+  }
+}
+
+export async function DELETE(req) {
+  try {
+    const { id } = await req.json();
+
+    await prisma.blogPost.delete({
+      where: { id },
+    });
+
+    return NextResponse.json({ success: true }, {status: 200});
+  } catch (e) {
+      console.error(e);
+      return NextResponse.json({
+        success: false
+      }, {status: 500})
   }
 }

@@ -18,6 +18,7 @@ export async function generateMetadata({ params }) {
   };
 }
 
+
 export default async function DestinationPage({ params }) {
   const { slug } = await params;
 
