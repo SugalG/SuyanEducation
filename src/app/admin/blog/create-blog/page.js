@@ -147,7 +147,7 @@ export default function CreateBlog() {
       </p>
     );
   return (
-    <div className="max-w-6xl mx-auto mt-20 px-4 sm:px-6 lg:px-8">
+    <div className="max-w-6xl mx-auto mt-20 px-4 sm:px-6 lg:px-8 mt-40">
       <h1 className="text-4xl font-extrabold mb-12 text-center text-gray-800">
         Create New Blog
       </h1>

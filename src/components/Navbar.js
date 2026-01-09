@@ -7,7 +7,7 @@ import { Menu, X, ChevronDown, Phone, Mail, MapPin } from "lucide-react";
 export default function Navbar({ settings, onApplyNow }) {
   const [scrolled, setScrolled] = useState(false);
   const [openMenu, setOpenMenu] = useState(null);
-  
+
   // Refs for desktop dropdowns to prevent premature closing
   const testMenuRef = useRef(null);
   const destMenuRef = useRef(null);
@@ -57,7 +57,8 @@ export default function Navbar({ settings, onApplyNow }) {
             <div className="flex items-center gap-4 mb-2 md:mb-0">
               <div className="flex items-center gap-2">
                 <Phone size={14} />
-                <span>+977-1-1234567</span>
+                <span>+977 1 5445099
+                </span>
               </div>
               <div className="hidden sm:flex items-center gap-2">
                 <Mail size={14} />
@@ -67,10 +68,10 @@ export default function Navbar({ settings, onApplyNow }) {
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
                 <MapPin size={14} />
-                <span>Kathmandu, Nepal</span>
+                <span>Kumaripati, Lalitpur, Nepal</span>
               </div>
               <div className="hidden lg:block text-xs opacity-80">
-                Mon-Fri: 9AM-6PM | Sat: 9AM-1PM
+                Sun-Fri: 9AM-6PM 
               </div>
             </div>
           </div>
@@ -80,8 +81,8 @@ export default function Navbar({ settings, onApplyNow }) {
       {/* Main Navigation */}
       <div className={`
         transition-all duration-300
-        ${scrolled 
-          ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-100' 
+        ${scrolled
+          ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-100'
           : 'bg-white'
         }
       `}>
@@ -108,16 +109,16 @@ export default function Navbar({ settings, onApplyNow }) {
 
           {/* DESKTOP MENU - Centered */}
           <div className="hidden md:flex items-center gap-6 lg:gap-8 font-medium mx-auto">
-            <Link 
-              href="/" 
+            <Link
+              href="/"
               className="relative text-gray-700 hover:text-red-600 transition-colors duration-200 group/nav"
             >
               Home
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-red-600 to-blue-950 group-hover/nav:w-full transition-all duration-300"></span>
             </Link>
-            
-            <Link 
-              href="/about" 
+
+            <Link
+              href="/about"
               className="relative text-gray-700 hover:text-red-600 transition-colors duration-200 group/nav"
             >
               About
@@ -135,7 +136,7 @@ export default function Navbar({ settings, onApplyNow }) {
                 }
               }}
             >
-              <button 
+              <button
                 className="relative text-gray-700 hover:text-red-600 transition-colors duration-200 flex items-center gap-1 group/nav"
                 onClick={() => setOpenMenu(openMenu === "test" ? null : "test")}
               >
@@ -146,14 +147,14 @@ export default function Navbar({ settings, onApplyNow }) {
 
               {/* Gap for smooth hover */}
               <div className="absolute left-0 top-full h-2"></div>
-              
+
               <div
                 ref={testMenuRef}
                 className={`absolute left-0 top-full mt-2 w-56 bg-white rounded-xl shadow-xl border border-gray-100
                 transition-all duration-200 origin-top
-                ${openMenu === "test" 
-                  ? "opacity-100 visible scale-y-100 translate-y-0" 
-                  : "opacity-0 invisible scale-y-95 -translate-y-2"}`}
+                ${openMenu === "test"
+                    ? "opacity-100 visible scale-y-100 translate-y-0"
+                    : "opacity-0 invisible scale-y-95 -translate-y-2"}`}
                 onMouseEnter={() => setOpenMenu("test")}
                 onMouseLeave={() => setOpenMenu(null)}
               >
@@ -162,13 +163,13 @@ export default function Navbar({ settings, onApplyNow }) {
                     <div className="text-xs font-semibold text-blue-950 uppercase tracking-wider">Language Tests</div>
                     <div className="text-xs text-gray-500">International proficiency exams</div>
                   </div>
-                  
+
                   {/* JLPT with Full Image */}
                   <Link href="/services/jlpt" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 hover:text-red-700 transition-all duration-200 group/item">
                     <div className="w-10 h-10 rounded-lg flex items-center justify-center group-hover/item:bg-red-50 transition-colors overflow-hidden p-1">
-                      <img 
-                        src="/icons/japan-test-prep.png" 
-                        alt="JLPT" 
+                      <img
+                        src="/icons/japan-test-prep.png"
+                        alt="JLPT"
                         className="w-full h-full object-contain"
                       />
                     </div>
@@ -177,13 +178,13 @@ export default function Navbar({ settings, onApplyNow }) {
                       <div className="text-xs text-gray-500">Japanese Language</div>
                     </div>
                   </Link>
-                  
+
                   {/* IELTS with Full Image */}
                   <Link href="/services/ielts" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 hover:text-red-700 transition-all duration-200 group/item">
                     <div className="w-10 h-10 rounded-lg flex items-center justify-center group-hover/item:bg-blue-50 transition-colors overflow-hidden p-1">
-                      <img 
-                        src="/icons/ielts.png" 
-                        alt="IELTS" 
+                      <img
+                        src="/icons/ielts.png"
+                        alt="IELTS"
                         className="w-full h-full object-contain"
                       />
                     </div>
@@ -192,13 +193,13 @@ export default function Navbar({ settings, onApplyNow }) {
                       <div className="text-xs text-gray-500">English Proficiency</div>
                     </div>
                   </Link>
-                  
+
                   {/* TOEFL with Full Image */}
                   <Link href="/services/toefl" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 hover:text-red-700 transition-all duration-200 group/item">
                     <div className="w-10 h-10 rounded-lg flex items-center justify-center group-hover/item:bg-green-50 transition-colors overflow-hidden p-1">
-                      <img 
-                        src="/icons/tofel-test-prep.png" 
-                        alt="TOEFL" 
+                      <img
+                        src="/icons/tofel-test-prep.png"
+                        alt="TOEFL"
                         className="w-full h-full object-contain"
                       />
                     </div>
@@ -207,13 +208,13 @@ export default function Navbar({ settings, onApplyNow }) {
                       <div className="text-xs text-gray-500">Academic English</div>
                     </div>
                   </Link>
-                  
+
                   {/* SSW with Full Image */}
                   <Link href="/services/ssw" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 hover:text-red-700 transition-all duration-200 group/item">
                     <div className="w-10 h-10 rounded-lg flex items-center justify-center group-hover/item:bg-purple-50 transition-colors overflow-hidden p-1">
-                      <img 
-                        src="/icons/ssw-test-prep.png" 
-                        alt="SSW" 
+                      <img
+                        src="/icons/ssw-test-prep.png"
+                        alt="SSW"
                         className="w-full h-full object-contain"
                       />
                     </div>
@@ -237,7 +238,7 @@ export default function Navbar({ settings, onApplyNow }) {
                 }
               }}
             >
-              <button 
+              <button
                 className="relative text-gray-700 hover:text-red-600 transition-colors duration-200 flex items-center gap-1 group/nav"
                 onClick={() => setOpenMenu(openMenu === "dest" ? null : "dest")}
               >
@@ -247,14 +248,14 @@ export default function Navbar({ settings, onApplyNow }) {
               </button>
 
               <div className="absolute left-0 top-full h-2"></div>
-              
+
               <div
                 ref={destMenuRef}
                 className={`absolute left-0 top-full mt-2 w-64 bg-white rounded-xl shadow-xl border border-gray-100
                 transition-all duration-200 origin-top
-                ${openMenu === "dest" 
-                  ? "opacity-100 visible scale-y-100 translate-y-0" 
-                  : "opacity-0 invisible scale-y-95 -translate-y-2"}`}
+                ${openMenu === "dest"
+                    ? "opacity-100 visible scale-y-100 translate-y-0"
+                    : "opacity-0 invisible scale-y-95 -translate-y-2"}`}
                 onMouseEnter={() => setOpenMenu("dest")}
                 onMouseLeave={() => setOpenMenu(null)}
               >
@@ -263,14 +264,13 @@ export default function Navbar({ settings, onApplyNow }) {
                     <div className="text-xs font-semibold text-blue-800 uppercase tracking-wider">Popular Destinations</div>
                     <div className="text-xs text-gray-500">Choose your study country</div>
                   </div>
-                  
+
                   {destinations.slice(0, 6).map((d, index) => (
                     <Link
                       key={d.slug}
                       href={`/destinations/${d.slug}`}
-                      className={`flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 hover:text-red-700 transition-all duration-200 group/item ${
-                        index < 5 ? 'mb-1' : ''
-                      }`}
+                      className={`flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 hover:text-red-700 transition-all duration-200 group/item ${index < 5 ? 'mb-1' : ''
+                        }`}
                     >
                       <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-red-100 to-blue-100 flex items-center justify-center group-hover/item:from-red-200 group-hover/item:to-blue-200 transition-all">
                         <span className="text-gray-700 font-bold text-sm">{d.country.charAt(0)}</span>
@@ -278,7 +278,7 @@ export default function Navbar({ settings, onApplyNow }) {
                       <div className="font-medium">{d.country}</div>
                     </Link>
                   ))}
-                  
+
                   {destinations.length > 6 && (
                     <Link
                       href="/destinations"
@@ -291,24 +291,24 @@ export default function Navbar({ settings, onApplyNow }) {
               </div>
             </div>
 
-            <Link 
-              href="/gallery" 
+            <Link
+              href="/gallery"
               className="relative text-gray-700 hover:text-red-600 transition-colors duration-200 group/nav"
             >
               Gallery
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-red-600 to-blue-600 group-hover/nav:w-full transition-all duration-300"></span>
             </Link>
-            
-            <Link 
-              href="/blog" 
+
+            <Link
+              href="/blog"
               className="relative text-gray-700 hover:text-red-600 transition-colors duration-200 group/nav"
             >
               Blog
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-red-600 to-blue-600 group-hover/nav:w-full transition-all duration-300"></span>
             </Link>
-            
-            <Link 
-              href="/contact" 
+
+            <Link
+              href="/contact"
               className="relative text-gray-700 hover:text-red-600 transition-colors duration-200 group/nav"
             >
               Contact
@@ -342,11 +342,11 @@ export default function Navbar({ settings, onApplyNow }) {
       {mobileOpen && (
         <div className="md:hidden fixed inset-0 z-50">
           {/* Backdrop */}
-          <div 
+          <div
             className="absolute inset-0 bg-black/30 backdrop-blur-sm"
             onClick={() => setMobileOpen(false)}
           />
-          
+
           {/* Menu Panel */}
           <div className="absolute right-0 top-0 bottom-0 w-full max-w-sm bg-white shadow-2xl">
             {/* Header */}
@@ -358,7 +358,7 @@ export default function Navbar({ settings, onApplyNow }) {
                   <div className="text-xs text-gray-600">Study Abroad Experts</div>
                 </div>
               </div>
-              <button 
+              <button
                 onClick={() => setMobileOpen(false)}
                 className="p-2 hover:bg-white rounded-lg transition-colors"
                 aria-label="Close menu"
@@ -370,8 +370,8 @@ export default function Navbar({ settings, onApplyNow }) {
             {/* Menu Content */}
             <div className="px-4 py-6 overflow-y-auto h-[calc(100vh-80px)]">
               <div className="space-y-1">
-                <Link 
-                  href="/" 
+                <Link
+                  href="/"
                   onClick={() => setMobileOpen(false)}
                   className="flex items-center gap-3 py-4 px-4 rounded-xl hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 text-gray-800 hover:text-red-700 transition-all duration-200 group"
                 >
@@ -380,9 +380,9 @@ export default function Navbar({ settings, onApplyNow }) {
                   </div>
                   <span className="font-semibold">Home</span>
                 </Link>
-                
-                <Link 
-                  href="/about" 
+
+                <Link
+                  href="/about"
                   onClick={() => setMobileOpen(false)}
                   className="flex items-center gap-3 py-4 px-4 rounded-xl hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 text-gray-800 hover:text-red-700 transition-all duration-200 group"
                 >
@@ -404,72 +404,72 @@ export default function Navbar({ settings, onApplyNow }) {
                       </div>
                       <span className="font-semibold">Test Preparation</span>
                     </div>
-                    <ChevronDown 
-                      size={20} 
+                    <ChevronDown
+                      size={20}
                       className={`transition-transform duration-200 ${mobileSub === "test" ? "rotate-180 text-red-600" : "text-gray-500"}`}
                     />
                   </button>
-                  
+
                   {mobileSub === "test" && (
                     <div className="pl-14 pr-4 space-y-1 mt-1 mb-3">
                       {/* JLPT Mobile with Full Image */}
-                      <Link 
-                        href="/services/jlpt" 
+                      <Link
+                        href="/services/jlpt"
                         onClick={() => setMobileOpen(false)}
                         className="flex items-center gap-3 py-3 px-4 rounded-lg hover:bg-red-50 text-gray-700 hover:text-red-700 transition-colors duration-150"
                       >
                         <div className="w-10 h-10 rounded-lg flex items-center justify-center overflow-hidden p-1">
-                          <img 
-                            src="/icons/japan-test-prep.png" 
-                            alt="JLPT" 
+                          <img
+                            src="/icons/japan-test-prep.png"
+                            alt="JLPT"
                             className="w-full h-full object-contain"
                           />
                         </div>
                         <span>JLPT</span>
                       </Link>
-                      
+
                       {/* IELTS Mobile with Full Image */}
-                      <Link 
-                        href="/services/ielts" 
+                      <Link
+                        href="/services/ielts"
                         onClick={() => setMobileOpen(false)}
                         className="flex items-center gap-3 py-3 px-4 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-blue-700 transition-colors duration-150"
                       >
                         <div className="w-10 h-10 rounded-lg flex items-center justify-center overflow-hidden p-1">
-                          <img 
-                            src="/icons/ielts.png" 
-                            alt="IELTS" 
+                          <img
+                            src="/icons/ielts.png"
+                            alt="IELTS"
                             className="w-full h-full object-contain"
                           />
                         </div>
                         <span>IELTS</span>
                       </Link>
-                      
+
                       {/* TOEFL Mobile with Full Image */}
-                      <Link 
-                        href="/services/toefl" 
+                      <Link
+                        href="/services/toefl"
                         onClick={() => setMobileOpen(false)}
                         className="flex items-center gap-3 py-3 px-4 rounded-lg hover:bg-green-50 text-gray-700 hover:text-green-700 transition-colors duration-150"
                       >
                         <div className="w-10 h-10 rounded-lg flex items-center justify-center overflow-hidden p-1">
-                          <img 
-                            src="/icons/tofel-test-prep.png" 
-                            alt="TOEFL" 
+                          <img
+                            src="/icons/tofel-test-prep.png"
+                            alt="TOEFL"
                             className="w-full h-full object-contain"
                           />
                         </div>
                         <span>TOEFL</span>
                       </Link>
-                      
+
                       {/* SSW Mobile with Full Image */}
-                      <Link 
-                        href="/services/ssw" 
+                      <Link
+                        href="/services/ssw"
                         onClick={() => setMobileOpen(false)}
                         className="flex items-center gap-3 py-3 px-4 rounded-lg hover:bg-purple-50 text-gray-700 hover:text-purple-700 transition-colors duration-150"
                       >
                         <div className="w-10 h-10 rounded-lg flex items-center justify-center overflow-hidden p-1">
-                          <img 
-                            src="/icons/ssw-test-prep.png" 
-                            alt="SSW" 
+                          <img
+                            src="/icons/ssw-test-prep.png"
+                            alt="SSW"
                             className="w-full h-full object-contain"
                           />
                         </div>
@@ -491,12 +491,12 @@ export default function Navbar({ settings, onApplyNow }) {
                       </div>
                       <span className="font-semibold">Destinations</span>
                     </div>
-                    <ChevronDown 
-                      size={20} 
+                    <ChevronDown
+                      size={20}
                       className={`transition-transform duration-200 ${mobileSub === "dest" ? "rotate-180 text-red-600" : "text-gray-500"}`}
                     />
                   </button>
-                  
+
                   {mobileSub === "dest" && (
                     <div className="pl-14 pr-4 space-y-1 mt-1 mb-3">
                       {destinations.map((d) => (
@@ -507,17 +507,17 @@ export default function Navbar({ settings, onApplyNow }) {
                           className="flex items-center justify-between py-3 px-4 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-blue-700 transition-colors duration-150 group"
                         >
                           <span>{d.country}</span>
-                          <svg 
-                            xmlns="http://www.w3.org/2000/svg" 
-                            width="16" 
-                            height="16" 
-                            viewBox="0 0 24 24" 
-                            fill="none" 
-                            stroke="currentColor" 
-                            strokeWidth="2" 
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
                             className="opacity-0 group-hover:opacity-100 transition-opacity"
                           >
-                            <path d="m9 18 6-6-6-6"/>
+                            <path d="m9 18 6-6-6-6" />
                           </svg>
                         </Link>
                       ))}
@@ -525,8 +525,8 @@ export default function Navbar({ settings, onApplyNow }) {
                   )}
                 </div>
 
-                <Link 
-                  href="/gallery" 
+                <Link
+                  href="/gallery"
                   onClick={() => setMobileOpen(false)}
                   className="flex items-center gap-3 py-4 px-4 rounded-xl hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 text-gray-800 hover:text-red-700 transition-all duration-200 group"
                 >
@@ -535,9 +535,9 @@ export default function Navbar({ settings, onApplyNow }) {
                   </div>
                   <span className="font-semibold">Gallery</span>
                 </Link>
-                
-                <Link 
-                  href="/blog" 
+
+                <Link
+                  href="/blog"
                   onClick={() => setMobileOpen(false)}
                   className="flex items-center gap-3 py-4 px-4 rounded-xl hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 text-gray-800 hover:text-red-700 transition-all duration-200 group"
                 >
@@ -546,9 +546,9 @@ export default function Navbar({ settings, onApplyNow }) {
                   </div>
                   <span className="font-semibold">Blog</span>
                 </Link>
-                
-                <Link 
-                  href="/contact" 
+
+                <Link
+                  href="/contact"
                   onClick={() => setMobileOpen(false)}
                   className="flex items-center gap-3 py-4 px-4 rounded-xl hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 text-gray-800 hover:text-red-700 transition-all duration-200 group"
                 >
@@ -570,7 +570,7 @@ export default function Navbar({ settings, onApplyNow }) {
                 >
                   Apply Now
                 </button>
-                
+
                 <div className="pt-6 border-t border-gray-200">
                   <div className="text-sm text-gray-600 mb-3">Contact Info:</div>
                   <div className="space-y-2">

@@ -126,13 +126,8 @@ export default async function ServiceDetail({ params }) {
                   </div>
                 </div>
                 
-                {/* Floating Stats */}
-                <div className="absolute -bottom-6 -right-6 bg-gradient-to-r from-red-600 to-blue-950 text-white p-6 rounded-2xl shadow-2xl">
-                  <div className="text-center">
-                    <div className="text-3xl font-bold">100%</div>
-                    <div className="text-sm font-medium opacity-90">Client Satisfaction</div>
-                  </div>
-                </div>
+              
+                
               </div>
             </Reveal>
           </div>
