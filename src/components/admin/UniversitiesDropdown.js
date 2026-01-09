@@ -3,10 +3,12 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
+import AddUniversityModal from "../AddUniversityModal";
 
 export default function UniversitiesDropdown({ destination }) {
   const queryClient = useQueryClient();
   const [isOpen, setIsOpen] = useState(false);
+  const [university, setUniversity] = useState(null);
 
   // Fetch universities lazily when dropdown opens
   const {
@@ -58,7 +60,7 @@ export default function UniversitiesDropdown({ destination }) {
         onClick={() => setIsOpen((prev) => !prev)}
         className="flex items-center justify-between w-full text-purple-600 text-sm font-medium hover:bg-gray-100 p-2 rounded"
       >
-        <span>{isOpen ? "Hide Universities" : `Show Universities (${universities.length})`}</span>
+        <span>{isOpen ? "Hide Universities" : `Show Universities`}</span>
         <svg
           className={`w-4 h-4 transition-transform ${isOpen ? "rotate-180" : ""}`}
           fill="none"
@@ -94,7 +96,7 @@ export default function UniversitiesDropdown({ destination }) {
               </div>
               <div className="flex gap-2">
                 <button
-                  onClick={() => toast("Edit functionality here")}
+                  onClick={() => setUniversity(u)}
                   className="text-blue-600 text-sm hover:underline"
                 >
                   Edit
@@ -116,16 +118,15 @@ export default function UniversitiesDropdown({ destination }) {
           {universities.length === 0 && !isLoading && (
             <div className="text-center py-4">
               <p className="text-gray-500">No universities found for this destination.</p>
-              <button
-                onClick={() => setSelectedDestination(destination)}
-                className="text-green-600 text-sm font-medium mt-2 hover:underline"
-              >
-                Add first university
-              </button>
             </div>
           )}
         </div>
       )}
+      {
+        university && (
+          <AddUniversityModal destination={destination} open={!!university} onClose={() => setUniversity(null)} university={university}/>
+        )
+      }
     </div>
   );
 }

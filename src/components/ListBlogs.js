@@ -87,7 +87,7 @@ export default function ListBlogs() {
               >
                 <td className="px-6 py-4 font-medium text-gray-800">
                   <div
-                    className="max-w-[420px] truncate"
+                    className="max-w-105 truncate"
                     title={blog.title} // full title on hover
                   >
                     {blog.title}

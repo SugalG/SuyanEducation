@@ -12,6 +12,11 @@ export async function GET(request) {
       // Return only universities for this destination
       universities = await prisma.university.findMany({
         where: { countryId: destinationId },
+        include: {
+          country: {
+            select: {id:true, country: true}
+          }
+        },
         orderBy: { createdAt: "desc" },
       });
     } else {
