@@ -26,10 +26,8 @@ export default function ListBlogs() {
 
   const deleteMutation = useMutation({
     mutationFn: async (id) => {
-      const res = await fetch("/api/admin/blogs", {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id }),
+      const res = await fetch(`/api/admin/blogs/${id}`, {
+        method: "DELETE"
       });
       const data = await res.json();
       if (!res.ok || !data.success)
