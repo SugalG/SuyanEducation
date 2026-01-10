@@ -115,12 +115,14 @@ export default function AdminTestimonials() {
           <label className="block text-sm font-medium mb-2">
             Student Photo
           </label>
+
           <div className="flex items-center gap-4">
             <ImageUpload
               label="Upload Image"
+              type="testimonials"
               onUpload={setImageUrl}
-              buttonStyle
             />
+
             {imageUrl && (
               <img
                 src={imageUrl}
@@ -216,8 +218,8 @@ export default function AdminTestimonials() {
               <div className="space-y-4">
                 <ImageUpload
                   label="Change Image"
+                  type="testimonials"
                   onUpload={setImageUrl}
-                  buttonStyle
                 />
 
                 {imageUrl && (

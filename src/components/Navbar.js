@@ -71,7 +71,7 @@ export default function Navbar({ settings, onApplyNow }) {
                 <span>Kumaripati, Lalitpur, Nepal</span>
               </div>
               <div className="hidden lg:block text-xs opacity-80">
-                Sun-Fri: 9AM-6PM 
+                Sun-Fri: 9AM-6PM
               </div>
             </div>
           </div>
@@ -290,6 +290,14 @@ export default function Navbar({ settings, onApplyNow }) {
                 </div>
               </div>
             </div>
+            <Link
+              href="/universities"
+              className="relative text-gray-700 hover:text-red-600 transition-colors duration-200 group/nav"
+            >
+              Universities
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-red-600 to-blue-600 group-hover/nav:w-full transition-all duration-300"></span>
+            </Link>
+
 
             <Link
               href="/gallery"

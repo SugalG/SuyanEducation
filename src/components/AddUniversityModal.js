@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
+import ImageUpload from "@/components/ImageUpload";
 
 export default function AddUniversityModal({
   open,
@@ -30,7 +31,7 @@ export default function AddUniversityModal({
       });
 
       const data = await res.json();
-      console.log(data);
+
       if (!res.ok || !data.success) {
         throw new Error(data.message || "Failed to create university");
       }
@@ -69,6 +70,7 @@ export default function AddUniversityModal({
           }}
           className="space-y-4"
         >
+          {/* UNIVERSITY NAME */}
           <input
             required
             placeholder="University Name"
@@ -79,6 +81,7 @@ export default function AddUniversityModal({
             }
           />
 
+          {/* CITY */}
           <input
             placeholder="City"
             className="w-full border rounded-lg p-3"
@@ -88,6 +91,7 @@ export default function AddUniversityModal({
             }
           />
 
+          {/* WEBSITE */}
           <input
             placeholder="Website URL"
             className="w-full border rounded-lg p-3"
@@ -97,16 +101,33 @@ export default function AddUniversityModal({
             }
           />
 
-          <input
-            required
-            placeholder="Image URL"
-            className="w-full border rounded-lg p-3"
-            value={form.imageUrl}
-            onChange={(e) =>
-              setForm({ ...form, imageUrl: e.target.value })
-            }
-          />
+          {/* UNIVERSITY LOGO UPLOAD */}
+          <div>
+            <label className="block text-sm font-medium mb-2">
+              University Logo
+            </label>
 
+            <ImageUpload
+              label="Upload University Logo"
+              type="universities"
+              onUpload={(url) =>
+                setForm((prev) => ({
+                  ...prev,
+                  imageUrl: url,
+                }))
+              }
+            />
+
+            {form.imageUrl && (
+              <img
+                src={form.imageUrl}
+                alt="University Logo Preview"
+                className="mt-4 h-24 object-contain border rounded-lg p-2 bg-white"
+              />
+            )}
+          </div>
+
+          {/* ACTIONS */}
           <div className="flex justify-end gap-3 pt-4">
             <button
               type="button"
@@ -117,7 +138,7 @@ export default function AddUniversityModal({
             </button>
 
             <button
-              disabled={mutation.isPending}
+              disabled={mutation.isPending || !form.imageUrl}
               className="px-6 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 disabled:opacity-50"
             >
               {mutation.isPending ? "Saving..." : "Save"}

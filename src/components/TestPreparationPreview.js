@@ -304,7 +304,7 @@ export default function ServicesPreview() {
             className="lg:col-span-1"
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.4 }}
+            transition={{ delay: 1  }}
           >
             <div className="sticky top-24 bg-gradient-to-b from-white to-gray-50 rounded-2xl border border-gray-200 p-8 shadow-xl">
               <div className="text-center mb-8">

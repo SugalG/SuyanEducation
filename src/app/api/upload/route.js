@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import cloudinary from "cloudinary";
-import { writeFile } from "fs/promises";
+import { writeFile, unlink } from "fs/promises";
 import path from "path";
 import os from "os";
 
@@ -12,6 +12,7 @@ export async function POST(req) {
   try {
     const formData = await req.formData();
     const file = formData.get("file");
+    const type = formData.get("type") || "general";
 
     if (!file) {
       return NextResponse.json(
@@ -27,8 +28,11 @@ export async function POST(req) {
     await writeFile(tempPath, buffer);
 
     const result = await cloudinary.v2.uploader.upload(tempPath, {
-      folder: "services",
+      folder: `consultancy/${type}`,
     });
+
+    // clean temp file
+    await unlink(tempPath);
 
     return NextResponse.json({
       url: result.secure_url,

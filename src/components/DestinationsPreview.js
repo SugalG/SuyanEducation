@@ -121,7 +121,7 @@ export default function DestinationsPreview() {
           
           {/* Subtitle */}
           <p className="text-lg sm:text-xl text-gray-600 leading-relaxed max-w-4xl mx-auto">
-            Choose from 11+ global destinations with personalized pathways and{" "}
+            Choose from 10+ global destinations with personalized pathways and{" "}
             <span className="font-semibold text-red-600">specialized expertise in Japan</span>
           </p>
         </motion.div>

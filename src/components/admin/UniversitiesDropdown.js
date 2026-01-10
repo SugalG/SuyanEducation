@@ -4,7 +4,11 @@ import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-export default function UniversitiesDropdown({ destination }) {
+export default function UniversitiesDropdown({
+  destination,
+  setSelectedDestination,
+}) {
+
   const queryClient = useQueryClient();
   const [isOpen, setIsOpen] = useState(false);
 

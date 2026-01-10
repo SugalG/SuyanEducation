@@ -159,7 +159,7 @@ export default function AdminDestinations() {
      UI
   ======================= */
   return (
-    <div className="max-w-6xl mx-auto px-6 py-10 mt-10">
+    <div className="max-w-6xl mx-auto px-6 py-10 mt-24">
       <h1 className="text-3xl font-bold text-red-500 mb-8">
         Manage Study Destinations
       </h1>
@@ -218,8 +218,8 @@ export default function AdminDestinations() {
             {saveMutation.isPending
               ? "Saving..."
               : editingId
-              ? "Update Destination"
-              : "Save Destination"}
+                ? "Update Destination"
+                : "Save Destination"}
           </button>
 
           {editingId && (
@@ -272,7 +272,11 @@ export default function AdminDestinations() {
 
             {/* Universities dropdown section */}
             <div className="border-t px-4 py-2 bg-gray-50">
-              <UniversitiesDropdown destination={d} />
+              <UniversitiesDropdown
+                destination={d}
+                setSelectedDestination={setSelectedDestination}
+              />
+
             </div>
           </div>
         ))}

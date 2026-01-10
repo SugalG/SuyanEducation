@@ -99,6 +99,7 @@ export default function AdminServices() {
           <ImageUpload
             key={editingId || "new-service"}
             label="Upload Hero Image"
+            type="services"
             onUpload={(url) =>
               setForm((prev) => ({
                 ...prev,

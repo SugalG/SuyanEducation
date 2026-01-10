@@ -2,7 +2,11 @@
 
 import { useRef, useState } from "react";
 
-export default function ImageUpload({ label = "Upload Image", onUpload }) {
+export default function ImageUpload({
+  label = "Upload Image",
+  onUpload,
+  type = "general",
+}) {
   const inputRef = useRef(null);
   const [uploading, setUploading] = useState(false);
 
@@ -15,6 +19,7 @@ export default function ImageUpload({ label = "Upload Image", onUpload }) {
     try {
       const formData = new FormData();
       formData.append("file", file);
+      formData.append("type", type);
 
       const res = await fetch("/api/upload", {
         method: "POST",
@@ -24,8 +29,8 @@ export default function ImageUpload({ label = "Upload Image", onUpload }) {
       const data = await res.json();
 
       if (!res.ok || !data.url) {
-        alert("Image upload failed");
         console.error(data);
+        alert("Image upload failed");
         return;
       }
 
