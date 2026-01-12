@@ -18,6 +18,7 @@ export async function generateMetadata({ params }) {
   };
 }
 
+
 export default async function DestinationPage({ params }) {
   const { slug } = await params;
 
@@ -218,7 +219,7 @@ export default async function DestinationPage({ params }) {
             <div className="text-center mb-16">
               <h2 className="text-4xl sm:text-5xl font-bold mb-8">
                 <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
-                  Education System
+                  Education System And Requirements
                 </span>
               </h2>
             </div>

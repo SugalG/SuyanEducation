@@ -31,17 +31,21 @@ export default async function RootLayout({ children }) {
           <div className="site-frame" />
 
           <div className="site-content">
-            {/* 🔥 IMPORTANT: USE THE WRAPPER */}
-
+            {/* FIXED NAVBAR */}
             <NavbarApplyWrapper
               settings={settings}
               destinations={destinations}
             />
 
-            <main className="min-h-screen">
+            {/* ✅ OFFSET CONTENT FOR FIXED NAVBAR */}
+            <main className="min-h-screen pt-[140px] md:pt-[120px]">
               {children}
-              <Toaster richColors duration={1500} position="top-center" />
-              </main>
+              <Toaster
+                richColors
+                duration={1500}
+                position="top-center"
+              />
+            </main>
 
             <Footer settings={settings} />
           </div>

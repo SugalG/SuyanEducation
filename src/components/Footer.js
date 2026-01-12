@@ -2,7 +2,15 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Phone, Mail, MapPin, Facebook, Instagram, Linkedin, Globe, BookOpen, GraduationCap, Users } from "lucide-react";
+import {
+  Phone,
+  Mail,
+  MapPin,
+  Facebook,
+  Instagram,
+  Linkedin,
+  GraduationCap,
+} from "lucide-react";
 
 export default function Footer({ settings }) {
   const currentYear = new Date().getFullYear();
@@ -13,7 +21,7 @@ export default function Footer({ settings }) {
     "University Placement",
     "Documentation Support",
     "Interview Preparation",
-    "Pre-Departure Guidance"
+    "Pre-Departure Guidance",
   ];
 
   const footerLinks = [
@@ -23,253 +31,221 @@ export default function Footer({ settings }) {
     { name: "Destinations", href: "/destinations" },
     { name: "Blog", href: "/blog" },
     { name: "Gallery", href: "/gallery" },
-    { name: "Contact", href: "/contact" }
+    { name: "Contact", href: "/contact" },
   ];
 
   return (
     <footer className="relative bg-gradient-to-br from-gray-900 to-gray-950 text-white overflow-hidden">
       {/* Top Gradient Bar */}
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-red-600 via-red-500 to-blue-950"></div>
-      
-      {/* Background Pattern */}
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-red-600 via-red-500 to-blue-950" />
+
+      {/* Background Glow */}
       <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-red-500 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-blue-500 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-red-500 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-blue-500 rounded-full blur-3xl" />
       </div>
 
-      {/* Footer Content */}
       <div className="relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
           {/* Main Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
-            {/* Brand Column */}
+
+            {/* Brand */}
             <div className="space-y-6">
               <div className="flex items-center gap-4">
                 <div className="relative h-16 w-16">
                   <Image
                     src="/logo.png"
-                    alt={settings.siteName || "Suyan Education"}
+                    alt={settings?.siteName || "Suyan Education"}
                     fill
                     className="object-contain"
-                    sizes="64px"
                   />
                 </div>
                 <div>
                   <h2 className="text-2xl font-bold bg-gradient-to-r from-red-500 to-blue-400 bg-clip-text text-transparent">
-                    {settings.siteName || "Suyan Education"}
+                    {settings?.siteName || "Suyan Education Pvt. Ltd."}
                   </h2>
-                  <p className="text-sm text-gray-300 mt-1">日本留学専門 | </p>
+                  <p className="text-sm text-gray-300 mt-1">
+                    日本留学専門
+                  </p>
                 </div>
               </div>
-              
+
               <p className="text-gray-300 text-sm leading-relaxed">
-                {settings.tagline || 
-                  "Your trusted partner for global education. We guide students through every step of their educational journey to Japan and beyond."}
+                {settings?.tagline ||
+                  "Your trusted partner for global education. We guide students through every step of their study abroad journey."}
               </p>
-              
+
               {/* Stats */}
               <div className="flex items-center gap-6 pt-4">
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-white">98%</div>
+                  <div className="text-2xl font-bold">98%</div>
                   <div className="text-xs text-gray-400">Success Rate</div>
                 </div>
-                <div className="h-8 w-px bg-gray-700"></div>
+                <div className="h-8 w-px bg-gray-700" />
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-white">500+</div>
+                  <div className="text-2xl font-bold">500+</div>
                   <div className="text-xs text-gray-400">Students</div>
                 </div>
-                <div className="h-8 w-px bg-gray-700"></div>
+                <div className="h-8 w-px bg-gray-700" />
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-white">11+</div>
+                  <div className="text-2xl font-bold">11+</div>
                   <div className="text-xs text-gray-400">Countries</div>
                 </div>
               </div>
             </div>
 
-            {/* Quick Links Column */}
+            {/* Quick Links */}
             <div>
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
-                <h3 className="text-lg font-semibold text-white">Quick Links</h3>
-              </div>
+              <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
               <ul className="space-y-3">
                 {footerLinks.map((link) => (
                   <li key={link.name}>
                     <Link
                       href={link.href}
-                      className="flex items-center gap-2 text-gray-300 hover:text-red-400 transition-all duration-200 text-sm group"
+                      className="text-gray-300 hover:text-red-400 text-sm transition"
                     >
-                      <div className="w-1 h-1 bg-gray-600 rounded-full group-hover:bg-red-500 transition-colors"></div>
-                      <span>{link.name}</span>
+                      {link.name}
                     </Link>
                   </li>
                 ))}
               </ul>
             </div>
 
-            {/* Services Column */}
+            {/* Services */}
             <div>
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
-                <h3 className="text-lg font-semibold text-white">Our Services</h3>
-              </div>
+              <h3 className="text-lg font-semibold mb-4">Our Services</h3>
               <ul className="space-y-3">
                 {footerServices.map((service) => (
                   <li key={service}>
-                    <Link
-                      href="/services"
-                      className="flex items-center gap-2 text-gray-300 hover:text-blue-400 transition-all duration-200 text-sm group"
-                    >
-                      <GraduationCap className="w-3 h-3 text-gray-500 group-hover:text-blue-400 transition-colors" />
-                      <span>{service}</span>
-                    </Link>
+                    <div className="flex items-center gap-2 text-gray-300 text-sm">
+                      <GraduationCap className="w-4 h-4 text-gray-500" />
+                      {service}
+                    </div>
                   </li>
                 ))}
               </ul>
             </div>
 
-            {/* Contact Column */}
+            {/* Contact Info */}
             <div>
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
-                <h3 className="text-lg font-semibold text-white">Contact Info</h3>
-              </div>
-              
-              <ul className="space-y-4 mb-6">
-                {settings.address && (
-                  <li className="flex items-start gap-3">
-                    <MapPin className="h-5 w-5 text-red-500 mt-1 flex-shrink-0" />
-                    <span className="text-gray-300 text-sm">{settings.address}</span>
-                  </li>
-                )}
-                
-                {settings.primaryPhone && (
-                  <li className="flex items-center gap-3">
-                    <Phone className="h-5 w-5 text-red-500 flex-shrink-0" />
-                    <a 
-                      href={`tel:${settings.primaryPhone}`}
-                      className="text-gray-300 hover:text-red-400 transition-colors duration-200 text-sm"
-                    >
-                      {settings.primaryPhone}
-                    </a>
-                  </li>
-                )}
-                
-                {settings.primaryEmail && (
-                  <li className="flex items-center gap-3">
-                    <Mail className="h-5 w-5 text-red-500 flex-shrink-0" />
-                    <a 
-                      href={`mailto:${settings.primaryEmail}`}
-                      className="text-gray-300 hover:text-red-400 transition-colors duration-200 text-sm"
-                    >
-                      {settings.primaryEmail}
-                    </a>
-                  </li>
-                )}
-              </ul>
-              
-              {/* Social Links */}
-              <div className="space-y-3">
-                <div className="text-sm text-gray-400">Follow Us</div>
-                <div className="flex gap-3">
-                  <a 
-                    href="https://www.facebook.com/suyancons07" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="h-10 w-10 rounded-xl bg-gray-800 hover:bg-gradient-to-r hover:from-blue-600 hover:to-blue-500 flex items-center justify-center text-white transition-all duration-300 hover:scale-105"
-                  >
-                    <Facebook className="h-4 w-4" />
-                  </a>
-                  <a 
-                    href="https://www.instagram.com/suyancons07" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="h-10 w-10 rounded-xl bg-gray-800 hover:bg-gradient-to-r hover:from-pink-600 hover:to-pink-500 flex items-center justify-center text-white transition-all duration-300 hover:scale-105"
-                  >
-                    <Instagram className="h-4 w-4" />
-                  </a>
-                  <a 
-                    href="#" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="h-10 w-10 rounded-xl bg-gray-800 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-600 flex items-center justify-center text-white transition-all duration-300 hover:scale-105"
-                  >
-                    <Linkedin className="h-4 w-4" />
-                  </a>
+              <h3 className="text-lg font-semibold mb-4">Contact Info</h3>
+
+              <div className="space-y-5 text-sm text-gray-300">
+
+                {/* Head Office */}
+                <div>
+                  <p className="font-semibold text-white mb-1">Head Office</p>
+                  <div className="flex gap-2">
+                    <MapPin className="w-4 h-4 text-red-500 mt-1" />
+                    <span>
+                      Lalitpur Metropolitan City Ward No. 20, Kumaripati
+                      (Purnachandi Road), Lalitpur, Nepal – 44700
+                    </span>
+                  </div>
+                  <div className="flex gap-2 mt-1">
+                    <Phone className="w-4 h-4 text-red-500" />
+                    <span>+977-1-5545099 / 9864-261-506</span>
+                  </div>
+                </div>
+
+                {/* Chabahil */}
+                <div>
+                  <p className="font-semibold text-white mb-1">
+                    Branch Office – Chabahil
+                  </p>
+                  <div className="flex gap-2">
+                    <MapPin className="w-4 h-4 text-red-500 mt-1" />
+                    <span>
+                      Kathmandu Metropolitan City Ward No. 7, Chabahil,
+                      Kathmandu, Nepal – 44600
+                    </span>
+                  </div>
+                  <div className="flex gap-2 mt-1">
+                    <Phone className="w-4 h-4 text-red-500" />
+                    <span>+977-1-5911820 / 9864-261-505</span>
+                  </div>
+                </div>
+
+                {/* Kalanki */}
+                <div>
+                  <p className="font-semibold text-white mb-1">
+                    Branch Office – Kalanki
+                  </p>
+                  <div className="flex gap-2">
+                    <MapPin className="w-4 h-4 text-red-500 mt-1" />
+                    <span>
+                      Kathmandu Metropolitan City Ward No. 14, Kalanki,
+                      Kathmandu, Nepal – 44600
+                    </span>
+                  </div>
+                  <div className="flex gap-2 mt-1">
+                    <Phone className="w-4 h-4 text-red-500" />
+                    <span>+977-1-5925652 / 9864-261-506</span>
+                  </div>
+                </div>
+
+                {/* Hours */}
+                <div className="pt-3 border-t border-gray-700">
+                  <p className="text-gray-400">
+                    Reception Hours:{" "}
+                    <span className="text-gray-200">7:00 AM – 3:00 PM</span>
+                  </p>
                 </div>
               </div>
+
+              {/* Social */}
+              <div className="flex gap-3 mt-6">
+                <a
+                  href="https://www.facebook.com/suyancons07"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="h-10 w-10 bg-gray-800 rounded-xl flex items-center justify-center hover:bg-blue-600 transition"
+                >
+                  <Facebook className="w-4 h-4" />
+                </a>
+                <a
+                  href="https://www.instagram.com/suyancons07"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="h-10 w-10 bg-gray-800 rounded-xl flex items-center justify-center hover:bg-pink-600 transition"
+                >
+                  <Instagram className="w-4 h-4" />
+                </a>
+                <a
+                  href="#"
+                  className="h-10 w-10 bg-gray-800 rounded-xl flex items-center justify-center hover:bg-blue-700 transition"
+                >
+                  <Linkedin className="w-4 h-4" />
+                </a>
+              </div>
             </div>
           </div>
 
-          {/* Divider with Gradient */}
-          <div className="my-8 lg:my-12">
-            <div className="h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent"></div>
-          </div>
+          {/* Bottom */}
+          <div className="mt-12 pt-6 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-gray-400 text-sm">
+              © {currentYear} {settings?.siteName || "Suyan Education Pvt. Ltd."}
+              . All rights reserved.
+            </p>
 
-          {/* Bottom Bar */}
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <div className="text-center md:text-left">
-              <p className="text-gray-400 text-sm">
-                © {currentYear} {settings.siteName || "Suyan Education"}. All rights reserved.
-              </p>
-            </div>
-            
-            <div className="flex flex-wrap justify-center gap-6 text-sm">
-              <Link 
-                href="/privacy" 
-                className="text-gray-400 hover:text-white transition-colors duration-200 hover:scale-105"
-              >
+            <div className="flex gap-6 text-sm text-gray-400">
+              <Link href="/privacy" className="hover:text-white">
                 Privacy Policy
               </Link>
-              <Link 
-                href="/terms" 
-                className="text-gray-400 hover:text-white transition-colors duration-200 hover:scale-105"
-              >
+              <Link href="/terms" className="hover:text-white">
                 Terms of Service
               </Link>
-              <Link 
-                href="/faq" 
-                className="text-gray-400 hover:text-white transition-colors duration-200 hover:scale-105"
-              >
+              <Link href="/faq" className="hover:text-white">
                 FAQ
               </Link>
-              <Link 
-                href="/sitemap" 
-                className="text-gray-400 hover:text-white transition-colors duration-200 hover:scale-105"
-              >
-                Sitemap
-              </Link>
             </div>
-            
-            
-          </div>
-
-          {/* Back to Top */}
-          <div className="text-center mt-8">
-            <button
-              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-gradient-to-r from-gray-800 to-gray-900 text-gray-300 text-sm font-medium hover:text-white hover:shadow-lg transition-all duration-300 border border-gray-700"
-            >
-              <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                width="16" 
-                height="16" 
-                viewBox="0 0 24 24" 
-                fill="none" 
-                stroke="currentColor" 
-                strokeWidth="2"
-                className="rotate-180"
-              >
-                <path d="m6 9 6-6 6 6"/>
-              </svg>
-              Back to Top
-            </button>
           </div>
         </div>
       </div>
 
-      {/* Bottom Gradient Bar */}
-      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-950 via-red-500 to-red-600"></div>
+      {/* Bottom Gradient */}
+      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-950 via-red-500 to-red-600" />
     </footer>
   );
 }

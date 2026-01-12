@@ -8,6 +8,8 @@ import SuccessStoriesPreview from "@/components/SuccessStoriesPreview";
 import Testimonials from "@/components/Testimonials";
 import dynamic from "next/dynamic";
 import GlobalReachSection from "@/components/GlobalReachSection";
+import BlogsPreview from "@/components/BlogsPreview";
+import UniversitiesPreview from "@/components/UniversitiesPreview";
 
 
 
@@ -24,6 +26,8 @@ export default async function HomePage() {
       <DestinationPreview />
       {/* <SuccessStoriesPreview /> */}
       <Testimonials/>
+      <UniversitiesPreview/>
+      <BlogsPreview/>
       
       
     </>

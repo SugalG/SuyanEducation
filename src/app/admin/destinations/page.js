@@ -39,7 +39,7 @@ export default function AdminDestinations() {
     queryFn: async () => {
       const res = await fetch("/api/admin/destinations");
       const data = await res.json();
-      console.log(data);
+
       if (!res.ok || !data.success) {
         throw new Error(data.message || "Failed to load destinations");
       }
@@ -53,8 +53,14 @@ export default function AdminDestinations() {
   ======================= */
   const saveMutation = useMutation({
     mutationFn: async (payload) => {
-      const res = await fetch("/api/admin/destinations", {
-        method: payload.id ? "PUT" : "POST",
+      const url = payload.id
+        ? `/api/admin/destinations/${payload.id}`
+        : "/api/admin/destinations";
+
+      const method = payload.id ? "PUT" : "POST";
+
+      const res = await fetch(url, {
+        method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
@@ -81,11 +87,9 @@ export default function AdminDestinations() {
      DELETE
   ======================= */
   const deleteMutation = useMutation({
-    mutationFn: async ({ id }) => {
-      const res = await fetch("/api/admin/destinations", {
+    mutationFn: async (id) => {
+      const res = await fetch(`/api/admin/destinations/${id}`, {
         method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id }),
       });
 
       const data = await res.json();
@@ -135,7 +139,7 @@ export default function AdminDestinations() {
   function remove(id, country) {
     const ok = confirm(`Delete "${country}"? This cannot be undone.`);
     if (!ok) return;
-    deleteMutation.mutate({ id });
+    deleteMutation.mutate(id);
   }
 
   /* =======================
@@ -206,7 +210,9 @@ export default function AdminDestinations() {
             rows={rows}
             placeholder={placeholder}
             value={form[key]}
-            onChange={(e) => setForm({ ...form, [key]: e.target.value })}
+            onChange={(e) =>
+              setForm({ ...form, [key]: e.target.value })
+            }
           />
         ))}
 
@@ -218,8 +224,8 @@ export default function AdminDestinations() {
             {saveMutation.isPending
               ? "Saving..."
               : editingId
-                ? "Update Destination"
-                : "Save Destination"}
+              ? "Update Destination"
+              : "Save Destination"}
           </button>
 
           {editingId && (
@@ -241,11 +247,12 @@ export default function AdminDestinations() {
             key={d.id}
             className="border rounded-xl bg-white overflow-hidden"
           >
-            {/* Destination header */}
             <div className="flex justify-between items-center p-4">
               <div>
                 <p className="font-semibold">{d.country}</p>
-                <p className="text-sm text-gray-500">/destinations/{d.slug}</p>
+                <p className="text-sm text-gray-500">
+                  /destinations/{d.slug}
+                </p>
               </div>
 
               <div className="flex gap-4 items-center">
@@ -270,20 +277,19 @@ export default function AdminDestinations() {
               </div>
             </div>
 
-            {/* Universities dropdown section */}
             <div className="border-t px-4 py-2 bg-gray-50">
               <UniversitiesDropdown
                 destination={d}
                 setSelectedDestination={setSelectedDestination}
               />
-
             </div>
           </div>
         ))}
       </div>
+
       {selectedDestination && (
         <AddUniversityModal
-          open={!!selectedDestination}
+          open
           destination={selectedDestination}
           onClose={() => setSelectedDestination(null)}
         />
