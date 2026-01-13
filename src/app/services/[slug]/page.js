@@ -6,9 +6,10 @@ export default async function ServiceDetail({ params }) {
   const { slug } = await params;
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL || ""}/api/services/${slug}`,
+    `/api/services/${slug}`,
     { cache: "no-store" }
   );
+
 
   if (!res.ok) return notFound();
 

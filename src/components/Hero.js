@@ -70,7 +70,7 @@ export default function Hero() {
             isLoaded ? "opacity-100" : "opacity-0"
           }`}
         >
-          <source src="/Timeline 1.mp4" type="video/mp4" />
+          <source src={HERO_VIDEO_URL} type="video/mp4" />
         </video>
       ) : (
         <img

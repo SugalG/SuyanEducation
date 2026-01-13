@@ -4,9 +4,10 @@ import { Camera, Calendar, Image as ImageIcon, Users } from "lucide-react";
 
 async function getAlbums() {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL || ""}/api/gallery/albums`,
+    `/api/gallery/albums`,
     { cache: "no-store" }
   );
+
 
   if (!res.ok) throw new Error("Failed to load gallery");
   return res.json();
@@ -21,11 +22,11 @@ export default async function GalleryPage() {
       <section className="relative min-h-[60vh] flex items-center overflow-hidden pt-24">
         {/* Gradient Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-white via-red-50 to-blue-50" />
-        
+
         {/* Animated Background Elements */}
         <div className="absolute top-0 left-0 w-1/3 h-full bg-gradient-to-r from-red-100/30 to-transparent" />
         <div className="absolute bottom-0 right-0 w-1/3 h-full bg-gradient-to-l from-blue-100/30 to-transparent" />
-        
+
         {/* Floating Circles */}
         <div className="absolute top-20 left-10 w-80 h-80 bg-gradient-to-r from-red-200/20 to-pink-200/10 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-l from-blue-200/20 to-cyan-200/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
@@ -37,19 +38,19 @@ export default async function GalleryPage() {
               <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
               <span className="text-sm font-medium text-gray-700">Our Memories</span>
             </div>
-            
+
             {/* Main Heading */}
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
               <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
                 Gallery
               </span>
             </h1>
-            
+
             {/* Animated Underline */}
             <div className="flex justify-center mb-6">
               <div className="w-24 h-1 bg-gradient-to-r from-red-600 to-blue-950 rounded-full"></div>
             </div>
-            
+
             {/* Subtitle */}
             <p className="text-lg sm:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto mb-10">
               Moments, events, and memories from our journey with students and partners.
@@ -126,7 +127,7 @@ export default async function GalleryPage() {
                       </div>
                     </div>
                   )}
-                  
+
                   {/* Photo count badge */}
                   <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 text-sm font-semibold text-gray-800">
                     {album.photoCount} photos
@@ -138,7 +139,7 @@ export default async function GalleryPage() {
                   <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-red-600 transition-colors">
                     {album.title}
                   </h3>
-                  
+
                   <div className="flex items-center gap-3 text-gray-600">
                     <Calendar className="w-4 h-4" />
                     <span className="text-sm">
@@ -149,20 +150,20 @@ export default async function GalleryPage() {
                       })}
                     </span>
                   </div>
-                  
+
                   <div className="mt-4 inline-flex items-center gap-2 text-red-600 font-semibold group-hover:gap-3 transition-all">
                     <span>View Album</span>
-                    <svg 
-                      xmlns="http://www.w3.org/2000/svg" 
-                      width="16" 
-                      height="16" 
-                      viewBox="0 0 24 24" 
-                      fill="none" 
-                      stroke="currentColor" 
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
                       strokeWidth="2"
                       className="group-hover:translate-x-1 transition-transform"
                     >
-                      <path d="m9 18 6-6-6-6"/>
+                      <path d="m9 18 6-6-6-6" />
                     </svg>
                   </div>
                 </div>
@@ -172,7 +173,7 @@ export default async function GalleryPage() {
         )}
       </section>
 
-     
+
     </main>
   );
 }
