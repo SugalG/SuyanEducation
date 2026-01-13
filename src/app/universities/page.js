@@ -242,7 +242,7 @@ export default function UniversitiesPage() {
             className="text-lg lg:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto mb-12"
             variants={fadeInUp}
           >
-            Explore our network of prestigious partner institutions across 11+ countries worldwide.
+            Explore our network of prestigious partner institutions across 10+ countries worldwide.
             We maintain strong relationships with universities to ensure smooth admissions for our students.
           </motion.p>
 

@@ -9,6 +9,8 @@ export async function GET() {
         id: true,
         slug: true,
         country: true,
+        heroImage: true,
+        description: true,
       },
     });
 

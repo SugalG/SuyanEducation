@@ -31,6 +31,7 @@ export async function POST(req) {
       data: {
         slug: body.slug,
         country: body.country,
+        heroImage: body.heroImage || null,
         description: body.description ?? null,
         whyPoints: body.whyPoints ?? null,
         education: body.education ?? null,

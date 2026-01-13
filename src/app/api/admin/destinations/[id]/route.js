@@ -6,19 +6,13 @@ import prisma from "@/lib/prisma";
 ====================== */
 export async function PUT(req, { params }) {
   try {
-    const { id } = await params;
+    const { id } = await params; // ✅ MUST await
     const body = await req.json();
-
-    if (!id) {
-      return NextResponse.json(
-        { success: false, message: "Missing destination id" },
-        { status: 400 }
-      );
-    }
 
     const item = await prisma.destination.update({
       where: { id },
       data: {
+        heroImage: body.heroImage || null,
         slug: body.slug,
         country: body.country,
         description: body.description,
@@ -44,14 +38,7 @@ export async function PUT(req, { params }) {
 ====================== */
 export async function DELETE(req, { params }) {
   try {
-    const { id } = await params;
-
-    if (!id) {
-      return NextResponse.json(
-        { success: false, message: "Missing destination id" },
-        { status: 400 }
-      );
-    }
+    const { id } = await params; // ✅ MUST await
 
     await prisma.destination.delete({
       where: { id },

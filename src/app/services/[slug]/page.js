@@ -20,11 +20,11 @@ export default async function ServiceDetail({ params }) {
       <section className="relative min-h-[80vh] flex items-center overflow-hidden">
         {/* Gradient Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-white via-red-50 to-blue-50" />
-        
+
         {/* Animated Background Elements */}
         <div className="absolute top-0 left-0 w-1/3 h-full bg-gradient-to-r from-red-100/30 to-transparent" />
         <div className="absolute bottom-0 right-0 w-1/3 h-full bg-gradient-to-l from-blue-100/30 to-transparent" />
-        
+
         {/* Floating Circles */}
         <div className="absolute top-20 left-10 w-80 h-80 bg-gradient-to-r from-red-200/20 to-pink-200/10 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-l from-blue-200/20 to-cyan-200/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
@@ -104,7 +104,7 @@ export default async function ServiceDetail({ params }) {
                 <div className="relative rounded-3xl overflow-hidden shadow-2xl">
                   {/* Gradient Border Effect */}
                   <div className="absolute -inset-1 bg-gradient-to-r from-red-500 via-pink-500 to-blue-500 rounded-3xl blur opacity-30"></div>
-                  
+
                   {/* Image Container */}
                   <div className="relative rounded-3xl overflow-hidden border-8 border-white bg-gradient-to-br from-gray-50 to-white">
                     {service.heroImage ? (
@@ -125,9 +125,9 @@ export default async function ServiceDetail({ params }) {
                     )}
                   </div>
                 </div>
-                
-              
-                
+
+
+
               </div>
             </Reveal>
           </div>
@@ -153,9 +153,27 @@ export default async function ServiceDetail({ params }) {
         {/* Content Container */}
         <Reveal delay={0.2}>
           <div className="bg-gradient-to-br from-white to-gray-50 rounded-3xl border-2 border-gray-100 p-10 shadow-xl">
-            <div className="prose prose-xl max-w-none">
-              <div dangerouslySetInnerHTML={{ __html: service.content }} />
+            <div className="relative bg-white rounded-3xl border border-gray-200 shadow-2xl overflow-hidden">
+              {/* Top Accent */}
+              <div className="h-2 bg-gradient-to-r from-red-600 via-red-500 to-blue-950" />
+
+              <div className="grid md:grid-cols-[60px_1fr] gap-8 p-10">
+                {/* Icon Rail */}
+                <div className="hidden md:flex flex-col items-center">
+                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-red-600 to-blue-950 flex items-center justify-center shadow-lg">
+                    <GraduationCap className="w-6 h-6 text-white" />
+                  </div>
+                  <div className="flex-1 w-px bg-gradient-to-b from-red-300 to-blue-300 mt-4" />
+                </div>
+
+                {/* Content */}
+                <div className="whitespace-pre-line text-gray-700 text-lg leading-relaxed space-y-6">
+                  {service.content}
+                </div>
+              </div>
             </div>
+
+
           </div>
         </Reveal>
 
@@ -249,7 +267,7 @@ export default async function ServiceDetail({ params }) {
                     <h4 className="text-xl font-bold text-gray-900 mb-3">{step.title}</h4>
                     <p className="text-gray-600">{step.desc}</p>
                   </div>
-                  
+
                   {/* Connector Line (except for last) */}
                   {index < 3 && (
                     <div className="hidden md:block absolute top-1/2 -right-4 w-8 h-0.5 bg-gradient-to-r from-red-300 to-blue-300 transform -translate-y-1/2"></div>
@@ -278,7 +296,7 @@ export default async function ServiceDetail({ params }) {
               <p className="text-xl text-red-100 mb-10 max-w-2xl mx-auto">
                 Take the first step towards achieving your educational goals with our expert guidance
               </p>
-              
+
               <div className="flex flex-col sm:flex-row gap-6 justify-center">
                 <a
                   href="/contact"

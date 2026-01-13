@@ -5,6 +5,7 @@ import NavbarApplyWrapper from "@/components/NavbarApplyWrapper";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import Providers from "./providers";
 import { Toaster } from "sonner";
+import GoogleTranslate from "@/components/GoogleTranslate"; // ✅ ADD
 
 export const metadata = {
   title: "Suyan Education",
@@ -31,13 +32,15 @@ export default async function RootLayout({ children }) {
           <div className="site-frame" />
 
           <div className="site-content">
+           
+
             {/* FIXED NAVBAR */}
             <NavbarApplyWrapper
               settings={settings}
               destinations={destinations}
             />
 
-            {/* ✅ OFFSET CONTENT FOR FIXED NAVBAR */}
+            {/* PAGE CONTENT */}
             <main className="min-h-screen pt-[140px] md:pt-[120px]">
               {children}
               <Toaster
@@ -49,7 +52,7 @@ export default async function RootLayout({ children }) {
 
             <Footer settings={settings} />
           </div>
-
+          <GoogleTranslate/>
           <WhatsAppFloat />
         </Providers>
       </body>

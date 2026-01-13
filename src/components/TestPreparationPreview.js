@@ -320,7 +320,7 @@ export default function ServicesPreview() {
                 <div className="flex items-center justify-between p-4 bg-white rounded-xl border border-gray-200 hover:border-red-300 transition-colors group">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-lg bg-red-50 flex items-center justify-center group-hover:bg-red-100 transition-colors">
-                      <span className="text-red-600 font-bold">15+</span>
+                      <span className="text-red-600 font-bold">7+</span>
                     </div>
                     <div>
                       <p className="font-semibold text-gray-900">Years Experience</p>
@@ -332,7 +332,7 @@ export default function ServicesPreview() {
                 <div className="flex items-center justify-between p-4 bg-white rounded-xl border border-gray-200 hover:border-blue-300 transition-colors group">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center group-hover:bg-blue-100 transition-colors">
-                      <span className="text-blue-700 font-bold">10K+</span>
+                      <span className="text-blue-700 font-bold">200+</span>
                     </div>
                     <div>
                       <p className="font-semibold text-gray-900">Students Helped</p>
@@ -348,33 +348,18 @@ export default function ServicesPreview() {
                     </div>
                     <div>
                       <p className="font-semibold text-gray-900">Global Network</p>
-                      <p className="text-sm text-gray-500">100+ partner institutions</p>
+                      <p className="text-sm text-gray-500">50+ partner institutions</p>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* CTA Button */}
-              <motion.div 
-                className="mt-8"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <Link
-                  href="/services"
-                  className="block w-full text-center bg-gradient-to-r from-red-600 to-blue-800 text-white px-6 py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-300"
-                >
-                  <span className="flex items-center justify-center gap-2">
-                    Explore All Services
-                    <ChevronRight className="w-5 h-5" />
-                  </span>
-                </Link>
-              </motion.div>
+    
 
               {/* Trust Badge */}
               <div className="mt-6 pt-6 border-t border-gray-200">
                 <p className="text-center text-sm text-gray-500">
-                  Trusted by students from 25+ countries
+                  Trusted by students from 10+ countries
                 </p>
                 <div className="flex justify-center mt-3 space-x-2">
                   {[1, 2, 3, 4].map((i) => (
@@ -387,7 +372,7 @@ export default function ServicesPreview() {
         </div>
       </div>
 
-      {/* Bottom CTA */}
+      
       <motion.div
         initial="hidden"
         whileInView="show"

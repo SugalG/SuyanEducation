@@ -58,6 +58,7 @@ model Destination {
   id            String   @id @default(cuid())
   slug          String   @unique
   country       String
+  heroImage     String?
   universities  University[]
   blogs         BlogPost[]
   description   String?

@@ -5,11 +5,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Users, Globe, Award, MapPin, CheckCircle, Target, Plane } from "lucide-react";
+import { WORLD_MAP_IMAGE } from "@/lib/media";
 
 const DESTINATIONS = [
-  { 
-    label: "Japan", 
-    coordinates: { x: 1668, y: 410 }, 
+  {
+    label: "Japan",
+    coordinates: { x: 1668, y: 410 },
     delay: "0s",
     stats: "250+ Students",
     color: "from-red-500 to-red-600",
@@ -18,9 +19,9 @@ const DESTINATIONS = [
     focus: "Primary Focus",
     slug: "japan"
   },
-  { 
-    label: "Australia", 
-    coordinates: { x: 1650, y: 770 }, 
+  {
+    label: "Australia",
+    coordinates: { x: 1650, y: 770 },
     delay: "0.6s",
     stats: "120+ Placements",
     color: "from-blue-500 to-blue-600",
@@ -29,9 +30,9 @@ const DESTINATIONS = [
     focus: "Popular Choice",
     slug: "australia"
   },
-  { 
-    label: "USA", 
-    coordinates: { x: 420, y: 430 }, 
+  {
+    label: "USA",
+    coordinates: { x: 420, y: 430 },
     delay: "1.2s",
     stats: "80+ Admitted",
     color: "from-purple-500 to-purple-600",
@@ -40,9 +41,9 @@ const DESTINATIONS = [
     focus: "Select Placements",
     slug: "usa"
   },
-  { 
-    label: "UK", 
-    coordinates: { x: 1040, y: 320 }, 
+  {
+    label: "UK",
+    coordinates: { x: 1040, y: 320 },
     delay: "1.8s",
     stats: "60+ Success",
     color: "from-green-500 to-green-600",
@@ -51,10 +52,10 @@ const DESTINATIONS = [
     focus: "Growing Market",
     slug: "uk"
   },
- 
-  { 
-    label: "Germany", 
-    coordinates: { x: 1100, y: 330 }, 
+
+  {
+    label: "Germany",
+    coordinates: { x: 1100, y: 330 },
     delay: "3.0s",
     stats: "35+ Admitted",
     color: "from-gray-500 to-gray-600",
@@ -63,9 +64,9 @@ const DESTINATIONS = [
     focus: "EU Hub",
     slug: "germany"
   },
-  { 
-    label: "Malta", 
-    coordinates: { x: 1080, y: 440 }, 
+  {
+    label: "Malta",
+    coordinates: { x: 1080, y: 440 },
     delay: "3.6s",
     stats: "25+ Students",
     color: "from-red-400 to-white",
@@ -74,9 +75,9 @@ const DESTINATIONS = [
     focus: "EU Gateway",
     slug: "malta"
   },
-  { 
-    label: "New Zealand", 
-    coordinates: { x: 1900, y: 850 }, 
+  {
+    label: "New Zealand",
+    coordinates: { x: 1900, y: 850 },
     delay: "4.2s",
     stats: "30+ Placements",
     color: "from-blue-300 to-blue-400",
@@ -85,9 +86,9 @@ const DESTINATIONS = [
     focus: "Pacific Option",
     slug: "new-zealand"
   },
-  { 
-    label: "Finland", 
-    coordinates: { x: 1150, y: 270 }, 
+  {
+    label: "Finland",
+    coordinates: { x: 1150, y: 270 },
     delay: "4.8s",
     stats: "15+ Students",
     color: "from-blue-300 to-white",
@@ -96,9 +97,9 @@ const DESTINATIONS = [
     focus: "Nordic Excellence",
     slug: "finland"
   },
-  { 
-    label: "Spain", 
-    coordinates: { x: 900, y: 410 }, 
+  {
+    label: "Spain",
+    coordinates: { x: 900, y: 410 },
     delay: "5.4s",
     stats: "20+ Visa Approvals",
     color: "from-red-400 to-yellow-400",
@@ -107,9 +108,9 @@ const DESTINATIONS = [
     focus: "Cultural Hub",
     slug: "spain"
   },
-  { 
-    label: "Italy", 
-    coordinates: { x: 1090, y: 420 }, 
+  {
+    label: "Italy",
+    coordinates: { x: 1090, y: 420 },
     delay: "6.0s",
     stats: "18+ Students",
     color: "from-green-400 to-white to-red-400",
@@ -162,7 +163,7 @@ export default function GlobalReachSection() {
           className="space-y-8"
         >
           {/* Badge */}
-          <motion.div 
+          <motion.div
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-red-50 to-blue-50 border border-red-100"
             variants={fadeInUp}
           >
@@ -171,7 +172,7 @@ export default function GlobalReachSection() {
           </motion.div>
 
           {/* Title */}
-          <motion.h2 
+          <motion.h2
             className="text-4xl sm:text-5xl lg:text-6xl font-bold"
             variants={fadeInUp}
           >
@@ -181,7 +182,7 @@ export default function GlobalReachSection() {
           </motion.h2>
 
           {/* Animated Underline */}
-          <motion.div 
+          <motion.div
             className="h-1 bg-gradient-to-r from-red-500 to-blue-950 rounded-full w-24"
             variants={fadeInUp}
             initial={{ width: 0 }}
@@ -190,17 +191,17 @@ export default function GlobalReachSection() {
           />
 
           {/* Description */}
-          <motion.p 
+          <motion.p
             className="text-lg sm:text-xl text-gray-600 leading-relaxed max-w-xl"
             variants={fadeInUp}
           >
-            From Kathmandu to 10+ global destinations. We provide personalized pathways to 
+            From Kathmandu to 10+ global destinations. We provide personalized pathways to
             <span className="font-semibold text-red-500"> leading educational hubs worldwide</span>,
             with specialized expertise in Japan.
           </motion.p>
 
           {/* Realistic Stats */}
-          <motion.div 
+          <motion.div
             className="grid grid-cols-2 sm:grid-cols-3 gap-4"
             variants={fadeInUp}
           >
@@ -209,7 +210,7 @@ export default function GlobalReachSection() {
               { icon: Award, value: "10+", label: "Countries", sublabel: "Active Partners" },
               { icon: Globe, value: "95%", label: "Success Rate", sublabel: "Japan Focus" },
             ].map((stat, index) => (
-              <div 
+              <div
                 key={index}
                 className="bg-white p-4 rounded-xl border border-gray-200 hover:border-red-300 transition-colors group"
               >
@@ -228,7 +229,7 @@ export default function GlobalReachSection() {
           </motion.div>
 
           {/* Destination List - ALL COUNTRIES VISIBLE */}
-          <motion.div 
+          <motion.div
             className="space-y-4"
             variants={fadeInUp}
           >
@@ -238,11 +239,10 @@ export default function GlobalReachSection() {
                 <button
                   key={dest.slug}
                   onClick={() => setActiveDestination(dest)}
-                  className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-300 flex items-center gap-1.5 ${
-                    activeDestination?.label === dest.label
-                      ? 'bg-gradient-to-r from-red-500 to-blue-950 text-white shadow-md'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }`}
+                  className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-300 flex items-center gap-1.5 ${activeDestination?.label === dest.label
+                    ? 'bg-gradient-to-r from-red-500 to-blue-950 text-white shadow-md'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    }`}
                 >
                   <span>{dest.icon}</span>
                   <span>{dest.label}</span>
@@ -286,13 +286,14 @@ export default function GlobalReachSection() {
               {/* MAP IMAGE */}
               <div className="absolute inset-0">
                 <Image
-                  src="/world-map-clean.png"
+                  src={WORLD_MAP_IMAGE}
                   alt="World map showing global reach"
                   fill
                   className="object-contain"
                   priority
-                  quality={85}
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                 />
+
               </div>
 
               {/* Interactive SVG Overlay - ALL DESTINATIONS */}
@@ -302,32 +303,32 @@ export default function GlobalReachSection() {
                 preserveAspectRatio="xMidYMid meet"
               >
                 {/* ORIGIN - Nepal */}
-                <g 
-                  className="cursor-pointer hover:opacity-80 transition-opacity" 
-                  onClick={() => setActiveDestination({ 
-                    label: "Nepal", 
-                    stats: "Our Home Base", 
+                <g
+                  className="cursor-pointer hover:opacity-80 transition-opacity"
+                  onClick={() => setActiveDestination({
+                    label: "Nepal",
+                    stats: "Our Home Base",
                     icon: "🇳🇵",
                     description: "Where dreams take flight to global education",
                     focus: "Starting Point"
                   })}
                 >
-                  <circle 
-                    cx={ORIGIN.x} 
-                    cy={ORIGIN.y} 
-                    r="12" 
+                  <circle
+                    cx={ORIGIN.x}
+                    cy={ORIGIN.y}
+                    r="12"
                     fill="#ef4444"
                     className="drop-shadow-lg"
                   />
-                  <circle 
-                    cx={ORIGIN.x} 
-                    cy={ORIGIN.y} 
-                    r="30" 
-                    fill="#ef4444" 
+                  <circle
+                    cx={ORIGIN.x}
+                    cy={ORIGIN.y}
+                    r="30"
+                    fill="#ef4444"
                     opacity="0.2"
                     className="origin-center animate-ping"
                   />
-                  
+
                   <text
                     x={ORIGIN.x + 35}
                     y={ORIGIN.y - 15}
@@ -346,7 +347,7 @@ export default function GlobalReachSection() {
                   const path = arcPath(ORIGIN, dest.coordinates);
 
                   return (
-                    <g 
+                    <g
                       key={dest.slug}
                       className="cursor-pointer"
                       onClick={() => setActiveDestination(dest)}
@@ -381,7 +382,7 @@ export default function GlobalReachSection() {
                         fill="#3b82f6"
                         className="transition-all duration-300"
                       />
-                      
+
                       {/* Destination Label */}
                       <text
                         x={dest.coordinates.x + 24}
@@ -439,15 +440,14 @@ export default function GlobalReachSection() {
                       <div>
                         <div className="flex items-center gap-2">
                           <h4 className="text-xl font-bold text-gray-900">{activeDestination.label}</h4>
-                          <span className={`px-2 py-0.5 text-xs font-medium rounded-full ${
-                            activeDestination.focus === "Primary Focus" 
-                              ? "bg-red-100 text-red-500" 
-                              : activeDestination.focus === "Popular Choice"
+                          <span className={`px-2 py-0.5 text-xs font-medium rounded-full ${activeDestination.focus === "Primary Focus"
+                            ? "bg-red-100 text-red-500"
+                            : activeDestination.focus === "Popular Choice"
                               ? "bg-blue-100 text-blue-700"
                               : activeDestination.focus === "EU Hub" || activeDestination.focus === "EU Gateway"
-                              ? "bg-purple-100 text-purple-700"
-                              : "bg-gray-100 text-gray-700"
-                          }`}>
+                                ? "bg-purple-100 text-purple-700"
+                                : "bg-gray-100 text-gray-700"
+                            }`}>
                             {activeDestination.focus}
                           </span>
                         </div>
@@ -461,7 +461,7 @@ export default function GlobalReachSection() {
                       <div className="text-sm text-gray-500">Successful Placements</div>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-center gap-4 mt-4 pt-4 border-t border-gray-100">
                     <div className="flex items-center gap-2 text-sm text-gray-600">
                       <CheckCircle className="w-4 h-4 text-green-500" />
@@ -500,7 +500,7 @@ export default function GlobalReachSection() {
                   <span className="text-gray-700">Student Pathways</span>
                 </div>
               </div>
-              
+
               <Link
                 href="/destinations"
                 className="text-blue-950 hover:text-red-500 transition-colors font-medium flex items-center gap-1"
@@ -530,22 +530,22 @@ export default function GlobalReachSection() {
             </p>
           </div>
           <div className="flex gap-3">
-            <Link href="/destinations">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-6 lg:px-8 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg lg:rounded-xl font-semibold text-sm lg:text-base shadow hover:shadow-red-200 transition-all duration-300"
-              >
-                Browse All Destinations
-              </motion.button>
-            </Link>
+
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-6 lg:px-8 py-3 bg-white text-blue-950 rounded-lg lg:rounded-xl font-semibold text-sm lg:text-base border-2 border-blue-950 hover:bg-blue-50 transition-all duration-300"
+              onClick={() => {
+                document
+                  .getElementById("destinations-preview")
+                  ?.scrollIntoView({ behavior: "smooth", block: "start" });
+              }}
+              className="px-6 lg:px-8 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg lg:rounded-xl font-semibold text-sm lg:text-base shadow hover:shadow-red-200 transition-all duration-300"
             >
-              Book Free Session
+              Browse All Destinations
             </motion.button>
+
+
+
           </div>
         </div>
       </motion.div>

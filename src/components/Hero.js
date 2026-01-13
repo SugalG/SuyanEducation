@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { HERO_FALLBACK_IMAGE, HERO_VIDEO_URL } from "@/lib/media";
 
 export default function Hero() {
   const containerRef = useRef(null);
@@ -59,6 +60,7 @@ export default function Hero() {
       {shouldLoadVideo ? (
         <video
           ref={videoRef}
+          autoPlay
           muted
           loop
           playsInline
@@ -68,11 +70,11 @@ export default function Hero() {
             isLoaded ? "opacity-100" : "opacity-0"
           }`}
         >
-          <source src="/timeline 1.mp4" type="video/mp4" />
+          <source src="/Timeline 1.mp4" type="video/mp4" />
         </video>
       ) : (
         <img
-          src="/hero-bg.png"
+          src={HERO_FALLBACK_IMAGE}
           alt="Hero background"
           className="w-full h-auto block"
         />

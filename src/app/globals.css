@@ -224,3 +224,55 @@ footer {
 .animate-scroll-x:hover {
   animation-play-state: paused;
 }
+
+
+/* Remove Google banner */
+.goog-te-banner-frame.skiptranslate {
+  display: none !important;
+}
+
+body {
+  top: 0 !important;
+}
+
+/* Hide branding link only */
+.goog-logo-link {
+  display: none !important;
+}
+
+/* Floating container styling */
+.translate-wrapper {
+  background: linear-gradient(135deg, #dc2626, #1e3a8a);
+  padding: 3px;
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* Inner white card */
+.translate-wrapper > div {
+  background: white;
+  border-radius: 10px;
+  padding: 8px 10px;
+}
+
+/* Gadget text */
+.goog-te-gadget {
+  font-size: 14px !important;
+  color: #111827 !important; /* 🔑 THIS MAKES IT VISIBLE */
+}
+
+/* Hide "Powered by" text only */
+.goog-te-gadget span {
+  display: none !important;
+}
+
+/* Dropdown styling */
+.goog-te-gadget select {
+  color: #111827 !important;
+  background: white;
+  font-size: 14px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+  cursor: pointer;
+}

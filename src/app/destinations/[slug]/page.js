@@ -41,7 +41,7 @@ export default async function DestinationPage({ params }) {
           <div className="absolute inset-0 bg-gradient-to-br from-white via-red-50 to-blue-50" />
           <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-red-100/20 to-transparent" />
           <div className="absolute bottom-0 left-0 w-1/3 h-full bg-gradient-to-r from-blue-100/20 to-transparent" />
-          
+
           {/* Animated Circles */}
           <div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-r from-red-200/30 to-pink-200/20 rounded-full blur-3xl animate-pulse"></div>
           <div className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-l from-blue-200/30 to-cyan-200/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
@@ -76,7 +76,7 @@ export default async function DestinationPage({ params }) {
 
                 {/* Description */}
                 <p className="text-xl text-gray-700 leading-relaxed mb-10">
-                  Embark on your educational journey in {destination.country} with world-class institutions, 
+                  Embark on your educational journey in {destination.country} with world-class institutions,
                   cutting-edge research facilities, and unparalleled opportunities for Nepalese students.
                 </p>
 
@@ -107,17 +107,17 @@ export default async function DestinationPage({ params }) {
                     className="group inline-flex items-center justify-center gap-3 px-10 py-5 bg-gradient-to-r from-red-600 to-red-500 text-white font-semibold rounded-2xl hover:shadow-2xl hover:scale-105 transition-all duration-300 shadow-lg"
                   >
                     <span>Start Your Journey</span>
-                    <svg 
-                      xmlns="http://www.w3.org/2000/svg" 
-                      width="20" 
-                      height="20" 
-                      viewBox="0 0 24 24" 
-                      fill="none" 
-                      stroke="currentColor" 
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
                       strokeWidth="2"
                       className="group-hover:translate-x-1 transition-transform"
                     >
-                      <path d="m9 18 6-6-6-6"/>
+                      <path d="m9 18 6-6-6-6" />
                     </svg>
                   </a>
                   <a
@@ -137,15 +137,22 @@ export default async function DestinationPage({ params }) {
                   {/* Image Container with Gradient Border */}
                   <div className="absolute -inset-1 bg-gradient-to-r from-red-500 via-pink-500 to-blue-500 rounded-3xl blur opacity-30"></div>
                   <div className="relative rounded-3xl overflow-hidden border-8 border-white">
-                    <img
-                      src={`/destinations/${destination.slug}.webp`}
-                      alt={`Study in ${destination.country}`}
-                      className="w-full h-[500px] object-cover transform hover:scale-105 transition-transform duration-700"
-                    />
+                    {destination.heroImage ? (
+                      <img
+                        src={destination.heroImage}
+                        alt={`Study in ${destination.country}`}
+                        className="w-full h-[500px] object-cover transform hover:scale-105 transition-transform duration-700"
+                      />
+                    ) : (
+                      <div className="w-full h-[500px] bg-gray-200 flex items-center justify-center text-gray-500">
+                        No image uploaded
+                      </div>
+                    )}
                   </div>
+
                 </div>
-                
-               
+
+
               </div>
             </Reveal>
           </div>
@@ -161,7 +168,7 @@ export default async function DestinationPage({ params }) {
               <span className="text-lg font-semibold text-gray-700">About Education in {destination.country}</span>
             </div>
           </Reveal>
-          
+
           <Reveal delay={0.2}>
             <p className="text-2xl text-gray-700 leading-relaxed max-w-4xl mx-auto">
               {destination.description}
@@ -195,13 +202,13 @@ export default async function DestinationPage({ params }) {
                     <div className="absolute -top-6 -left-6 w-16 h-16 bg-gradient-to-br from-red-500 to-red-400 text-white rounded-2xl flex items-center justify-center text-2xl font-bold shadow-lg">
                       {i + 1}
                     </div>
-                    
+
                     <div className="pt-6">
                       <p className="text-lg text-gray-700 leading-relaxed">
                         {point}
                       </p>
                     </div>
-                    
+
                     {/* Hover Effect Line */}
                     <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-red-500 to-blue-500 rounded-b-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   </div>
@@ -266,24 +273,24 @@ export default async function DestinationPage({ params }) {
                         {field}
                       </h3>
                     </div>
-                    
+
                     <p className="text-gray-600 mb-6">
                       Premier programs and universities offering {field.toLowerCase()} with excellent career prospects.
                     </p>
-                    
+
                     <div className="inline-flex items-center gap-2 text-red-600 font-semibold group-hover:gap-3 transition-all">
                       <span>Explore Programs</span>
-                      <svg 
-                        xmlns="http://www.w3.org/2000/svg" 
-                        width="18" 
-                        height="18" 
-                        viewBox="0 0 24 24" 
-                        fill="none" 
-                        stroke="currentColor" 
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
                         strokeWidth="2"
                         className="group-hover:translate-x-1 transition-transform"
                       >
-                        <path d="m9 18 6-6-6-6"/>
+                        <path d="m9 18 6-6-6-6" />
                       </svg>
                     </div>
                   </div>
@@ -314,7 +321,7 @@ export default async function DestinationPage({ params }) {
                 <h3 className="text-2xl sm:text-3xl font-bold mb-2">Latest Information for Nepalese Students</h3>
                 <p className="text-red-100">Updated regularly by our immigration experts</p>
               </div>
-              
+
               {/* Content */}
               <div className="p-8 sm:p-10">
                 <div className="grid md:grid-cols-2 gap-10">
@@ -370,24 +377,24 @@ export default async function DestinationPage({ params }) {
               <p className="text-xl text-red-100 mb-10 max-w-2xl mx-auto">
                 Our dedicated team is ready to guide you through every step of your study abroad journey
               </p>
-              
+
               <div className="flex flex-col sm:flex-row gap-6 justify-center">
                 <a
                   href="/contact"
                   className="group inline-flex items-center justify-center gap-3 px-12 py-5 bg-white text-gray-900 font-bold rounded-2xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
                 >
                   <span>Book Free Consultation</span>
-                  <svg 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    width="20" 
-                    height="20" 
-                    viewBox="0 0 24 24" 
-                    fill="none" 
-                    stroke="currentColor" 
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
                     strokeWidth="2"
                     className="group-hover:translate-x-1 transition-transform"
                   >
-                    <path d="m9 18 6-6-6-6"/>
+                    <path d="m9 18 6-6-6-6" />
                   </svg>
                 </a>
                 <a

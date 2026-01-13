@@ -79,17 +79,17 @@ export default function Footer({ settings }) {
               {/* Stats */}
               <div className="flex items-center gap-6 pt-4">
                 <div className="text-center">
-                  <div className="text-2xl font-bold">98%</div>
+                  <div className="text-2xl font-bold">95%</div>
                   <div className="text-xs text-gray-400">Success Rate</div>
                 </div>
                 <div className="h-8 w-px bg-gray-700" />
                 <div className="text-center">
-                  <div className="text-2xl font-bold">500+</div>
+                  <div className="text-2xl font-bold">100+</div>
                   <div className="text-xs text-gray-400">Students</div>
                 </div>
                 <div className="h-8 w-px bg-gray-700" />
                 <div className="text-center">
-                  <div className="text-2xl font-bold">11+</div>
+                  <div className="text-2xl font-bold">10+</div>
                   <div className="text-xs text-gray-400">Countries</div>
                 </div>
               </div>
