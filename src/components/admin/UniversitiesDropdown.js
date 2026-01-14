@@ -5,7 +5,11 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import AddUniversityModal from "../AddUniversityModal";
 
-export default function UniversitiesDropdown({ destination }) {
+export default function UniversitiesDropdown({
+  destination,
+  setSelectedDestination,
+}) {
+
   const queryClient = useQueryClient();
   const [isOpen, setIsOpen] = useState(false);
   const [university, setUniversity] = useState(null);
@@ -33,14 +37,17 @@ export default function UniversitiesDropdown({ destination }) {
   // Delete mutation
   const deleteMutation = useMutation({
     mutationFn: async (id) => {
-      const res = await fetch(`/api/admin/universities`, {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id }),
-      });
+      const res = await fetch(
+        `/api/admin/universities?id=${id}`,
+        { method: "DELETE" }
+      );
+
       const data = await res.json();
-      if (!res.ok || !data.success)
+
+      if (!res.ok || !data.success) {
         throw new Error(data.message || "Delete failed");
+      }
+
       return data;
     },
     onSuccess: () => {
@@ -53,6 +60,7 @@ export default function UniversitiesDropdown({ destination }) {
       toast.error(err.message || "Delete failed");
     },
   });
+
 
   return (
     <div className="w-full">
@@ -124,7 +132,7 @@ export default function UniversitiesDropdown({ destination }) {
       )}
       {
         university && (
-          <AddUniversityModal destination={destination} open={!!university} onClose={() => setUniversity(null)} university={university}/>
+          <AddUniversityModal destination={destination} open={!!university} onClose={() => setUniversity(null)} university={university} />
         )
       }
     </div>

@@ -1,7 +1,7 @@
 "use client";
 
 export default function WhatsAppFloat() {
-  const phoneNumber = "97798123456**"; // client number
+  const phoneNumber = "9779864261506"; // client number
   const message = "Hello, I’m interested in study abroad consultation.";
 
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(

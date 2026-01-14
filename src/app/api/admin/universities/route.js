@@ -1,38 +1,38 @@
 import { NextResponse } from "next/server";
-import prisma from "@/lib/prisma"; // Make sure you have prisma client
+import prisma from "@/lib/prisma";
 
+/* =========================
+   GET – List universities
+========================= */
 export async function GET(request) {
   try {
-    const url = new URL(request.url);
-    const destinationId = url.searchParams.get("destinationId");
+    const { searchParams } = new URL(request.url);
+    const destinationId = searchParams.get("destinationId");
 
-    let universities;
-
-    if (destinationId) {
-      // Return only universities for this destination
-      universities = await prisma.university.findMany({
-        where: { countryId: destinationId },
-        include: {
-          country: {
-            select: {id:true, country: true}
-          }
-        },
-        orderBy: { createdAt: "desc" },
-      });
-    } else {
-      // Return all universities
-      universities = await prisma.university.findMany({
-        orderBy: { createdAt: "desc" },
-        include: { country: true },
-      });
-    }
+    const universities = await prisma.university.findMany({
+      where: {
+        ...(destinationId && { countryId: destinationId }),
+        imageUrl: { not: "" },
+      },
+      select: {
+        id: true,
+        name: true,
+        imageUrl: true,
+        websiteUrl: true,
+        city: true,
+        countryId: true,
+      },
+      orderBy: {
+        name: "asc",
+      },
+    });
 
     return NextResponse.json(
       { success: true, items: universities },
       { status: 200 }
     );
-  } catch (e) {
-    console.error("GET /universities error:", e);
+  } catch (error) {
+    console.error("GET /api/admin/universities error:", error);
     return NextResponse.json(
       { success: false, message: "Failed to fetch universities" },
       { status: 500 }
@@ -40,38 +40,68 @@ export async function GET(request) {
   }
 }
 
-export async function POST(req) {
+/* =========================
+   POST – Create university
+========================= */
+export async function POST(request) {
   try {
-    const body = await req.json();
-    const { name, countryId, city, websiteUrl, imageUrl } = body;
+    const body = await request.json();
+    const { name, city, websiteUrl, imageUrl, countryId } = body;
 
-    if (!name || !countryId || !imageUrl) {
+    if (!name || !imageUrl || !countryId) {
       return NextResponse.json(
         {
           success: false,
-          message: "Name, countryId, and imageUrl are required",
+          message: "Name, logo URL, and destination are required",
         },
         { status: 400 }
       );
     }
 
-    const university = await prisma.university.create({
-      data: { name, countryId, city, websiteUrl, imageUrl },
+    // Ensure destination exists
+    const destinationExists = await prisma.destination.findUnique({
+      where: { id: countryId },
     });
 
-    return NextResponse.json({ success: true, university }, { status: 200 });
-  } catch (e) {
-    console.error("POST /universities error:", e);
+    if (!destinationExists) {
+      return NextResponse.json(
+        { success: false, message: "Invalid destination ID" },
+        { status: 400 }
+      );
+    }
+
+    const university = await prisma.university.create({
+      data: {
+        name,
+        city,
+        websiteUrl,
+        imageUrl,
+        countryId,
+      },
+    });
+
     return NextResponse.json(
-      { success: false, message: "Failed to create university" },
+      { success: true, item: university },
+      { status: 201 }
+    );
+  } catch (error) {
+    console.error("POST /api/admin/universities error:", error);
+    return NextResponse.json(
+      {
+        success: false,
+        message: error.message || "Failed to create university",
+      },
       { status: 500 }
     );
   }
 }
 
-export async function PUT(req) {
+/* =========================
+   PUT – Update university
+========================= */
+export async function PUT(request) {
   try {
-    const body = await req.json();
+    const body = await request.json();
     const { id, name, city, websiteUrl, imageUrl } = body;
 
     if (!id) {
@@ -81,27 +111,39 @@ export async function PUT(req) {
       );
     }
 
-    const updated = await prisma.university.update({
+    const university = await prisma.university.update({
       where: { id },
-      data: { name, city, websiteUrl, imageUrl },
+      data: {
+        name,
+        city,
+        websiteUrl,
+        imageUrl,
+      },
     });
 
     return NextResponse.json(
-      { success: true, university: updated },
+      { success: true, item: university },
       { status: 200 }
     );
-  } catch (e) {
-    console.error("PUT /universities error:", e);
+  } catch (error) {
+    console.error("PUT /api/admin/universities error:", error);
     return NextResponse.json(
-      { success: false, message: "Failed to update university" },
+      {
+        success: false,
+        message: error.message || "Failed to update university",
+      },
       { status: 500 }
     );
   }
 }
 
-export async function DELETE(req) {
+/* =========================
+   DELETE – Remove university
+========================= */
+export async function DELETE(request) {
   try {
-    const { id } = await req.json();
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get("id");
 
     if (!id) {
       return NextResponse.json(
@@ -110,13 +152,21 @@ export async function DELETE(req) {
       );
     }
 
-    await prisma.university.delete({ where: { id } });
+    await prisma.university.delete({
+      where: { id },
+    });
 
-    return NextResponse.json({ success: true });
-  } catch (e) {
-    console.error("DELETE /universities error:", e);
     return NextResponse.json(
-      { success: false, message: "Failed to delete university" },
+      { success: true },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("DELETE /api/admin/universities error:", error);
+    return NextResponse.json(
+      {
+        success: false,
+        message: error.message || "Failed to delete university",
+      },
       { status: 500 }
     );
   }

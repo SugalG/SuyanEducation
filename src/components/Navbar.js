@@ -28,13 +28,22 @@ export default function Navbar({ settings, onApplyNow }) {
     async function loadDestinations() {
       try {
         const res = await fetch("/api/destinations");
-        if (res.ok) setDestinations(await res.json());
+        const json = await res.json();
+
+        if (!res.ok || !json.success) {
+          throw new Error(json.message || "Failed to load destinations");
+        }
+
+        setDestinations(json.items); // ✅ array
       } catch (err) {
         console.error("Failed to load destinations", err);
+        setDestinations([]); // safety
       }
     }
+
     loadDestinations();
   }, []);
+
 
   // Close mobile menu when clicking outside or on link
   useEffect(() => {
@@ -49,10 +58,14 @@ export default function Navbar({ settings, onApplyNow }) {
   }, [mobileOpen]);
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50">
+    <header
+      className="fixed top-0 left-0 w-full z-50"
+      style={{ "--navbar-height": "120px" }}
+    >
+
       {/* Top Bar with Contact Info */}
       <div className="bg-gradient-to-r from-blue-950 via-blue-800 to-red-700 text-white">
-        <div className="max-w-7xl mx-auto px-6 py-2">
+        <div className="max-w-8xl mx-auto px-8 py-2">
           <div className="flex flex-col md:flex-row items-center justify-between text-sm">
             <div className="flex items-center gap-4 mb-2 md:mb-0">
               <div className="flex items-center gap-2">
@@ -71,7 +84,7 @@ export default function Navbar({ settings, onApplyNow }) {
                 <span>Kumaripati, Lalitpur, Nepal</span>
               </div>
               <div className="hidden lg:block text-xs opacity-80">
-                Sun-Fri: 9AM-6PM 
+                Sun-Fri: 9AM-6PM
               </div>
             </div>
           </div>
@@ -86,20 +99,20 @@ export default function Navbar({ settings, onApplyNow }) {
           : 'bg-white'
         }
       `}>
-        <nav className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          {/* Logo - Left aligned */}
-          <Link href="/" className="flex items-center group flex-shrink-0 mr-4">
+        <nav className="max-w-8xl mx-auto px-8 h-24 flex items-center justify-between">
+          {/* Logo - Left aligned with more space */}
+          <Link href="/" className="flex items-center group flex-shrink-0 mr-12">
             <div className="relative">
               <div className="absolute -inset-2 bg-gradient-to-r from-red-600 to-blue-950 rounded-xl opacity-0 group-hover:opacity-20 blur transition-opacity duration-300"></div>
               <img
                 src="/logo.png"
                 alt={settings?.siteName || "Suyan Education"}
-                className="h-16 w-auto relative transition-transform duration-300 group-hover:scale-105"
+                className="h-18 w-auto relative transition-transform duration-300 group-hover:scale-105"
               />
             </div>
             {settings?.siteName && (
-              <div className="ml-4 hidden lg:block">
-                <div className="text-lg font-bold bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
+              <div className="ml-5 hidden lg:block">
+                <div className="text-xl font-bold bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
                   {settings.siteName}
                 </div>
                 <div className="text-xs text-gray-500 mt-0.5">Study Abroad Consultants</div>
@@ -107,11 +120,11 @@ export default function Navbar({ settings, onApplyNow }) {
             )}
           </Link>
 
-          {/* DESKTOP MENU - Centered */}
-          <div className="hidden md:flex items-center gap-6 lg:gap-8 font-medium mx-auto">
+          {/* DESKTOP MENU - Centered with more spacing */}
+          <div className="hidden md:flex items-center gap-8 lg:gap-10 font-medium mx-auto">
             <Link
               href="/"
-              className="relative text-gray-700 hover:text-red-600 transition-colors duration-200 group/nav"
+              className="relative text-gray-700 hover:text-red-600 transition-colors duration-200 group/nav px-1"
             >
               Home
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-red-600 to-blue-950 group-hover/nav:w-full transition-all duration-300"></span>
@@ -119,7 +132,7 @@ export default function Navbar({ settings, onApplyNow }) {
 
             <Link
               href="/about"
-              className="relative text-gray-700 hover:text-red-600 transition-colors duration-200 group/nav"
+              className="relative text-gray-700 hover:text-red-600 transition-colors duration-200 group/nav px-1"
             >
               About
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-red-600 to-blue-950 group-hover/nav:w-full transition-all duration-300"></span>
@@ -137,7 +150,7 @@ export default function Navbar({ settings, onApplyNow }) {
               }}
             >
               <button
-                className="relative text-gray-700 hover:text-red-600 transition-colors duration-200 flex items-center gap-1 group/nav"
+                className="relative text-gray-700 hover:text-red-600 transition-colors duration-200 flex items-center gap-1 group/nav px-1"
                 onClick={() => setOpenMenu(openMenu === "test" ? null : "test")}
               >
                 Test Preparation
@@ -164,13 +177,13 @@ export default function Navbar({ settings, onApplyNow }) {
                     <div className="text-xs text-gray-500">International proficiency exams</div>
                   </div>
 
-                  {/* JLPT with Full Image */}
+                  {/* JLPT with Rounded Image */}
                   <Link href="/services/jlpt" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 hover:text-red-700 transition-all duration-200 group/item">
-                    <div className="w-10 h-10 rounded-lg flex items-center justify-center group-hover/item:bg-red-50 transition-colors overflow-hidden p-1">
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center group-hover/item:bg-red-50 transition-colors overflow-hidden p-1">
                       <img
                         src="/icons/japan-test-prep.png"
                         alt="JLPT"
-                        className="w-full h-full object-contain"
+                        className="w-full h-full object-contain rounded-full"
                       />
                     </div>
                     <div>
@@ -179,13 +192,13 @@ export default function Navbar({ settings, onApplyNow }) {
                     </div>
                   </Link>
 
-                  {/* IELTS with Full Image */}
+                  {/* IELTS with Rounded Image */}
                   <Link href="/services/ielts" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 hover:text-red-700 transition-all duration-200 group/item">
-                    <div className="w-10 h-10 rounded-lg flex items-center justify-center group-hover/item:bg-blue-50 transition-colors overflow-hidden p-1">
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center group-hover/item:bg-blue-50 transition-colors overflow-hidden p-1">
                       <img
                         src="/icons/ielts.png"
                         alt="IELTS"
-                        className="w-full h-full object-contain"
+                        className="w-full h-full object-contain rounded-full"
                       />
                     </div>
                     <div>
@@ -194,13 +207,13 @@ export default function Navbar({ settings, onApplyNow }) {
                     </div>
                   </Link>
 
-                  {/* TOEFL with Full Image */}
+                  {/* TOEFL with Rounded Image */}
                   <Link href="/services/toefl" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 hover:text-red-700 transition-all duration-200 group/item">
-                    <div className="w-10 h-10 rounded-lg flex items-center justify-center group-hover/item:bg-green-50 transition-colors overflow-hidden p-1">
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center group-hover/item:bg-green-50 transition-colors overflow-hidden p-1">
                       <img
                         src="/icons/tofel-test-prep.png"
                         alt="TOEFL"
-                        className="w-full h-full object-contain"
+                        className="w-full h-full object-contain rounded-full"
                       />
                     </div>
                     <div>
@@ -209,13 +222,13 @@ export default function Navbar({ settings, onApplyNow }) {
                     </div>
                   </Link>
 
-                  {/* SSW with Full Image */}
+                  {/* SSW with Rounded Image */}
                   <Link href="/services/ssw" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 hover:text-red-700 transition-all duration-200 group/item">
-                    <div className="w-10 h-10 rounded-lg flex items-center justify-center group-hover/item:bg-purple-50 transition-colors overflow-hidden p-1">
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center group-hover/item:bg-purple-50 transition-colors overflow-hidden p-1">
                       <img
                         src="/icons/ssw-test-prep.png"
                         alt="SSW"
-                        className="w-full h-full object-contain"
+                        className="w-full h-full object-contain rounded-full"
                       />
                     </div>
                     <div>
@@ -239,7 +252,7 @@ export default function Navbar({ settings, onApplyNow }) {
               }}
             >
               <button
-                className="relative text-gray-700 hover:text-red-600 transition-colors duration-200 flex items-center gap-1 group/nav"
+                className="relative text-gray-700 hover:text-red-600 transition-colors duration-200 flex items-center gap-1 group/nav px-1"
                 onClick={() => setOpenMenu(openMenu === "dest" ? null : "dest")}
               >
                 Destinations
@@ -265,35 +278,39 @@ export default function Navbar({ settings, onApplyNow }) {
                     <div className="text-xs text-gray-500">Choose your study country</div>
                   </div>
 
-                  {destinations.slice(0, 6).map((d, index) => (
+                  {destinations.map((d) => (
                     <Link
                       key={d.slug}
                       href={`/destinations/${d.slug}`}
-                      className={`flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 hover:text-red-700 transition-all duration-200 group/item ${index < 5 ? 'mb-1' : ''
-                        }`}
+                      className="flex items-center gap-3 px-4 py-3 rounded-lg
+      hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50
+      hover:text-red-700 transition-all duration-200 group/item"
                     >
-                      <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-red-100 to-blue-100 flex items-center justify-center group-hover/item:from-red-200 group-hover/item:to-blue-200 transition-all">
-                        <span className="text-gray-700 font-bold text-sm">{d.country.charAt(0)}</span>
+                      <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-red-100 to-blue-100 flex items-center justify-center">
+                        <span className="text-gray-700 font-bold text-sm">
+                          {d.country.charAt(0)}
+                        </span>
                       </div>
                       <div className="font-medium">{d.country}</div>
                     </Link>
                   ))}
 
-                  {destinations.length > 6 && (
-                    <Link
-                      href="/destinations"
-                      className="mt-2 px-4 py-2 text-center text-sm text-blue-700 font-medium hover:text-red-700 hover:bg-blue-50 rounded-lg transition-colors duration-200"
-                    >
-                      View All {destinations.length} Destinations →
-                    </Link>
-                  )}
+                 
                 </div>
               </div>
             </div>
+            <Link
+              href="/universities"
+              className="relative text-gray-700 hover:text-red-600 transition-colors duration-200 group/nav px-1"
+            >
+              Universities
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-red-600 to-blue-600 group-hover/nav:w-full transition-all duration-300"></span>
+            </Link>
+
 
             <Link
               href="/gallery"
-              className="relative text-gray-700 hover:text-red-600 transition-colors duration-200 group/nav"
+              className="relative text-gray-700 hover:text-red-600 transition-colors duration-200 group/nav px-1"
             >
               Gallery
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-red-600 to-blue-600 group-hover/nav:w-full transition-all duration-300"></span>
@@ -301,7 +318,7 @@ export default function Navbar({ settings, onApplyNow }) {
 
             <Link
               href="/blog"
-              className="relative text-gray-700 hover:text-red-600 transition-colors duration-200 group/nav"
+              className="relative text-gray-700 hover:text-red-600 transition-colors duration-200 group/nav px-1"
             >
               Blog
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-red-600 to-blue-600 group-hover/nav:w-full transition-all duration-300"></span>
@@ -309,18 +326,18 @@ export default function Navbar({ settings, onApplyNow }) {
 
             <Link
               href="/contact"
-              className="relative text-gray-700 hover:text-red-600 transition-colors duration-200 group/nav"
+              className="relative text-gray-700 hover:text-red-600 transition-colors duration-200 group/nav px-1"
             >
               Contact
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-red-600 to-blue-600 group-hover/nav:w-full transition-all duration-300"></span>
             </Link>
           </div>
 
-          {/* APPLY NOW (DESKTOP) - Right aligned */}
-          <div className="hidden md:flex items-center ml-auto">
+          {/* APPLY NOW (DESKTOP) - Right aligned with more space */}
+          <div className="hidden md:flex items-center ml-12">
             <button
               onClick={onApplyNow}
-              className="relative px-6 py-2.5 rounded-full font-semibold bg-gradient-to-r from-red-600 to-red-700 text-white hover:from-red-700 hover:to-red-800 transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg hover:shadow-red-200 group flex-shrink-0"
+              className="relative px-8 py-3.5 rounded-full font-semibold bg-gradient-to-r from-red-600 to-red-700 text-white hover:from-red-700 hover:to-red-800 transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg hover:shadow-red-200 group flex-shrink-0 min-w-[140px]"
             >
               Apply Now
               <div className="absolute -inset-1 bg-gradient-to-r from-red-600 to-blue-800 rounded-full opacity-0 group-hover:opacity-20 blur-md transition-opacity duration-300 -z-10"></div>
@@ -350,11 +367,11 @@ export default function Navbar({ settings, onApplyNow }) {
           {/* Menu Panel */}
           <div className="absolute right-0 top-0 bottom-0 w-full max-w-sm bg-white shadow-2xl">
             {/* Header */}
-            <div className="flex items-center justify-between px-6 h-20 border-b border-gray-100 bg-gradient-to-r from-red-50 to-blue-50">
+            <div className="flex items-center justify-between px-6 h-24 border-b border-gray-100 bg-gradient-to-r from-red-50 to-blue-50">
               <div className="flex items-center gap-4">
-                <img src="/logo.png" alt="Logo" className="h-10" />
+                <img src="/logo.png" alt="Logo" className="h-12" />
                 <div>
-                  <div className="font-bold text-gray-900">Suyan Education</div>
+                  <div className="font-bold text-gray-900 text-lg">Suyan Education</div>
                   <div className="text-xs text-gray-600">Study Abroad Experts</div>
                 </div>
               </div>
@@ -368,8 +385,8 @@ export default function Navbar({ settings, onApplyNow }) {
             </div>
 
             {/* Menu Content */}
-            <div className="px-4 py-6 overflow-y-auto h-[calc(100vh-80px)]">
-              <div className="space-y-1">
+            <div className="px-4 py-8 overflow-y-auto h-[calc(100vh-96px)]">
+              <div className="space-y-2">
                 <Link
                   href="/"
                   onClick={() => setMobileOpen(false)}
@@ -378,7 +395,7 @@ export default function Navbar({ settings, onApplyNow }) {
                   <div className="w-10 h-10 rounded-lg bg-red-100 flex items-center justify-center group-hover:bg-red-200">
                     <span className="text-red-700 font-bold">H</span>
                   </div>
-                  <span className="font-semibold">Home</span>
+                  <span className="font-semibold text-lg">Home</span>
                 </Link>
 
                 <Link
@@ -389,10 +406,10 @@ export default function Navbar({ settings, onApplyNow }) {
                   <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center group-hover:bg-blue-200">
                     <span className="text-blue-700 font-bold">A</span>
                   </div>
-                  <span className="font-semibold">About Us</span>
+                  <span className="font-semibold text-lg">About Us</span>
                 </Link>
 
-                {/* Mobile Test Prep with Full Images */}
+                {/* Mobile Test Prep with Rounded Images */}
                 <div className="border-b border-gray-100 last:border-0">
                   <button
                     onClick={() => setMobileSub(mobileSub === "test" ? null : "test")}
@@ -402,7 +419,7 @@ export default function Navbar({ settings, onApplyNow }) {
                       <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-red-100 to-blue-100 flex items-center justify-center group-hover:from-red-200 group-hover:to-blue-200">
                         <span className="font-bold bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">T</span>
                       </div>
-                      <span className="font-semibold">Test Preparation</span>
+                      <span className="font-semibold text-lg">Test Preparation</span>
                     </div>
                     <ChevronDown
                       size={20}
@@ -411,69 +428,69 @@ export default function Navbar({ settings, onApplyNow }) {
                   </button>
 
                   {mobileSub === "test" && (
-                    <div className="pl-14 pr-4 space-y-1 mt-1 mb-3">
-                      {/* JLPT Mobile with Full Image */}
+                    <div className="pl-14 pr-4 space-y-3 mt-2 mb-4">
+                      {/* JLPT Mobile with Rounded Image */}
                       <Link
                         href="/services/jlpt"
                         onClick={() => setMobileOpen(false)}
                         className="flex items-center gap-3 py-3 px-4 rounded-lg hover:bg-red-50 text-gray-700 hover:text-red-700 transition-colors duration-150"
                       >
-                        <div className="w-10 h-10 rounded-lg flex items-center justify-center overflow-hidden p-1">
+                        <div className="w-10 h-10 rounded-full flex items-center justify-center overflow-hidden p-1">
                           <img
                             src="/icons/japan-test-prep.png"
                             alt="JLPT"
-                            className="w-full h-full object-contain"
+                            className="w-full h-full object-contain rounded-full"
                           />
                         </div>
-                        <span>JLPT</span>
+                        <span className="font-medium">JLPT</span>
                       </Link>
 
-                      {/* IELTS Mobile with Full Image */}
+                      {/* IELTS Mobile with Rounded Image */}
                       <Link
                         href="/services/ielts"
                         onClick={() => setMobileOpen(false)}
                         className="flex items-center gap-3 py-3 px-4 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-blue-700 transition-colors duration-150"
                       >
-                        <div className="w-10 h-10 rounded-lg flex items-center justify-center overflow-hidden p-1">
+                        <div className="w-10 h-10 rounded-full flex items-center justify-center overflow-hidden p-1">
                           <img
                             src="/icons/ielts.png"
                             alt="IELTS"
-                            className="w-full h-full object-contain"
+                            className="w-full h-full object-contain rounded-full"
                           />
                         </div>
-                        <span>IELTS</span>
+                        <span className="font-medium">IELTS</span>
                       </Link>
 
-                      {/* TOEFL Mobile with Full Image */}
+                      {/* TOEFL Mobile with Rounded Image */}
                       <Link
                         href="/services/toefl"
                         onClick={() => setMobileOpen(false)}
                         className="flex items-center gap-3 py-3 px-4 rounded-lg hover:bg-green-50 text-gray-700 hover:text-green-700 transition-colors duration-150"
                       >
-                        <div className="w-10 h-10 rounded-lg flex items-center justify-center overflow-hidden p-1">
+                        <div className="w-10 h-10 rounded-full flex items-center justify-center overflow-hidden p-1">
                           <img
                             src="/icons/tofel-test-prep.png"
                             alt="TOEFL"
-                            className="w-full h-full object-contain"
+                            className="w-full h-full object-contain rounded-full"
                           />
                         </div>
-                        <span>TOEFL</span>
+                        <span className="font-medium">TOEFL</span>
                       </Link>
 
-                      {/* SSW Mobile with Full Image */}
+                      {/* SSW Mobile with Rounded Image */}
                       <Link
                         href="/services/ssw"
                         onClick={() => setMobileOpen(false)}
                         className="flex items-center gap-3 py-3 px-4 rounded-lg hover:bg-purple-50 text-gray-700 hover:text-purple-700 transition-colors duration-150"
                       >
-                        <div className="w-10 h-10 rounded-lg flex items-center justify-center overflow-hidden p-1">
+                        <div className="w-10 h-10 rounded-full flex items-center justify-center overflow-hidden p-1">
                           <img
                             src="/icons/ssw-test-prep.png"
                             alt="SSW"
-                            className="w-full h-full object-contain"
+                            className="w-full h-full object-contain rounded-full"
                           />
                         </div>
-                        <span>SSW</span>
+                        <span className="font-medium">SSW</span>
                       </Link>
                     </div>
                   )}
@@ -489,7 +506,7 @@ export default function Navbar({ settings, onApplyNow }) {
                       <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-blue-100 to-red-100 flex items-center justify-center group-hover:from-blue-200 group-hover:to-red-200">
                         <span className="font-bold bg-gradient-to-r from-blue-600 to-red-600 bg-clip-text text-transparent">D</span>
                       </div>
-                      <span className="font-semibold">Destinations</span>
+                      <span className="font-semibold text-lg">Destinations</span>
                     </div>
                     <ChevronDown
                       size={20}
@@ -498,7 +515,7 @@ export default function Navbar({ settings, onApplyNow }) {
                   </button>
 
                   {mobileSub === "dest" && (
-                    <div className="pl-14 pr-4 space-y-1 mt-1 mb-3">
+                    <div className="pl-14 pr-4 space-y-3 mt-2 mb-4">
                       {destinations.map((d) => (
                         <Link
                           key={d.slug}
@@ -506,7 +523,7 @@ export default function Navbar({ settings, onApplyNow }) {
                           onClick={() => setMobileOpen(false)}
                           className="flex items-center justify-between py-3 px-4 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-blue-700 transition-colors duration-150 group"
                         >
-                          <span>{d.country}</span>
+                          <span className="font-medium">{d.country}</span>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="16"
@@ -526,6 +543,17 @@ export default function Navbar({ settings, onApplyNow }) {
                 </div>
 
                 <Link
+                  href="/universities"
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center gap-3 py-4 px-4 rounded-xl hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 text-gray-800 hover:text-red-700 transition-all duration-200 group"
+                >
+                  <div className="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center group-hover:bg-purple-200">
+                    <span className="text-purple-700 font-bold">U</span>
+                  </div>
+                  <span className="font-semibold text-lg">Universities</span>
+                </Link>
+
+                <Link
                   href="/gallery"
                   onClick={() => setMobileOpen(false)}
                   className="flex items-center gap-3 py-4 px-4 rounded-xl hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 text-gray-800 hover:text-red-700 transition-all duration-200 group"
@@ -533,7 +561,7 @@ export default function Navbar({ settings, onApplyNow }) {
                   <div className="w-10 h-10 rounded-lg bg-yellow-100 flex items-center justify-center group-hover:bg-yellow-200">
                     <span className="text-yellow-700 font-bold">G</span>
                   </div>
-                  <span className="font-semibold">Gallery</span>
+                  <span className="font-semibold text-lg">Gallery</span>
                 </Link>
 
                 <Link
@@ -544,7 +572,7 @@ export default function Navbar({ settings, onApplyNow }) {
                   <div className="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center group-hover:bg-green-200">
                     <span className="text-green-700 font-bold">B</span>
                   </div>
-                  <span className="font-semibold">Blog</span>
+                  <span className="font-semibold text-lg">Blog</span>
                 </Link>
 
                 <Link
@@ -552,35 +580,39 @@ export default function Navbar({ settings, onApplyNow }) {
                   onClick={() => setMobileOpen(false)}
                   className="flex items-center gap-3 py-4 px-4 rounded-xl hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 text-gray-800 hover:text-red-700 transition-all duration-200 group"
                 >
-                  <div className="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center group-hover:bg-purple-200">
-                    <span className="text-purple-700 font-bold">C</span>
+                  <div className="w-10 h-10 rounded-lg bg-cyan-100 flex items-center justify-center group-hover:bg-cyan-200">
+                    <span className="text-cyan-700 font-bold">C</span>
                   </div>
-                  <span className="font-semibold">Contact Us</span>
+                  <span className="font-semibold text-lg">Contact Us</span>
                 </Link>
               </div>
 
               {/* Mobile CTA Buttons */}
-              <div className="mt-8 px-4 space-y-4">
+              <div className="mt-12 px-4 space-y-6">
                 <button
                   onClick={() => {
                     setMobileOpen(false);
                     onApplyNow?.();
                   }}
-                  className="w-full px-6 py-4 rounded-xl bg-gradient-to-r from-red-600 to-red-700 text-white font-bold text-lg shadow-lg hover:shadow-red-200 transition-all duration-300 active:scale-95"
+                  className="w-full px-6 py-5 rounded-xl bg-gradient-to-r from-red-600 to-red-700 text-white font-bold text-lg shadow-lg hover:shadow-red-200 transition-all duration-300 active:scale-95"
                 >
                   Apply Now
                 </button>
 
                 <div className="pt-6 border-t border-gray-200">
-                  <div className="text-sm text-gray-600 mb-3">Contact Info:</div>
-                  <div className="space-y-2">
+                  <div className="text-sm text-gray-600 mb-4">Contact Info:</div>
+                  <div className="space-y-4">
                     <div className="flex items-center gap-3 text-gray-700">
-                      <Phone size={16} className="text-red-600" />
-                      <span>+977-1-1234567</span>
+                      <Phone size={18} className="text-red-600" />
+                      <span className="text-lg">+977 1 5445099</span>
                     </div>
                     <div className="flex items-center gap-3 text-gray-700">
-                      <Mail size={16} className="text-blue-600" />
-                      <span>info@suyan.edu.np</span>
+                      <Mail size={18} className="text-blue-600" />
+                      <span className="text-lg">info@suyan.edu.np</span>
+                    </div>
+                    <div className="flex items-center gap-3 text-gray-700">
+                      <MapPin size={18} className="text-green-600" />
+                      <span className="text-lg">Kumaripati, Lalitpur, Nepal</span>
                     </div>
                   </div>
                 </div>

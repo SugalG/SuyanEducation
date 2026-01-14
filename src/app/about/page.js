@@ -1,5 +1,6 @@
 "use client";
 
+import AboutTeamSection from "@/components/AboutTeamSection";
 import { motion } from "framer-motion";
 import { Target, Eye, Users, Award, Globe, CheckCircle, GraduationCap, Shield, BookOpen, MapPin, Clock, Star, Plane, Building, Languages, FileText, Mic, Compass } from "lucide-react";
 
@@ -25,23 +26,23 @@ export default function AboutPage() {
     {
       icon: Globe,
       title: "Global Destinations",
-      description: "11+ countries with diverse educational opportunities",
+      description: "10+ countries with diverse educational opportunities",
       color: "from-red-500 to-red-600",
-      stat: "11+ Countries"
+      stat: "10+ Countries"
     },
     {
       icon: GraduationCap,
       title: "University Placement",
       description: "Top institutions worldwide with strong partnerships",
       color: "from-blue-500 to-blue-600",
-      stat: "100+ Partners"
+      stat: "50+ Partners"
     },
     {
       icon: Languages,
       title: "Language Training",
       description: "Comprehensive preparation for language proficiency tests",
       color: "from-green-500 to-green-600",
-      stat: "500+ Trained"
+      stat: "100+ Trained"
     },
     {
       icon: FileText,
@@ -113,7 +114,7 @@ export default function AboutPage() {
 
       {/* HERO SECTION */}
       <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
-        <motion.div 
+        <motion.div
           className="text-center max-w-5xl mx-auto"
           initial="hidden"
           whileInView="show"
@@ -121,16 +122,16 @@ export default function AboutPage() {
           variants={staggerContainer}
         >
           {/* Badge */}
-          <motion.div 
+          <motion.div
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-red-50 to-blue-50 border border-red-100 mb-8"
             variants={fadeInUp}
           >
             <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
             <span className="text-sm font-medium text-gray-700">Global Education Experts</span>
           </motion.div>
-          
+
           {/* Main Heading */}
-          <motion.h1 
+          <motion.h1
             className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-8"
             variants={fadeInUp}
           >
@@ -138,19 +139,19 @@ export default function AboutPage() {
               About Suyan Education
             </span>
           </motion.h1>
-          
+
           {/* Animated Underline */}
           <div className="flex justify-center mb-8">
-            <motion.div 
+            <motion.div
               className="w-24 h-1 bg-gradient-to-r from-red-600 to-blue-950 rounded-full"
               initial={{ width: 0 }}
               whileInView={{ width: 96 }}
               transition={{ delay: 0.3, duration: 0.8 }}
             />
           </div>
-          
+
           {/* Subtitle */}
-          <motion.p 
+          <motion.p
             className="text-xl lg:text-2xl text-gray-600 leading-relaxed max-w-3xl mx-auto mb-12"
             variants={fadeInUp}
           >
@@ -160,17 +161,17 @@ export default function AboutPage() {
           </motion.p>
 
           {/* Global Stats */}
-          <motion.div 
+          <motion.div
             className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto"
             variants={fadeInUp}
           >
             {[
-              { icon: Globe, value: "11+", label: "Countries", color: "text-red-600" },
-              { icon: Users, value: "500+", label: "Students Guided", color: "text-blue-950" },
+              { icon: Globe, value: "10+", label: "Countries", color: "text-red-600" },
+              { icon: Users, value: "100+", label: "Students Guided", color: "text-blue-950" },
               { icon: Award, value: "95%", label: "Visa Success", color: "text-green-600" },
-              { icon: Clock, value: "2020", label: "Since Year", color: "text-purple-600" },
+              { icon: Clock, value: "2018", label: "Since Year", color: "text-purple-600" },
             ].map((stat, index) => (
-              <div 
+              <div
                 key={index}
                 className="bg-white p-5 rounded-xl border border-gray-200 hover:border-red-300 transition-colors group"
               >
@@ -200,7 +201,7 @@ export default function AboutPage() {
             variants={staggerContainer}
             className="space-y-8"
           >
-            <motion.h2 
+            <motion.h2
               className="text-4xl lg:text-5xl font-bold"
               variants={fadeInUp}
             >
@@ -209,17 +210,17 @@ export default function AboutPage() {
               </span>
             </motion.h2>
 
-            <motion.p 
+            <motion.p
               className="text-lg text-gray-600 leading-relaxed"
               variants={fadeInUp}
             >
-              Suyan Education is a premier education consultancy based in Nepal, dedicated to 
+              Suyan Education is a premier education consultancy based in Nepal, dedicated to
               opening doors to worldwide academic opportunities. While we bring{" "}
               <span className="font-semibold text-red-600">specialized expertise in Japanese education</span>,
               our services span across continents, guiding students to their ideal study destinations.
             </motion.p>
 
-            <motion.p 
+            <motion.p
               className="text-lg text-gray-600 leading-relaxed"
               variants={fadeInUp}
             >
@@ -269,7 +270,7 @@ export default function AboutPage() {
               ))}
               <div className="pt-4 border-t border-gray-200">
                 <a href="/destinations" className="text-red-600 hover:text-red-700 font-medium text-sm flex items-center gap-2">
-                  Explore all 11+ destinations
+                  Explore all 10+ destinations
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                   </svg>
@@ -280,16 +281,22 @@ export default function AboutPage() {
         </div>
       </section>
 
+
+     
+
+           <AboutTeamSection/>
+
+
       {/* COMPREHENSIVE SERVICES */}
       <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
-        <motion.div 
+        <motion.div
           className="text-center max-w-4xl mx-auto mb-16"
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
           variants={staggerContainer}
         >
-          <motion.h2 
+          <motion.h2
             className="text-4xl lg:text-5xl font-bold mb-8"
             variants={fadeInUp}
           >
@@ -297,8 +304,8 @@ export default function AboutPage() {
               Our Comprehensive Services
             </span>
           </motion.h2>
-          
-          <motion.p 
+
+          <motion.p
             className="text-lg text-gray-600 leading-relaxed"
             variants={fadeInUp}
           >
@@ -320,7 +327,7 @@ export default function AboutPage() {
               <div className="bg-white rounded-2xl p-6 lg:p-8 border-2 border-gray-100 hover:border-transparent transition-all duration-300 h-full relative overflow-hidden">
                 {/* Gradient Background on Hover */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
-                
+
                 {/* Icon with Gradient Border */}
                 <div className="relative mb-6">
                   <div className={`absolute -inset-3 bg-gradient-to-br ${service.color} rounded-xl opacity-0 group-hover:opacity-20 blur transition-opacity duration-300`} />
@@ -328,17 +335,17 @@ export default function AboutPage() {
                     <service.icon className="w-8 h-8 text-red-600" />
                   </div>
                 </div>
-                
+
                 {/* Content */}
                 <div className="relative">
                   <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-red-700 transition-colors">
                     {service.title}
                   </h3>
-                  
+
                   <p className="text-gray-600 leading-relaxed mb-4">
                     {service.description}
                   </p>
-                  
+
                   <div className="flex items-center justify-between mt-6 pt-4 border-t border-gray-100">
                     <span className="text-sm font-semibold bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
                       {service.stat}
@@ -364,7 +371,7 @@ export default function AboutPage() {
             <div className="absolute top-0 right-0 w-96 h-96 border-2 border-red-300 rounded-full transform translate-x-48 -translate-y-48"></div>
             <div className="absolute bottom-0 left-0 w-96 h-96 border-2 border-blue-300 rounded-full transform -translate-x-48 translate-y-48"></div>
           </div>
-          
+
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 relative z-10">
             {/* Mission */}
             <motion.div
@@ -382,15 +389,15 @@ export default function AboutPage() {
                   Our Mission
                 </h3>
               </div>
-              
-              <motion.p 
+
+              <motion.p
                 className="text-lg text-gray-600 leading-relaxed"
                 variants={fadeInUp}
               >
-                To empower Nepali students with comprehensive, ethical, and personalized guidance 
+                To empower Nepali students with comprehensive, ethical, and personalized guidance
                 that transforms their global education aspirations into successful realities.
               </motion.p>
-              
+
               <div className="space-y-3">
                 <div className="flex items-center gap-2">
                   <CheckCircle className="w-5 h-5 text-green-500" />
@@ -423,22 +430,22 @@ export default function AboutPage() {
                   Our Vision
                 </h3>
               </div>
-              
-              <motion.p 
+
+              <motion.p
                 className="text-lg text-gray-600 leading-relaxed"
                 variants={fadeInUp}
               >
-                To be Nepal's most trusted global education consultancy, recognized for excellence 
-                in creating successful international pathways while maintaining our specialized 
+                To be Nepal's most trusted global education consultancy, recognized for excellence
+                in creating successful international pathways while maintaining our specialized
                 expertise in Japanese education.
               </motion.p>
-              
+
               <div className="space-y-3">
                 <div className="flex items-center gap-2">
                   <div className="w-5 h-5 rounded-full bg-gradient-to-r from-red-500 to-blue-500 flex items-center justify-center">
                     <div className="w-2 h-2 rounded-full bg-white"></div>
                   </div>
-                  <span className="text-gray-700">Expand to 20+ global destinations by 2025</span>
+                  <span className="text-gray-700">Expand to 100+ global destinations by 2025</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-5 h-5 rounded-full bg-gradient-to-r from-red-500 to-blue-500 flex items-center justify-center">
@@ -474,21 +481,21 @@ export default function AboutPage() {
               <div className="absolute bottom-0 left-0 w-64 h-64 border-4 border-white rounded-full transform -translate-x-32 translate-y-32"></div>
               <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48 border-4 border-white rounded-full"></div>
             </div>
-            
+
             <div className="relative z-10">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm mb-6">
                 <Plane className="w-4 h-4 text-white" />
                 <span className="text-sm font-medium text-white">Ready for Your Journey</span>
               </div>
-              
+
               <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
                 Begin Your Global Education Adventure
               </h2>
-              
+
               <p className="text-lg text-white/90 mb-8 max-w-2xl mx-auto">
                 Whether it's Japan, Australia, the US, or beyond — we'll guide you every step of the way
               </p>
-              
+
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a
                   href="/contact"

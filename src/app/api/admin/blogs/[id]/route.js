@@ -1,14 +1,31 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
+import { getAdmin } from "@/lib/auth";
 
+/* =========================
+   GET BLOG BY ID (ADMIN)
+========================= */
 export async function GET(req, { params }) {
   try {
-    const param = await params;
-    const id = param.id;
+    const { id } = await params;
+
+    if (!id) {
+      return NextResponse.json(
+        { success: false, message: "Missing blog id" },
+        { status: 400 }
+      );
+    }
 
     const blog = await prisma.blogPost.findUnique({
       where: { id },
-      include: { country: { select: { id: true, country: true } } },
+      include: {
+        country: {
+          select: {
+            id: true,
+            country: true,
+          },
+        },
+      },
     });
 
     if (!blog) {
@@ -19,8 +36,8 @@ export async function GET(req, { params }) {
     }
 
     return NextResponse.json({ success: true, item: blog }, { status: 200 });
-  } catch (e) {
-    console.error("GET /blogs/[id] error:", e);
+  } catch (error) {
+    console.error("GET /api/admin/blogs/[id] error:", error);
     return NextResponse.json(
       { success: false, message: "Failed to fetch blog" },
       { status: 500 }
@@ -28,22 +45,51 @@ export async function GET(req, { params }) {
   }
 }
 
-// Optional: Update blog
+/* =========================
+   UPDATE BLOG (INLINE EDIT)
+========================= */
 export async function PATCH(req, { params }) {
   try {
-    const param = await params;
-    const id = param.id;
-    
+    const admin = await getAdmin();
+    if (!admin) {
+      return NextResponse.json(
+        { success: false, message: "Unauthorized" },
+        { status: 401 }
+      );
+    }
+
+    const { id } = await params;
+    if (!id) {
+      return NextResponse.json(
+        { success: false, message: "Missing blog id" },
+        { status: 400 }
+      );
+    }
+
     const body = await req.json();
 
     const updatedBlog = await prisma.blogPost.update({
       where: { id },
-      data: body,
+      data: {
+        title: body.title,
+        slug: body.slug,
+        excerpt: body.excerpt,
+        content: body.content,
+        publishedAt: body.publishedAt
+          ? new Date(body.publishedAt)
+          : null,
+        countryId: body.countryId,
+        imageUrl: body.imageUrl,
+        coverImage: body.coverImage,
+      },
     });
 
-    return NextResponse.json({ success: true, item: updatedBlog });
-  } catch (e) {
-    console.error("PATCH /blogs/[id] error:", e);
+    return NextResponse.json(
+      { success: true, item: updatedBlog },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("PATCH /api/admin/blogs/[id] error:", error);
     return NextResponse.json(
       { success: false, message: "Failed to update blog" },
       { status: 500 }
@@ -51,31 +97,41 @@ export async function PATCH(req, { params }) {
   }
 }
 
-// Optional: Delete blog
-export async function DELETE(req, {params}) {
-    try {
-      const param = await params;
-      const id = param?.id;
-      if (!id) {
-        return NextResponse.json(
-          { success: false, message: "Missing id" },
-          { status: 400 }
-        );
-      }
-  
-      console.log("Deleting blog with id:", id);
-  
-      // If your Prisma id is String
-      await prisma.blogPost.delete({
-        where: { id }, 
-      });
-  
-      return NextResponse.json({ success: true });
-    } catch (e) {
-      console.error("DELETE /blogs/[id] error:", e);
+/* =========================
+   DELETE BLOG
+   (SAFE – NO FK ISSUES)
+========================= */
+export async function DELETE(req, { params }) {
+  try {
+    const admin = await getAdmin();
+    if (!admin) {
       return NextResponse.json(
-        { success: false, message: e.message },
-        { status: 500 }
+        { success: false, message: "Unauthorized" },
+        { status: 401 }
       );
     }
+
+    const { id } = await params;
+    if (!id) {
+      return NextResponse.json(
+        { success: false, message: "Missing blog id" },
+        { status: 400 }
+      );
+    }
+
+    await prisma.blogPost.delete({
+      where: { id },
+    });
+
+    return NextResponse.json(
+      { success: true },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("DELETE /api/admin/blogs/[id] error:", error);
+    return NextResponse.json(
+      { success: false, message: error.message },
+      { status: 500 }
+    );
   }
+}
