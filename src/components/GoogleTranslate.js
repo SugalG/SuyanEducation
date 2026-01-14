@@ -1,8 +1,10 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function GoogleTranslate() {
+  const [open, setOpen] = useState(false);
+
   useEffect(() => {
     if (window.google?.translate) return;
 
@@ -10,7 +12,8 @@ export default function GoogleTranslate() {
       new window.google.translate.TranslateElement(
         {
           pageLanguage: "en",
-          includedLanguages: "en,ne,ja,hi",
+          includedLanguages:
+            "en,ne,hi,ja,ko,zh-CN,zh-TW,fr,de,es,it,pt,ru,ar,tr,th,vi,id,ms",
           autoDisplay: false,
         },
         "google_translate_element"
@@ -25,35 +28,51 @@ export default function GoogleTranslate() {
   }, []);
 
   return (
-  <div
-    className="
-      fixed bottom-24 right-4
-      z-[9999]
-      group
-    "
-  >
-    <div
-      className="
-        flex items-center gap-2
-        px-4 py-2
-        rounded-full
-        bg-white
-        border border-gray-200
-        shadow-lg
-        hover:shadow-xl
-        transition-all
-      "
-    >
-      {/* Globe Icon */}
-      <span className="text-lg">🌐</span>
+    <div className="fixed bottom-24 right-4 z-[9999]">
+      {/* Anchor wrapper */}
+      <div className="relative flex flex-col items-end">
+        {/* Button */}
+        <button
+          onClick={() => setOpen((v) => !v)}
+          className="
+            px-6 py-3
+            rounded-full
+            font-semibold
+            text-white
+            bg-brand-gradient
+            shadow-lg
+            hover:shadow-xl
+            hover:scale-105
+            transition-all
+          "
+        >
+          Translate
+        </button>
 
-      {/* Google Translate Mount */}
-      <div
-        id="google_translate_element"
-        className="min-w-[120px]"
-      />
+        {/* Dropdown — absolutely positioned */}
+        <div
+          className={`
+            absolute
+            bottom-full
+            mb-3
+            right-0
+            translate-wrapper
+            transition-all
+            duration-300
+            origin-bottom-right
+            ${open
+              ? "opacity-100 scale-100"
+              : "opacity-0 scale-95 pointer-events-none"}
+          `}
+        >
+          <div>
+            <div
+              id="google_translate_element"
+              className="min-w-[180px]"
+            />
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-);
-
+  );
 }

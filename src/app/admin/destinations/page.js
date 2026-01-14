@@ -16,7 +16,7 @@ export default function AdminDestinations() {
   const emptyForm = {
     slug: "",
     country: "",
-    heroImage: "", // ✅ NEW
+    heroImage: "", 
     description: "",
     whyPoints: "",
     education: "",

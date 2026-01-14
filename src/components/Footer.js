@@ -168,22 +168,7 @@ export default function Footer({ settings }) {
                 </div>
 
                 {/* Kalanki */}
-                <div>
-                  <p className="font-semibold text-white mb-1">
-                    Branch Office – Kalanki
-                  </p>
-                  <div className="flex gap-2">
-                    <MapPin className="w-4 h-4 text-red-500 mt-1" />
-                    <span>
-                      Kathmandu Metropolitan City Ward No. 14, Kalanki,
-                      Kathmandu, Nepal – 44600
-                    </span>
-                  </div>
-                  <div className="flex gap-2 mt-1">
-                    <Phone className="w-4 h-4 text-red-500" />
-                    <span>+977-1-5925652 / 9864-261-506</span>
-                  </div>
-                </div>
+              
 
                 {/* Hours */}
                 <div className="pt-3 border-t border-gray-700">
