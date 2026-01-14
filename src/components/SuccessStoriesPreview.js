@@ -6,9 +6,39 @@ export default function SuccessStoriesPreview() {
   const [stories, setStories] = useState([]);
 
   useEffect(() => {
+    let isMounted = true;
+
     fetch("/api/testimonials")
-      .then((res) => res.json())
-      .then(setStories);
+      .then(async (res) => {
+        if (!res.ok) {
+          console.error("Failed to fetch testimonials:", res.status);
+          return [];
+        }
+
+        const text = await res.text();
+
+        if (!text) return [];
+
+        try {
+          return JSON.parse(text);
+        } catch (err) {
+          console.error("Invalid JSON from /api/testimonials", err);
+          return [];
+        }
+      })
+      .then((data) => {
+        if (isMounted) {
+          setStories(Array.isArray(data) ? data : []);
+        }
+      })
+      .catch((err) => {
+        console.error("Testimonials fetch error:", err);
+        if (isMounted) setStories([]);
+      });
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   if (!stories.length) return null;
@@ -16,7 +46,6 @@ export default function SuccessStoriesPreview() {
   return (
     <section className="max-w-7xl mx-auto px-6 mt-24">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-
         {/* Left */}
         <div>
           <h2 className="text-3xl font-bold text-gray-900">
@@ -64,7 +93,6 @@ export default function SuccessStoriesPreview() {
             </div>
           ))}
         </div>
-
       </div>
     </section>
   );

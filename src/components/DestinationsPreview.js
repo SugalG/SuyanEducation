@@ -27,9 +27,10 @@ export default function DestinationsPreview() {
   if (!destinations.length) return null;
 
   return (
-    <section 
-    id="destinations-preview"
-    className="relative w-full py-16 lg:py-24 overflow-hidden">
+    <section
+      id="destinations-preview"
+      className="relative w-full py-16 lg:py-24 overflow-hidden"
+    >
       {/* Background */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-red-500/5 rounded-full blur-3xl" />
@@ -113,6 +114,7 @@ function DestinationCard({ destination }) {
       href={`/destinations/${destination.slug}`}
       className="block bg-white rounded-2xl overflow-hidden border-2 border-gray-100 hover:border-red-300 transition-all group hover:shadow-xl"
     >
+      {/* IMAGE — NO OVERLAY */}
       <div className="relative h-48 overflow-hidden">
         {destination.heroImage ? (
           <Image
@@ -128,13 +130,16 @@ function DestinationCard({ destination }) {
           </div>
         )}
 
-        <div className="absolute bottom-0 left-0 right-0 bg-black/40 p-3">
-          <h3 className="text-xl font-bold text-white">
-            {destination.country}
-          </h3>
-        </div>
+        {/* COUNTRY NAME — FLOATING, NO BACKGROUND */}
+        <h3
+          className="absolute bottom-4 left-4 text-xl font-bold text-white"
+          style={{ textShadow: "0 2px 8px rgba(0,0,0,0.45)" }}
+        >
+          {destination.country}
+        </h3>
       </div>
 
+      {/* CONTENT */}
       <div className="p-6">
         <p className="text-gray-600 text-sm line-clamp-3">
           {destination.description || "Explore study opportunities"}

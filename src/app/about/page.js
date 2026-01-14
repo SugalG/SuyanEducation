@@ -1,5 +1,6 @@
 "use client";
 
+import AboutTeamSection from "@/components/AboutTeamSection";
 import { motion } from "framer-motion";
 import { Target, Eye, Users, Award, Globe, CheckCircle, GraduationCap, Shield, BookOpen, MapPin, Clock, Star, Plane, Building, Languages, FileText, Mic, Compass } from "lucide-react";
 
@@ -281,79 +282,9 @@ export default function AboutPage() {
       </section>
 
 
-      {/* MESSAGE FROM CEO */}
-      <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
-        <motion.div
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true }}
-          variants={staggerContainer}
-          className="bg-gradient-to-br from-white to-gray-50 rounded-2xl lg:rounded-3xl p-8 lg:p-12 border border-gray-200 shadow-xl"
-        >
-          <div className="grid lg:grid-cols-[1.5fr_1fr] gap-12 items-center">
+     
 
-            {/* CEO Message Content */}
-            <motion.div variants={fadeInUp} className="space-y-6">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-red-50 to-blue-50 border border-red-100">
-                <Star className="w-4 h-4 text-red-600" />
-                <span className="text-sm font-medium text-gray-700">
-                  Message from the CEO
-                </span>
-              </div>
-
-              <h3 className="text-3xl lg:text-4xl font-bold">
-                <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
-                  Building Global Futures with Purpose
-                </span>
-              </h3>
-
-              <p className="text-lg text-gray-600 leading-relaxed">
-                Studying abroad is not just about traveling to another country — it is a
-                life-changing decision that shapes one’s academic, professional, and
-                personal future.
-              </p>
-
-              <p className="text-lg text-gray-600 leading-relaxed">
-                At Suyan Education, our journey began with a strong foundation in
-                <span className="font-semibold text-red-600"> Japanese education and language training</span>.
-                Over time, our vision expanded to include multiple global destinations,
-                enabling students to access world-class education across continents.
-              </p>
-
-              <p className="text-lg text-gray-600 leading-relaxed">
-                Our commitment is simple — to guide students with honesty, clarity,
-                and long-term perspective, ensuring they are prepared not only to study
-                abroad, but to succeed abroad.
-              </p>
-
-              <div className="pt-4">
-                <div className="font-bold text-gray-900">
-                  Founder & Managing Director
-                </div>
-                <div className="text-sm text-gray-600">
-                  Suyan Education
-                </div>
-              </div>
-            </motion.div>
-
-            {/* CEO Image */}
-            <motion.div
-              variants={fadeInUp}
-              className="flex justify-center lg:justify-end"
-            >
-              <div className="relative">
-                <div className="absolute -inset-1 bg-gradient-to-r from-red-600 to-blue-950 rounded-full blur opacity-30"></div>
-                <img
-                  src="/ceo.jpg"
-                  alt="CEO - Suyan Education"
-                  className="relative w-64 h-64 rounded-full object-cover border-8 border-white shadow-2xl"
-                />
-              </div>
-            </motion.div>
-
-          </div>
-        </motion.div>
-      </section>
+           <AboutTeamSection/>
 
 
       {/* COMPREHENSIVE SERVICES */}
