@@ -85,7 +85,7 @@ export default function Hero() {
 
       {/* CONTENT */}
       <div
-        className="absolute inset-x-0 bottom-0 z-10 flex items-center justify-center px-4 sm:px-6"
+        className="absolute inset-x-0 bottom-0 z-10 flex items-center justify-center px-4 sm:px-6 py-4"
         style={{ top: "var(--navbar-height)" }}
       >
         <div className="max-w-5xl w-full text-center">

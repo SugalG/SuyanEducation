@@ -12,6 +12,7 @@ import {
   BookOpen,
   GraduationCap,
 } from "lucide-react";
+import RevealTest from "@/components/RevealTest";
 
 export default async function ServiceDetail({ params }) {
   // ✅ params is NOT async
@@ -41,7 +42,7 @@ export default async function ServiceDetail({ params }) {
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 py-20 w-full">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <Reveal>
+            <RevealTest animateImmediately>
               <div>
                 <div className="inline-flex items-center gap-3 px-6 py-3 rounded-2xl bg-white shadow-lg mb-8">
                   <div className="w-3 h-3 bg-gradient-to-r from-red-500 to-blue-600 rounded-full animate-pulse"></div>
@@ -75,15 +76,17 @@ export default async function ServiceDetail({ params }) {
                   Get Started <ArrowRight className="w-5 h-5" />
                 </a>
               </div>
-            </Reveal>
+            </RevealTest>
 
-            <Reveal delay={0.3}>
+            <RevealTest animateImmediately delay={0.3}>
               <div className="rounded-3xl overflow-hidden shadow-2xl bg-white border-8 border-white">
                 {service.heroImage ? (
                   <img
                     src={service.heroImage}
                     alt={service.title}
                     className="w-full h-[500px] object-cover"
+                    decoding="async"
+                    loading="lazy"
                   />
                 ) : (
                   <div className="h-[500px] flex items-center justify-center">
@@ -91,7 +94,7 @@ export default async function ServiceDetail({ params }) {
                   </div>
                 )}
               </div>
-            </Reveal>
+            </RevealTest>
           </div>
         </div>
       </section>

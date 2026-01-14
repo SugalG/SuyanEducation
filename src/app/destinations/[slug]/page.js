@@ -2,6 +2,7 @@ import prisma from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import Reveal from "@/components/Reveal";
 import { Users, BookOpen, Globe, GraduationCap, Calendar, Target, Award, Briefcase } from "lucide-react";
+import RevealTest from "@/components/RevealTest";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -50,7 +51,7 @@ export default async function DestinationPage({ params }) {
         {/* Content */}
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <Reveal>
+            <RevealTest animateImmediately>
               <div>
                 {/* Elegant Country Badge */}
                 <div className="inline-flex items-center gap-3 px-5 py-3 rounded-2xl bg-white shadow-lg border border-gray-100 mb-8">
@@ -128,10 +129,10 @@ export default async function DestinationPage({ params }) {
                   </a>
                 </div>
               </div>
-            </Reveal>
+            </RevealTest>
 
             {/* Hero Image with Modern Frame */}
-            <Reveal delay={0.3}>
+            <RevealTest animateImmediately delay={0.5}>
               <div className="relative">
                 <div className="relative rounded-3xl overflow-hidden shadow-2xl">
                   {/* Image Container with Gradient Border */}
@@ -154,7 +155,7 @@ export default async function DestinationPage({ params }) {
 
 
               </div>
-            </Reveal>
+            </RevealTest>
           </div>
         </div>
       </section>
