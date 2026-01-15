@@ -70,8 +70,8 @@ model Destination {
   popularFields String?
   visaUpdatesTitle String? @default("Visa and Immigration Updates")  
   visaUpdates   String?
-  lifeInCountry LifeInCountry
-  jobsAndCareer JobsAndCareer
+  lifeInCountry LifeInCountry?
+  jobsAndCareer JobsAndCareer?
   createdAt     DateTime @default(now())
 }
 
@@ -91,6 +91,7 @@ model LifeInCountry {
   workLifeBalance String?  // student life balance
 
   createdAt       DateTime @default(now())
+  @@index([destinationId])
 }
 
 
@@ -110,6 +111,7 @@ model JobsAndCareer {
   demandJobs     String?  // in-demand professions
 
   createdAt       DateTime @default(now())
+  @@index([destinationId])
 }
 
 

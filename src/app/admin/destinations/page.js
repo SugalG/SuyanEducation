@@ -85,6 +85,34 @@ export default function AdminDestinations() {
     },
   });
 
+  // Delete mutation
+  const deleteMutation = useMutation({
+    mutationFn: async (id) => {
+      const res = await fetch(
+        `/api/admin/destinations/${id}`,
+        { method: "DELETE" }
+      );
+
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        throw new Error(data.message || "Delete failed");
+      }
+
+      return data;
+    },
+    onSuccess: () => {
+      toast.success("Destination Deleted");
+      queryClient.invalidateQueries({
+        queryKey: ["destinations"],
+      });
+    },
+    onError: (err) => {
+      toast.error(err.message || "Delete failed");
+    },
+  });
+  
+
   /* =======================
      HANDLERS
   ======================= */
