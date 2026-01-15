@@ -262,6 +262,7 @@ export default function AdminDestinations() {
               </div>
 
               <div className="flex gap-4">
+                <button className="text-green-600 text-sm" onClick={() => setSelectedDestination(d) }>Add University</button>
                 <button
                   onClick={() => startEdit(d)}
                   className="text-blue-600 text-sm"
