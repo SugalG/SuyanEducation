@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Reveal from "@/components/Reveal";
 import { Users, BookOpen, Globe, GraduationCap, Calendar, Target, Award, Briefcase } from "lucide-react";
 import RevealTest from "@/components/RevealTest";
+import DestinationContent from "@/components/destinations/DestinationContent";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -34,7 +35,7 @@ export default async function DestinationPage({ params }) {
   const visaUpdates = destination.visaUpdates?.split("\n") || [];
 
   return (
-    <main className="w-full overflow-hidden scroll-mt-[var(--navbar-height)]">
+    <main className="w-full">
       {/* Hero Section - Modern Design */}
       <section className="relative w-full min-h-[90vh] flex items-center overflow-hidden">
         {/* Beautiful Background with Gradient */}
@@ -160,194 +161,8 @@ export default async function DestinationPage({ params }) {
         </div>
       </section>
 
-      {/* Introduction Section */}
-      <section
-        id="introduction"
-        className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 scroll-mt-[var(--navbar-height)]"
-      >
-        <div className="text-center">
-          <Reveal>
-            <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-red-50 to-blue-50 border border-red-100 mb-6">
-              <BookOpen className="w-5 h-5 text-red-500" />
-              <span className="text-lg font-semibold text-gray-700">
-                About Education in {destination.country}
-              </span>
-            </div>
-          </Reveal>
-
-          <Reveal delay={0.2}>
-            <p className="text-2xl text-gray-700 leading-relaxed max-w-4xl mx-auto">
-              {destination.description}
-            </p>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ================= SIDEBAR + CONTENT ================= */}
-      <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-32">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-14">
-          {/* ===== Sidebar ===== */}
-          <aside className="hidden lg:block lg:col-span-1">
-            <div className="sticky top-32 bg-white rounded-2xl border border-gray-100 shadow-lg p-6">
-              <h4 className="text-lg font-bold text-gray-900 mb-5">
-                On this page
-              </h4>
-
-              <nav className="space-y-3 text-sm font-medium">
-                <a
-                  href="#introduction"
-                  className="block text-gray-600 hover:text-red-600 transition"
-                >
-                  Introduction
-                </a>
-
-                {whyPoints.length > 0 && (
-                  <a
-                    href="#why-study"
-                    className="block text-gray-600 hover:text-red-600 transition"
-                  >
-                    Why Choose {destination.country}
-                  </a>
-                )}
-
-                {destination.education && (
-                  <a
-                    href="#education"
-                    className="block text-gray-600 hover:text-red-600 transition"
-                  >
-                    Education System & Requirements
-                  </a>
-                )}
-
-                {fields.length > 0 && (
-                  <a
-                    href="#fields"
-                    className="block text-gray-600 hover:text-red-600 transition"
-                  >
-                    Top Fields of Study
-                  </a>
-                )}
-
-                {visaUpdates.length > 0 && (
-                  <a
-                    href="#visa"
-                    className="block text-gray-600 hover:text-red-600 transition"
-                  >
-                    Visa & Immigration Updates
-                  </a>
-                )}
-              </nav>
-            </div>
-          </aside>
-
-          {/* ===== Main Content ===== */}
-          <div className="lg:col-span-3 space-y-32">
-            {/* ===== WHY STUDY ===== */}
-            {whyPoints.length > 0 && (
-              <section id="why-study" className="scroll-mt-[var(--navbar-height)] pt-10">
-
-                <Reveal>
-                  <h2 className="text-4xl sm:text-5xl font-bold mb-6">
-                    <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
-                      Why Choose {destination.country}?
-                    </span>
-                  </h2>
-                </Reveal>
-
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
-                  {whyPoints.map((point, i) => (
-                    <Reveal key={i} delay={i * 0.1}>
-                      <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition">
-                        <div className="text-red-600 font-bold text-2xl mb-4">
-                          {i + 1}
-                        </div>
-                        <p className="text-gray-700">{point}</p>
-                      </div>
-                    </Reveal>
-                  ))}
-                </div>
-              </section>
-            )}
-
-            {/* ===== EDUCATION ===== */}
-            {destination.education && (
-              <section id="education" className="scroll-mt-[var(--navbar-height)] pt-10">
-                <Reveal>
-                  <h2 className="text-4xl sm:text-5xl font-bold mb-8">
-                    <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
-                      Education System & Requirements
-                    </span>
-                  </h2>
-                </Reveal>
-
-                <Reveal delay={0.2}>
-                  <div className="bg-white rounded-3xl p-10 border shadow-xl">
-                    {destination.education.split("\n").map((p, i) => (
-                      <p key={i} className="mb-6 text-gray-700 text-lg">
-                        {p}
-                      </p>
-                    ))}
-                  </div>
-                </Reveal>
-              </section>
-            )}
-
-            {/* ===== FIELDS ===== */}
-            {fields.length > 0 && (
-              <section id="fields" className="scroll-mt-[var(--navbar-height)] pt-10">
-                <Reveal>
-                  <h2 className="text-4xl sm:text-5xl font-bold mb-6">
-                    <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
-                      Top Fields of Study
-                    </span>
-                  </h2>
-                </Reveal>
-
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
-                  {fields.map((field, i) => (
-                    <Reveal key={i} delay={i * 0.1}>
-                      <div className="bg-white p-8 rounded-3xl border shadow hover:shadow-2xl transition">
-                        <h3 className="text-xl font-bold text-gray-900 mb-3">
-                          {field}
-                        </h3>
-                        <p className="text-gray-600">
-                          High-demand programs with strong career outcomes.
-                        </p>
-                      </div>
-                    </Reveal>
-                  ))}
-                </div>
-              </section>
-            )}
-
-            {/* ===== VISA ===== */}
-            {visaUpdates.length > 0 && (
-              <section id="visa" className="scroll-mt-[var(--navbar-height)] pt-10">
-                <Reveal>
-                  <h2 className="text-4xl sm:text-5xl font-bold mb-8">
-                    <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
-                      Visa & Immigration Updates
-                    </span>
-                  </h2>
-                </Reveal>
-
-                <Reveal delay={0.2}>
-                  <ul className="space-y-4">
-                    {visaUpdates.map((v, i) => (
-                      <li
-                        key={i}
-                        className="bg-white rounded-2xl p-6 shadow border"
-                      >
-                        {v}
-                      </li>
-                    ))}
-                  </ul>
-                </Reveal>
-              </section>
-            )}
-          </div>
-        </div>
-      </section>
+      {/* Sidebar + Content Section */}
+      <DestinationContent destination={destination} />
     
     </main>
   );

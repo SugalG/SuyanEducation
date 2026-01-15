@@ -305,3 +305,8 @@ body {
   border: 1px solid #e5e7eb;
   cursor: pointer;
 }
+
+.destination-sticky{
+  position: sticky;
+  top: 100px;
+}
