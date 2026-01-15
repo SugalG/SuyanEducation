@@ -34,7 +34,7 @@ export default async function DestinationPage({ params }) {
   const visaUpdates = destination.visaUpdates?.split("\n") || [];
 
   return (
-    <main className="w-full overflow-hidden mt-24">
+    <main className="w-full overflow-hidden scroll-mt-[var(--navbar-height)]">
       {/* Hero Section - Modern Design */}
       <section className="relative w-full min-h-[90vh] flex items-center overflow-hidden">
         {/* Beautiful Background with Gradient */}
@@ -161,12 +161,17 @@ export default async function DestinationPage({ params }) {
       </section>
 
       {/* Introduction Section */}
-      <section className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <section
+        id="introduction"
+        className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 scroll-mt-[var(--navbar-height)]"
+      >
         <div className="text-center">
           <Reveal>
             <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-red-50 to-blue-50 border border-red-100 mb-6">
               <BookOpen className="w-5 h-5 text-red-500" />
-              <span className="text-lg font-semibold text-gray-700">About Education in {destination.country}</span>
+              <span className="text-lg font-semibold text-gray-700">
+                About Education in {destination.country}
+              </span>
             </div>
           </Reveal>
 
@@ -178,237 +183,172 @@ export default async function DestinationPage({ params }) {
         </div>
       </section>
 
-      {/* Why Study Section */}
-      {whyPoints.length > 0 && (
-        <section id="why-study" className="relative bg-gradient-to-b from-white to-gray-50/50 py-24">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <Reveal>
-              <div className="text-center mb-16">
-                <h2 className="text-4xl sm:text-5xl font-bold mb-6">
-                  <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
-                    Why Choose {destination.country}?
-                  </span>
-                </h2>
-                <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                  Discover the unique advantages that make {destination.country} an exceptional choice for Nepalese students
-                </p>
-              </div>
-            </Reveal>
+      {/* ================= SIDEBAR + CONTENT ================= */}
+      <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-32">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-14">
+          {/* ===== Sidebar ===== */}
+          <aside className="hidden lg:block lg:col-span-1">
+            <div className="sticky top-32 bg-white rounded-2xl border border-gray-100 shadow-lg p-6">
+              <h4 className="text-lg font-bold text-gray-900 mb-5">
+                On this page
+              </h4>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {whyPoints.map((point, i) => (
-                <Reveal key={i} delay={i * 0.1}>
-                  <div className="group relative bg-white rounded-3xl p-8 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
-                    {/* Number Background */}
-                    <div className="absolute -top-6 -left-6 w-16 h-16 bg-gradient-to-br from-red-500 to-red-400 text-white rounded-2xl flex items-center justify-center text-2xl font-bold shadow-lg">
-                      {i + 1}
-                    </div>
-
-                    <div className="pt-6">
-                      <p className="text-lg text-gray-700 leading-relaxed">
-                        {point}
-                      </p>
-                    </div>
-
-                    {/* Hover Effect Line */}
-                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-red-500 to-blue-500 rounded-b-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Education System */}
-      {destination.education && (
-        <section className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-          <Reveal>
-            <div className="text-center mb-16">
-              <h2 className="text-4xl sm:text-5xl font-bold mb-8">
-                <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
-                  Education System And Requirements
-                </span>
-              </h2>
-            </div>
-          </Reveal>
-
-          <Reveal delay={0.2}>
-            <div className="bg-gradient-to-br from-white to-gray-50 rounded-3xl border-2 border-gray-100 p-10 shadow-xl">
-              <div className="prose prose-xl max-w-none text-gray-700 leading-relaxed">
-                {destination.education.split("\n").map((para, i) => (
-                  <p key={i} className="mb-8 last:mb-0 text-lg">{para}</p>
-                ))}
-              </div>
-            </div>
-          </Reveal>
-        </section>
-      )}
-
-      {/* Popular Fields */}
-      {fields.length > 0 && (
-        <section className="relative bg-gradient-to-b from-gray-50/50 to-white py-24">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <Reveal>
-              <div className="text-center mb-16">
-                <h2 className="text-4xl sm:text-5xl font-bold mb-6">
-                  <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
-                    Top Fields of Study
-                  </span>
-                </h2>
-                <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                  Explore the most sought-after academic disciplines in {destination.country} for Nepalese students
-                </p>
-              </div>
-            </Reveal>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {fields.map((field, i) => (
-                <Reveal key={i} delay={i * 0.1}>
-                  <div className="group bg-white rounded-3xl border-2 border-gray-100 p-8 hover:border-red-300 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
-                    <div className="flex items-start gap-4 mb-6">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-red-500 to-red-400 flex items-center justify-center text-white font-bold text-lg">
-                        {i + 1}
-                      </div>
-                      <h3 className="text-2xl font-bold text-gray-900 mt-1 group-hover:text-red-600 transition-colors">
-                        {field}
-                      </h3>
-                    </div>
-
-                    <p className="text-gray-600 mb-6">
-                      Premier programs and universities offering {field.toLowerCase()} with excellent career prospects.
-                    </p>
-
-                    <div className="inline-flex items-center gap-2 text-red-600 font-semibold group-hover:gap-3 transition-all">
-                      <span>Explore Programs</span>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="18"
-                        height="18"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        className="group-hover:translate-x-1 transition-transform"
-                      >
-                        <path d="m9 18 6-6-6-6" />
-                      </svg>
-                    </div>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Visa Updates */}
-      {visaUpdates.length > 0 && (
-        <section className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-          <Reveal>
-            <div className="text-center mb-16">
-              <h2 className="text-4xl sm:text-5xl font-bold mb-8">
-                <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
-                  Visa & Immigration Updates
-                </span>
-              </h2>
-            </div>
-          </Reveal>
-
-          <Reveal delay={0.2}>
-            <div className="bg-gradient-to-br from-red-50 via-white to-blue-50 rounded-3xl border-2 border-red-100 shadow-2xl overflow-hidden">
-              {/* Header */}
-              <div className="bg-gradient-to-r from-red-600 to-blue-950 text-white p-8 text-center">
-                <h3 className="text-2xl sm:text-3xl font-bold mb-2">Latest Information for Nepalese Students</h3>
-                <p className="text-red-100">Updated regularly by our immigration experts</p>
-              </div>
-
-              {/* Content */}
-              <div className="p-8 sm:p-10">
-                <div className="grid md:grid-cols-2 gap-10">
-                  <div>
-                    <h4 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-                      <Calendar className="w-8 h-8 text-red-600" />
-                      Important Updates
-                    </h4>
-                    <ul className="space-y-5">
-                      {visaUpdates.slice(0, Math.ceil(visaUpdates.length / 2)).map((v, i) => (
-                        <li key={i} className="flex gap-4 text-gray-700">
-                          <div className="w-3 h-3 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span className="text-lg">{v}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div>
-                    <h4 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-                      <Target className="w-8 h-8 text-blue-600" />
-                      Requirements & Tips
-                    </h4>
-                    <ul className="space-y-5">
-                      {visaUpdates.slice(Math.ceil(visaUpdates.length / 2)).map((v, i) => (
-                        <li key={i} className="flex gap-4 text-gray-700">
-                          <div className="w-3 h-3 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div>
-                          <span className="text-lg">{v}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Reveal>
-        </section>
-      )}
-
-      {/* Final CTA */}
-      <section className="relative py-24 overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-red-50 via-white to-blue-50" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-64 bg-gradient-to-r from-red-200/20 to-blue-200/20 rounded-full blur-3xl"></div>
-        </div>
-
-        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <Reveal>
-            <div className="bg-gradient-to-r from-red-600 to-blue-950 rounded-3xl p-12 shadow-2xl">
-              <h3 className="text-3xl sm:text-4xl font-bold text-white mb-6">
-                Begin Your Educational Adventure in {destination.country}
-              </h3>
-              <p className="text-xl text-red-100 mb-10 max-w-2xl mx-auto">
-                Our dedicated team is ready to guide you through every step of your study abroad journey
-              </p>
-
-              <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <nav className="space-y-3 text-sm font-medium">
                 <a
-                  href="/contact"
-                  className="group inline-flex items-center justify-center gap-3 px-12 py-5 bg-white text-gray-900 font-bold rounded-2xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
+                  href="#introduction"
+                  className="block text-gray-600 hover:text-red-600 transition"
                 >
-                  <span>Book Free Consultation</span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    className="group-hover:translate-x-1 transition-transform"
+                  Introduction
+                </a>
+
+                {whyPoints.length > 0 && (
+                  <a
+                    href="#why-study"
+                    className="block text-gray-600 hover:text-red-600 transition"
                   >
-                    <path d="m9 18 6-6-6-6" />
-                  </svg>
-                </a>
-                <a
-                  href="tel:+977-1234567890"
-                  className="inline-flex items-center justify-center px-12 py-5 bg-transparent border-2 border-white text-white font-bold rounded-2xl hover:bg-white/10 transition-all duration-300"
-                >
-                  Speak with Expert
-                </a>
-              </div>
+                    Why Choose {destination.country}
+                  </a>
+                )}
+
+                {destination.education && (
+                  <a
+                    href="#education"
+                    className="block text-gray-600 hover:text-red-600 transition"
+                  >
+                    Education System & Requirements
+                  </a>
+                )}
+
+                {fields.length > 0 && (
+                  <a
+                    href="#fields"
+                    className="block text-gray-600 hover:text-red-600 transition"
+                  >
+                    Top Fields of Study
+                  </a>
+                )}
+
+                {visaUpdates.length > 0 && (
+                  <a
+                    href="#visa"
+                    className="block text-gray-600 hover:text-red-600 transition"
+                  >
+                    Visa & Immigration Updates
+                  </a>
+                )}
+              </nav>
             </div>
-          </Reveal>
+          </aside>
+
+          {/* ===== Main Content ===== */}
+          <div className="lg:col-span-3 space-y-32">
+            {/* ===== WHY STUDY ===== */}
+            {whyPoints.length > 0 && (
+              <section id="why-study" className="scroll-mt-[var(--navbar-height)] pt-10">
+
+                <Reveal>
+                  <h2 className="text-4xl sm:text-5xl font-bold mb-6">
+                    <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
+                      Why Choose {destination.country}?
+                    </span>
+                  </h2>
+                </Reveal>
+
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+                  {whyPoints.map((point, i) => (
+                    <Reveal key={i} delay={i * 0.1}>
+                      <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition">
+                        <div className="text-red-600 font-bold text-2xl mb-4">
+                          {i + 1}
+                        </div>
+                        <p className="text-gray-700">{point}</p>
+                      </div>
+                    </Reveal>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* ===== EDUCATION ===== */}
+            {destination.education && (
+              <section id="education" className="scroll-mt-[var(--navbar-height)] pt-10">
+                <Reveal>
+                  <h2 className="text-4xl sm:text-5xl font-bold mb-8">
+                    <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
+                      Education System & Requirements
+                    </span>
+                  </h2>
+                </Reveal>
+
+                <Reveal delay={0.2}>
+                  <div className="bg-white rounded-3xl p-10 border shadow-xl">
+                    {destination.education.split("\n").map((p, i) => (
+                      <p key={i} className="mb-6 text-gray-700 text-lg">
+                        {p}
+                      </p>
+                    ))}
+                  </div>
+                </Reveal>
+              </section>
+            )}
+
+            {/* ===== FIELDS ===== */}
+            {fields.length > 0 && (
+              <section id="fields" className="scroll-mt-[var(--navbar-height)] pt-10">
+                <Reveal>
+                  <h2 className="text-4xl sm:text-5xl font-bold mb-6">
+                    <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
+                      Top Fields of Study
+                    </span>
+                  </h2>
+                </Reveal>
+
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+                  {fields.map((field, i) => (
+                    <Reveal key={i} delay={i * 0.1}>
+                      <div className="bg-white p-8 rounded-3xl border shadow hover:shadow-2xl transition">
+                        <h3 className="text-xl font-bold text-gray-900 mb-3">
+                          {field}
+                        </h3>
+                        <p className="text-gray-600">
+                          High-demand programs with strong career outcomes.
+                        </p>
+                      </div>
+                    </Reveal>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* ===== VISA ===== */}
+            {visaUpdates.length > 0 && (
+              <section id="visa" className="scroll-mt-[var(--navbar-height)] pt-10">
+                <Reveal>
+                  <h2 className="text-4xl sm:text-5xl font-bold mb-8">
+                    <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
+                      Visa & Immigration Updates
+                    </span>
+                  </h2>
+                </Reveal>
+
+                <Reveal delay={0.2}>
+                  <ul className="space-y-4">
+                    {visaUpdates.map((v, i) => (
+                      <li
+                        key={i}
+                        className="bg-white rounded-2xl p-6 shadow border"
+                      >
+                        {v}
+                      </li>
+                    ))}
+                  </ul>
+                </Reveal>
+              </section>
+            )}
+          </div>
         </div>
       </section>
+    
     </main>
   );
 }

@@ -61,10 +61,14 @@ model Destination {
   heroImage     String?
   universities  University[]
   blogs         BlogPost[]
+  descriptionTitle String? @default("Introduction")
   description   String?
   whyPoints     String?  
+  educationTitle String? @default("Education System and Requirements")
   education     String?
-  popularFields String?  
+  popularFieldsTitle String? @default("Top Field of Study")
+  popularFields String?
+  visaUpdatesTitle String? @default("Visa and Immigration Updates")  
   visaUpdates   String?
   createdAt     DateTime @default(now())
 }
