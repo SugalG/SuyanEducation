@@ -35,9 +35,9 @@ export default function Footer({ settings }) {
   ];
 
   return (
-    <footer className="relative bg-gradient-to-br from-gray-900 to-gray-950 text-white overflow-hidden">
+    <footer className="relative bg-gradient-to-br from-blue-950 to-blue-950 text-white overflow-hidden">
       {/* Top Gradient Bar */}
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-red-600 via-red-500 to-blue-950" />
+      <div className="absolute top-0 left-0 right-0 h-1" />
 
       {/* Background Glow */}
       <div className="absolute inset-0 opacity-10">
@@ -52,29 +52,24 @@ export default function Footer({ settings }) {
 
             {/* Brand */}
             <div className="space-y-6">
-              <div className="flex items-center gap-4">
-                <div className="relative h-16 w-16">
+              <div className=" items-center justify-items-center gap-4">
+                <div className=" relative h-40 w-40">
                   <Image
                     src="/logo.png"
                     alt={settings?.siteName || "Suyan Education"}
                     fill
-                    className="object-contain"
+                    className="object-contain justify-center"
                   />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold bg-gradient-to-r from-red-500 to-blue-400 bg-clip-text text-transparent">
+                  <h2 className="text-center text-2xl font-bold bg-gradient-to-r from-red-500 to-blue-400 bg-clip-text text-transparent">
                     {settings?.siteName || "Suyan Education Pvt. Ltd."}
                   </h2>
-                  <p className="text-sm text-gray-300 mt-1">
-                    日本留学専門
-                  </p>
+                  
                 </div>
               </div>
 
-              <p className="text-gray-300 text-sm leading-relaxed">
-                {settings?.tagline ||
-                  "Your trusted partner for global education. We guide students through every step of their study abroad journey."}
-              </p>
+          
 
               {/* Stats */}
               <div className="flex items-center gap-6 pt-4">
@@ -230,7 +225,7 @@ export default function Footer({ settings }) {
       </div>
 
       {/* Bottom Gradient */}
-      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-950 via-red-500 to-red-600" />
+      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-white via-white to-white" />
     </footer>
   );
 }

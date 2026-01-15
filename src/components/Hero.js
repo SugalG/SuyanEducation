@@ -53,32 +53,35 @@ export default function Hero() {
       className="relative w-full bg-black overflow-hidden"
       style={{
         paddingTop: "var(--navbar-height)",
-        minHeight: "calc(100vh - var(--navbar-height))",
+        height: "70vh",
+        minHeight: "520px",
       }}
     >
-      {/* VIDEO / FALLBACK */}
-      {shouldLoadVideo ? (
-        <video
-          ref={videoRef}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          poster="/hero-bg.png"
-          className={`w-full h-auto transition-opacity duration-500 ${
-            isLoaded ? "opacity-100" : "opacity-0"
-          }`}
-        >
-          <source src={HERO_VIDEO_URL} type="video/mp4" />
-        </video>
-      ) : (
-        <img
-          src={HERO_FALLBACK_IMAGE}
-          alt="Hero background"
-          className="w-full h-auto block"
-        />
-      )}
+      {/* VIDEO / FALLBACK WRAPPER */}
+      <div className="absolute inset-0 flex items-center justify-center">
+        {shouldLoadVideo ? (
+          <video
+            ref={videoRef}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            poster="/hero-bg.png"
+            className={`w-full h-full object-contain transition-opacity duration-500 ${
+              isLoaded ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            <source src={HERO_VIDEO_URL} type="video/mp4" />
+          </video>
+        ) : (
+          <img
+            src={HERO_FALLBACK_IMAGE}
+            alt="Hero background"
+            className="w-full h-full object-contain block"
+          />
+        )}
+      </div>
 
       {/* DARK OVERLAY */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/40 pointer-events-none" />

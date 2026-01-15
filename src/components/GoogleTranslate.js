@@ -28,10 +28,8 @@ export default function GoogleTranslate() {
   }, []);
 
   return (
-    <div className="fixed bottom-24 right-4 z-[9999]">
-      {/* Anchor wrapper */}
+    <div className="fixed bottom-6 right-4 z-[9999]">
       <div className="relative flex flex-col items-end">
-        {/* Button */}
         <button
           onClick={() => setOpen((v) => !v)}
           className="
@@ -39,7 +37,7 @@ export default function GoogleTranslate() {
             rounded-full
             font-semibold
             text-white
-            bg-brand-gradient
+            bg-blue-950 hover:bg-blue-900
             shadow-lg
             hover:shadow-xl
             hover:scale-105
@@ -49,14 +47,12 @@ export default function GoogleTranslate() {
           Translate
         </button>
 
-        {/* Dropdown — absolutely positioned */}
         <div
           className={`
             absolute
             bottom-full
             mb-3
             right-0
-            translate-wrapper
             transition-all
             duration-300
             origin-bottom-right
@@ -65,12 +61,7 @@ export default function GoogleTranslate() {
               : "opacity-0 scale-95 pointer-events-none"}
           `}
         >
-          <div>
-            <div
-              id="google_translate_element"
-              className="min-w-[180px]"
-            />
-          </div>
+          <div id="google_translate_element" className="min-w-[180px]" />
         </div>
       </div>
     </div>

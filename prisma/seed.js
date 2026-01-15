@@ -9,7 +9,7 @@ async function main() {
   await prisma.siteSettings.upsert({
     where: { id: "site-settings" },
     update: {
-      siteName: "Suyan Education Pvt. Ltd.",
+      siteName: "Suyan Education ",
       tagline: "Japan-Focused Education Consultancy",
       primaryPhone: "+977 1 5445099",
       whatsappNumber: "9864261506",

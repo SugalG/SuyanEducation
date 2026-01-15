@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState, useRef } from "react";
 import { Menu, X, ChevronDown, Phone, Mail, MapPin } from "lucide-react";
+import Image from "next/image";
 
 export default function Navbar({ settings, onApplyNow }) {
   const [scrolled, setScrolled] = useState(false);
@@ -104,24 +105,22 @@ export default function Navbar({ settings, onApplyNow }) {
           <Link href="/" className="flex items-center group flex-shrink-0 mr-12">
             <div className="relative">
               <div className="absolute -inset-2 bg-gradient-to-r from-red-600 to-blue-950 rounded-xl opacity-0 group-hover:opacity-20 blur transition-opacity duration-300"></div>
-              <img
-                src="/logo.png"
-                alt={settings?.siteName || "Suyan Education"}
-                className="h-18 w-auto relative transition-transform duration-300 group-hover:scale-105"
+              <Image
+                src="/NAVBAR LOGO Final.png"
+                alt="Suyan Education"
+                width={320}
+                height={80}
+                priority
+                className="h-60 w-auto relative transition-transform duration-300 group-hover:scale-105"
               />
+
             </div>
-            {settings?.siteName && (
-              <div className="ml-5 hidden lg:block">
-                <div className="text-xl font-bold bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
-                  {settings.siteName}
-                </div>
-                <div className="text-xs text-gray-500 mt-0.5">Study Abroad Consultants</div>
-              </div>
-            )}
           </Link>
 
+
           {/* DESKTOP MENU - Centered with more spacing */}
-          <div className="hidden md:flex items-center gap-8 lg:gap-10 font-medium mx-auto">
+          <div className="hidden md:flex items-center gap-7 lg:gap-9 font-semibold text-[17px] mx-auto">
+
             <Link
               href="/"
               className="relative text-gray-700 hover:text-red-600 transition-colors duration-200 group/nav px-1"
@@ -295,7 +294,7 @@ export default function Navbar({ settings, onApplyNow }) {
                     </Link>
                   ))}
 
-                 
+
                 </div>
               </div>
             </div>

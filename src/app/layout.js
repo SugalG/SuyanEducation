@@ -64,8 +64,8 @@ export default async function RootLayout({ children }) {
           </div>
 
           {/* Floating Utilities */}
-          <GoogleTranslate />
           <WhatsAppFloat />
+          <GoogleTranslate />
         </Providers>
       </body>
     </html>
