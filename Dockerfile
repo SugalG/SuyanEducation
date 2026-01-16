@@ -1,17 +1,12 @@
 # Use Node 20 Alpine as base
-FROM node:20-alpine
+FROM node:20-bullseye
 
 # Set working directory
 WORKDIR /app
 
-# Install system dependencies needed for Prisma on Alpine
-RUN apk add --no-cache \
-    openssl1.1 \
-    libstdc++ \
-    bash \
-    curl \
-    git \
-    libc6-compat
+# Build argument for database URL
+ARG DATABASE_URL
+ENV DATABASE_URL=$DATABASE_URL
 
 # Copy package.json and lock file
 COPY package*.json ./
@@ -21,6 +16,9 @@ RUN npm ci
 
 # Copy the rest of the app
 COPY . .
+
+# Copy environment file for build-time access
+COPY .env.production .env
 
 # Generate Prisma client
 RUN npx prisma generate
