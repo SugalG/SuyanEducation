@@ -86,7 +86,7 @@ export default function Hero() {
       </div>
 
     
-      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/45 to-black/50" />
+      
 
       
       {/* <div className="relative z-10 flex h-full items-center justify-center px-4 sm:px-6 lg:px-8">
