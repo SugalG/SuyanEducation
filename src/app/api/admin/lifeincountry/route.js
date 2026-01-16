@@ -34,11 +34,11 @@ export async function POST(req){
           }, { status: 200})
 
     }catch(e){
-        console.error("POST /api/admin/lifeandcareer error:", error)
+        console.error("POST /api/admin/lifeincountry error:", error)
         return NextResponse.json(
             {
               success: false,
-              message: error.message || "Failed to create university",
+              message: error.message || "Failed to add lifestyle info",
             },
             { status: 500 }
           );
