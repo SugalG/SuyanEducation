@@ -59,6 +59,7 @@ model Destination {
   slug          String   @unique
   country       String
   heroImage     String?
+  code          String?
   universities  University[]
   blogs         BlogPost[]
   descriptionTitle String? @default("Introduction")
