@@ -37,7 +37,7 @@ export default async function ServiceDetail({ params }) {
     <main className="w-full overflow-hidden mt-24">
       {/* Hero Section */}
       <section className="relative min-h-[80vh] flex items-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-white via-red-50 to-blue-50" />
+        {/* <div className="absolute inset-0 bg-gradient-to-br from-white via-red-50 to-blue-50" /> */}
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 py-20 w-full">
           <div className="grid lg:grid-cols-2 gap-16 items-center">

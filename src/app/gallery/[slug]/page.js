@@ -90,7 +90,7 @@ export default async function GalleryAlbumPage(props) {
             {/* Main Title */}
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-8 leading-tight">
               <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
-                {album.title}
+                Images
               </span>
             </h1>
             

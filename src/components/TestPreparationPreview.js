@@ -122,10 +122,10 @@ export default function ServicesPreview() {
   return (
     <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 sm:mt-20 md:mt-24 lg:mt-28 xl:mt-32">
       {/* Animated Background Elements */}
-      <div className="absolute inset-0 -z-10 overflow-hidden">
+      {/* <div className="absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-red-500/5 rounded-full blur-3xl"></div>
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-900/5 rounded-full blur-3xl"></div>
-      </div>
+      </div> */}
 
       {/* Header */}
       <motion.div 
@@ -393,13 +393,7 @@ export default function ServicesPreview() {
             >
               Book Consultation
             </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-8 py-3 bg-white text-blue-800 rounded-lg font-semibold border-2 border-blue-800 hover:bg-blue-50 transition-colors"
-            >
-              Download Brochure
-            </motion.button>
+           
           </div>
         </div>
       </motion.div>

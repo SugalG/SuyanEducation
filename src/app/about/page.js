@@ -3,6 +3,7 @@
 import AboutTeamSection from "@/components/AboutTeamSection";
 import { motion } from "framer-motion";
 import { Target, Eye, Users, Award, Globe, CheckCircle, GraduationCap, Shield, BookOpen, MapPin, Clock, Star, Plane, Building, Languages, FileText, Mic, Compass } from "lucide-react";
+import { useEffect, useState } from "react";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
@@ -21,7 +22,109 @@ const staggerContainer = {
   }
 };
 
+// Country flag emojis mapping
+const countryFlags = {
+  "Japan": "🇯🇵",
+  "Australia": "🇦🇺",
+  "USA": "🇺🇸",
+  "United States": "🇺🇸",
+  "UK": "🇬🇧",
+  "United Kingdom": "🇬🇧",
+  "Canada": "🇨🇦",
+  "Germany": "🇩🇪",
+  "France": "🇫🇷",
+  "Italy": "🇮🇹",
+  "Spain": "🇪🇸",
+  "Netherlands": "🇳🇱",
+  "Sweden": "🇸🇪",
+  "Switzerland": "🇨🇭",
+  "Singapore": "🇸🇬",
+  "Malaysia": "🇲🇾",
+  "South Korea": "🇰🇷",
+  "New Zealand": "🇳🇿",
+  "Ireland": "🇮🇪",
+  "Finland": "🇫🇮",
+  "Norway": "🇳🇴",
+  "Denmark": "🇩🇰"
+};
+
+// Default color mapping for countries
+const countryColors = {
+  "Japan": "bg-red-100 text-red-700",
+  "Australia": "bg-blue-100 text-blue-700",
+  "USA": "bg-purple-100 text-purple-700",
+  "United States": "bg-purple-100 text-purple-700",
+  "UK": "bg-green-100 text-green-700",
+  "United Kingdom": "bg-green-100 text-green-700",
+  "Canada": "bg-yellow-100 text-yellow-700",
+  "Germany": "bg-gray-100 text-gray-700",
+  "France": "bg-blue-50 text-blue-600",
+  "Italy": "bg-green-50 text-green-600",
+  "Spain": "bg-red-50 text-red-600",
+  "Netherlands": "bg-orange-100 text-orange-700",
+  "Sweden": "bg-blue-50 text-blue-600",
+  "Switzerland": "bg-red-100 text-red-700",
+  "Singapore": "bg-red-50 text-red-600",
+  "Malaysia": "bg-blue-50 text-blue-600",
+  "South Korea": "bg-blue-50 text-blue-600",
+  "New Zealand": "bg-blue-100 text-blue-700",
+  "Ireland": "bg-green-50 text-green-600",
+  "Finland": "bg-blue-50 text-blue-600",
+  "Norway": "bg-red-50 text-red-600",
+  "Denmark": "bg-red-50 text-red-600"
+};
+
+// Default specialties for countries
+const defaultSpecialties = {
+  "Japan": "Technology & Language",
+  "Australia": "Research & Work",
+  "USA": "STEM & Business",
+  "United States": "STEM & Business",
+  "UK": "Foundation Programs",
+  "United Kingdom": "Foundation Programs",
+  "Canada": "Co-op & Immigration",
+  "Germany": "Free Education",
+  "France": "Art & Culture",
+  "Italy": "Design & Architecture",
+  "Spain": "Language & Hospitality",
+  "Netherlands": "Engineering & Tech",
+  "Sweden": "Sustainability & Innovation",
+  "Switzerland": "Hospitality & Business",
+  "Singapore": "Business & Technology",
+  "Malaysia": "Affordable Education",
+  "South Korea": "Technology & Innovation",
+  "New Zealand": "Adventure & Research",
+  "Ireland": "Technology & Pharmaceuticals",
+  "Finland": "Education & Technology",
+  "Norway": "Renewable Energy",
+  "Denmark": "Design & Sustainability"
+};
+
 export default function AboutPage() {
+  const [destinations, setDestinations] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadDestinations() {
+      try {
+        const res = await fetch("/api/destinations");
+        const data = await res.json();
+        if (data.success) {
+          // Take up to 6 destinations for display
+          setDestinations(data.items.slice(0, 6));
+        }
+      } catch (err) {
+        console.error("Failed to load destinations", err);
+        // Use fallback data if API fails
+        setDestinations([]);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadDestinations();
+  }, []);
+
   const services = [
     {
       icon: Globe,
@@ -67,14 +170,20 @@ export default function AboutPage() {
     }
   ];
 
-  const globalDestinations = [
-    { country: "Japan", icon: "🇯🇵", color: "bg-red-100 text-red-700", specialty: "Technology & Language" },
-    { country: "Australia", icon: "🇦🇺", color: "bg-blue-100 text-blue-700", specialty: "Research & Work" },
-    { country: "USA", icon: "🇺🇸", color: "bg-purple-100 text-purple-700", specialty: "STEM & Business" },
-    { country: "UK", icon: "🇬🇧", color: "bg-green-100 text-green-700", specialty: "Foundation Programs" },
-    { country: "Canada", icon: "🇨🇦", color: "bg-yellow-100 text-yellow-700", specialty: "Co-op & Immigration" },
-    { country: "Germany", icon: "🇩🇪", color: "bg-gray-100 text-gray-700", specialty: "Free Education" },
-  ];
+  // Generate global destinations from API data
+  const globalDestinations = destinations.map(dest => {
+    const countryName = dest.country || "";
+    const flag = countryFlags[countryName] || "🌍";
+    const color = countryColors[countryName] || "bg-gray-100 text-gray-700";
+    const specialty = dest.keyFeatures?.[0] || defaultSpecialties[countryName] || "Study Opportunities";
+    
+    return {
+      country: countryName,
+      icon: flag,
+      color,
+      specialty
+    };
+  });
 
   const values = [
     {
@@ -105,11 +214,10 @@ export default function AboutPage() {
 
   return (
     <main className="relative">
-      {/* Background Elements */}
+      {/* Background Elements - REMOVED the pinkish gradient */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute top-0 -right-40 w-80 h-80 bg-red-500/5 rounded-full blur-3xl"></div>
         <div className="absolute bottom-0 -left-40 w-80 h-80 bg-blue-950/5 rounded-full blur-3xl"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-r from-red-500/10 to-blue-500/10 rounded-full blur-3xl"></div>
       </div>
 
       {/* HERO SECTION */}
@@ -254,38 +362,68 @@ export default function AboutPage() {
           >
             <h3 className="text-2xl font-bold text-gray-900 mb-6">Our Global Reach</h3>
             <div className="space-y-4">
-              {globalDestinations.map((dest, idx) => (
-                <div key={idx} className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors group">
-                  <div className="flex items-center gap-4">
-                    <div className="text-2xl">{dest.icon}</div>
-                    <div>
-                      <div className="font-semibold text-gray-900">{dest.country}</div>
-                      <div className="text-sm text-gray-600">{dest.specialty}</div>
+              {loading ? (
+                // Loading skeleton
+                Array.from({ length: 6 }).map((_, idx) => (
+                  <div key={idx} className="flex items-center justify-between p-3 rounded-lg bg-gray-100 animate-pulse">
+                    <div className="flex items-center gap-4">
+                      <div className="w-8 h-8 rounded-full bg-gray-200"></div>
+                      <div className="space-y-2">
+                        <div className="w-24 h-4 bg-gray-200 rounded"></div>
+                        <div className="w-32 h-3 bg-gray-200 rounded"></div>
+                      </div>
                     </div>
+                    <div className="w-16 h-6 bg-gray-200 rounded-full"></div>
                   </div>
-                  <span className={`px-3 py-1 rounded-full text-xs font-medium ${dest.color}`}>
-                    Available
-                  </span>
-                </div>
-              ))}
-              <div className="pt-4 border-t border-gray-200">
-                <a href="/destinations" className="text-red-600 hover:text-red-700 font-medium text-sm flex items-center gap-2">
-                  Explore all 10+ destinations
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                  </svg>
-                </a>
-              </div>
+                ))
+              ) : globalDestinations.length > 0 ? (
+                // Actual destinations from API
+                globalDestinations.map((dest, idx) => (
+                  <div key={idx} className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors group">
+                    <div className="flex items-center gap-4">
+                      <div className="text-2xl">{dest.icon}</div>
+                      <div>
+                        <div className="font-semibold text-gray-900">{dest.country}</div>
+                        <div className="text-sm text-gray-600">{dest.specialty}</div>
+                      </div>
+                    </div>
+                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${dest.color}`}>
+                      Available
+                    </span>
+                  </div>
+                ))
+              ) : (
+                // Fallback when no destinations are loaded
+                <>
+                  {[
+                    { country: "Japan", icon: "🇯🇵", color: "bg-red-100 text-red-700", specialty: "Technology & Language" },
+                    { country: "Australia", icon: "🇦🇺", color: "bg-blue-100 text-blue-700", specialty: "Research & Work" },
+                    { country: "USA", icon: "🇺🇸", color: "bg-purple-100 text-purple-700", specialty: "STEM & Business" },
+                    { country: "UK", icon: "🇬🇧", color: "bg-green-100 text-green-700", specialty: "Foundation Programs" },
+                    { country: "Canada", icon: "🇨🇦", color: "bg-yellow-100 text-yellow-700", specialty: "Co-op & Immigration" },
+                    { country: "Germany", icon: "🇩🇪", color: "bg-gray-100 text-gray-700", specialty: "Free Education" },
+                  ].map((dest, idx) => (
+                    <div key={idx} className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors group">
+                      <div className="flex items-center gap-4">
+                        <div className="text-2xl">{dest.icon}</div>
+                        <div>
+                          <div className="font-semibold text-gray-900">{dest.country}</div>
+                          <div className="text-sm text-gray-600">{dest.specialty}</div>
+                        </div>
+                      </div>
+                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${dest.color}`}>
+                        Available
+                      </span>
+                    </div>
+                  ))}
+                </>
+              )}
             </div>
           </motion.div>
         </div>
       </section>
 
-
-     
-
-           <AboutTeamSection/>
-
+      <AboutTeamSection/>
 
       {/* COMPREHENSIVE SERVICES */}
       <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">

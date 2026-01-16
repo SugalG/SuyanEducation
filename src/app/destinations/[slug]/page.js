@@ -38,13 +38,13 @@ export default async function DestinationPage({ params }) {
       <section className="relative w-full min-h-[90vh] flex items-center overflow-hidden">
         {/* Beautiful Background with Gradient */}
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-white via-red-50 to-blue-50" />
+          {/* <div className="absolute inset-0 bg-gradient-to-br from-white via-red-50 to-blue-50" />
           <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-red-100/20 to-transparent" />
-          <div className="absolute bottom-0 left-0 w-1/3 h-full bg-gradient-to-r from-blue-100/20 to-transparent" />
+          <div className="absolute bottom-0 left-0 w-1/3 h-full bg-gradient-to-r from-blue-100/20 to-transparent" /> */}
 
           {/* Animated Circles */}
-          <div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-r from-red-200/30 to-pink-200/20 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-l from-blue-200/30 to-cyan-200/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+          {/* <div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-r from-red-200/30 to-pink-200/20 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-l from-blue-200/30 to-cyan-200/20 rounded-full blur-3xl animate-pulse delay-1000"></div> */}
         </div>
 
         {/* Content */}

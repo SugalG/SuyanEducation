@@ -104,14 +104,14 @@ export default function Navbar({ settings, onApplyNow }) {
           {/* Logo - Left aligned with more space */}
           <Link href="/" className="flex items-center group flex-shrink-0 mr-12">
             <div className="relative">
-              <div className="absolute -inset-2 bg-gradient-to-r from-red-600 to-blue-950 rounded-xl opacity-0 group-hover:opacity-20 blur transition-opacity duration-300"></div>
+             
               <Image
                 src="/NAVBAR LOGO Final.png"
                 alt="Suyan Education"
                 width={320}
                 height={80}
                 priority
-                className="h-60 w-auto relative transition-transform duration-300 group-hover:scale-105"
+                className="h-14 sm:h-16 md:h-60 w-auto relative transition-transform duration-300 group-hover:scale-105"
               />
 
             </div>

@@ -5,7 +5,7 @@ import { Calendar, Clock, MapPin, ArrowLeft, Share2, BookOpen, GraduationCap, Gl
 import Link from "next/link";
 
 export default async function BlogDetailsPage({ params }) {
-  // ✅ FIX: unwrap params
+ 
   const { slug } = await params;
 
   // Safety guard
