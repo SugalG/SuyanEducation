@@ -27,6 +27,17 @@ export default function LifeInCountryContent({ lifeInfo }) {
     { id: "safety", label: "Safety", icon: Users },
     { id: "workLifeBalance", label: "Work-Life Balance", icon: Briefcase },
   ];
+
+  const LIFE_SECTION_IMAGES = {
+    livingCost: "https://www.instarem.com/wp-content/uploads/2024/03/Cost-of-living-Perth.jpg",
+    accommodation:"https://www.rmit.edu.au/content/dam/rmit/au/en/students/images/student-life/accommodation/housing-options-promo.jpg",
+    insurance:"https://t3.ftcdn.net/jpg/02/04/40/28/360_F_204402874_0gGy7GH5WAE6y6gtKa6dAnw8ZdY1anRQ.jpg",
+    transportation: "https://media.istockphoto.com/id/2151733424/photo/students-waiting-at-the-bus-stop.jpg?s=612x612&w=0&k=20&c=6-CAhx9N0wIiFQYEoIVr1w_HAvuj3-Ib24VwNOWMATg=",
+    foodLifestyle: "https://thumbs.dreamstime.com/b/young-people-eating-brunch-drinking-smoothies-bowl-eco-bar-restaurant-healthy-lifestyle-food-trends-concept-focus-178020277.jpg",
+    safety:"https://media.istockphoto.com/id/483960569/photo/school-crossing-guard.jpg?s=612x612&w=0&k=20&c=n1bRoh4Nof75WiFH7dLq6cgCH6cu9sxZhQ_p-p0HOzU=",
+    workLifeBalance: "https://media.istockphoto.com/id/1304715784/vector/work-and-life-balance-tiny-woman-sitting-in-lotus-position-and-keep-harmony-choose-between.jpg?s=612x612&w=0&k=20&c=2oEMNKI8TuqE0QvetiK0_6xWI1ut3VwheOzqNZYG9kg="
+  }
+
   const livingPoints = lifeInfo.lifeInCountry?.livingCost.split("\n") || [];
   const accommodationPoints =
     lifeInfo.lifeInCountry?.accommodation.split("\n") || [];
@@ -142,6 +153,7 @@ export default function LifeInCountryContent({ lifeInfo }) {
             icon={Home}
             points={livingPoints}
             sectionsRef={sectionsRef}
+            image={LIFE_SECTION_IMAGES.livingCost}
           />
 
           <InfoSection
@@ -150,6 +162,7 @@ export default function LifeInCountryContent({ lifeInfo }) {
             icon={Building}
             points={accommodationPoints}
             sectionsRef={sectionsRef}
+            image={LIFE_SECTION_IMAGES.accommodation}
           />
 
           <InfoSection
@@ -158,6 +171,7 @@ export default function LifeInCountryContent({ lifeInfo }) {
             icon={Shield}
             points={insurancePoints}
             sectionsRef={sectionsRef}
+            image={LIFE_SECTION_IMAGES.insurance}
           />
 
           <InfoSection
@@ -166,6 +180,7 @@ export default function LifeInCountryContent({ lifeInfo }) {
             icon={Truck}
             points={transportationPoints}
             sectionsRef={sectionsRef}
+            image={LIFE_SECTION_IMAGES.transportation}
           />
 
           <InfoSection
@@ -174,6 +189,7 @@ export default function LifeInCountryContent({ lifeInfo }) {
             icon={Coffee}
             points={foodLifestylePoints}
             sectionsRef={sectionsRef}
+            image={LIFE_SECTION_IMAGES.foodLifestyle}
           />
 
           <InfoSection
@@ -182,6 +198,7 @@ export default function LifeInCountryContent({ lifeInfo }) {
             icon={Users}
             points={safetyPoints}
             sectionsRef={sectionsRef}
+            image={LIFE_SECTION_IMAGES.safety}
           />
 
           <InfoSection
@@ -190,6 +207,7 @@ export default function LifeInCountryContent({ lifeInfo }) {
             icon={Briefcase}
             points={workLifeBalancePoints}
             sectionsRef={sectionsRef}
+            image={LIFE_SECTION_IMAGES.workLifeBalance}
           />
         </div>
       </div>
@@ -200,13 +218,11 @@ export default function LifeInCountryContent({ lifeInfo }) {
 
 
 
-function InfoSection({ id, title, icon: Icon, points, sectionsRef }) {
+function InfoSection({ id, title, icon: Icon, points, sectionsRef, image }) {
   const [expanded, setExpanded] = useState(false);
-
   if (!points.length) return null;
 
   const visiblePoints = expanded ? points : points.slice(0, 3);
-  const hasMore = points.length > 3;
 
   return (
     <section
@@ -216,40 +232,52 @@ function InfoSection({ id, title, icon: Icon, points, sectionsRef }) {
     >
       {/* Section Heading */}
       <RevealTest delay={0.2}>
-        <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-5 sm:mb-6 md:mb-8">
+        <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-6">
           <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
             {title}
           </span>
         </h2>
       </RevealTest>
 
-      {/* Content Card */}
-      <RevealTest delay={0.5}>
-        <div className="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-6 md:p-8 lg:p-10 border border-gray-100 shadow-lg">
-          <div className="flex items-start gap-3 sm:gap-4 md:gap-5">
-            {/* Icon */}
-            <div className="flex-shrink-0 w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center rounded-lg sm:rounded-xl bg-gradient-to-r from-red-50 to-blue-50">
-              <Icon className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-red-500" />
+      {/* Card */}
+      <RevealTest delay={0.4}>
+        <div className="bg-white rounded-2xl border border-gray-100 shadow-lg overflow-hidden">
+          {/* Image on top */}
+          {image && (
+            <div className="w-full h-56 sm:h-72 md:h-80 lg:h-96 relative">
+              <img
+                src={image}
+                alt={title}
+                className="absolute inset-0 w-full h-full object-cover"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-black/10" />
             </div>
+          )}
 
-            {/* Content */}
-            <div className="flex-1">
-              <div className="space-y-4 sm:space-y-5">
+          {/* Content */}
+          <div className="p-5 sm:p-6 md:p-8 lg:p-10">
+            <div className="flex items-start gap-4">
+              {/* Icon */}
+              <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-xl bg-gradient-to-r from-red-50 to-blue-50">
+                <Icon className="w-5 h-5 md:w-6 md:h-6 text-red-500" />
+              </div>
+
+              {/* Paragraphs */}
+              <div className="flex-1 space-y-4">
                 {visiblePoints.map((p, i) => (
                   <RevealTest key={i} delay={i * 0.05}>
-                    <p className="text-gray-700 text-sm sm:text-base md:text-lg leading-snug sm:leading-relaxed">
+                    <p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed">
                       {p}
                     </p>
                   </RevealTest>
                 ))}
-              </div>
 
-              {/* Read More */}
-              {hasMore && (
-                <div className="mt-5 sm:mt-6">
+                {/* Read More */}
+                {points.length > 3 && (
                   <button
-                    onClick={() => setExpanded((prev) => !prev)}
-                    className="text-sm sm:text-base text-red-600 font-semibold hover:text-red-700 transition inline-flex items-center gap-2"
+                    onClick={() => setExpanded(!expanded)}
+                    className="mt-4 inline-flex items-center gap-2 text-red-600 font-semibold hover:text-red-700 transition"
                   >
                     {expanded ? "Show less" : "Read more"}
                     <span
@@ -260,8 +288,8 @@ function InfoSection({ id, title, icon: Icon, points, sectionsRef }) {
                       ↓
                     </span>
                   </button>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -269,6 +297,7 @@ function InfoSection({ id, title, icon: Icon, points, sectionsRef }) {
     </section>
   );
 }
+
 
 
 
