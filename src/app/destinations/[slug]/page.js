@@ -4,6 +4,7 @@ import Reveal from "@/components/Reveal";
 import { Users, BookOpen, Globe, GraduationCap, Calendar, Target, Award, Briefcase } from "lucide-react";
 import RevealTest from "@/components/RevealTest";
 import DestinationContent from "@/components/destinations/DestinationContent";
+import Link from "next/link";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -104,11 +105,11 @@ export default async function DestinationPage({ params }) {
 
                 {/* CTA Buttons */}
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <a
-                    href="/contact"
+                  <Link
+                    href={`/destinations/life/${destination.id}`}
                     className="group inline-flex items-center justify-center gap-3 px-10 py-5 bg-gradient-to-r from-red-600 to-red-500 text-white font-semibold rounded-2xl hover:shadow-2xl hover:scale-105 transition-all duration-300 shadow-lg"
                   >
-                    <span>Start Your Journey</span>
+                    <span>Life in {destination.country}</span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="20"
@@ -121,12 +122,12 @@ export default async function DestinationPage({ params }) {
                     >
                       <path d="m9 18 6-6-6-6" />
                     </svg>
-                  </a>
+                  </Link>
                   <a
                     href="#why-study"
                     className="inline-flex items-center justify-center px-10 py-5 bg-white text-gray-800 font-semibold rounded-2xl border-2 border-gray-200 hover:border-red-300 hover:shadow-xl transition-all duration-300"
                   >
-                    Explore Programs
+                    Jobs and Career in {destination.country}
                   </a>
                 </div>
               </div>
