@@ -106,7 +106,7 @@ export default async function DestinationPage({ params }) {
                 {/* CTA Buttons */}
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Link
-                    href={`/destinations/life/${destination.id}`}
+                    href={`/destinations/life/${destination.slug}`}
                     className="group inline-flex items-center justify-center gap-3 px-10 py-5 bg-gradient-to-r from-red-600 to-red-500 text-white font-semibold rounded-2xl hover:shadow-2xl hover:scale-105 transition-all duration-300 shadow-lg"
                   >
                     <span>Life in {destination.country}</span>
@@ -123,12 +123,12 @@ export default async function DestinationPage({ params }) {
                       <path d="m9 18 6-6-6-6" />
                     </svg>
                   </Link>
-                  <a
-                    href="#why-study"
+                  <Link
+                    href={`/destinations/career/${destination.slug}`}
                     className="inline-flex items-center justify-center px-10 py-5 bg-white text-gray-800 font-semibold rounded-2xl border-2 border-gray-200 hover:border-red-300 hover:shadow-xl transition-all duration-300"
                   >
                     Jobs and Career in {destination.country}
-                  </a>
+                  </Link>
                 </div>
               </div>
             </RevealTest>
