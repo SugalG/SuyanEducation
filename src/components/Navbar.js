@@ -343,11 +343,11 @@ export default function Navbar({ settings, onApplyNow }) {
       hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50
       hover:text-red-700 transition-all duration-200 group/item"
                     >
-                      <div className="w-6 h-6 rounded-lg overflow-hidden flex items-center justify-center">
+                      <div className="w-6 h-6 overflow-hidden flex items-center justify-center">
                         <img
-                          src={`https://flagcdn.com/w20/${d.code.toLowerCase()}.png`}
+                          src={`https://flagcdn.com/w40/${d.code.toLowerCase()}.png`}
                           alt={d.country}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-contain"
                         />
                       </div>
                       <div className="font-medium ml-2">{d.country}</div>
