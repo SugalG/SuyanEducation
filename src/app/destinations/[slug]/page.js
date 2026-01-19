@@ -31,10 +31,6 @@ export default async function DestinationPage({ params }) {
 
   if (!destination) notFound();
 
-  const whyPoints = destination.whyPoints?.split("\n") || [];
-  const fields = destination.popularFields?.split("\n") || [];
-  const visaUpdates = destination.visaUpdates?.split("\n") || [];
-
   return (
     <main className="w-full">
       {/* Hero Section - Modern Design */}

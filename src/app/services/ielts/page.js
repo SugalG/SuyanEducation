@@ -15,8 +15,12 @@ import {
   Bookmark,
   Clock,
   CheckCircle,
-  Zap
+  Zap,
+  GraduationCap,
+  Briefcase
 } from "lucide-react";
+import RevealTest from "@/components/RevealTest";
+import Link from "next/link";
 
 const faqs = [
   {
@@ -111,146 +115,152 @@ export default function MagicalIELTSPage() {
 
   return (
     <main className="w-full overflow-hidden mt-10 relative">
-      {/* Hero Section */}
-      <section className="relative w-full min-h-screen flex items-center justify-center bg-gradient-to-br from-red-50 via-white to-rose-100 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/50 to-transparent" />
-        
-        {/* Animated Background Elements */}
-        <motion.div
-          className="absolute top-0 left-0 w-full h-full"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-        >
-          <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-r from-red-200/10 to-pink-200/10 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-r from-rose-200/10 to-orange-200/10 rounded-full blur-3xl animate-pulse" />
-        </motion.div>
+      
+  {/* Hero Section */}
+  <section className="relative w-full min-h-[90vh] flex items-center overflow-hidden">
+    {/* Beautiful Background with Gradient */}
+    <div className="absolute inset-0">
+      <div className="absolute inset-0 bg-gradient-to-br from-white via-red-50 to-blue-50" />
+      <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-red-100/20 to-transparent" />
+      <div className="absolute bottom-0 left-0 w-1/3 h-full bg-gradient-to-r from-blue-100/20 to-transparent" />
 
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, type: "spring" }}
-          className="text-center px-4 max-w-6xl z-30 relative"
-        >
-          {/* Animated Title */}
-          <div className="relative inline-block mb-8">
-            <motion.div
-              className="absolute -inset-1 bg-gradient-to-r from-red-600 via-rose-500 to-pink-500 rounded-lg blur-xl opacity-75"
-              animate={{ rotate: 360 }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            />
-            <h1 className="relative text-6xl sm:text-7xl md:text-8xl font-bold bg-gradient-to-r from-red-600 via-rose-500 to-pink-500 bg-clip-text text-transparent leading-tight">
-              <motion.span
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="block"
-              >
-                Master IELTS
-              </motion.span>
-              <motion.span
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-                className="block mt-2"
-              >
-                Like Magic ✨
-              </motion.span>
-            </h1>
-          </div>
+      {/* Animated Circles */}
+      <div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-r from-red-200/30 to-pink-200/20 rounded-full blur-3xl animate-pulse"></div>
+      <div className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-l from-blue-200/30 to-cyan-200/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+      
+      {/* Floating English Letters */}
+      <div className="absolute top-1/4 left-1/4 opacity-5 text-9xl font-bold text-blue-300 animate-float">E</div>
+      <div className="absolute bottom-1/3 right-1/4 opacity-5 text-9xl font-bold text-red-300 animate-float delay-500">L</div>
+    </div>
 
-          {/* Animated Subtitle */}
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6 }}
-            className="text-xl sm:text-2xl text-gray-700 mb-10 max-w-3xl mx-auto font-medium"
-          >
-            Transform your English skills with our magical approach to IELTS success
-          </motion.p>
-
-          {/* Animated Buttons with Icons */}
-          <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
-            <motion.a
-              href="/contact"
-              whileHover={{ 
-                scale: 1.05,
-                boxShadow: "0 20px 40px rgba(239, 68, 68, 0.3)"
-              }}
-              whileTap={{ scale: 0.95 }}
-              className="relative px-10 py-5 bg-gradient-to-r from-red-600 to-rose-500 text-white rounded-2xl font-bold shadow-2xl group overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-red-700 to-rose-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <span className="relative flex items-center justify-center gap-3">
-                <Bookmark className="w-5 h-5" />
-                Book IELTS With Us
-                <Sparkles className="w-5 h-5" />
+    {/* Content */}
+    <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full">
+      <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <RevealTest animateImmediately>
+          <div>
+            {/* Elegant IELTS Badge */}
+            <div className="inline-flex items-center gap-3 px-5 py-3 rounded-2xl bg-white shadow-lg border border-gray-100 mb-8">
+              <div className="w-3 h-3 bg-gradient-to-r from-red-500 to-blue-600 rounded-full animate-pulse"></div>
+              <span className="text-lg font-semibold bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
+                Global Language Certification
               </span>
-            </motion.a>
-
-            <motion.a
-              href="/contact"
-              whileHover={{ 
-                scale: 1.05,
-                boxShadow: "0 20px 40px rgba(255, 255, 255, 0.3)"
-              }}
-              whileTap={{ scale: 0.95 }}
-              className="relative px-10 py-5 bg-white/80 backdrop-blur-sm text-red-600 rounded-2xl font-bold border-2 border-red-600 shadow-2xl group overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-white to-red-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <span className="relative flex items-center justify-center gap-3">
-                <BookOpen className="w-5 h-5" />
-                Learn IELTS With Us
-                <Zap className="w-5 h-5" />
-              </span>
-            </motion.a>
-          </div>
-
-          {/* Animated Hero Image with Parallax Effect */}
-          <motion.div
-            className="relative mt-12 rounded-3xl overflow-hidden shadow-2xl"
-            initial={{ opacity: 0, scale: 0.9, rotateY: -20 }}
-            animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-            transition={{ duration: 1, delay: 0.8, type: "spring" }}
-            whileHover={{ scale: 1.02 }}
-          >
-            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent z-10" />
-            <motion.img
-              src="https://www.applyboard.com/wp-content/uploads/2020/03/IELTS-Practice-Tests-Blog-Banner-Jul23-1024x512.png"
-              alt="Students studying for IELTS"
-              className="w-full h-[400px] object-cover"
-              animate={{ scale: [1, 1.05, 1] }}
-              transition={{ duration: 20, repeat: Infinity }}
-            />
-            <div className="absolute bottom-6 left-6 z-20 text-white">
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 1 }}
-                className="flex items-center gap-2"
-              >
-                <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-                <span className="font-semibold">Join 3M+ Successful Test Takers</span>
-              </motion.div>
             </div>
-          </motion.div>
-        </motion.div>
 
-        {/* Scroll Indicator */}
-        <motion.div
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-        >
-          <div className="w-6 h-10 border-2 border-red-400 rounded-full flex justify-center">
-            <motion.div
-              className="w-1 h-3 bg-red-400 rounded-full mt-2"
-              animate={{ y: [0, 12, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
-            />
+            {/* Main Heading with Elegant Design */}
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-8 leading-tight">
+              <span className="bg-gradient-to-r from-red-600 via-red-500 to-blue-950 bg-clip-text text-transparent">
+                IELTS
+              </span>
+              <span className="block text-gray-800 mt-4 text-4xl sm:text-5xl">
+                Mastery Program
+              </span>
+            </h1>
+
+            {/* IELTS Score Indicator */}
+            <div className="flex items-center gap-4 mb-8">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-blue-500"></div>
+                <span className="text-sm font-semibold text-gray-700">4 Module Focus</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                <span className="text-sm font-semibold text-gray-700">98% Success Rate</span>
+              </div>
+            </div>
+
+            {/* Description */}
+            <p className="text-xl text-gray-700 leading-relaxed mb-10">
+              Achieve your dream IELTS score with our comprehensive preparation program. 
+              Expert coaching, personalized strategies, and proven methodologies to help you 
+              excel in Listening, Reading, Writing, and Speaking modules.
+            </p>
+
+            {/* Feature Icons Grid */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-12">
+              <div className="flex flex-col items-center p-4 bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:border-red-200 transition-all">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-r from-red-100 to-red-50 flex items-center justify-center mb-3">
+                  <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                  </svg>
+                </div>
+                <span className="text-sm font-semibold text-gray-800">Expert Trainers</span>
+              </div>
+              <div className="flex flex-col items-center p-4 bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:border-red-200 transition-all">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-100 to-blue-50 flex items-center justify-center mb-3">
+                  <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <span className="text-sm font-semibold text-gray-800">Score Guarantee</span>
+              </div>
+              <div className="flex flex-col items-center p-4 bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:border-red-200 transition-all">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-r from-green-100 to-green-50 flex items-center justify-center mb-3">
+                  <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                  </svg>
+                </div>
+                <span className="text-sm font-semibold text-gray-800">Study Material</span>
+              </div>
+              <div className="flex flex-col items-center p-4 bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:border-red-200 transition-all">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-r from-purple-100 to-purple-50 flex items-center justify-center mb-3">
+                  <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                  </svg>
+                </div>
+                <span className="text-sm font-semibold text-gray-800">Mock Tests</span>
+              </div>
+            </div>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Link href="/contact" className="group inline-flex items-center justify-center gap-3 px-10 py-5 bg-gradient-to-r from-red-600 to-red-500 text-white font-semibold rounded-2xl hover:shadow-2xl hover:scale-105 transition-all duration-300 shadow-lg">
+                <span>Join Us Now</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  className="group-hover:translate-x-1 transition-transform"
+                >
+                  <path d="m9 18 6-6-6-6" />
+                </svg>
+              </Link>
+            </div>
+            
+            {/* Quick Stats */}
+           
           </div>
-        </motion.div>
-      </section>
+        </RevealTest>
+
+        {/* Hero Image with Modern Frame */}
+        
+        <RevealTest animateImmediately delay={0.5}>
+              <div className="relative">
+                <div className="relative rounded-3xl overflow-hidden shadow-2xl">
+                  {/* Image Container with Gradient Border */}
+                  <div className="absolute -inset-1 bg-gradient-to-r from-red-500 via-pink-500 to-blue-500 rounded-3xl blur opacity-30"></div>
+                  <div className="relative rounded-3xl overflow-hidden border-8 border-white">
+                    
+                      <img
+                        src="/icons/ielts.png"
+                        alt={`Study Ielts`}
+                        className="w-full h-[500px] object-cover transform hover:scale-105 transition-transform duration-700"
+                      />
+                   
+                  </div>
+
+                </div>
+
+
+              </div>
+            </RevealTest>
+      </div>
+    </div>
+  </section>
+
 
       {/* Stats Section */}
       <section className="py-20 bg-gradient-to-b from-white to-gray-50">
@@ -416,6 +426,73 @@ export default function MagicalIELTSPage() {
           </div>
         </div>
       </section>
+
+      <RevealTest animateImmediately delay={0.5}>
+          <div className="relative">
+            <div className="relative rounded-3xl overflow-hidden shadow-2xl">
+              {/* Image Container with Gradient Border */}
+              <div className="absolute -inset-1 bg-gradient-to-r from-red-500 via-pink-500 to-blue-500 rounded-3xl blur opacity-30"></div>
+              <div className="relative rounded-3xl overflow-hidden border-8 border-white bg-gradient-to-br from-blue-50 to-red-50">
+                <div className="p-12 h-full flex flex-col items-center justify-center">
+                  {/* IELTS Badge */}
+                  <div className="mb-8">
+                    <div className="relative">
+                      <div className="w-32 h-32 rounded-full bg-gradient-to-r from-red-600 to-blue-600 flex items-center justify-center animate-pulse">
+                        <div className="w-28 h-28 rounded-full bg-white flex items-center justify-center">
+                          <span className="text-4xl font-bold bg-gradient-to-r from-red-600 to-blue-600 bg-clip-text text-transparent">
+                            IELTS
+                          </span>
+                        </div>
+                      </div>
+                      <div className="absolute -top-2 -right-2 w-10 h-10 rounded-full bg-yellow-500 flex items-center justify-center">
+                        <span className="text-white font-bold">9</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* IELTS Modules */}
+                  <div className="grid grid-cols-2 gap-4 w-full max-w-md">
+                    <div className="bg-white rounded-xl p-4 text-center border border-red-100 shadow-sm hover:shadow-md transition-shadow">
+                      <div className="text-lg font-bold text-red-600 mb-2">Listening</div>
+                      <div className="text-sm text-gray-600">40 Questions</div>
+                    </div>
+                    <div className="bg-white rounded-xl p-4 text-center border border-blue-100 shadow-sm hover:shadow-md transition-shadow">
+                      <div className="text-lg font-bold text-blue-600 mb-2">Reading</div>
+                      <div className="text-sm text-gray-600">40 Questions</div>
+                    </div>
+                    <div className="bg-white rounded-xl p-4 text-center border border-green-100 shadow-sm hover:shadow-md transition-shadow">
+                      <div className="text-lg font-bold text-green-600 mb-2">Writing</div>
+                      <div className="text-sm text-gray-600">2 Tasks</div>
+                    </div>
+                    <div className="bg-white rounded-xl p-4 text-center border border-purple-100 shadow-sm hover:shadow-md transition-shadow">
+                      <div className="text-lg font-bold text-purple-600 mb-2">Speaking</div>
+                      <div className="text-sm text-gray-600">3 Parts</div>
+                    </div>
+                  </div>
+
+                  {/* Band Score Chart */}
+                  <div className="mt-8 w-full max-w-md">
+                    <div className="text-center mb-4">
+                      <div className="text-lg font-semibold text-gray-800">Band Score Distribution</div>
+                    </div>
+                    <div className="h-4 bg-gray-200 rounded-full overflow-hidden">
+                      <div className="h-full bg-gradient-to-r from-red-500 via-yellow-500 to-green-500" style={{ width: '85%' }}></div>
+                    </div>
+                    <div className="flex justify-between text-xs text-gray-600 mt-2">
+                      <span>5.0</span>
+                      <span>6.5</span>
+                      <span>7.5+</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Floating Elements */}
+            <div className="absolute -top-4 -right-4 w-20 h-20 rounded-full bg-gradient-to-r from-red-200 to-pink-200 blur-xl opacity-50"></div>
+            <div className="absolute -bottom-4 -left-4 w-16 h-16 rounded-full bg-gradient-to-r from-blue-200 to-cyan-200 blur-xl opacity-50"></div>
+          </div>
+        </RevealTest>
 
       {/* Advantages Section */}
       <section className="py-24 relative overflow-hidden">
