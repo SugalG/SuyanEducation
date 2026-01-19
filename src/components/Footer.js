@@ -8,7 +8,6 @@ import {
   MapPin,
   Facebook,
   Instagram,
-  Linkedin,
   GraduationCap,
 } from "lucide-react";
 
@@ -34,16 +33,22 @@ export default function Footer({ settings }) {
     { name: "Contact", href: "/contact" },
   ];
 
+  // Custom TikTok Icon SVG
+  const TikTokIcon = () => (
+    <svg 
+      xmlns="http://www.w3.org/2000/svg" 
+      viewBox="0 0 24 24" 
+      fill="currentColor"
+      className="w-4 h-4"
+    >
+      <path d="M19.589 6.686a4.793 4.793 0 0 1-3.77-4.245V2h-3.445v13.672a2.896 2.896 0 0 1-5.201 1.743l-.002-.001.002.001a2.895 2.895 0 0 1 3.183-4.51v-3.5a6.329 6.329 0 0 0-5.394 10.692 6.33 6.33 0 0 0 10.857-4.424V8.687a8.182 8.182 0 0 0 4.773 1.526V6.79a4.831 4.831 0 0 1-1.003-.104z"/>
+    </svg>
+  );
+
   return (
     <footer className="relative bg-gradient-to-br from-blue-950 to-blue-950 text-white overflow-hidden">
       {/* Top Gradient Bar */}
       <div className="absolute top-0 left-0 right-0 h-1" />
-
-      {/* Background Glow */}
-      {/* <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-red-500 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-blue-500 rounded-full blur-3xl" />
-      </div> */}
 
       <div className="relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
@@ -68,8 +73,6 @@ export default function Footer({ settings }) {
                   
                 </div>
               </div>
-
-          
 
               {/* Stats */}
               <div className="flex items-center gap-6 pt-4">
@@ -162,9 +165,6 @@ export default function Footer({ settings }) {
                   </div>
                 </div>
 
-                {/* Kalanki */}
-              
-
                 {/* Hours */}
                 <div className="pt-3 border-t border-gray-700">
                   <p className="text-gray-400">
@@ -174,7 +174,7 @@ export default function Footer({ settings }) {
                 </div>
               </div>
 
-              {/* Social */}
+              {/* Social - TikTok replaces LinkedIn */}
               <div className="flex gap-3 mt-6">
                 <a
                   href="https://www.facebook.com/suyancons07"
@@ -193,10 +193,12 @@ export default function Footer({ settings }) {
                   <Instagram className="w-4 h-4" />
                 </a>
                 <a
-                  href="#"
-                  className="h-10 w-10 bg-gray-800 rounded-xl flex items-center justify-center hover:bg-blue-700 transition"
+                  href="https://www.tiktok.com/@suyaneducation1?_r=1&_t=ZS-934GCdKUirV"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="h-10 w-10 bg-gray-800 rounded-xl flex items-center justify-center hover:bg-black transition"
                 >
-                  <Linkedin className="w-4 h-4" />
+                  <TikTokIcon />
                 </a>
               </div>
             </div>
