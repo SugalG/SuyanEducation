@@ -57,10 +57,8 @@ export default function Testimonials() {
   );
 
   return (
-    <section className="relative max-w-7xl mx-auto px-4 sm:px-6 py-24">
-   
-
-      {/* Header - EXACTLY like Services Section */}
+    <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 sm:mt-16 md:mt-20 lg:mt-24 xl:mt-16">
+      {/* Header */}
       <motion.div 
         className="text-center max-w-4xl mx-auto px-4 mb-16"
         initial="hidden"
@@ -68,7 +66,7 @@ export default function Testimonials() {
         viewport={{ once: true, margin: "-50px" }}
         variants={fadeInUp}
       >
-        {/* Badge - Same as Services */}
+        {/* Badge */}
         <motion.div 
           className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-red-50 to-blue-50 border border-red-100"
           initial={{ opacity: 0, scale: 0.9 }}
@@ -79,26 +77,26 @@ export default function Testimonials() {
           <span className="text-sm font-medium text-gray-700">Student Voices</span>
         </motion.div>
         
-        {/* Main Heading - Same gradient as Services */}
+        {/* Main Heading */}
         <h2 className="mt-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold">
           <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
             Success Stories
           </span>
         </h2>
         
-        {/* Animated Underline - Same as Services */}
+        {/* Animated Underline - Made longer */}
         <div className="flex justify-center mt-4">
           <motion.div 
-            className="w-24 h-1 bg-gradient-to-r from-red-600 to-blue-800 rounded-full"
+            className="w-48 h-1.5 bg-gradient-to-r from-red-600 to-blue-800 rounded-full"
             initial={{ width: 0 }}
-            whileInView={{ width: 96 }}
+            whileInView={{ width: 192 }}
             transition={{ delay: 0.3, duration: 0.8 }}
           />
         </div>
         
-        {/* Subtitle - Same styling */}
+        {/* Subtitle */}
         <motion.p 
-          className="mt-6 text-lg sm:text-xl md:text-2xl text-gray-600 leading-relaxed"
+          className="mt-8 text-lg sm:text-xl md:text-2xl text-gray-600 leading-relaxed"
           variants={fadeInUp}
         >
           Real experiences from students who secured admissions with{" "}
@@ -108,8 +106,6 @@ export default function Testimonials() {
 
       {/* Cards Grid */}
       <div className="relative">
-     
-
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <AnimatePresence mode="wait">
             {visibleItems.map((t, index) => {
@@ -136,7 +132,7 @@ export default function Testimonials() {
                       : 'border-gray-100 hover:border-red-300'
                   }`}
                 >
-                  {/* Gradient Background - Same as Services */}
+                  {/* Gradient Background */}
                   <div className={`absolute inset-0 bg-gradient-to-br from-red-50 to-blue-50 opacity-5 group-hover:opacity-10 transition-opacity duration-300`} />
                   
                   {/* Content */}
@@ -193,8 +189,6 @@ export default function Testimonials() {
                             <p>Class of {t.year}</p>
                           )}
                         </div>
-
-                       
                       </div>
                     </div>
 
@@ -272,7 +266,7 @@ export default function Testimonials() {
                     </div>
                   </div>
 
-                  {/* Hover/Active Indicator - Same gradient as Services */}
+                  {/* Hover/Active Indicator */}
                   <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-red-600 to-blue-800 transition-all duration-300 ${
                     selectedCard === t.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
                   }`} />
@@ -281,16 +275,10 @@ export default function Testimonials() {
             })}
           </AnimatePresence>
         </div>
-
-        {/* Stats Panel - Same theme */}
- 
       </div>
 
       {/* Pagination */}
-     <div className="flex justify-center items-center gap-4 mt-12">
-
-        
-        
+      <div className="flex justify-center items-center gap-4 mt-12">
         <div className="flex items-center gap-2">
           <motion.button
             whileHover={{ scale: page > 0 ? 1.1 : 1 }}
@@ -333,8 +321,6 @@ export default function Testimonials() {
           </motion.button>
         </div>
       </div>
-
-     
     </section>
   );
 }

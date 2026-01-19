@@ -8,6 +8,9 @@ import { Toaster } from "sonner";
 import GoogleTranslate from "@/components/GoogleTranslate";
 import { Poppins } from "next/font/google";
 
+/* ✅ REQUIRED: prevent build-time DB access */
+export const dynamic = "force-dynamic";
+
 /* FONT SETUP */
 const poppins = Poppins({
   subsets: ["latin"],
@@ -46,8 +49,7 @@ export default async function RootLayout({ children }) {
               destinations={destinations}
             />
 
-            {/* MOBILE FIX ONLY */}
-            <main className="min-h-screen pt-[96px] md:pt-[120px]">
+            <main className="min-h-screen">
               {children}
               <Toaster richColors duration={1500} position="top-center" />
             </main>

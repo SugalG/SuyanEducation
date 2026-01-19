@@ -3,9 +3,14 @@
 import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import ApplyNowModal from "@/components/ApplyNowModal";
+import { usePathname } from "next/navigation";
 
 export default function NavbarApplyWrapper({ settings, destinations }) {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  
+  // Check if current page is homepage
+  const isHomepage = pathname === "/";
 
   // Lock background scroll on mobile when modal is open
   useEffect(() => {
@@ -26,6 +31,7 @@ export default function NavbarApplyWrapper({ settings, destinations }) {
         settings={settings}
         destinations={destinations}
         onApplyNow={() => setOpen(true)}
+        isHomepage={isHomepage} // Pass the isHomepage prop here
       />
 
       <ApplyNowModal

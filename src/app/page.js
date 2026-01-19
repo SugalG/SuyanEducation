@@ -25,8 +25,8 @@ export default async function HomePage() {
       <TestPreparationPreview />
       <DestinationPreview />
       {/* <SuccessStoriesPreview /> */}
-      <Testimonials/>
       <UniversitiesPreview/>
+      <Testimonials/>
       <BlogsPreview/>
       
       

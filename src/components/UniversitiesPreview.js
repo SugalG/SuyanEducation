@@ -4,6 +4,16 @@ import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
+// Animation variants - EXACTLY like testimonials
+const fadeInUp = {
+  hidden: { opacity: 0, y: 20 },
+  show: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { duration: 0.6 } 
+  }
+};
+
 export default function UniversitiesPreview() {
   const { data = [], isLoading, isError } = useQuery({
     queryKey: ["home-universities"],
@@ -23,39 +33,56 @@ export default function UniversitiesPreview() {
   const universities = data.slice(0, 14);
 
   return (
-    <section className="relative w-full py-16 lg:py-24 overflow-hidden">
-      {/* Background accents */}
-      {/* <div className="absolute inset-0 -z-10">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-red-500/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-950/5 rounded-full blur-3xl" />
-      </div> */}
-
-      {/* Header */}
+    <section className="relative w-full mt-16 sm:mt-16 md:mt-20 lg:mt-24 xl:mt-16">
+      {/* Header - FIXED to match testimonials EXACTLY */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
-        <motion.div
-          className="text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+        <motion.div 
+          className="text-center max-w-4xl mx-auto px-4 mb-16"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-50px" }}
+          variants={fadeInUp}
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-red-50 to-blue-50 border border-red-100 mb-6">
-            <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+          {/* Badge - EXACTLY like testimonials */}
+          <motion.div 
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-red-50 to-blue-50 border border-red-100"
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2 }}
+          >
+            <div className="w-2 h-2 bg-red-600 rounded-full animate-pulse"></div>
             <span className="text-sm font-medium text-gray-700">
               Trusted Academic Partners
             </span>
-          </div>
-
-          <h2 className="text-4xl sm:text-5xl font-bold mb-4">
+          </motion.div>
+          
+          {/* Main Heading - EXACTLY like testimonials */}
+          <h2 className="mt-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold">
             <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
               Partner Universities
             </span>
           </h2>
-
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            We collaborate with globally recognized universities to ensure
-            quality education pathways for our students.
-          </p>
+          
+          {/* Animated Underline - EXACTLY like testimonials */}
+          <div className="flex justify-center mt-4">
+            <motion.div 
+              className="w-48 h-1.5 bg-gradient-to-r from-red-600 to-blue-800 rounded-full"
+              initial={{ width: 0 }}
+              whileInView={{ width: 192 }}
+              transition={{ delay: 0.3, duration: 0.8 }}
+              // REMOVED: viewport={{ once: true }} <- This was the issue!
+            />
+          </div>
+          
+          {/* Subtitle - EXACTLY like testimonials */}
+          <motion.p 
+            className="mt-8 text-lg sm:text-xl md:text-2xl text-gray-600 leading-relaxed"
+            variants={fadeInUp}
+          >
+            We collaborate with{" "}
+            <span className="font-semibold text-red-600">globally recognized universities</span>{" "}
+            to ensure quality education pathways for our students
+          </motion.p>
         </motion.div>
       </div>
 
