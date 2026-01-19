@@ -34,7 +34,7 @@ export default function UniversitiesPreview() {
 
   return (
     <section className="relative w-full mt-16 sm:mt-16 md:mt-20 lg:mt-24 xl:mt-16">
-      {/* Header - FIXED to match testimonials EXACTLY */}
+     
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
         <motion.div 
           className="text-center max-w-4xl mx-auto px-4 mb-16"
@@ -43,7 +43,7 @@ export default function UniversitiesPreview() {
           viewport={{ once: true, margin: "-50px" }}
           variants={fadeInUp}
         >
-          {/* Badge - EXACTLY like testimonials */}
+        
           <motion.div 
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-red-50 to-blue-50 border border-red-100"
             initial={{ opacity: 0, scale: 0.9 }}
@@ -56,21 +56,21 @@ export default function UniversitiesPreview() {
             </span>
           </motion.div>
           
-          {/* Main Heading - EXACTLY like testimonials */}
+         
           <h2 className="mt-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold">
             <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
               Partner Universities
             </span>
           </h2>
           
-          {/* Animated Underline - EXACTLY like testimonials */}
+         
           <div className="flex justify-center mt-4">
             <motion.div 
               className="w-48 h-1.5 bg-gradient-to-r from-red-600 to-blue-800 rounded-full"
               initial={{ width: 0 }}
               whileInView={{ width: 192 }}
               transition={{ delay: 0.3, duration: 0.8 }}
-              // REMOVED: viewport={{ once: true }} <- This was the issue!
+              
             />
           </div>
           
@@ -102,7 +102,8 @@ export default function UniversitiesPreview() {
                   src={uni.imageUrl}
                   alt={uni.name}
                   loading="lazy"
-                  className="max-h-16 w-full object-contain grayscale group-hover:grayscale-0 transition duration-300"
+                  className="max-h-16 w-full object-contain transition duration-300"
+
                 />
               </a>
             ))}
