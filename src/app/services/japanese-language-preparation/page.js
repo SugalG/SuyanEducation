@@ -229,7 +229,7 @@ export default function JapaneseLanguageTraining() {
                   <div className="relative rounded-3xl overflow-hidden border-8 border-white">
                     
                       <img
-                        src="/icons/ielts.png"
+                        src="/icons/japan-test-prep.png"
                         alt={`Study Ielts`}
                         className="w-full h-[500px] object-cover transform hover:scale-105 transition-transform duration-700"
                       />
