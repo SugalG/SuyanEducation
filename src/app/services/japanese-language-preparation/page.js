@@ -4,6 +4,7 @@ import LevelTimeline from "@/components/japanesePrepComp/LevelTimeline";
 import WhyLearnJapanese from "@/components/japanesePrepComp/WhyLearnJapanese";
 import TeachingMethodology from "@/components/japanesePrepComp/TeachingMethodology";
 import Link from "next/link";
+import RevealTest from "@/components/RevealTest";
 
 export const dynamic = "force-static";
 
@@ -114,7 +115,7 @@ export default function JapaneseLanguageTraining() {
               backgroundSize: '30px 30px'
             }}></div>
           </div>
-
+          <RevealTest animateImmediately delay={0.2}>
           <div className="relative text-center mb-16">
             <span className="inline-block px-4 py-2 rounded-full bg-red-100 text-red-700 font-medium mb-6">
               日本語トレーニング
@@ -129,14 +130,16 @@ export default function JapaneseLanguageTraining() {
               Comprehensive language training program designed specifically for students and professionals aiming to study, work, or settle in Japan.
             </p>
           </div>
-
+          </RevealTest>
           {/* Quick Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto mb-20">
             {whyLearnStats.map((stat, index) => (
+              <RevealTest animateImmediately delay={index * 0.1 } key = {index}>
               <div key={index} className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg">
                 <div className="text-3xl font-bold text-red-600">{stat.number}</div>
                 <div className="text-gray-600 text-sm mt-2">{stat.label}</div>
               </div>
+              </RevealTest>
             ))}
           </div>
         </div>

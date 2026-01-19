@@ -200,7 +200,7 @@ export default function Navbar({ settings, onApplyNow }) {
 
                   {/* JLPT with Rounded Image */}
                   <Link
-                    href="/services/jlpt"
+                    href="/services/japanese-language-preparation"
                     className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 hover:text-red-700 transition-all duration-200 group/item"
                   >
                     <div className="w-10 h-10 rounded-full flex items-center justify-center group-hover/item:bg-red-50 transition-colors overflow-hidden p-1">
