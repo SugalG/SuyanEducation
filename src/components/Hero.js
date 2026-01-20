@@ -48,11 +48,7 @@ export default function Hero() {
       ref={containerRef}
       className="
         relative w-full overflow-hidden bg-black
-        h-[100vh]
-        sm:h-[100vh]
-        md:h-[100vh]
-        lg:h-[100vh]
-        xl:h-[100vh]
+        h-screen
       "
     >
       {/* Background Media */}
@@ -67,9 +63,9 @@ export default function Hero() {
             preload="metadata"
             poster="/hero-bg.png"
             className={`
+              absolute inset-0
               w-full h-full
               object-cover
-              md:object-contain
               transition-opacity duration-700
               ${isLoaded ? "opacity-100" : "opacity-0"}
             `}
@@ -80,15 +76,15 @@ export default function Hero() {
           <img
             src={HERO_FALLBACK_IMAGE}
             alt="Hero background"
-            className="w-full h-full object-cover md:object-contain"
+            className="
+              absolute inset-0
+              w-full h-full
+              object-cover
+            "
           />
         )}
       </div>
 
-    
-      
-
-      
       {/* <div className="relative z-10 flex h-full items-center justify-center px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl text-center">
           <h1
