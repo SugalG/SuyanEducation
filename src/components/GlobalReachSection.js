@@ -3,19 +3,15 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { Star } from "lucide-react";
-import { motion, useInView, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 const EASE_PREMIUM = [0.22, 1, 0.36, 1];
 
 export default function MessageFromCEOSection() {
-  const ref = useRef(null);
   const reduceMotion = useReducedMotion();
+  const ref = useRef(null);
 
-  const inView = useInView(ref, {
-    amount: 0.2,
-    margin: "0px 0px -15% 0px",
-    once: false,
-  });
+  /* ================= ANIMATIONS ================= */
 
   const ceoImageAnimation = reduceMotion
     ? {}
@@ -25,7 +21,11 @@ export default function MessageFromCEOSection() {
           opacity: 1,
           y: 0,
           scale: 1,
-          transition: { duration: 0.8, ease: EASE_PREMIUM, delay: 0.1 },
+          transition: {
+            duration: 0.8,
+            ease: EASE_PREMIUM,
+            delay: 0.1,
+          },
         },
       };
 
@@ -35,7 +35,10 @@ export default function MessageFromCEOSection() {
         hidden: { opacity: 0 },
         show: {
           opacity: 1,
-          transition: { staggerChildren: 0.12, delayChildren: 0.3 },
+          transition: {
+            staggerChildren: 0.12,
+            delayChildren: 0.3,
+          },
         },
       };
 
@@ -53,7 +56,7 @@ export default function MessageFromCEOSection() {
   return (
     <section
       ref={ref}
-      className="relative py-16 md:py-24 lg:py-28"
+      className="relative py-16 md:py-24 lg:py-28 overflow-hidden"
     >
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         <div
@@ -65,12 +68,11 @@ export default function MessageFromCEOSection() {
           "
         >
           {/* ================= MOBILE FLOW ================= */}
-          <div className="md:hidden space-y-8 w-full overflow-visible">
-            {/* Badge */}
+          <div className="md:hidden space-y-8">
             <motion.div
               variants={textItemAnimation}
               initial="hidden"
-              animate={inView ? "show" : "hidden"}
+              animate="show"
               className="flex justify-center"
             >
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-red-50 to-blue-50 border border-red-100">
@@ -81,11 +83,10 @@ export default function MessageFromCEOSection() {
               </div>
             </motion.div>
 
-            {/* Title */}
             <motion.h2
               variants={textItemAnimation}
               initial="hidden"
-              animate={inView ? "show" : "hidden"}
+              animate="show"
               className="text-2xl sm:text-3xl font-bold text-center"
             >
               <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
@@ -93,11 +94,10 @@ export default function MessageFromCEOSection() {
               </span>
             </motion.h2>
 
-            {/* Image */}
             <motion.div
               variants={ceoImageAnimation}
               initial="hidden"
-              animate={inView ? "show" : "hidden"}
+              animate="show"
               className="flex flex-col items-center"
             >
               <div className="relative w-full max-w-[360px] h-[300px] rounded-[22px] overflow-hidden shadow-xl">
@@ -119,11 +119,10 @@ export default function MessageFromCEOSection() {
               </div>
             </motion.div>
 
-            {/* Text */}
             <motion.div
               variants={textContainerAnimation}
               initial="hidden"
-              animate={inView ? "show" : "hidden"}
+              animate="show"
               className="space-y-4 text-center"
             >
               {[
@@ -141,24 +140,21 @@ export default function MessageFromCEOSection() {
               ))}
             </motion.div>
 
-            {/* ✅ FIXED: Video without negative margins for curved displays */}
             <motion.div
               variants={textItemAnimation}
               initial="hidden"
-              animate={inView ? "show" : "hidden"}
-              className="relative w-full overflow-visible"
+              animate="show"
+              className="relative -mx-4 sm:-mx-6 w-screen"
             >
-              <div className="relative w-full">
-                <video
-                  src="https://res.cloudinary.com/dvx9dcap6/video/upload/v1768546068/FLAGANIMATION2_k5xkt0.webm"
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  preload="auto"
-                  className="w-full h-auto object-contain rounded-lg"
-                />
-              </div>
+              <video
+                src="https://res.cloudinary.com/dvx9dcap6/video/upload/v1768546068/FLAGANIMATION2_k5xkt0.webm"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="auto"
+                className="w-full h-auto object-contain"
+              />
             </motion.div>
           </div>
 
@@ -167,9 +163,12 @@ export default function MessageFromCEOSection() {
             <motion.div
               variants={textContainerAnimation}
               initial="hidden"
-              animate={inView ? "show" : "hidden"}
+              animate="show"
             >
-              <motion.div variants={textItemAnimation} className="mb-6">
+              <motion.div
+                variants={textItemAnimation}
+                className="flex justify-start mb-6"
+              >
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-red-50 to-blue-50 border border-red-100">
                   <Star className="w-4 h-4 text-red-600" />
                   <span className="text-sm font-semibold tracking-wide text-gray-800">
@@ -187,13 +186,19 @@ export default function MessageFromCEOSection() {
                 </span>
               </motion.h2>
 
-              <motion.div variants={textItemAnimation} className="space-y-4 mt-6">
+              <motion.div
+                variants={textItemAnimation}
+                className="space-y-4 mt-6"
+              >
                 {[
                   "At Suyan Education, we believe that studying abroad is more than an academic journey — it is a transformational step toward a student's future and global perspective.",
                   "Our mission has always been rooted in honest guidance, transparent processes, and personalized counseling built on real experience.",
                   "From a strong foundation in Japanese education, we have grown into a global consultancy supporting students across multiple destinations.",
-                ].map((text, i) => (
-                  <p key={i} className="text-lg text-gray-700 leading-relaxed">
+                ].map((text, index) => (
+                  <p
+                    key={index}
+                    className="text-lg text-gray-700 leading-relaxed"
+                  >
                     {text}
                   </p>
                 ))}
@@ -201,11 +206,10 @@ export default function MessageFromCEOSection() {
             </motion.div>
           </div>
 
-          {/* Desktop Image */}
           <motion.div
             variants={ceoImageAnimation}
             initial="hidden"
-            animate={inView ? "show" : "hidden"}
+            animate="show"
             className="hidden md:flex flex-col items-center order-1"
           >
             <div className="relative w-full max-w-[420px] h-[600px] rounded-[22px] overflow-hidden shadow-xl">
@@ -229,7 +233,6 @@ export default function MessageFromCEOSection() {
             </div>
           </motion.div>
 
-          {/* Desktop Video */}
           <div className="hidden md:flex justify-center order-3">
             <div className="relative w-full max-w-[420px] h-[600px] rounded-[22px] overflow-hidden shadow-xl">
               <video
