@@ -11,14 +11,11 @@ export default function MessageFromCEOSection() {
   const ref = useRef(null);
   const reduceMotion = useReducedMotion();
 
-  /* ================= SAFE INVIEW (FIXED) ================= */
-  const rawInView = useInView(ref, {
-    amount: 0.15,
-    once: true,
+  const inView = useInView(ref, {
+    amount: 0.2,
+    margin: "0px 0px -15% 0px",
+    once: false,
   });
-
-  const inView = reduceMotion || rawInView;
-  /* ====================================================== */
 
   const ceoImageAnimation = reduceMotion
     ? {}
@@ -56,7 +53,7 @@ export default function MessageFromCEOSection() {
   return (
     <section
       ref={ref}
-      className="relative py-16 md:py-24 lg:py-28 overflow-hidden"
+      className="relative py-16 md:py-24 lg:py-28"
     >
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         <div
@@ -68,7 +65,8 @@ export default function MessageFromCEOSection() {
           "
         >
           {/* ================= MOBILE FLOW ================= */}
-          <div className="md:hidden space-y-8">
+          <div className="md:hidden space-y-8 w-full overflow-visible">
+            {/* Badge */}
             <motion.div
               variants={textItemAnimation}
               initial="hidden"
@@ -83,46 +81,45 @@ export default function MessageFromCEOSection() {
               </div>
             </motion.div>
 
+            {/* Title */}
             <motion.h2
               variants={textItemAnimation}
               initial="hidden"
               animate={inView ? "show" : "hidden"}
-              className="text-2xl sm:text-3xl font-bold text-center mt-4"
+              className="text-2xl sm:text-3xl font-bold text-center"
             >
               <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
                 Building Global Futures with Purpose
               </span>
             </motion.h2>
 
+            {/* Image */}
             <motion.div
               variants={ceoImageAnimation}
               initial="hidden"
               animate={inView ? "show" : "hidden"}
               className="flex flex-col items-center"
             >
-              <div className="relative w-full max-w-[360px] h-[300px]">
-                <div className="relative w-full h-full rounded-[22px] overflow-hidden shadow-xl">
-                  <Image
-                    src="https://res.cloudinary.com/dvx9dcap6/image/upload/v1768383148/ceo1_sut1bx.jpg"
-                    alt="Sunil Maharjan - Founder & CEO"
-                    fill
-                    priority
-                    quality={85}
-                    className="object-cover object-[42%_12%]"
-                  />
-                </div>
+              <div className="relative w-full max-w-[360px] h-[300px] rounded-[22px] overflow-hidden shadow-xl">
+                <Image
+                  src="https://res.cloudinary.com/dvx9dcap6/image/upload/v1768383148/ceo1_sut1bx.jpg"
+                  alt="Sunil Maharjan - Founder & CEO"
+                  fill
+                  priority
+                  quality={85}
+                  className="object-cover object-[42%_12%]"
+                />
               </div>
 
               <div className="mt-4 text-center">
-                <div className="font-bold text-gray-900">
-                  SUNIL MAHARJAN
-                </div>
+                <div className="font-bold text-gray-900">SUNIL MAHARJAN</div>
                 <div className="text-sm text-gray-600">
                   Founder & CEO, Suyan Education
                 </div>
               </div>
             </motion.div>
 
+            {/* Text */}
             <motion.div
               variants={textContainerAnimation}
               initial="hidden"
@@ -144,32 +141,35 @@ export default function MessageFromCEOSection() {
               ))}
             </motion.div>
 
+            {/* ✅ FIXED: Video without negative margins for curved displays */}
             <motion.div
               variants={textItemAnimation}
               initial="hidden"
               animate={inView ? "show" : "hidden"}
-              className="relative -mx-4 sm:-mx-6 w-screen"
+              className="relative w-full overflow-visible"
             >
-              <video
-                src="https://res.cloudinary.com/dvx9dcap6/video/upload/v1768546068/FLAGANIMATION2_k5xkt0.webm"
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="auto"
-                className="w-full h-auto object-contain"
-              />
+              <div className="relative w-full">
+                <video
+                  src="https://res.cloudinary.com/dvx9dcap6/video/upload/v1768546068/FLAGANIMATION2_k5xkt0.webm"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="auto"
+                  className="w-full h-auto object-contain rounded-lg"
+                />
+              </div>
             </motion.div>
           </div>
 
-          {/* ================= DESKTOP FLOW (UNCHANGED) ================= */}
+          {/* ================= DESKTOP FLOW ================= */}
           <div className="hidden md:block order-1 md:order-2 space-y-8">
             <motion.div
               variants={textContainerAnimation}
               initial="hidden"
               animate={inView ? "show" : "hidden"}
             >
-              <motion.div variants={textItemAnimation} className="flex justify-start mb-6">
+              <motion.div variants={textItemAnimation} className="mb-6">
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-red-50 to-blue-50 border border-red-100">
                   <Star className="w-4 h-4 text-red-600" />
                   <span className="text-sm font-semibold tracking-wide text-gray-800">
@@ -178,7 +178,10 @@ export default function MessageFromCEOSection() {
                 </div>
               </motion.div>
 
-              <motion.h2 variants={textItemAnimation} className="text-4xl lg:text-5xl xl:text-6xl font-bold">
+              <motion.h2
+                variants={textItemAnimation}
+                className="text-4xl lg:text-5xl xl:text-6xl font-bold"
+              >
                 <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
                   Building Global Futures with Purpose
                 </span>
@@ -189,8 +192,8 @@ export default function MessageFromCEOSection() {
                   "At Suyan Education, we believe that studying abroad is more than an academic journey — it is a transformational step toward a student's future and global perspective.",
                   "Our mission has always been rooted in honest guidance, transparent processes, and personalized counseling built on real experience.",
                   "From a strong foundation in Japanese education, we have grown into a global consultancy supporting students across multiple destinations.",
-                ].map((text, index) => (
-                  <p key={index} className="text-lg text-gray-700 leading-relaxed">
+                ].map((text, i) => (
+                  <p key={i} className="text-lg text-gray-700 leading-relaxed">
                     {text}
                   </p>
                 ))}
@@ -198,23 +201,22 @@ export default function MessageFromCEOSection() {
             </motion.div>
           </div>
 
+          {/* Desktop Image */}
           <motion.div
             variants={ceoImageAnimation}
             initial="hidden"
             animate={inView ? "show" : "hidden"}
             className="hidden md:flex flex-col items-center order-1"
           >
-            <div className="relative w-full max-w-[420px] h-[600px]">
-              <div className="relative w-full h-full rounded-[22px] overflow-hidden shadow-xl">
-                <Image
-                  src="https://res.cloudinary.com/dvx9dcap6/image/upload/v1768383148/ceo1_sut1bx.jpg"
-                  alt="Sunil Maharjan - Founder & CEO"
-                  fill
-                  priority
-                  quality={85}
-                  className="object-cover object-[42%_center]"
-                />
-              </div>
+            <div className="relative w-full max-w-[420px] h-[600px] rounded-[22px] overflow-hidden shadow-xl">
+              <Image
+                src="https://res.cloudinary.com/dvx9dcap6/image/upload/v1768383148/ceo1_sut1bx.jpg"
+                alt="Sunil Maharjan - Founder & CEO"
+                fill
+                priority
+                quality={85}
+                className="object-cover object-[42%_center]"
+              />
             </div>
 
             <div className="mt-6 text-center">
@@ -227,19 +229,18 @@ export default function MessageFromCEOSection() {
             </div>
           </motion.div>
 
+          {/* Desktop Video */}
           <div className="hidden md:flex justify-center order-3">
-            <div className="relative w-full max-w-[420px] h-[600px]">
-              <div className="w-full h-full rounded-[22px] overflow-hidden shadow-xl">
-                <video
-                  src="https://res.cloudinary.com/dvx9dcap6/video/upload/v1768546068/FLAGANIMATION2_k5xkt0.webm"
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  preload="auto"
-                  className="w-full h-full object-cover"
-                />
-              </div>
+            <div className="relative w-full max-w-[420px] h-[600px] rounded-[22px] overflow-hidden shadow-xl">
+              <video
+                src="https://res.cloudinary.com/dvx9dcap6/video/upload/v1768546068/FLAGANIMATION2_k5xkt0.webm"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="auto"
+                className="w-full h-full object-cover"
+              />
             </div>
           </div>
         </div>
