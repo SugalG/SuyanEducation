@@ -153,7 +153,8 @@ export default function MessageFromCEOSection() {
               variants={textItemAnimation}
               initial="hidden"
               animate={inView ? "show" : "hidden"}
-              className="w-screen -mx-4"
+              className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-[100vw] max-w-none"
+
             >
               <video
                 src="https://res.cloudinary.com/dvx9dcap6/video/upload/v1768546068/FLAGANIMATION2_k5xkt0.webm"

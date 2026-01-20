@@ -131,7 +131,7 @@ export default function Navbar({ settings, onApplyNow, isHomepage = false }) {
   return (
     <header className="fixed top-0 left-0 w-full z-50">
       {/* Top Bar with Contact Info */}
-      <div className={`bg-blue-800 text-white ${isHomepage && !scrolled ? 'bg-opacity-90' : ''}`}>
+      <div className={`bg-blue-950 text-white ${isHomepage && !scrolled ? 'bg-opacity-90' : ''}`}>
         <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-1">
           <div className="flex flex-col md:flex-row items-center justify-between text-xs">
             <div className="flex items-center gap-3 sm:gap-4 mb-1 md:mb-0">

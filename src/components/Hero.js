@@ -48,11 +48,11 @@ export default function Hero() {
       ref={containerRef}
       className="
         relative w-full overflow-hidden bg-black
-        h-[60vh]
-        sm:h-[65vh]
-        md:h-[70vh]
-        lg:h-[80vh]
-        xl:h-[85vh]
+        h-[100vh]
+        sm:h-[100vh]
+        md:h-[100vh]
+        lg:h-[100vh]
+        xl:h-[100vh]
       "
     >
       {/* Background Media */}
