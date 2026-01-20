@@ -230,7 +230,7 @@ export default function JapaneseLanguageTraining() {
                     
                       <img
                         src="/icons/japan-test-prep.png"
-                        alt={`Study Ielts`}
+                        alt={`Master in Japanese Languate`}
                         className="w-full h-[500px] object-cover transform hover:scale-105 transition-transform duration-700"
                       />
                    
