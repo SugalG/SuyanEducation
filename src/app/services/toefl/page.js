@@ -281,7 +281,7 @@ export default function ToeflInformation() {
       {/* Key Facts */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <AnimatedSection animation="fade-up" delay={0.1}>
+          <RevealTest animateImmediately delay={0.1}>
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
                 <span className="bg-gradient-to-r from-red-600 via-red-500 to-blue-950 bg-clip-text text-transparent">
@@ -293,7 +293,7 @@ export default function ToeflInformation() {
                 requirements
               </p>
             </div>
-          </AnimatedSection>
+          </RevealTest>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
             {keyFacts.map((item, index) => (
