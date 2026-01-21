@@ -3,7 +3,17 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { Facebook, Instagram, Phone, Mail, MapPin, MessageSquare, Globe, Users, Target } from "lucide-react";
+import {
+  Facebook,
+  Instagram,
+  Phone,
+  Mail,
+  MapPin,
+  MessageSquare,
+  Globe,
+  Users,
+  Target,
+} from "lucide-react";
 
 const cardVariants = {
   hidden: { opacity: 0, y: 30 },
@@ -24,11 +34,11 @@ export default function ContactClient() {
       <section className="relative min-h-[80vh] flex items-center overflow-hidden pt-24">
         {/* Gradient Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-white via-red-50 to-blue-50" />
-        
+
         {/* Animated Background Elements */}
         <div className="absolute top-0 left-0 w-1/3 h-full bg-gradient-to-r from-red-100/30 to-transparent" />
         <div className="absolute bottom-0 right-0 w-1/3 h-full bg-gradient-to-l from-blue-100/30 to-transparent" />
-        
+
         {/* Floating Circles */}
         <div className="absolute top-20 left-10 w-80 h-80 bg-gradient-to-r from-red-200/20 to-pink-200/10 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-l from-blue-200/20 to-cyan-200/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
@@ -66,8 +76,9 @@ export default function ContactClient() {
 
                 {/* Description */}
                 <p className="text-lg lg:text-xl text-gray-700 leading-relaxed mb-8 lg:mb-10">
-                  We're here to guide you every step of your study abroad journey. 
-                  Get personalized counseling and expert advice from our dedicated team.
+                  We're here to guide you every step of your study abroad
+                  journey. Get personalized counseling and expert advice from
+                  our dedicated team.
                 </p>
 
                 {/* Feature Icons Grid */}
@@ -78,7 +89,7 @@ export default function ContactClient() {
                     { icon: MessageSquare, label: "Quick Response" },
                     { icon: Globe, label: "Global Network" },
                   ].map((feature, index) => (
-                    <div 
+                    <div
                       key={index}
                       className="flex flex-col items-center p-3 lg:p-4 bg-white/80 backdrop-blur-sm rounded-xl lg:rounded-2xl border border-gray-100 active:scale-95 active:border-red-200 active:shadow-lg transition-all duration-200 touch-manipulation"
                       onTouchStart={() => {}}
@@ -101,17 +112,25 @@ export default function ContactClient() {
             >
               <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl lg:rounded-3xl border-2 border-gray-100 p-6 lg:p-8 xl:p-10 shadow-xl lg:shadow-2xl">
                 <div className="text-center mb-6 lg:mb-8">
-                  <h3 className="text-xl lg:text-2xl font-bold text-gray-900 mb-2">Start Your Journey Today</h3>
-                  <p className="text-sm lg:text-base text-gray-600">Book your free consultation session</p>
+                  <h3 className="text-xl lg:text-2xl font-bold text-gray-900 mb-2">
+                    Start Your Journey Today
+                  </h3>
+                  <p className="text-sm lg:text-base text-gray-600">
+                    Book your free consultation session
+                  </p>
                 </div>
-                
+
                 <div className="space-y-4 lg:space-y-6">
                   <div className="bg-gradient-to-r from-red-50 to-blue-50 rounded-xl lg:rounded-2xl p-4 lg:p-6 text-center active:scale-95 transition-transform duration-200">
                     <Phone className="w-8 lg:w-12 h-8 lg:h-12 text-red-600 mx-auto mb-3 lg:mb-4" />
-                    <div className="text-lg lg:text-2xl font-bold text-gray-900 mb-1 lg:mb-2">+977 1 5445099</div>
-                    <p className="text-sm lg:text-base text-gray-600">Sun–Fri, 10AM–6PM</p>
+                    <div className="text-lg lg:text-2xl font-bold text-gray-900 mb-1 lg:mb-2">
+                      +977 1 5445099
+                    </div>
+                    <p className="text-sm lg:text-base text-gray-600">
+                      Sun–Fri, 10AM–6PM
+                    </p>
                   </div>
-                  
+
                   <a
                     href="mailto:info@suyan.com.np"
                     className="block bg-gradient-to-r from-red-600 to-red-500 text-white rounded-xl lg:rounded-2xl p-4 lg:p-6 text-center font-semibold active:scale-95 active:shadow-lg transition-all duration-200"
@@ -130,9 +149,8 @@ export default function ContactClient() {
       <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          viewport={{ once: true, margin: "-100px" }}
           className="text-center mb-10 lg:mb-16"
         >
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 lg:mb-6">
@@ -141,7 +159,8 @@ export default function ContactClient() {
             </span>
           </h2>
           <p className="text-base lg:text-xl text-gray-600 max-w-3xl mx-auto px-4">
-            Multiple ways to reach our expert counselors for personalized guidance
+            Multiple ways to reach our expert counselors for personalized
+            guidance
           </p>
         </motion.div>
 
@@ -153,7 +172,7 @@ export default function ContactClient() {
               value: "+977 1 5445099",
               hint: "Sun–Fri, 10AM–6PM",
               color: "from-red-500 to-red-400",
-              action: "tel:+97715445099"
+              action: "tel:+97715445099",
             },
             {
               icon: Mail,
@@ -161,7 +180,7 @@ export default function ContactClient() {
               value: "info@suyan.com.np",
               hint: "We reply within 24 hours",
               color: "from-blue-500 to-blue-400",
-              action: "mailto:info@suyan.com.np"
+              action: "mailto:info@suyan.com.np",
             },
             {
               icon: MapPin,
@@ -169,7 +188,7 @@ export default function ContactClient() {
               value: "Kumaripati, Lalitpur",
               hint: "Nepal",
               color: "from-purple-500 to-purple-400",
-              action: "#location"
+              action: "#location",
             },
           ].map((item, i) => {
             const Icon = item.icon;
@@ -189,18 +208,34 @@ export default function ContactClient() {
                 onTouchEnd={() => setActiveCard(null)}
                 onMouseEnter={() => setActiveCard(i)}
                 onMouseLeave={() => setActiveCard(null)}
-                className={`group relative block ${isActive ? 'scale-98' : ''}`}
+                className={`group relative block ${isActive ? "scale-98" : ""}`}
               >
-                <div className={`bg-white rounded-2xl lg:rounded-3xl border-2 ${isActive ? 'border-red-300 shadow-xl' : 'border-gray-100'} p-6 lg:p-8 transition-all duration-300 active:scale-95`}>
+                <div
+                  className={`bg-white rounded-2xl lg:rounded-3xl border-2 ${
+                    isActive ? "border-red-300 shadow-xl" : "border-gray-100"
+                  } p-6 lg:p-8 transition-all duration-300 active:scale-95`}
+                >
                   {/* Icon Background */}
-                  <div className={`absolute -top-5 lg:-top-6 left-1/2 -translate-x-1/2 w-12 lg:w-16 h-12 lg:h-16 bg-gradient-to-br ${item.color} rounded-xl lg:rounded-2xl flex items-center justify-center shadow-lg ${isActive ? 'scale-110' : ''} transition-transform duration-300`}>
+                  <div
+                    className={`absolute -top-5 lg:-top-6 left-1/2 -translate-x-1/2 w-12 lg:w-16 h-12 lg:h-16 bg-gradient-to-br ${
+                      item.color
+                    } rounded-xl lg:rounded-2xl flex items-center justify-center shadow-lg ${
+                      isActive ? "scale-110" : ""
+                    } transition-transform duration-300`}
+                  >
                     <Icon className="w-6 lg:w-8 h-6 lg:h-8 text-white" />
                   </div>
-                  
+
                   <div className="pt-8 lg:pt-10 text-center">
-                    <h3 className="text-lg lg:text-xl font-bold text-gray-900 mb-3 lg:mb-4">{item.title}</h3>
-                    <p className="text-base lg:text-lg font-semibold text-gray-700 mb-1 lg:mb-2">{item.value}</p>
-                    <p className="text-xs lg:text-sm text-gray-500">{item.hint}</p>
+                    <h3 className="text-lg lg:text-xl font-bold text-gray-900 mb-3 lg:mb-4">
+                      {item.title}
+                    </h3>
+                    <p className="text-base lg:text-lg font-semibold text-gray-700 mb-1 lg:mb-2">
+                      {item.value}
+                    </p>
+                    <p className="text-xs lg:text-sm text-gray-500">
+                      {item.hint}
+                    </p>
                   </div>
                 </div>
               </motion.a>
@@ -225,7 +260,8 @@ export default function ContactClient() {
               </span>
             </h3>
             <p className="text-base lg:text-xl text-gray-600 max-w-3xl mx-auto px-4">
-              Stay updated with the latest news, success stories, and study abroad opportunities
+              Stay updated with the latest news, success stories, and study
+              abroad opportunities
             </p>
           </motion.div>
 
@@ -235,13 +271,13 @@ export default function ContactClient() {
                 icon: Facebook,
                 href: "https://www.facebook.com/suyancons07",
                 label: "Facebook",
-                color: "from-blue-600 to-blue-500"
+                color: "from-blue-600 to-blue-500",
               },
               {
                 icon: Instagram,
                 href: "https://www.instagram.com/suyancons07",
                 label: "Instagram",
-                color: "from-pink-600 to-pink-500"
+                color: "from-pink-600 to-pink-500",
               },
             ].map((social, i) => {
               const Icon = social.icon;
@@ -265,9 +301,23 @@ export default function ContactClient() {
                   onMouseLeave={() => setActiveSocial(null)}
                   className="group w-full sm:w-auto"
                 >
-                  <div className={`bg-gradient-to-br ${social.color} rounded-2xl lg:rounded-3xl p-6 lg:p-8 shadow-xl ${isActive ? 'scale-95 shadow-2xl' : ''} transition-all duration-300`}>
-                    <Icon className={`w-12 lg:w-16 h-12 lg:h-16 text-white mb-3 lg:mb-4 mx-auto ${isActive ? 'scale-110 rotate-12' : 'group-hover:scale-110 group-hover:rotate-5'} transition-transform duration-300`} />
-                    <div className="text-white font-semibold text-base lg:text-lg text-center">{social.label}</div>
+                  <div
+                    className={`bg-gradient-to-br ${
+                      social.color
+                    } rounded-2xl lg:rounded-3xl p-6 lg:p-8 shadow-xl ${
+                      isActive ? "scale-95 shadow-2xl" : ""
+                    } transition-all duration-300`}
+                  >
+                    <Icon
+                      className={`w-12 lg:w-16 h-12 lg:h-16 text-white mb-3 lg:mb-4 mx-auto ${
+                        isActive
+                          ? "scale-110 rotate-12"
+                          : "group-hover:scale-110 group-hover:rotate-5"
+                      } transition-transform duration-300`}
+                    />
+                    <div className="text-white font-semibold text-base lg:text-lg text-center">
+                      {social.label}
+                    </div>
                   </div>
                 </motion.a>
               );
@@ -277,7 +327,10 @@ export default function ContactClient() {
       </section>
 
       {/* Location Map Section */}
-      <section id="location" className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+      <section
+        id="location"
+        className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24"
+      >
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -304,10 +357,14 @@ export default function ContactClient() {
         >
           {/* Map Header */}
           <div className="bg-gradient-to-r from-red-600 to-blue-950 text-white p-4 lg:p-6 text-center">
-            <h4 className="text-xl lg:text-2xl font-bold">Suyan Education Pvt. Ltd.</h4>
-            <p className="text-red-100 text-sm lg:text-base">Kumaripati, Lalitpur, Nepal</p>
+            <h4 className="text-xl lg:text-2xl font-bold">
+              Suyan Education Pvt. Ltd.
+            </h4>
+            <p className="text-red-100 text-sm lg:text-base">
+              Kumaripati, Lalitpur, Nepal
+            </p>
           </div>
-          
+
           {/* Map */}
           <iframe
             title="Suyan Education Pvt. Ltd."
@@ -333,9 +390,10 @@ export default function ContactClient() {
               Quick Contact
             </h3>
             <p className="text-base lg:text-xl text-red-100 mb-8 lg:mb-10 max-w-2xl mx-auto px-4">
-              Scan the QR code to quickly reach us or save our contact information
+              Scan the QR code to quickly reach us or save our contact
+              information
             </p>
-            
+
             <div className="flex flex-col md:flex-row items-center justify-center gap-8 lg:gap-12">
               <div className="bg-white/10 backdrop-blur-sm rounded-2xl lg:rounded-3xl p-6 lg:p-8 border border-white/20">
                 <Image
@@ -346,21 +404,35 @@ export default function ContactClient() {
                   className="rounded-xl lg:rounded-2xl w-48 h-48 lg:w-64 lg:h-64"
                 />
               </div>
-              
+
               <div className="text-left text-white">
                 <div className="space-y-4 lg:space-y-6">
                   <div>
-                    <h4 className="text-lg lg:text-xl font-bold mb-1 lg:mb-2">Direct Contact</h4>
-                    <p className="text-red-100 text-base lg:text-lg">+977 1 5445099</p>
+                    <h4 className="text-lg lg:text-xl font-bold mb-1 lg:mb-2">
+                      Direct Contact
+                    </h4>
+                    <p className="text-red-100 text-base lg:text-lg">
+                      +977 1 5445099
+                    </p>
                   </div>
                   <div>
-                    <h4 className="text-lg lg:text-xl font-bold mb-1 lg:mb-2">Email Address</h4>
-                    <p className="text-red-100 text-base lg:text-lg">info@suyan.com.np</p>
+                    <h4 className="text-lg lg:text-xl font-bold mb-1 lg:mb-2">
+                      Email Address
+                    </h4>
+                    <p className="text-red-100 text-base lg:text-lg">
+                      info@suyan.com.np
+                    </p>
                   </div>
                   <div>
-                    <h4 className="text-lg lg:text-xl font-bold mb-1 lg:mb-2">Office Hours</h4>
-                    <p className="text-red-100 text-sm lg:text-base">Sunday - Friday</p>
-                    <p className="text-red-100 text-sm lg:text-base">10:00 AM - 6:00 PM</p>
+                    <h4 className="text-lg lg:text-xl font-bold mb-1 lg:mb-2">
+                      Office Hours
+                    </h4>
+                    <p className="text-red-100 text-sm lg:text-base">
+                      Sunday - Friday
+                    </p>
+                    <p className="text-red-100 text-sm lg:text-base">
+                      10:00 AM - 6:00 PM
+                    </p>
                   </div>
                 </div>
               </div>

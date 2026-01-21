@@ -1,69 +1,93 @@
 "use client";
 
+import { useEffect } from "react";
+import ReactDOM from "react-dom";
+import ReactFocusLock from "react-focus-lock";
+
 export default function ApplyNowModal({ open, onClose }) {
+  useEffect(() => {
+    if (!open) return;
+
+    const scrollY = window.scrollY; // remember scroll position
+    const html = document.documentElement;
+
+    // Freeze background scroll
+    html.style.position = "fixed";
+    html.style.top = `-${scrollY}px`;
+    html.style.left = "0";
+    html.style.right = "0";
+    html.style.overflow = "hidden";
+    html.style.width = "100%";
+
+    return () => {
+      // Restore scroll when modal closes
+      html.style.position = "";
+      html.style.top = "";
+      html.style.left = "";
+      html.style.right = "";
+      html.style.overflow = "";
+      html.style.width = "";
+      window.scrollTo(0, scrollY); // go back to original scroll position
+    };
+  }, [open]);
+
   if (!open) return null;
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4">
-      <div className="bg-white w-full max-w-md rounded-2xl p-6 relative">
-        {/* Logo / Title */}
-        <div className="text-center mb-6">
-          <h2 className="text-xl font-bold text-gray-900">
-            WI Education Consultancy Lalitpur
-          </h2>
-          <p className="text-lg font-semibold mt-2">
-            Apply Now
-          </p>
-        </div>
+  return ReactDOM.createPortal(
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4">
+      <ReactFocusLock>
+        <div className="bg-white w-full max-w-md rounded-3xl p-6 relative shadow-2xl transform transition-all duration-300 scale-100 max-h-[90vh] overflow-auto">
+          <div className="text-center mb-6">
+            <h2 className="text-2xl font-bold text-gray-900">
+              Suyon Education Consultancy
+            </h2>
+            <p className="text-lg font-medium mt-2 text-gray-700">Apply Now</p>
+          </div>
 
-        {/* FORM */}
-        <form className="space-y-4">
-          <input
-            type="text"
-            placeholder="Full Name"
-            className="w-full border rounded-lg px-4 py-3"
-            required
-          />
-
-          <input
-            type="email"
-            placeholder="Email"
-            className="w-full border rounded-lg px-4 py-3"
-            required
-          />
-
-          <input
-            type="tel"
-            placeholder="Contact Number"
-            className="w-full border rounded-lg px-4 py-3"
-            required
-          />
-
-          <select className="w-full border rounded-lg px-4 py-3">
-            <option value="">Select Service</option>
-            <option>IELTS Preparation</option>
-            <option>PTE Preparation</option>
-            <option>Study in Japan</option>
-            <option>Study in Australia</option>
-            <option>Study in Europe</option>
-          </select>
+          <form className="space-y-4">
+            <input
+              type="text"
+              placeholder="Full Name"
+              className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
+              required
+            />
+            <input
+              type="email"
+              placeholder="Email"
+              className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
+              required
+            />
+            <input
+              type="tel"
+              placeholder="Contact Number"
+              className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
+              required
+            />
+            <select className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none transition">
+              <option value="">Select Service</option>
+              <option>IELTS Preparation</option>
+              <option>PTE Preparation</option>
+              <option>Study in Japan</option>
+              <option>Study in Australia</option>
+              <option>Study in Europe</option>
+            </select>
+            <button
+              type="submit"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-full font-semibold transition-transform duration-200 hover:scale-105"
+            >
+              Submit
+            </button>
+          </form>
 
           <button
-            type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-full font-semibold transition"
+            onClick={onClose}
+            className="w-full mt-4 border border-gray-300 py-2 rounded-xl text-gray-600 hover:bg-gray-100 transition"
           >
-            Submit
+            Close
           </button>
-        </form>
-
-        {/* CLOSE */}
-        <button
-          onClick={onClose}
-          className="w-full mt-4 border py-2 rounded-lg text-gray-600"
-        >
-          Close
-        </button>
-      </div>
-    </div>
+        </div>
+      </ReactFocusLock>
+    </div>,
+    document.body
   );
 }

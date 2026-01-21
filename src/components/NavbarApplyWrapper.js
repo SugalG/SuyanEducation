@@ -12,27 +12,13 @@ export default function NavbarApplyWrapper({ settings, destinations }) {
   // Check if current page is homepage
   const isHomepage = pathname === "/";
 
-  // Lock background scroll on mobile when modal is open
-  
-  useEffect(() => {
-    if (open) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [open]);
-
   return (
     <>
       <Navbar
         settings={settings}
         destinations={destinations}
         onApplyNow={() => setOpen(true)}
-        isHomepage={isHomepage} // Pass the isHomepage prop here
+        isHomepage={isHomepage}
       />
 
       <ApplyNowModal
