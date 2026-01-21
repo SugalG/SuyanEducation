@@ -2,7 +2,15 @@
 
 import Link from "next/link";
 import { useEffect, useState, useRef } from "react";
-import { Menu, X, ChevronDown, Phone, Mail, MapPin, MessageSquare } from "lucide-react";
+import {
+  Menu,
+  X,
+  ChevronDown,
+  Phone,
+  Mail,
+  MapPin,
+  MessageSquare,
+} from "lucide-react";
 import Image from "next/image";
 
 export default function Navbar({ settings, onApplyNow, isHomepage = false }) {
@@ -25,7 +33,7 @@ export default function Navbar({ settings, onApplyNow, isHomepage = false }) {
     const updateScrolled = () => {
       const currentScrollY = window.scrollY;
       const newScrolled = currentScrollY > 50;
-      
+
       if (newScrolled !== scrolled) {
         setScrolled(newScrolled);
       }
@@ -34,7 +42,7 @@ export default function Navbar({ settings, onApplyNow, isHomepage = false }) {
 
     const onScroll = () => {
       lastScrollY = window.scrollY;
-      
+
       if (!ticking) {
         window.requestAnimationFrame(() => {
           updateScrolled();
@@ -70,12 +78,12 @@ export default function Navbar({ settings, onApplyNow, isHomepage = false }) {
   // Close mobile menu when clicking outside or on link
   useEffect(() => {
     if (mobileOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     }
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     };
   }, [mobileOpen]);
 
@@ -96,25 +104,25 @@ export default function Navbar({ settings, onApplyNow, isHomepage = false }) {
   // Clean text shadow classes - NO BACKGROUND, just text effects
   const getNavLinkClass = () => {
     return `relative transition-all duration-200 group/nav px-1 whitespace-nowrap ${
-      isHomepage && !scrolled 
+      isHomepage && !scrolled
         ? `
           text-white font-semibold
           [text-shadow:0_1px_2px_rgba(0,0,0,0.9),0_2px_4px_rgba(0,0,0,0.7)]
           hover:[text-shadow:0_2px_4px_rgba(0,0,0,0.95),0_4px_8px_rgba(0,0,0,0.8)]
-        ` 
-        : 'text-gray-700 hover:text-red-600'
+        `
+        : "text-gray-700 hover:text-red-600"
     }`;
   };
 
   const getDropdownButtonClass = () => {
     return `relative transition-all duration-200 flex items-center gap-1 group/nav px-1 whitespace-nowrap ${
-      isHomepage && !scrolled 
+      isHomepage && !scrolled
         ? `
           text-white font-semibold
           [text-shadow:0_1px_2px_rgba(0,0,0,0.9),0_2px_4px_rgba(0,0,0,0.7)]
           hover:[text-shadow:0_2px_4px_rgba(0,0,0,0.95),0_4px_8px_rgba(0,0,0,0.8)]
-        ` 
-        : 'text-gray-700 hover:text-red-600'
+        `
+        : "text-gray-700 hover:text-red-600"
     }`;
   };
 
@@ -122,8 +130,8 @@ export default function Navbar({ settings, onApplyNow, isHomepage = false }) {
     return `transition-transform duration-200 ${
       openMenu === menu ? "rotate-180" : ""
     } ${
-      isHomepage && !scrolled 
-        ? "text-white/90 [text-shadow:0_1px_2px_rgba(0,0,0,0.8)]" 
+      isHomepage && !scrolled
+        ? "text-white/90 [text-shadow:0_1px_2px_rgba(0,0,0,0.8)]"
         : "text-gray-700 group-hover/nav:text-red-600"
     }`;
   };
@@ -131,7 +139,11 @@ export default function Navbar({ settings, onApplyNow, isHomepage = false }) {
   return (
     <header className="fixed top-0 left-0 w-full z-50">
       {/* Top Bar with Contact Info */}
-      <div className={`bg-blue-950 text-white ${isHomepage && !scrolled ? 'bg-opacity-90' : ''}`}>
+      <div
+        className={`bg-blue-950 text-white ${
+          isHomepage && !scrolled ? "bg-opacity-90" : ""
+        }`}
+      >
         <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-1">
           <div className="flex flex-col md:flex-row items-center justify-between text-xs">
             <div className="flex items-center gap-3 sm:gap-4 mb-1 md:mb-0">
@@ -144,17 +156,19 @@ export default function Navbar({ settings, onApplyNow, isHomepage = false }) {
                 <span>info@suyan.edu.np</span>
               </div>
             </div>
-            
+
             <div className="flex items-center gap-3 sm:gap-4">
               <div className="flex items-center gap-1 sm:gap-2">
                 <MapPin size={12} />
-                <span className="hidden md:inline">Kumaripati, Lalitpur, Nepal</span>
+                <span className="hidden md:inline">
+                  Kumaripati, Lalitpur, Nepal
+                </span>
                 <span className="md:hidden text-xs">Lalitpur, Nepal</span>
               </div>
               <div className="hidden lg:block text-xs opacity-80">
                 Sun-Fri: 7AM-3PM
               </div>
-              
+
               <button
                 onClick={onApplyNow}
                 className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-white text-blue-800 text-xs font-semibold hover:bg-blue-50 transition-all duration-200 hover:scale-105 active:scale-95 shadow-sm ml-2"
@@ -168,20 +182,27 @@ export default function Navbar({ settings, onApplyNow, isHomepage = false }) {
       </div>
 
       {/* Main Navigation */}
-      <div className={`
+      <div
+        className={`
         transition-all duration-300 ease-in-out
-        ${!isHomepage 
-          ? 'bg-white/95 backdrop-blur-md shadow-sm' 
-          : scrolled 
-            ? 'bg-white/95 backdrop-blur-md shadow-sm' 
-            : 'bg-transparent'
+        ${
+          !isHomepage
+            ? "bg-white/95 backdrop-blur-md shadow-sm"
+            : scrolled
+            ? "bg-white/95 backdrop-blur-md shadow-sm"
+            : "bg-transparent"
         }
-      `}>
+      `}
+      >
         <nav className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 h-24 flex items-center justify-between">
           {/* Logo */}
-          <div className={`flex-shrink-0 transition-all duration-300 ${
-            isHomepage && !scrolled ? 'opacity-0 invisible w-0' : 'opacity-100 visible w-auto'
-          }`}>
+          <div
+            className={`flex-shrink-0 transition-all duration-300 ${
+              isHomepage && !scrolled
+                ? "opacity-0 invisible w-0"
+                : "opacity-100 visible w-auto"
+            }`}
+          >
             <Link href="/" className="flex items-center group">
               <div className="relative">
                 <Image
@@ -199,29 +220,27 @@ export default function Navbar({ settings, onApplyNow, isHomepage = false }) {
           {/* Fixed Position Navigation */}
           <div className="hidden md:flex items-center gap-6 lg:gap-8 font-semibold text-[16px] lg:text-[17px] absolute left-1/2 transform -translate-x-1/2">
             {/* Home */}
-            <Link
-              href="/"
-              className={getNavLinkClass()}
-            >
+            <Link href="/" className={getNavLinkClass()}>
               Home
-              <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 ${
-                isHomepage && !scrolled
-                  ? 'bg-white group-hover/nav:w-full'
-                  : 'bg-gradient-to-r from-red-600 to-blue-950 group-hover/nav:w-full'
-              }`}></span>
+              <span
+                className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 ${
+                  isHomepage && !scrolled
+                    ? "bg-white group-hover/nav:w-full"
+                    : "bg-gradient-to-r from-red-600 to-blue-950 group-hover/nav:w-full"
+                }`}
+              ></span>
             </Link>
 
             {/* About */}
-            <Link
-              href="/about"
-              className={getNavLinkClass()}
-            >
+            <Link href="/about" className={getNavLinkClass()}>
               About
-              <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 ${
-                isHomepage && !scrolled
-                  ? 'bg-white group-hover/nav:w-full'
-                  : 'bg-gradient-to-r from-red-600 to-blue-950 group-hover/nav:w-full'
-              }`}></span>
+              <span
+                className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 ${
+                  isHomepage && !scrolled
+                    ? "bg-white group-hover/nav:w-full"
+                    : "bg-gradient-to-r from-red-600 to-blue-950 group-hover/nav:w-full"
+                }`}
+              ></span>
             </Link>
 
             {/* Test Preparation */}
@@ -236,11 +255,13 @@ export default function Navbar({ settings, onApplyNow, isHomepage = false }) {
               >
                 Test Preparation
                 <ChevronDown size={16} className={getChevronClass("test")} />
-                <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 ${
-                  isHomepage && !scrolled
-                    ? 'bg-white group-hover/nav:w-full'
-                    : 'bg-gradient-to-r from-red-600 to-blue-950 group-hover/nav:w-full'
-                }`}></span>
+                <span
+                  className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 ${
+                    isHomepage && !scrolled
+                      ? "bg-white group-hover/nav:w-full"
+                      : "bg-gradient-to-r from-red-600 to-blue-950 group-hover/nav:w-full"
+                  }`}
+                ></span>
               </button>
 
               {/* Dropdown gap for hover */}
@@ -250,20 +271,29 @@ export default function Navbar({ settings, onApplyNow, isHomepage = false }) {
                 ref={testMenuRef}
                 className={`absolute left-1/2 transform -translate-x-1/2 top-full mt-2 w-56 bg-white/95 backdrop-blur-md rounded-xl shadow-xl border border-gray-100
                 transition-all duration-200 origin-top
-                ${openMenu === "test"
+                ${
+                  openMenu === "test"
                     ? "opacity-100 visible scale-y-100 translate-y-0"
-                    : "opacity-0 invisible scale-y-95 -translate-y-2"}`}
+                    : "opacity-0 invisible scale-y-95 -translate-y-2"
+                }`}
                 onMouseEnter={() => handleMouseEnter("test")}
                 onMouseLeave={handleMouseLeave}
               >
                 <div className="p-2">
                   <div className="px-3 py-2 mb-2">
-                    <div className="text-xs font-semibold text-blue-950 uppercase tracking-wider">Language Tests</div>
-                    <div className="text-xs text-gray-500">International proficiency exams</div>
+                    <div className="text-xs font-semibold text-blue-950 uppercase tracking-wider">
+                      Language Tests
+                    </div>
+                    <div className="text-xs text-gray-500">
+                      International proficiency exams
+                    </div>
                   </div>
 
                   {/* Menu items */}
-                  <Link href="/services/jlpt" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 hover:text-red-700 transition-all duration-200 group/item">
+                  <Link
+                    href="/services/japanese-language-preparation"
+                    className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 hover:text-red-700 transition-all duration-200 group/item"
+                  >
                     <div className="w-10 h-10 rounded-full flex items-center justify-center group-hover/item:bg-red-50 transition-colors overflow-hidden p-1">
                       <img
                         src="/icons/japan-test-prep.png"
@@ -273,11 +303,16 @@ export default function Navbar({ settings, onApplyNow, isHomepage = false }) {
                     </div>
                     <div>
                       <div className="font-medium">JLPT</div>
-                      <div className="text-xs text-gray-500">Japanese Language</div>
+                      <div className="text-xs text-gray-500">
+                        Japanese Language
+                      </div>
                     </div>
                   </Link>
 
-                  <Link href="/services/ielts" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 hover:text-red-700 transition-all duration-200 group/item">
+                  <Link
+                    href="/services/ielts"
+                    className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 hover:text-red-700 transition-all duration-200 group/item"
+                  >
                     <div className="w-10 h-10 rounded-full flex items-center justify-center group-hover/item:bg-blue-50 transition-colors overflow-hidden p-1">
                       <img
                         src="/icons/ielts.png"
@@ -287,11 +322,16 @@ export default function Navbar({ settings, onApplyNow, isHomepage = false }) {
                     </div>
                     <div>
                       <div className="font-medium">IELTS</div>
-                      <div className="text-xs text-gray-500">English Proficiency</div>
+                      <div className="text-xs text-gray-500">
+                        English Proficiency
+                      </div>
                     </div>
                   </Link>
 
-                  <Link href="/services/toefl" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 hover:text-red-700 transition-all duration-200 group/item">
+                  <Link
+                    href="/services/toefl"
+                    className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 hover:text-red-700 transition-all duration-200 group/item"
+                  >
                     <div className="w-10 h-10 rounded-full flex items-center justify-center group-hover/item:bg-green-50 transition-colors overflow-hidden p-1">
                       <img
                         src="/icons/tofel-test-prep.png"
@@ -301,11 +341,16 @@ export default function Navbar({ settings, onApplyNow, isHomepage = false }) {
                     </div>
                     <div>
                       <div className="font-medium">TOEFL</div>
-                      <div className="text-xs text-gray-500">Academic English</div>
+                      <div className="text-xs text-gray-500">
+                        Academic English
+                      </div>
                     </div>
                   </Link>
 
-                  <Link href="/services/ssw" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 hover:text-red-700 transition-all duration-200 group/item">
+                  <Link
+                    href="/services/ssw"
+                    className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 hover:text-red-700 transition-all duration-200 group/item"
+                  >
                     <div className="w-10 h-10 rounded-full flex items-center justify-center group-hover/item:bg-purple-50 transition-colors overflow-hidden p-1">
                       <img
                         src="/icons/ssw-test-prep.png"
@@ -315,7 +360,9 @@ export default function Navbar({ settings, onApplyNow, isHomepage = false }) {
                     </div>
                     <div>
                       <div className="font-medium">SSW</div>
-                      <div className="text-xs text-gray-500">Specialized Skills</div>
+                      <div className="text-xs text-gray-500">
+                        Specialized Skills
+                      </div>
                     </div>
                   </Link>
                 </div>
@@ -334,11 +381,13 @@ export default function Navbar({ settings, onApplyNow, isHomepage = false }) {
               >
                 Destinations
                 <ChevronDown size={16} className={getChevronClass("dest")} />
-                <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 ${
-                  isHomepage && !scrolled
-                    ? 'bg-white group-hover/nav:w-full'
-                    : 'bg-gradient-to-r from-red-600 to-blue-600 group-hover/nav:w-full'
-                }`}></span>
+                <span
+                  className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 ${
+                    isHomepage && !scrolled
+                      ? "bg-white group-hover/nav:w-full"
+                      : "bg-gradient-to-r from-red-600 to-blue-600 group-hover/nav:w-full"
+                  }`}
+                ></span>
               </button>
 
               <div className="absolute left-0 top-full h-2"></div>
@@ -347,30 +396,40 @@ export default function Navbar({ settings, onApplyNow, isHomepage = false }) {
                 ref={destMenuRef}
                 className={`absolute left-1/2 transform -translate-x-1/2 top-full mt-2 w-64 bg-white/95 backdrop-blur-md rounded-xl shadow-xl border border-gray-100
                 transition-all duration-200 origin-top
-                ${openMenu === "dest"
+                ${
+                  openMenu === "dest"
                     ? "opacity-100 visible scale-y-100 translate-y-0"
-                    : "opacity-0 invisible scale-y-95 -translate-y-2"}`}
+                    : "opacity-0 invisible scale-y-95 -translate-y-2"
+                }`}
                 onMouseEnter={() => handleMouseEnter("dest")}
                 onMouseLeave={handleMouseLeave}
               >
                 <div className="p-2">
                   <div className="px-3 py-2 mb-2">
-                    <div className="text-xs font-semibold text-blue-800 uppercase tracking-wider">Popular Destinations</div>
-                    <div className="text-xs text-gray-500">Choose your study country</div>
+                    <div className="text-xs font-semibold text-blue-800 uppercase tracking-wider">
+                      Popular Destinations
+                    </div>
+                    <div className="text-xs text-gray-500">
+                      Choose your study country
+                    </div>
                   </div>
 
                   {destinations.map((d) => (
                     <Link
                       key={d.slug}
                       href={`/destinations/${d.slug}`}
-                      className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 hover:text-red-700 transition-all duration-200 group/item"
+                      className="flex items-center gap-3 px-4 py-3 rounded-lg
+     hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50
+     hover:text-red-700 transition-all duration-200 group/item"
                     >
-                      <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-red-100 to-blue-100 flex items-center justify-center">
-                        <span className="text-gray-700 font-bold text-sm">
-                          {d.country.charAt(0)}
-                        </span>
+                      <div className="w-6 h-6 overflow-hidden flex items-center justify-center">
+                        <img
+                          src={`https://flagcdn.com/w40/${d.code.toLowerCase()}.png`}
+                          alt={d.country}
+                          className="w-full h-full object-contain"
+                        />
                       </div>
-                      <div className="font-medium">{d.country}</div>
+                      <div className="font-medium ml-2">{d.country}</div>
                     </Link>
                   ))}
                 </div>
@@ -378,55 +437,51 @@ export default function Navbar({ settings, onApplyNow, isHomepage = false }) {
             </div>
 
             {/* Universities */}
-            <Link
-              href="/universities"
-              className={getNavLinkClass()}
-            >
+            <Link href="/universities" className={getNavLinkClass()}>
               Universities
-              <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 ${
-                isHomepage && !scrolled
-                  ? 'bg-white group-hover/nav:w-full'
-                  : 'bg-gradient-to-r from-red-600 to-blue-600 group-hover/nav:w-full'
-              }`}></span>
+              <span
+                className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 ${
+                  isHomepage && !scrolled
+                    ? "bg-white group-hover/nav:w-full"
+                    : "bg-gradient-to-r from-red-600 to-blue-600 group-hover/nav:w-full"
+                }`}
+              ></span>
             </Link>
 
             {/* Gallery */}
-            <Link
-              href="/gallery"
-              className={getNavLinkClass()}
-            >
+            <Link href="/gallery" className={getNavLinkClass()}>
               Gallery
-              <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 ${
-                isHomepage && !scrolled
-                  ? 'bg-white group-hover/nav:w-full'
-                  : 'bg-gradient-to-r from-red-600 to-blue-600 group-hover/nav:w-full'
-              }`}></span>
+              <span
+                className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 ${
+                  isHomepage && !scrolled
+                    ? "bg-white group-hover/nav:w-full"
+                    : "bg-gradient-to-r from-red-600 to-blue-600 group-hover/nav:w-full"
+                }`}
+              ></span>
             </Link>
 
             {/* Blog */}
-            <Link
-              href="/blog"
-              className={getNavLinkClass()}
-            >
+            <Link href="/blog" className={getNavLinkClass()}>
               Blog
-              <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 ${
-                isHomepage && !scrolled
-                  ? 'bg-white group-hover/nav:w-full'
-                  : 'bg-gradient-to-r from-red-600 to-blue-600 group-hover/nav:w-full'
-              }`}></span>
+              <span
+                className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 ${
+                  isHomepage && !scrolled
+                    ? "bg-white group-hover/nav:w-full"
+                    : "bg-gradient-to-r from-red-600 to-blue-600 group-hover/nav:w-full"
+                }`}
+              ></span>
             </Link>
 
             {/* Contact */}
-            <Link
-              href="/contact"
-              className={getNavLinkClass()}
-            >
+            <Link href="/contact" className={getNavLinkClass()}>
               Contact
-              <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 ${
-                isHomepage && !scrolled
-                  ? 'bg-white group-hover/nav:w-full'
-                  : 'bg-gradient-to-r from-red-600 to-blue-600 group-hover/nav:w-full'
-              }`}></span>
+              <span
+                className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 ${
+                  isHomepage && !scrolled
+                    ? "bg-white group-hover/nav:w-full"
+                    : "bg-gradient-to-r from-red-600 to-blue-600 group-hover/nav:w-full"
+                }`}
+              ></span>
             </Link>
           </div>
 
@@ -434,9 +489,9 @@ export default function Navbar({ settings, onApplyNow, isHomepage = false }) {
           <button
             onClick={() => setMobileOpen(true)}
             className={`md:hidden p-2 transition-colors duration-200 ml-auto ${
-              isHomepage && !scrolled 
-                ? 'text-white hover:text-white/90 [text-shadow:0_1px_2px_rgba(0,0,0,0.8)]' 
-                : 'text-gray-700 hover:text-red-600'
+              isHomepage && !scrolled
+                ? "text-white hover:text-white/90 [text-shadow:0_1px_2px_rgba(0,0,0,0.8)]"
+                : "text-gray-700 hover:text-red-600"
             }`}
             aria-label="Open menu"
           >
@@ -505,18 +560,26 @@ export default function Navbar({ settings, onApplyNow, isHomepage = false }) {
                 {/* Mobile Test Prep */}
                 <div className="border-b border-gray-100 last:border-0">
                   <button
-                    onClick={() => setMobileSub(mobileSub === "test" ? null : "test")}
+                    onClick={() =>
+                      setMobileSub(mobileSub === "test" ? null : "test")
+                    }
                     className="w-full flex items-center justify-between py-3 px-4 rounded-xl hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 text-gray-800 transition-all duration-200 group"
                   >
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 rounded-lg bg-gradient-to-r from-red-100 to-blue-100 flex items-center justify-center group-hover:from-red-200 group-hover:to-blue-200">
-                        <span className="font-bold bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent text-sm">T</span>
+                        <span className="font-bold bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent text-sm">
+                          T
+                        </span>
                       </div>
                       <span className="font-semibold">Test Preparation</span>
                     </div>
                     <ChevronDown
                       size={18}
-                      className={`transition-transform duration-200 ${mobileSub === "test" ? "rotate-180 text-red-600" : "text-gray-500"}`}
+                      className={`transition-transform duration-200 ${
+                        mobileSub === "test"
+                          ? "rotate-180 text-red-600"
+                          : "text-gray-500"
+                      }`}
                     />
                   </button>
 
@@ -588,18 +651,26 @@ export default function Navbar({ settings, onApplyNow, isHomepage = false }) {
                 {/* Mobile Destinations */}
                 <div className="border-b border-gray-100 last:border-0">
                   <button
-                    onClick={() => setMobileSub(mobileSub === "dest" ? null : "dest")}
+                    onClick={() =>
+                      setMobileSub(mobileSub === "dest" ? null : "dest")
+                    }
                     className="w-full flex items-center justify-between py-3 px-4 rounded-xl hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 text-gray-800 transition-all duration-200 group"
                   >
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 rounded-lg bg-gradient-to-r from-blue-100 to-red-100 flex items-center justify-center group-hover:from-blue-200 group-hover:to-red-200">
-                        <span className="font-bold bg-gradient-to-r from-blue-600 to-red-600 bg-clip-text text-transparent text-sm">D</span>
+                        <span className="font-bold bg-gradient-to-r from-blue-600 to-red-600 bg-clip-text text-transparent text-sm">
+                          D
+                        </span>
                       </div>
                       <span className="font-semibold">Destinations</span>
                     </div>
                     <ChevronDown
                       size={18}
-                      className={`transition-transform duration-200 ${mobileSub === "dest" ? "rotate-180 text-red-600" : "text-gray-500"}`}
+                      className={`transition-transform duration-200 ${
+                        mobileSub === "dest"
+                          ? "rotate-180 text-red-600"
+                          : "text-gray-500"
+                      }`}
                     />
                   </button>
 
@@ -633,7 +704,11 @@ export default function Navbar({ settings, onApplyNow, isHomepage = false }) {
 
                 {/* Other mobile links */}
                 {[
-                  { href: "/universities", label: "Universities", color: "purple" },
+                  {
+                    href: "/universities",
+                    label: "Universities",
+                    color: "purple",
+                  },
                   { href: "/gallery", label: "Gallery", color: "yellow" },
                   { href: "/blog", label: "Blog", color: "green" },
                   { href: "/contact", label: "Contact Us", color: "cyan" },
@@ -644,8 +719,12 @@ export default function Navbar({ settings, onApplyNow, isHomepage = false }) {
                     onClick={() => setMobileOpen(false)}
                     className="flex items-center gap-3 py-3 px-4 rounded-xl hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 text-gray-800 hover:text-red-700 transition-all duration-200 group"
                   >
-                    <div className={`w-8 h-8 rounded-lg bg-${item.color}-100 flex items-center justify-center group-hover:bg-${item.color}-200`}>
-                      <span className={`text-${item.color}-700 font-bold text-sm`}>
+                    <div
+                      className={`w-8 h-8 rounded-lg bg-${item.color}-100 flex items-center justify-center group-hover:bg-${item.color}-200`}
+                    >
+                      <span
+                        className={`text-${item.color}-700 font-bold text-sm`}
+                      >
                         {item.label.charAt(0)}
                       </span>
                     </div>
