@@ -182,10 +182,5 @@ model GalleryPhoto {
   album     GalleryAlbum @relation(fields: [albumId], references: [id], onDelete: Cascade)
   @@index([albumId])
   @@map("gallery_photos")
-}+977 1 5445099
-info@suyan.edu.np
-Kumaripati, Lalitpur, Nepal
-Sun-Fri: 7AM-3PM
-￼
-Message Us
+}
 
