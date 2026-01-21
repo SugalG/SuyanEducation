@@ -8,6 +8,7 @@ import { slugify } from "@/lib/slugify";
 import AddUniversityModal from "@/components/AddUniversityModal";
 import UniversitiesDropdown from "@/components/admin/UniversitiesDropdown";
 import ImageUpload from "@/components/ImageUpload"; // ✅ reuse existing uploader
+import Link from "next/link";
 
 export default function AdminDestinations() {
   const router = useRouter();
@@ -16,7 +17,7 @@ export default function AdminDestinations() {
   const emptyForm = {
     slug: "",
     country: "",
-    heroImage: "", 
+    heroImage: "",
     description: "",
     whyPoints: "",
     education: "",
@@ -82,6 +83,32 @@ export default function AdminDestinations() {
     },
     onError: (err) => {
       toast.error(err.message || "Something went wrong");
+    },
+  });
+
+  // Delete mutation
+  const deleteMutation = useMutation({
+    mutationFn: async (id) => {
+      const res = await fetch(`/api/admin/destinations/${id}`, {
+        method: "DELETE",
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        throw new Error(data.message || "Delete failed");
+      }
+
+      return data;
+    },
+    onSuccess: () => {
+      toast.success("Destination Deleted");
+      queryClient.invalidateQueries({
+        queryKey: ["destinations"],
+      });
+    },
+    onError: (err) => {
+      toast.error(err.message || "Delete failed");
     },
   });
 
@@ -163,9 +190,7 @@ export default function AdminDestinations() {
           <ImageUpload
             label="Upload Image"
             type="destinations"
-            onUpload={(url) =>
-              setForm((prev) => ({ ...prev, heroImage: url }))
-            }
+            onUpload={(url) => setForm((prev) => ({ ...prev, heroImage: url }))}
           />
 
           {form.heroImage && (
@@ -210,9 +235,7 @@ export default function AdminDestinations() {
             rows={rows}
             placeholder={placeholder}
             value={form[key]}
-            onChange={(e) =>
-              setForm({ ...form, [key]: e.target.value })
-            }
+            onChange={(e) => setForm({ ...form, [key]: e.target.value })}
           />
         ))}
 
@@ -228,12 +251,23 @@ export default function AdminDestinations() {
             <div className="flex justify-between items-center p-4">
               <div>
                 <p className="font-semibold">{d.country}</p>
-                <p className="text-sm text-gray-500">
-                  /destinations/{d.slug}
-                </p>
+                <p className="text-sm text-gray-500">/destinations/{d.slug}</p>
               </div>
 
               <div className="flex gap-4">
+                <Link href={`/admin/lifeincountry/${d.id}`}>
+                  Life Info
+                </Link>
+                <Link href={`/admin/jobsandcareer/${d.id}`}>
+                  Jobs and Career Info
+                </Link>
+                <button
+                  className="text-green-600 text-sm"
+                  onClick={() => setSelectedDestination(d)}
+                >
+                  Add University
+                </button>
+
                 <button
                   onClick={() => startEdit(d)}
                   className="text-blue-600 text-sm"

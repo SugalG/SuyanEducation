@@ -1,0 +1,22 @@
+services:
+  suyon-app:
+    build: .
+    restart: unless-stopped
+
+    ports:
+      - "127.0.0.1:7006:7006"
+
+    env_file:
+      - .env
+      - .env.production
+
+    environment:
+      NODE_ENV: production
+      PORT: 7006
+
+    networks:
+      - suyon-network
+
+networks:
+  suyon-network:
+    external: true

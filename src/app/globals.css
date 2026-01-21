@@ -124,6 +124,7 @@
     rgba(220, 38, 38, 0.08),
     rgba(30, 58, 138, 0.08)
   );
+  --navbar-height: 140px;
 }
 
 body {
@@ -303,4 +304,9 @@ body {
   border-radius: 6px;
   border: 1px solid #e5e7eb;
   cursor: pointer;
+}
+
+.destination-sticky{
+  position: sticky;
+  top: 100px;
 }

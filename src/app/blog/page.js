@@ -244,7 +244,7 @@ export default function BlogPage() {
                     {filteredBlogs.length} {filteredBlogs.length === 1 ? 'article' : 'articles'} found
                     {query && (
                       <span className="ml-2 text-red-600">
-                        for "{query}"
+                        {/* for "{query}" */}
                       </span>
                     )}
                   </p>

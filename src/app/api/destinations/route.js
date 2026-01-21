@@ -11,6 +11,7 @@ export async function GET() {
         country: true,
         heroImage: true,
         description: true,
+        code: true
       },
     });
 

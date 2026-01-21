@@ -59,16 +59,61 @@ model Destination {
   slug          String   @unique
   country       String
   heroImage     String?
+  code          String?
   universities  University[]
   blogs         BlogPost[]
+  descriptionTitle String? @default("Introduction")
   description   String?
   whyPoints     String?  
+  educationTitle String? @default("Education System and Requirements")
   education     String?
-  popularFields String?  
+  popularFieldsTitle String? @default("Top Field of Study")
+  popularFields String?
+  visaUpdatesTitle String? @default("Visa and Immigration Updates")  
   visaUpdates   String?
+  lifeInCountry LifeInCountry?
+  jobsAndCareer JobsAndCareer?
   createdAt     DateTime @default(now())
 }
 
+model LifeInCountry {
+  id              String   @id @default(cuid())
+  destinationId   String   @unique
+  destination     Destination @relation(fields: [destinationId], references: [id])
+
+  title           String? @default("Life in the Country")
+
+  livingCost      String?  // monthly expenses overview
+  accommodation   String?  // dorms, shared apartments, rent
+  insurance       String?  // health insurance requirements
+  transportation  String?  // public transport info
+  foodLifestyle   String?  // food habits, halal/veg options
+  safety          String?  // general safety info
+  workLifeBalance String?  // student life balance
+
+  createdAt       DateTime @default(now())
+  @@index([destinationId])
+}
+
+
+model JobsAndCareer {
+  id              String   @id @default(cuid())
+  destinationId   String   @unique
+  destination     Destination @relation(fields: [destinationId], references: [id])
+
+  title           String? @default("Jobs and Career Opportunities")
+
+  partTimeRules   String?  // hours allowed, restrictions
+  partTimeSectors String?  // retail, IT, hospitality, etc
+  avgWage         String?  // average hourly pay
+  internshipInfo String?  // internships during study
+  postStudyWork  String?  // PSW visa duration & rules
+  prPathways     String?  // PR or long-term stay overview
+  demandJobs     String?  // in-demand professions
+
+  createdAt       DateTime @default(now())
+  @@index([destinationId])
+}
 
 
 model Service {
