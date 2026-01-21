@@ -1,28 +1,51 @@
 import Link from "next/link";
 import Image from "next/image";
 import { headers } from "next/headers";
+import prisma from "@/lib/prisma";
 import { Camera, Calendar, Image as ImageIcon, Users } from "lucide-react";
 
 async function getAlbums() {
   
-  const headersList = await headers();
-  const host = headersList.get("host");
+  // const headersList = await headers();
+  // const host = headersList.get("host");
 
-  const protocol =
-    process.env.NODE_ENV === "development" ? "http" : "https";
+  // const protocol =
+  //   process.env.NODE_ENV === "development" ? "http" : "https";
 
-  const res = await fetch(
-    `${protocol}://${host}/api/gallery/albums`,
-    { cache: "no-store" }
-  );
+  // const res = await fetch(
+  //   `${protocol}://${host}/api/gallery/albums`,
+  //   { cache: "no-store" }
+  // );
 
-  if (!res.ok) throw new Error("Failed to load gallery");
-  return res.json();
+  // if (!res.ok) throw new Error("Failed to load gallery");
+  // return res.json();
+  const albums = await prisma.galleryAlbum.findMany({
+    orderBy: { albumDate: "desc" },
+    include: {
+      photos: {
+        select: { id: true },
+      },
+    },
+  });
+  const formatted = albums.map((album) => ({
+    id: album.id,
+    slug: album.slug,
+    title: album.title,
+    description: album.description,
+    albumDate: album.albumDate,
+    coverImage: album.coverImage,
+    photoCount: album.photos.length,
+  }));
+  return formatted;
 }
 
 export default async function GalleryPage() {
   const albums = await getAlbums();
-
+  if (albums.length === 0){
+    return (
+      <div>No albums found</div>
+    )
+  }
   return (
     <main className="w-full overflow-hidden">
       {/* Hero Section */}

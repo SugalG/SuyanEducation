@@ -13,6 +13,7 @@ export default function NavbarApplyWrapper({ settings, destinations }) {
   const isHomepage = pathname === "/";
 
   // Lock background scroll on mobile when modal is open
+  
   useEffect(() => {
     if (open) {
       document.body.style.overflow = "hidden";
@@ -37,7 +38,7 @@ export default function NavbarApplyWrapper({ settings, destinations }) {
       <ApplyNowModal
         open={open}
         onClose={() => setOpen(false)}
-        className="z-[9999]"
+        className=""
       />
     </>
   );
