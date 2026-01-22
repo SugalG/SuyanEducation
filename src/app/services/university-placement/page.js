@@ -408,7 +408,7 @@ export default function UniversityPlacement() {
   ];
 
   return (
-    <main className="min-h-screen overflow-hidden bg-gradient-to-b from-white to-gray-50">
+    <main className="min-h-screen overflow-hidden bg-gradient-to-b from-white to-gray-50 mt-24">
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-red-50 py-12 md:py-20 px-4 sm:px-6">
         <div className="absolute inset-0 opacity-5">

@@ -72,7 +72,7 @@ export default function StudentVisaLifecycle() {
   ];
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <main className="min-h-screen bg-gradient-to-b from-gray-50 to-white mt-24">
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-red-50 via-white to-blue-50 py-20 px-6">
         <div className="max-w-7xl mx-auto">
@@ -80,7 +80,7 @@ export default function StudentVisaLifecycle() {
             <span className="inline-block px-4 py-2 rounded-full bg-red-100 text-red-700 font-medium mb-6">
               Structured Success Pathway
             </span>
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-red-600 via-red-500 to-blue-950 bg-clip-text text-transparent">
+            <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-red-600 via-red-500 to-blue-950 bg-clip-text text-transparent pb-4">
               Student Visa <span className="block">Counseling Journey</span>
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
