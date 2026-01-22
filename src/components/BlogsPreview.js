@@ -156,7 +156,7 @@ export default function BlogsPreview() {
       </div>
 
       {/* CTA Button */}
-      {/* <AnimatedSection animation="zoom-in" delay={0.5}>
+      <AnimatedSection animation="zoom-in" delay={0.5}>
         <div className="text-center mt-16 pt-8">
           <Link
             href="/blog"
@@ -166,7 +166,7 @@ export default function BlogsPreview() {
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
-      </AnimatedSection> */}
+      </AnimatedSection>
     </section>
   );
 }
