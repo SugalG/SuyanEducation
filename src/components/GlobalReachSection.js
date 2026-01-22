@@ -254,7 +254,7 @@ export default function MessageFromCEOSection() {
                 animate={hasAnimated ? "visible" : "hidden"}
                 variants={fadeRightVariants}
               >
-                <div className="relative w-full max-w-[420px] h-[450px] md:h-[600px] rounded-[22px] overflow-hidden shadow-xl">
+                <div className="relative w-full max-w-[420px] h-[450px] md:h-[600px] rounded-[22px] overflow-hidden">
                   <video
                     src="https://res.cloudinary.com/dvx9dcap6/video/upload/v1768546068/FLAGANIMATION2_k5xkt0.webm"
                     autoPlay
@@ -262,7 +262,7 @@ export default function MessageFromCEOSection() {
                     loop
                     playsInline
                     preload="auto"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain"
                   />
                 </div>
               </motion.div>

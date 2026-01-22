@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import ApplyNowModal from "@/components/ApplyNowModal";
 import { usePathname } from "next/navigation";
+import NavigationBar from "./NavigationBar";
 
 export default function NavbarApplyWrapper({ settings, destinations }) {
   const [open, setOpen] = useState(false);
@@ -14,7 +15,7 @@ export default function NavbarApplyWrapper({ settings, destinations }) {
 
   return (
     <>
-      <Navbar
+      <NavigationBar
         settings={settings}
         destinations={destinations}
         onApplyNow={() => setOpen(true)}
