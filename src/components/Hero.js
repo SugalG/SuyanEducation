@@ -48,7 +48,7 @@ export default function Hero() {
       ref={containerRef}
       className="
         relative w-full overflow-hidden bg-black
-        h-screen
+        h-[70vh]
       "
     >
       {/* Background Media */}

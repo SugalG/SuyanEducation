@@ -58,7 +58,7 @@ export default function MessageFromCEOSection() {
       ref={ref}
       className="relative py-16 md:py-24 lg:py-28 overflow-hidden"
     >
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div
           className="
             grid grid-cols-1 gap-12
