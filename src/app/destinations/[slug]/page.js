@@ -32,7 +32,7 @@ export default async function DestinationPage({ params }) {
   if (!destination) notFound();
 
   return (
-    <main className="w-full">
+    <main className="w-full mt-24">
       {/* Hero Section - Modern Design */}
       <section className="relative w-full min-h-[90vh] flex items-center overflow-hidden">
         {/* Beautiful Background with Gradient */}

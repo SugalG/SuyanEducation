@@ -121,7 +121,7 @@ export default function UniversitiesPage() {
   ========================= */
   if (isLoading) {
     return (
-      <main className="relative">
+      <main className="relative mt-24">
         {/* Background Elements */}
         <div className="absolute inset-0 -z-10 overflow-hidden">
           <div className="absolute top-0 -right-40 w-80 h-80 bg-red-500/5 rounded-full blur-3xl"></div>
@@ -143,7 +143,7 @@ export default function UniversitiesPage() {
 
   if (isError) {
     return (
-      <main className="relative">
+      <main className="relative mt-24">
         <div className="absolute inset-0 -z-10 overflow-hidden">
           <div className="absolute top-0 -right-40 w-80 h-80 bg-red-500/5 rounded-full blur-3xl"></div>
         </div>
@@ -191,7 +191,7 @@ export default function UniversitiesPage() {
      UI
   ========================= */
   return (
-    <main className="relative">
+    <main className="relative mt-24">
       {/* Background Elements */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute top-0 -right-40 w-80 h-80 bg-red-500/5 rounded-full blur-3xl"></div>

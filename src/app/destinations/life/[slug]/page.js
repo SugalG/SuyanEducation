@@ -31,7 +31,7 @@ export default async function LifeInCountryPage({ params }){
         redirect(`/destinations/${slug}`)
     }
     return (
-        <div className="mt-5">
+        <div className="mt-24">
             <HeroSection country={lifeInfo.country} heroImage={lifeInfo.heroImage} title = "Life in" description="Cost of living, accommodation, work culture & student life"/>
             <LifeInCountryContent lifeInfo={lifeInfo}/>
         </div>

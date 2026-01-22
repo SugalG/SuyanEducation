@@ -25,7 +25,7 @@ export default async function GalleryAlbumPage(props) {
 
   if (!album) {
     return (
-      <main className="w-full overflow-hidden">
+      <main className="w-full overflow-hidden mt-24">
         <section className="relative min-h-[60vh] flex items-center overflow-hidden pt-24">
           <div className="absolute inset-0 bg-gradient-to-br from-white via-red-50 to-blue-50" />
           

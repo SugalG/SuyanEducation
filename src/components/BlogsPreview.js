@@ -7,8 +7,8 @@ import AnimatedSection from "./universityPlacement/AnimatedSection";
 const staticBlogs = [
   {
     id: 1,
-    slug: "study-in-japan-from-nepal-guide",
-    title: "Study in Japan from Nepal: Universities, Costs, Scholarships & Visa Guide",
+    slug: "top-japanese-schools-for-nepali-students",
+    title: "Top Japanese Schools for Nepali Students: Universities, Costs, Scholarships & Visa Guide",
     excerpt: "Complete guide for Nepali students wanting to study in Japan. Learn about top universities, living costs, scholarship opportunities, and step-by-step visa process.",
     imageUrl: "https://images.unsplash.com/photo-1528164344705-47542687000d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     country: {
@@ -27,6 +27,16 @@ const staticBlogs = [
   },
   {
     id: 3,
+    slug: "ielts-vs-pte-nepali-students",
+    title: "IELTS vs PTE: Which English Test Is Better for Nepali Students?",
+    excerpt: "Detailed comparison of IELTS and PTE tests for Nepali students. Understand format differences, scoring, acceptance, and which test suits you better.",
+    imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    country: {
+      country: "All Countries"
+    }
+  },
+  {
+    id: 4,
     slug: "study-in-usa-from-nepal",
     title: "Study in the USA from Nepal: F-1 Visa Process, Universities & Scholarships",
     excerpt: "Your comprehensive guide to studying in the USA from Nepal. Learn about F-1 visa process, top universities, and scholarship opportunities for international students.",
@@ -36,7 +46,7 @@ const staticBlogs = [
     }
   },
   {
-    id: 4,
+    id: 5,
     slug: "study-in-uk-from-nepal",
     title: "Study in the UK from Nepal: 1-Year Degrees, PSW Visa & Cost Guide",
     excerpt: "Discover the benefits of studying in the UK from Nepal. Learn about 1-year master's degrees, Post-Study Work (PSW) visa, and living cost breakdown.",
@@ -46,7 +56,7 @@ const staticBlogs = [
     }
   },
   {
-    id: 5,
+    id: 6,
     slug: "choose-best-country-study-abroad",
     title: "How to Choose the Best Country to Study Abroad from Nepal",
     excerpt: "Confused about which country to choose? This guide helps Nepali students compare countries based on education quality, costs, career opportunities, and more.",
@@ -54,17 +64,8 @@ const staticBlogs = [
     country: {
       country: "Multiple Countries"
     }
-  },
-  {
-    id: 6,
-    slug: "ielts-vs-pte-nepali-students",
-    title: "IELTS vs PTE: Which English Test Is Better for Nepali Students?",
-    excerpt: "Detailed comparison of IELTS and PTE tests for Nepali students. Understand format differences, scoring, acceptance, and which test suits you better.",
-    imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    country: {
-      country: "All Countries"
-    }
   }
+  
 ];
 
 export default function BlogsPreview() {
@@ -155,7 +156,7 @@ export default function BlogsPreview() {
       </div>
 
       {/* CTA Button */}
-      <AnimatedSection animation="zoom-in" delay={0.5}>
+      {/* <AnimatedSection animation="zoom-in" delay={0.5}>
         <div className="text-center mt-16 pt-8">
           <Link
             href="/blog"
@@ -165,7 +166,7 @@ export default function BlogsPreview() {
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
-      </AnimatedSection>
+      </AnimatedSection> */}
     </section>
   );
 }

@@ -117,7 +117,7 @@ export default function MagicalIELTSPage() {
     <main className="w-full overflow-hidden mt-10 relative">
       
   {/* Hero Section */}
-  <section className="relative w-full min-h-[90vh] flex items-center overflow-hidden">
+  <section className="relative w-full min-h-[90vh] flex items-center overflow-hidden mt-24">
     {/* Beautiful Background with Gradient */}
     <div className="absolute inset-0">
       <div className="absolute inset-0 bg-gradient-to-br from-white via-red-50 to-blue-50" />

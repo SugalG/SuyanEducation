@@ -161,7 +161,7 @@ export default function JapaneseLanguageTraining() {
   ];
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-white to-red-50">
+    <main className="min-h-screen bg-gradient-to-b from-white to-red-50 mt-24">
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-white via-red-50 to-blue-50 py-20 px-6">
         <div className="max-w-7xl mx-auto">

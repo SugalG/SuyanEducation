@@ -146,7 +146,7 @@ export default function DocumentationSupport() {
   ];
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-white to-gray-50 overflow-hidden">
+    <main className="min-h-screen bg-gradient-to-b from-white to-gray-50 overflow-hidden mt-24">
       {/* Hero Section with Image */}
       <section className="relative h-[60vh] min-h-[500px] max-h-[800px] overflow-hidden">
         {/* Background Image with Overlay */}

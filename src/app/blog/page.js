@@ -41,64 +41,64 @@ const allBlogs = [
     date: "2025-12-05",
     category: "Country Guide"
   },
-  {
-    id: 4,
-    slug: "australia-student-visa-nepal",
-    title: "Australia Student Visa from Nepal: Costs, Requirements & Common Mistakes",
-    excerpt: "Avoid common pitfalls when applying for an Australian student visa from Nepal. Learn about costs, documentation, and success strategies.",
-    imageUrl: "https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-    country: { country: "Australia" },
-    readTime: "7 min read",
-    date: "2025-12-01",
-    category: "Visa Guide"
-  },
+  // {
+  //   id: 4,
+  //   slug: "australia-student-visa-nepal",
+  //   title: "Australia Student Visa from Nepal: Costs, Requirements & Common Mistakes",
+  //   excerpt: "Avoid common pitfalls when applying for an Australian student visa from Nepal. Learn about costs, documentation, and success strategies.",
+  //   imageUrl: "https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+  //   country: { country: "Australia" },
+  //   readTime: "7 min read",
+  //   date: "2025-12-01",
+  //   category: "Visa Guide"
+  // },
   // USA Blogs
-  {
-    id: 5,
-    slug: "study-in-usa-from-nepal",
-    title: "Study in the USA from Nepal: F-1 Visa Process, Universities & Scholarships",
-    excerpt: "Your comprehensive guide to studying in the USA from Nepal. Learn about F-1 visa process, top universities, and scholarship opportunities for international students.",
-    imageUrl: "https://images.unsplash.com/photo-1541336032412-2048a678540d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-    country: { country: "USA" },
-    readTime: "9 min read",
-    date: "2025-11-28",
-    category: "Country Guide"
-  },
-  // UK Blogs
-  {
-    id: 6,
-    slug: "study-in-uk-from-nepal",
-    title: "Study in the UK from Nepal: 1-Year Degrees, PSW Visa & Cost Guide",
-    excerpt: "Discover the benefits of studying in the UK from Nepal. Learn about 1-year master's degrees, Post-Study Work (PSW) visa, and living cost breakdown.",
-    imageUrl: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-    country: { country: "UK" },
-    readTime: "8 min read",
-    date: "2025-11-25",
-    category: "Country Guide"
-  },
-  // Generic/Helpful Guides
-  {
-    id: 7,
-    slug: "choose-best-country-study-abroad",
-    title: "How to Choose the Best Country to Study Abroad from Nepal",
-    excerpt: "Confused about which country to choose? This guide helps Nepali students compare countries based on education quality, costs, career opportunities, and more.",
-    imageUrl: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-    country: { country: "Multiple Countries" },
-    readTime: "12 min read",
-    date: "2025-11-20",
-    category: "Decision Guide"
-  },
-  {
-    id: 8,
-    slug: "study-abroad-complete-guide",
-    title: "Study Abroad from Nepal: Complete Guide to Countries, Costs & Visas",
-    excerpt: "Everything you need to know about studying abroad from Nepal. Compare popular destinations, understand costs, and navigate visa processes.",
-    imageUrl: "https://images.unsplash.com/photo-1571260899304-425eee4c7efc?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    country: { country: "All Countries" },
-    readTime: "15 min read",
-    date: "2025-11-18",
-    category: "Complete Guide"
-  },
+  // {
+  //   id: 5,
+  //   slug: "study-in-usa-from-nepal",
+  //   title: "Study in the USA from Nepal: F-1 Visa Process, Universities & Scholarships",
+  //   excerpt: "Your comprehensive guide to studying in the USA from Nepal. Learn about F-1 visa process, top universities, and scholarship opportunities for international students.",
+  //   imageUrl: "https://images.unsplash.com/photo-1541336032412-2048a678540d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+  //   country: { country: "USA" },
+  //   readTime: "9 min read",
+  //   date: "2025-11-28",
+  //   category: "Country Guide"
+  // },
+  // // UK Blogs
+  // {
+  //   id: 6,
+  //   slug: "study-in-uk-from-nepal",
+  //   title: "Study in the UK from Nepal: 1-Year Degrees, PSW Visa & Cost Guide",
+  //   excerpt: "Discover the benefits of studying in the UK from Nepal. Learn about 1-year master's degrees, Post-Study Work (PSW) visa, and living cost breakdown.",
+  //   imageUrl: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+  //   country: { country: "UK" },
+  //   readTime: "8 min read",
+  //   date: "2025-11-25",
+  //   category: "Country Guide"
+  // },
+  // // Generic/Helpful Guides
+  // {
+  //   id: 7,
+  //   slug: "choose-best-country-study-abroad",
+  //   title: "How to Choose the Best Country to Study Abroad from Nepal",
+  //   excerpt: "Confused about which country to choose? This guide helps Nepali students compare countries based on education quality, costs, career opportunities, and more.",
+  //   imageUrl: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+  //   country: { country: "Multiple Countries" },
+  //   readTime: "12 min read",
+  //   date: "2025-11-20",
+  //   category: "Decision Guide"
+  // },
+  // {
+  //   id: 8,
+  //   slug: "study-abroad-complete-guide",
+  //   title: "Study Abroad from Nepal: Complete Guide to Countries, Costs & Visas",
+  //   excerpt: "Everything you need to know about studying abroad from Nepal. Compare popular destinations, understand costs, and navigate visa processes.",
+  //   imageUrl: "https://images.unsplash.com/photo-1571260899304-425eee4c7efc?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  //   country: { country: "All Countries" },
+  //   readTime: "15 min read",
+  //   date: "2025-11-18",
+  //   category: "Complete Guide"
+  // },
   {
     id: 9,
     slug: "ielts-vs-pte-nepali-students",

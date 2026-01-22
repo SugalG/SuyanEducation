@@ -185,7 +185,7 @@ export default function ToeflInformation() {
   ];
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-white to-blue-50/30 overflow-hidden">
+    <main className="min-h-screen bg-gradient-to-b from-white to-blue-50/30 overflow-hidden mt-24">
       {/* Hero Section */}
       <section className="relative py-20 md:py-28 overflow-hidden">
         {/* Background Pattern */}

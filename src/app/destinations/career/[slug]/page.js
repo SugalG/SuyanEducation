@@ -32,7 +32,7 @@ export default async function LifeInCountryPage({ params }){
         redirect(`/destinations/${slug}`)
     }
     return (
-        <div className="mt-5">
+        <div className="mt-24">
             <HeroSection country={jobsInfo.country} heroImage={jobsInfo.heroImage} title = "Jobs and Career In" description="Careers, salaries & opportunities"/>
             <JobsAndCareerContent jobsInfo={jobsInfo}/>
         </div>
