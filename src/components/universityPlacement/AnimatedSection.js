@@ -1,9 +1,7 @@
-// components/AnimatedSection.tsx
 "use client";
 
 import { motion, useAnimation, useInView } from "framer-motion";
 import { ReactNode, useEffect, useRef, useState } from "react";
-
 
 export default function AnimatedSection({ 
   children, 
@@ -73,8 +71,12 @@ export default function AnimatedSection({
 
   // Fallback: If element is in viewport on mount and hasn't animated after 500ms, trigger animation
   useEffect(() => {
+    // Check if component is still mounted
+    let isMounted = true;
+    let timers = [];
+
     const checkIfInViewport = () => {
-      if (!ref.current || hasAnimated) return;
+      if (!ref.current || hasAnimated || !isMounted) return;
       
       const rect = ref.current.getBoundingClientRect();
       const isVisible = (
@@ -86,26 +88,42 @@ export default function AnimatedSection({
       
       if (isVisible) {
         const timer = setTimeout(() => {
-          if (!hasAnimated) {
+          if (!hasAnimated && isMounted && controls) {
             controls.start("animate");
             setHasAnimated(true);
           }
         }, 500); // Wait 500ms before fallback trigger
-        return () => clearTimeout(timer);
+        
+        timers.push(timer);
       }
     };
 
     // Check after a short delay to allow for rendering
-    const initialTimer = setTimeout(checkIfInViewport, 300);
+    const initialTimer = setTimeout(() => {
+      if (isMounted) {
+        checkIfInViewport();
+      }
+    }, 300);
     
+    timers.push(initialTimer);
+
     // Also check on resize and scroll
-    window.addEventListener('resize', checkIfInViewport);
-    window.addEventListener('scroll', checkIfInViewport);
+    const handleResize = () => isMounted && checkIfInViewport();
+    const handleScroll = () => isMounted && checkIfInViewport();
+    
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('scroll', handleScroll);
     
     return () => {
-      clearTimeout(initialTimer);
-      window.removeEventListener('resize', checkIfInViewport);
-      window.removeEventListener('scroll', checkIfInViewport);
+      isMounted = false;
+      
+      // Clear all timers
+      timers.forEach(timer => clearTimeout(timer));
+      timers = [];
+      
+      // Remove event listeners
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, [controls, hasAnimated]);
 
