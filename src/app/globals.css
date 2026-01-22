@@ -310,3 +310,25 @@ body {
   position: sticky;
   top: 100px;
 }
+
+@keyframes smooth-bounce {
+  0% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-4px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+  75% {
+    transform: translateY(-4px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.animate-smooth-bounce {
+  animation: smooth-bounce 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}

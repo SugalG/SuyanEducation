@@ -109,10 +109,7 @@ export default function MessageFromCEOSection() {
                 "Our mission has always been rooted in honest guidance, transparent processes, and personalized counseling built on real experience.",
                 "From a strong foundation in Japanese education, we have grown into a global consultancy supporting students across multiple destinations.",
               ].map((text, i) => (
-                <p
-                  key={i}
-                  className="text-sm text-gray-700 leading-relaxed"
-                >
+                <p key={i} className="text-sm text-gray-700 leading-relaxed">
                   {text}
                 </p>
               ))}
@@ -239,7 +236,9 @@ export default function MessageFromCEOSection() {
                     />
                   </div>
                   <div className="mt-4 text-center">
-                    <div className="font-bold text-gray-900">SUNIL MAHARJAN</div>
+                    <div className="font-bold text-gray-900">
+                      SUNIL MAHARJAN
+                    </div>
                     <div className="text-sm text-gray-600">
                       Founder & CEO, Suyan Education
                     </div>
