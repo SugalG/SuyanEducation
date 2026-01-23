@@ -1,82 +1,38 @@
-"use client";
-
 import Image from "next/image";
 import { Star } from "lucide-react";
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
-
-const EASE_PREMIUM = [0.22, 1, 0.36, 1];
+import AnimatedSection from "./universityPlacement/AnimatedSection";
 
 export default function MessageFromCEOSection() {
-  const [hasAnimated, setHasAnimated] = useState(false);
-
-  // Trigger animation immediately on mount
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setHasAnimated(true);
-    }, 100);
-    return () => clearTimeout(timer);
-  }, []);
-
-  // Animation variants for immediate animation
-  const fadeRightVariants = {
-    hidden: { opacity: 0, x: -40 },
-    visible: (delay) => ({
-      opacity: 1,
-      x: 0,
-      transition: {
-        duration: 0.6,
-        ease: EASE_PREMIUM,
-        delay: delay * 0.1,
-      },
-    }),
-  };
-
   return (
-    <section className="relative py-16 md:py-24 lg:py-28 overflow-hidden">
+    <section className="relative py-12 sm:py-16 md:py-20 lg:py-24 overflow-hidden">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Mobile Layout */}
-        <div className="md:hidden space-y-8">
+        <div className="md:hidden space-y-6 sm:space-y-8">
           {/* Badge */}
-          <motion.div
-            custom={1}
-            initial="hidden"
-            animate={hasAnimated ? "visible" : "hidden"}
-            variants={fadeRightVariants}
-          >
+          <AnimatedSection animation="fade-up" delay={0.1} once={false}>
             <div className="flex justify-center">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-red-50 to-blue-50 border border-red-100">
-                <Star className="w-4 h-4 text-red-600" />
-                <span className="text-sm font-semibold tracking-wide text-gray-800">
+                <Star className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-red-600" />
+                <span className="text-xs sm:text-sm font-semibold tracking-wide text-gray-800">
                   Message from the Founder
                 </span>
               </div>
             </div>
-          </motion.div>
+          </AnimatedSection>
 
           {/* Title */}
-          <motion.div
-            custom={2}
-            initial="hidden"
-            animate={hasAnimated ? "visible" : "hidden"}
-            variants={fadeRightVariants}
-          >
-            <h2 className="text-2xl sm:text-3xl font-bold text-center">
+          <AnimatedSection animation="fade-up" delay={0.2} animateImmediately once={false}>
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-center">
               <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
                 Building Global Futures with Purpose
               </span>
             </h2>
-          </motion.div>
+          </AnimatedSection>
 
           {/* CEO Image */}
-          <motion.div
-            custom={3}
-            initial="hidden"
-            animate={hasAnimated ? "visible" : "hidden"}
-            variants={fadeRightVariants}
-          >
+          <AnimatedSection animation="fade-up" delay={0.3} once={false}>
             <div className="flex flex-col items-center">
-              <div className="relative w-full max-w-[360px] h-[350px] rounded-[22px] overflow-hidden shadow-xl">
+              <div className="relative w-full max-w-[280px] sm:max-w-[320px] h-[260px] sm:h-[300px] rounded-xl sm:rounded-2xl overflow-hidden shadow-lg sm:shadow-xl">
                 <Image
                   src="https://res.cloudinary.com/dvx9dcap6/image/upload/v1768383148/ceo1_sut1bx.jpg"
                   alt="Sunil Maharjan - Founder & CEO"
@@ -84,46 +40,41 @@ export default function MessageFromCEOSection() {
                   priority
                   quality={85}
                   className="object-cover object-[42%_12%]"
-                  sizes="(max-width: 768px) 100vw, 360px"
+                  sizes="(max-width: 640px) 280px, 320px"
                 />
               </div>
-              <div className="mt-4 text-center">
-                <div className="font-bold text-gray-900">SUNIL MAHARJAN</div>
-                <div className="text-sm text-gray-600">
+              <div className="mt-3 sm:mt-4 text-center">
+                <div className="font-bold text-gray-900 text-sm sm:text-base">
+                  SUNIL MAHARJAN
+                </div>
+                <div className="text-xs sm:text-sm text-gray-600">
                   Founder & CEO, Suyan Education
                 </div>
               </div>
             </div>
-          </motion.div>
+          </AnimatedSection>
 
           {/* Text Content */}
-          <motion.div
-            custom={4}
-            initial="hidden"
-            animate={hasAnimated ? "visible" : "hidden"}
-            variants={fadeRightVariants}
-          >
-            <div className="space-y-4 text-center">
+          <AnimatedSection animation="fade-up" delay={0.4} once={false}>
+            <div className="space-y-3 sm:space-y-4 text-center">
               {[
                 "At Suyan Education, we believe that studying abroad is more than an academic journey — it is a transformational step toward a student's future and global perspective.",
                 "Our mission has always been rooted in honest guidance, transparent processes, and personalized counseling built on real experience.",
                 "From a strong foundation in Japanese education, we have grown into a global consultancy supporting students across multiple destinations.",
               ].map((text, i) => (
-                <p key={i} className="text-sm text-gray-700 leading-relaxed">
+                <p
+                  key={i}
+                  className="text-xs sm:text-sm text-gray-700 leading-relaxed"
+                >
                   {text}
                 </p>
               ))}
             </div>
-          </motion.div>
+          </AnimatedSection>
 
           {/* Video */}
-          <motion.div
-            custom={5}
-            initial="hidden"
-            animate={hasAnimated ? "visible" : "hidden"}
-            variants={fadeRightVariants}
-          >
-            <div className="relative h-[450px] overflow-hidden rounded-[22px]">
+          <AnimatedSection animation="fade-up" delay={0.5} once={false}>
+            <div className="relative h-[260px] sm:h-[300px] overflow-hidden rounded-xl sm:rounded-2xl">
               <video
                 src="https://res.cloudinary.com/dvx9dcap6/video/upload/v1768546068/FLAGANIMATION2_k5xkt0.webm"
                 autoPlay
@@ -134,137 +85,133 @@ export default function MessageFromCEOSection() {
                 className="w-full h-full object-contain"
               />
             </div>
-          </motion.div>
+          </AnimatedSection>
         </div>
 
         {/* Desktop & Tablet Layout (md and above) */}
         <div className="hidden md:block">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16 items-center">
-            {/* Left Column - CEO Image (hidden on md, visible on lg) */}
-            <motion.div
-              custom={1}
-              initial="hidden"
-              animate={hasAnimated ? "visible" : "hidden"}
-              variants={fadeRightVariants}
-              className="hidden lg:block"
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12 xl:gap-16">
+            {/* Tablet (768px-1024px): Content on left, Image+Video on right */}
+            {/* Desktop (1024px+): Image left, Content middle, Video right */}
+
+            {/* Left Column - CEO Image (only on lg+) */}
+            <AnimatedSection
+              animation="fade-right"
+              delay={0.2}
+              className="hidden lg:flex flex-col items-center justify-center"
+              once={false}
             >
-              <div className="flex flex-col items-center justify-center">
-                <div className="relative w-full max-w-[420px] h-[500px] lg:h-[600px] rounded-[22px] overflow-hidden shadow-xl">
-                  <Image
-                    src="https://res.cloudinary.com/dvx9dcap6/image/upload/v1768383148/ceo1_sut1bx.jpg"
-                    alt="Sunil Maharjan - Founder & CEO"
-                    fill
-                    priority
-                    quality={85}
-                    className="object-cover object-[42%_center]"
-                    sizes="(min-width: 1024px) 420px, (min-width: 768px) 320px, 100vw"
-                  />
+              <div className="relative w-full max-w-[320px] xl:max-w-[380px] h-[400px] lg:h-[450px] xl:h-[500px] rounded-2xl overflow-hidden shadow-xl">
+                <Image
+                  src="https://res.cloudinary.com/dvx9dcap6/image/upload/v1768383148/ceo1_sut1bx.jpg"
+                  alt="Sunil Maharjan - Founder & CEO"
+                  fill
+                  priority
+                  quality={90}
+                  className="object-cover object-[42%_center]"
+                  sizes="(min-width: 1024px) 320px, (min-width: 1280px) 380px"
+                />
+              </div>
+              <div className="mt-4 xl:mt-6 text-center">
+                <div className="font-bold text-gray-900 text-base xl:text-lg">
+                  SUNIL MAHARJAN
                 </div>
-                <div className="mt-6 text-center">
-                  <div className="font-bold text-gray-900 text-lg">
-                    SUNIL MAHARJAN
-                  </div>
-                  <div className="text-sm text-gray-600">
-                    Founder & CEO, Suyan Education
-                  </div>
+                <div className="text-sm text-gray-600">
+                  Founder & CEO, Suyan Education
                 </div>
               </div>
-            </motion.div>
+            </AnimatedSection>
 
-            {/* Middle Column - Content (full width on md, middle on lg) */}
-            <motion.div
-              custom={2}
-              initial="hidden"
-              animate={hasAnimated ? "visible" : "hidden"}
-              variants={fadeRightVariants}
-              className="lg:col-span-1"
-            >
-              <div className="space-y-6 lg:space-y-8">
+            {/* Middle Column - Content (full width on tablet, middle on desktop) */}
+            <div className="md:col-span-1 lg:col-span-1">
+              <div className="space-y-4 lg:space-y-6 xl:space-y-8 h-full flex flex-col justify-center">
                 {/* Badge */}
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-red-50 to-blue-50 border border-red-100">
-                  <Star className="w-4 h-4 text-red-600" />
-                  <span className="text-sm font-semibold tracking-wide text-gray-800">
-                    Message from the Founder
-                  </span>
-                </div>
+                <AnimatedSection animation="fade-up" delay={0.1} once={false}>
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-red-50 to-blue-50 border border-red-100">
+                    <Star className="w-4 h-4 text-red-600" />
+                    <span className="text-sm font-semibold tracking-wide text-gray-800">
+                      Message from the Founder
+                    </span>
+                  </div>
+                </AnimatedSection>
 
                 {/* Title */}
-                <h2 className="text-4xl lg:text-5xl xl:text-6xl font-bold">
-                  <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
-                    Building Global Futures with Purpose
-                  </span>
-                </h2>
+                <AnimatedSection animation="fade-up" delay={0.2} once={false}>
+                  <h2 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold">
+                    <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
+                      Building Global Futures with Purpose
+                    </span>
+                  </h2>
+                </AnimatedSection>
 
                 {/* Text Content */}
-                <div className="space-y-4">
-                  {[
-                    "At Suyan Education, we believe that studying abroad is more than an academic journey — it is a transformational step toward a student's future and global perspective.",
-                    "Our mission has always been rooted in honest guidance, transparent processes, and personalized counseling built on real experience.",
-                    "From a strong foundation in Japanese education, we have grown into a global consultancy supporting students across multiple destinations.",
-                  ].map((text, index) => (
-                    <p
-                      key={index}
-                      className="text-lg text-gray-700 leading-relaxed"
-                    >
-                      {text}
-                    </p>
-                  ))}
-                </div>
+                <AnimatedSection animation="fade-up" delay={0.3} once={false}>
+                  <div className="space-y-3 lg:space-y-4">
+                    {[
+                      "At Suyan Education, we believe that studying abroad is more than an academic journey — it is a transformational step toward a student's future and global perspective.",
+                      "Our mission has always been rooted in honest guidance, transparent processes, and personalized counseling built on real experience.",
+                      "From a strong foundation in Japanese education, we have grown into a global consultancy supporting students across multiple destinations.",
+                    ].map((text, index) => (
+                      <p
+                        key={index}
+                        className="text-sm md:text-base lg:text-lg text-gray-700 leading-relaxed"
+                      >
+                        {text}
+                      </p>
+                    ))}
+                  </div>
+                </AnimatedSection>
               </div>
-            </motion.div>
+            </div>
 
-            {/* Right Column */}
-            <div className="lg:block">
-              {/* CEO Image - Only shown on tablet (md), hidden on desktop (lg) */}
-              <motion.div
-                custom={3}
-                initial="hidden"
-                animate={hasAnimated ? "visible" : "hidden"}
-                variants={fadeRightVariants}
-                className="block lg:hidden w-full mb-8"
-              >
-                <div className="flex flex-col items-center">
-                  <div className="relative w-full max-w-[420px] h-[350px] rounded-[22px] overflow-hidden shadow-xl">
-                    <Image
-                      src="https://res.cloudinary.com/dvx9dcap6/image/upload/v1768383148/ceo1_sut1bx.jpg"
-                      alt="Sunil Maharjan - Founder & CEO"
-                      fill
-                      priority
-                      quality={85}
-                      className="object-cover object-[42%_center]"
-                      sizes="(min-width: 768px) 50vw, 100vw"
+            {/* Right Column - Video & Tablet CEO Image */}
+            <div className="md:col-span-1 lg:col-span-1">
+              <div className="space-y-8 h-full flex flex-col justify-center">
+                {/* CEO Image - Only shown on tablet (md), hidden on desktop (lg) */}
+                <AnimatedSection
+                  animation="fade-up"
+                  delay={0.4}
+                  className="block lg:hidden"
+                  once={false}
+                >
+                  <div className="flex flex-col items-center">
+                    <div className="relative w-full max-w-[320px] h-[300px] rounded-2xl overflow-hidden shadow-xl">
+                      <Image
+                        src="https://res.cloudinary.com/dvx9dcap6/image/upload/v1768383148/ceo1_sut1bx.jpg"
+                        alt="Sunil Maharjan - Founder & CEO"
+                        fill
+                        priority
+                        quality={85}
+                        className="object-cover object-[42%_center]"
+                        sizes="(min-width: 768px) 320px, 100vw"
+                      />
+                    </div>
+                    <div className="mt-4 text-center">
+                      <div className="font-bold text-gray-900 text-base">
+                        SUNIL MAHARJAN
+                      </div>
+                      <div className="text-sm text-gray-600">
+                        Founder & CEO, Suyan Education
+                      </div>
+                    </div>
+                  </div>
+                </AnimatedSection>
+
+                {/* Video - Always shown */}
+                <AnimatedSection animation="fade-left" delay={0.5} once={false}>
+                  <div className="relative w-full h-[400px] md:h-[440px] lg:h-[500px] xl:h-[550px] rounded-2xl overflow-hidden">
+                    <video
+                      src="https://res.cloudinary.com/dvx9dcap6/video/upload/v1768546068/FLAGANIMATION2_k5xkt0.webm"
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload="auto"
+                      className="w-full h-full object-contain"
                     />
                   </div>
-                  <div className="mt-4 text-center">
-                    <div className="font-bold text-gray-900">
-                      SUNIL MAHARJAN
-                    </div>
-                    <div className="text-sm text-gray-600">
-                      Founder & CEO, Suyan Education
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Video - Always shown on md and lg */}
-              <motion.div
-                custom={4}
-                initial="hidden"
-                animate={hasAnimated ? "visible" : "hidden"}
-                variants={fadeRightVariants}
-              >
-                <div className="relative w-full max-w-[420px] h-[450px] md:h-[600px] rounded-[22px] overflow-hidden">
-                  <video
-                    src="https://res.cloudinary.com/dvx9dcap6/video/upload/v1768546068/FLAGANIMATION2_k5xkt0.webm"
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    preload="auto"
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-              </motion.div>
+                </AnimatedSection>
+              </div>
             </div>
           </div>
         </div>
