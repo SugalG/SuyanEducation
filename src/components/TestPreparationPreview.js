@@ -179,7 +179,7 @@ export default function ServicesPreview() {
   };
 
   return (
-    <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 mb-8 overflow-x-hidden w-full">
+    <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 mb-8 overflow-hidden w-full">
       {/* Background decorative elements - FIXED: Contained with overflow-hidden */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-r from-red-100 to-blue-100 rounded-full blur-3xl opacity-30"></div>
@@ -246,73 +246,79 @@ export default function ServicesPreview() {
                   once={false}
                 >
                   <div
-                    className="relative group w-full"
+                    className="relative group w-full cursor-pointer"
                     onClick={(e) => handleCardClick(service.slug, e)}
                   >
                     {/* Highlight badge */}
                     {service.highlight && (
                       <div className="absolute -top-3 left-4 sm:left-6 z-10">
-                        <div className="px-3 sm:px-4 py-1 bg-gradient-to-r from-red-600 to-blue-700 text-white text-xs font-bold rounded-full shadow-lg flex items-center gap-1.5">
-                          <Sparkles className="w-3 h-3" />
-                          {service.highlight}
+                        <div className="px-3 sm:px-4 py-1 bg-gradient-to-r from-red-600 to-blue-700 text-white text-xs font-bold rounded-full shadow-lg flex items-center gap-1.5 whitespace-nowrap">
+                          <Sparkles className="w-3 h-3 flex-shrink-0" />
+                          <span className="truncate">{service.highlight}</span>
                         </div>
                       </div>
                     )}
 
-                    {/* Main Card */}
+                    {/* Main Card - FIXED: Equal height for all cards */}
                     <div
-                      className={`relative h-full rounded-xl sm:rounded-2xl overflow-hidden border border-gray-200/80 backdrop-blur-sm transform-gpu transition-transform duration-300 hover:-translate-y-2 hover:shadow-xl sm:hover:shadow-2xl ${service.gradient} w-full`}
+                      className={`relative h-full rounded-xl sm:rounded-2xl overflow-hidden border border-gray-200/80 backdrop-blur-sm transform-gpu transition-transform duration-300 hover:-translate-y-2 hover:shadow-xl sm:hover:shadow-2xl ${service.gradient} w-full flex flex-col`}
+                      style={{ minHeight: "300px" }} // Equal minimum height
                     >
                       {/* Card content */}
-                      <div className="relative p-4 sm:p-6 md:p-8 h-full flex flex-col w-full">
+                      <div className="relative p-4 sm:p-6 md:p-8 h-full flex flex-col w-full flex-grow">
                         {/* Header with icon and stat */}
                         <div className="flex items-start justify-between mb-4 sm:mb-6">
                           {/* Icon */}
-                          <div className="relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl sm:rounded-2xl bg-gradient-to-br from-white to-gray-50 border border-gray-200/50 shadow-lg flex items-center justify-center">
+                          <div className="relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl sm:rounded-2xl bg-gradient-to-br from-white to-gray-50 border border-gray-200/50 shadow-lg flex items-center justify-center flex-shrink-0">
                             <Icon
                               className={`w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 ${service.iconColor}`}
                             />
                           </div>
 
                           {/* Stat badge */}
-                          <div className="flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-white/90 backdrop-blur-sm border border-gray-200 shadow-sm">
-                            <StatIcon className="w-3 h-3 sm:w-4 sm:h-4 text-blue-700" />
-                            <span className="text-xs sm:text-sm font-bold text-gray-900">
+                          <div className="flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-white/90 backdrop-blur-sm border border-gray-200 shadow-sm ml-2">
+                            <StatIcon className="w-3 h-3 sm:w-4 sm:h-4 text-blue-700 flex-shrink-0" />
+                            <span className="text-xs sm:text-sm font-bold text-gray-900 truncate">
                               {service.stat}
                             </span>
                           </div>
                         </div>
 
-                        {/* Title and description */}
-                        <div className="mb-4 sm:mb-6 flex-grow">
-                          <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 mb-2 sm:mb-3">
+                        {/* Title and description - FIXED: Consistent height */}
+                        <div className="mb-4 sm:mb-6 flex-shrink-0 min-h-[120px]">
+                          <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-2 sm:mb-3 line-clamp-2">
                             {service.title}
                           </h3>
-                          <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
+                          <p className="text-sm sm:text-base text-gray-600 leading-relaxed line-clamp-3">
                             {service.desc}
                           </p>
                         </div>
 
-                        {/* Features list - Expandable */}
+                        {/* Features list - Expandable - FIXED: Better grid for readability */}
                         <div
-                          className="overflow-hidden features-list transition-all duration-300 ease-in-out w-full"
+                          className="features-list transition-all duration-300 ease-in-out w-full overflow-hidden flex-grow"
                           style={{
-                            height: expandedCard === index ? "auto" : "0px",
-                            marginBottom:
-                              expandedCard === index ? "1rem sm:1.5rem" : "0px",
+                            maxHeight: expandedCard === index ? "300px" : "0px",
                             opacity: expandedCard === index ? 1 : 0,
+                            marginBottom:
+                              expandedCard === index ? "1rem" : "0px",
                           }}
                         >
                           <div className="pt-3 sm:pt-4 border-t border-gray-200/50 w-full">
                             <p className="text-xs sm:text-sm font-semibold text-gray-700 mb-2 sm:mb-3 flex items-center gap-2">
-                              <BookOpen className="w-3 h-3 sm:w-4 sm:h-4" />
-                              What's included:
+                              <BookOpen className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
+                              <span>What's included:</span>
                             </p>
-                            <ul className="grid grid-cols-2 gap-1 sm:gap-2 w-full">
+                            {/* 
+                  FIXED: Smart grid layout
+                  - On mobile (single column): grid-cols-2 (features side by side)
+                  - On sm+ (cards side by side): grid-cols-1 (features stacked)
+                */}
+                            <ul className="grid grid-cols-2 sm:grid-cols-1 gap-2 w-full">
                               {service.features.map((feature, i) => (
                                 <li
                                   key={i}
-                                  className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm text-gray-600 p-1 sm:p-2 rounded-lg bg-white/50 transition-all duration-300 w-full"
+                                  className="flex items-center gap-2 text-xs sm:text-sm text-gray-600 p-2 rounded-lg bg-white/50 transition-all duration-300 w-full"
                                   style={{
                                     opacity: expandedCard === index ? 1 : 0,
                                     transform:
@@ -325,39 +331,31 @@ export default function ServicesPreview() {
                                         : "0ms",
                                   }}
                                 >
-                                  <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-red-500 to-blue-600"></div>
-                                  <span className="truncate">{feature}</span>
+                                  <div className="w-2 h-2 rounded-full bg-gradient-to-r from-red-500 to-blue-600 flex-shrink-0"></div>
+                                  <span className="break-words">{feature}</span>
                                 </li>
                               ))}
                             </ul>
                           </div>
                         </div>
 
-                        {/* Footer with CTA and expand button */}
-                        <div className="flex items-center justify-between mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-gray-200/50 w-full">
-                          {/* Learn More Link */}
-                          <Link
-                            href={`/services/${service.slug}`}
-                            className="inline-flex items-center gap-1 sm:gap-2 text-gray-900 font-semibold hover:text-red-700 transition-colors text-sm sm:text-base"
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            <span>Explore Service</span>
-                            <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
-                          </Link>
-
-                          {/* Expand/Collapse Button */}
-                          <button
-                            data-expand
-                            onClick={(e) => handleExpandClick(index, e)}
-                            className="expand-indicator flex items-center gap-1 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-gradient-to-r from-red-50 to-blue-50 border border-gray-200 hover:border-gray-300 text-gray-700 font-medium text-xs sm:text-sm transition-all hover:shadow-md"
-                          >
-                            <MessageSquare className="w-3 h-3 sm:w-4 sm:h-4" />
-                            <span>
-                              {expandedCard === index
-                                ? "Show Less"
-                                : "See Features"}
-                            </span>
-                          </button>
+                        {/* Footer with CTA and expand button - FIXED: Always at bottom */}
+                        <div className="mt-auto pt-4 sm:pt-6 border-t border-gray-200/50 w-full">
+                          <div className="flex items-center justify-end">
+                            {/* Expand/Collapse Button */}
+                            <button
+                              data-expand
+                              onClick={(e) => handleExpandClick(index, e)}
+                              className="expand-indicator flex-shrink-0 flex items-center gap-1 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-gradient-to-r from-red-50 to-blue-50 border border-gray-200 hover:border-gray-300 text-gray-700 font-medium text-xs sm:text-sm transition-all hover:shadow-md whitespace-nowrap"
+                            >
+                              <MessageSquare className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
+                              <span>
+                                {expandedCard === index
+                                  ? "Show Less"
+                                  : "See Features"}
+                              </span>
+                            </button>
+                          </div>
                         </div>
                       </div>
 
@@ -376,7 +374,7 @@ export default function ServicesPreview() {
           <AnimatedSection animation="fade-left" delay={0.8}>
             <div className="sticky top-24 bg-gradient-to-b from-white to-gray-50/50 rounded-2xl sm:rounded-3xl border border-gray-200/80 p-4 sm:p-6 md:p-8 shadow-xl sm:shadow-2xl backdrop-blur-sm w-full">
               {/* Header */}
-              <AnimatedSection animation="fade-down" delay={0.3} once= {false}>
+              <AnimatedSection animation="fade-down" delay={0.3} once={false}>
                 <div className="text-center mb-6 sm:mb-10">
                   <div className="relative inline-block mb-4 sm:mb-6">
                     <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br from-red-600 to-blue-800 flex items-center justify-center shadow-lg">
@@ -464,7 +462,6 @@ export default function ServicesPreview() {
                       animation="zoom-in"
                       key={i}
                       delay={i * 0.05}
-                    
                       once={false} // Optional: keep visible after animation
                     >
                       <div className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-full bg-gradient-to-r from-red-400/80 to-blue-600/80 shadow-lg" />
