@@ -56,11 +56,11 @@ export default async function RootLayout({ children }) {
               <Toaster richColors duration={1500} position="top-center" />
             </main>
 
-            <Footer settings={settings} />
+            <Footer settings={settings} />*
           </div>
 
-          <WhatsAppFloat />
-          <GoogleTranslate />
+          {/* <WhatsAppFloat /> */}
+          {/* <GoogleTranslate /> */}
         </Providers>
       </body>
     </html>
