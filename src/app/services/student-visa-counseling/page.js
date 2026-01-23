@@ -157,7 +157,7 @@ export default function StudentVisaLifecycle() {
             Join thousands of successful students who transformed their dreams into reality with our structured counseling process.
           </p>
           <Link className="px-8 py-4 bg-gradient-to-r from-red-600 to-blue-900 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300" href="/contact">
-            Start Your Assessment Today
+            Join Us Today
           </Link>
         </div>
       </section>

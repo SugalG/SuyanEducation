@@ -206,7 +206,7 @@ export default function JapaneseLanguageSchoolsPage() {
         </div>
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
-          <AnimatedSection animation="fade-up">
+          <AnimatedSection animation="fade-up" animateImmediately>
             <div className="text-center text-white">
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full mb-6">
                 <Globe className="w-5 h-5" />

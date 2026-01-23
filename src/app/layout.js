@@ -7,6 +7,7 @@ import Providers from "./providers";
 import { Toaster } from "sonner";
 import GoogleTranslate from "@/components/GoogleTranslate";
 import { Poppins } from "next/font/google";
+import TestNavbar from "@/components/TestNavbar";
 
 /* ✅ REQUIRED: prevent build-time DB access */
 export const dynamic = "force-dynamic";
@@ -44,10 +45,11 @@ export default async function RootLayout({ children }) {
           <div className="site-frame" />
 
           <div className="site-content">
-            <NavbarApplyWrapper
+            {/* <NavbarApplyWrapper
               settings={settings}
               destinations={destinations}
-            />
+            /> */}
+            <TestNavbar/>
 
             <main className="min-h-screen">
               {children}

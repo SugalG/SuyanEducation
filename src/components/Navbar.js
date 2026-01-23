@@ -197,23 +197,19 @@ export default function Navbar({ settings, onApplyNow, isHomepage = false }) {
         <nav className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 h-24 flex items-center justify-between">
           {/* Logo */}
           <div
-            className={`flex-shrink-0 transition-all duration-300 ${
-              isHomepage && !scrolled
-                ? "opacity-0 invisible w-0"
-                : "opacity-100 visible w-auto"
+            className={`flex-shrink-0 transition-opacity duration-300 ${
+              isHomepage && !scrolled ? "opacity-0" : "opacity-100"
             }`}
           >
             <Link href="/" className="flex items-center group">
-              <div className="relative">
-                <Image
-                  src="/NAVBAR LOGO Final.png"
-                  alt="Suyan Education"
-                  width={420}
-                  height={105}
-                  priority
-                  className="h-28 sm:h-32 md:h-34 w-auto transition-transform duration-300 group-hover:scale-105"
-                />
-              </div>
+              <Image
+                src="/NAVBAR LOGO Final.png"
+                alt="Suyan Education"
+                width={420}
+                height={105}
+                priority
+                className="h-28 sm:h-32 md:h-34 w-auto transition-transform duration-300 group-hover:scale-105"
+              />
             </Link>
           </div>
 
