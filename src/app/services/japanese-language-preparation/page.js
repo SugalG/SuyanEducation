@@ -136,61 +136,37 @@ export default function JapaneseLanguageTraining() {
     { number: "50+", label: "Top Universities in Japan" },
   ];
 
-  const successStories = [
-    {
-      name: "Arjun Patel",
-      level: "JLPT N2",
-      achievement: "Placed at Toyota Japan",
-      quote:
-        "The structured approach helped me achieve N2 in 14 months and secure my dream job.",
-    },
-    {
-      name: "Priya Sharma",
-      level: "JLPT N1",
-      achievement: "Tokyo University Scholarship",
-      quote:
-        "Cultural immersion sessions made the transition to Japan seamless and enjoyable.",
-    },
-    {
-      name: "Rohan Mehta",
-      level: "JLPT N3",
-      achievement: "Moved to Osaka as Engineer",
-      quote:
-        "Real-world conversation practice prepared me perfectly for workplace communication.",
-    },
-  ];
-
   return (
-    <main className="min-h-screen bg-gradient-to-b from-white to-red-50 mt-24">
+    <main className="min-h-screen bg-gradient-to-b from-white to-red-50 mt-24 overflow-x-hidden">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-white via-red-50 to-blue-50 py-20 px-6">
-        <div className="max-w-7xl mx-auto">
-          {/* Japanese Pattern Background */}
-          <div className="absolute inset-0 opacity-5">
+      <section className="relative overflow-hidden bg-gradient-to-br from-white via-red-50 to-blue-50 py-16 md:py-20 px-4 sm:px-6">
+        <div className="max-w-7xl mx-auto w-full">
+          {/* Japanese Pattern Background - FIXED: Added overflow-hidden */}
+          <div className="absolute inset-0 opacity-5 overflow-hidden">
             <div
-              className="absolute inset-0"
+              className="absolute inset-0 w-full"
               style={{
                 backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
                 backgroundSize: "30px 30px",
               }}
             ></div>
           </div>
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div>
+          <div className="grid lg:grid-cols-2 gap-12 md:gap-16 items-center w-full">
+            <div className="w-full">
               <RevealTest animateImmediately delay={0.2}>
-                <div className="relative text-center mb-16">
-                  <span className="inline-block px-4 py-2 rounded-full bg-red-100 text-red-700 font-medium mb-6">
+                <div className="relative text-center mb-12 md:mb-16 px-4">
+                  <span className="inline-block px-4 py-2 rounded-full bg-red-100 text-red-700 font-medium mb-4 md:mb-6 text-sm md:text-base">
                     日本語トレーニング
                   </span>
-                  <h1 className="text-5xl md:text-6xl font-bold mb-6">
+                  <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6">
                     <span className="bg-gradient-to-r from-red-600 via-red-500 to-blue-950 bg-clip-text text-transparent">
                       Master Japanese
                     </span>
-                    <span className="block text-gray-800 mt-2">
+                    <span className="block text-gray-800 mt-2 text-lg sm:text-xl md:text-2xl">
                       For Study & Career in Japan
                     </span>
                   </h1>
-                  <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                  <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
                     Comprehensive language training program designed
                     specifically for students and professionals aiming to study,
                     work, or settle in Japan.
@@ -198,7 +174,7 @@ export default function JapaneseLanguageTraining() {
                 </div>
               </RevealTest>
               {/* Quick Stats */}
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-20">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 md:gap-6 max-w-4xl mx-auto mb-12 md:mb-20 px-4">
                 {whyLearnStats.map((stat, index) => (
                   <RevealTest
                     animateImmediately
@@ -207,38 +183,32 @@ export default function JapaneseLanguageTraining() {
                   >
                     <div
                       key={index}
-                      className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg"
+                      className="bg-white/80 backdrop-blur-sm rounded-xl md:rounded-2xl p-4 md:p-6 shadow-lg w-full"
                     >
-                      <div className="text-3xl font-bold text-red-600">
+                      <div className="text-xl sm:text-2xl md:text-3xl font-bold text-red-600">
                         {stat.number}
                       </div>
-                      <div className="text-gray-600 text-sm mt-2">
+                      <div className="text-gray-600 text-xs sm:text-sm md:text-sm mt-1 md:mt-2">
                         {stat.label}
                       </div>
                     </div>
                   </RevealTest>
                 ))}
               </div>
-              
             </div>
             <RevealTest animateImmediately delay={0.5}>
-              <div className="relative">
-                <div className="relative rounded-3xl overflow-hidden shadow-2xl">
-                  {/* Image Container with Gradient Border */}
-                  <div className="absolute -inset-1 bg-gradient-to-r from-red-500 via-pink-500 to-blue-500 rounded-3xl blur opacity-30"></div>
-                  <div className="relative rounded-3xl overflow-hidden border-8 border-white">
-                    
-                      <img
-                        src="/icons/japan-test-prep.png"
-                        alt={`Master in Japanese Languate`}
-                        className="w-full h-[500px] object-cover transform hover:scale-105 transition-transform duration-700"
-                      />
-                   
+              <div className="relative w-full px-4 lg:px-0">
+                <div className="relative rounded-2xl md:rounded-3xl overflow-hidden shadow-xl md:shadow-2xl w-full">
+                  {/* Image Container with Gradient Border - FIXED: Removed negative inset */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-red-500 via-pink-500 to-blue-500 rounded-2xl md:rounded-3xl blur opacity-30"></div>
+                  <div className="relative rounded-2xl md:rounded-3xl overflow-hidden border-4 md:border-8 border-white w-full">
+                    <img
+                      src="/icons/japan-test-prep.png"
+                      alt="Master in Japanese Language"
+                      className="w-full h-[300px] sm:h-[400px] md:h-[500px] object-cover transform hover:scale-105 transition-transform duration-700"
+                    />
                   </div>
-
                 </div>
-
-
               </div>
             </RevealTest>
           </div>
@@ -249,12 +219,12 @@ export default function JapaneseLanguageTraining() {
       <WhyLearnJapanese />
 
       {/* JLPT Levels Timeline */}
-      <section className="max-w-7xl mx-auto px-6 py-20">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-12 md:py-16 lg:py-20 overflow-x-hidden">
+        <div className="text-center mb-12 md:mb-16 px-4">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
             Structured JLPT Preparation
           </h2>
-          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+          <p className="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto">
             Progress through five comprehensive levels following Japan's
             official JLPT certification framework
           </p>
@@ -267,18 +237,18 @@ export default function JapaneseLanguageTraining() {
       <TeachingMethodology methods={teachingMethods} />
 
       {/* Curriculum Details */}
-      <section className="max-w-7xl mx-auto px-6 py-20">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-12 md:py-16 lg:py-20 overflow-x-hidden">
+        <div className="text-center mb-12 md:mb-16 px-4">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
             Comprehensive Curriculum
           </h2>
-          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+          <p className="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto">
             Each level includes focused training on all essential language
             skills
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 px-4 sm:px-0">
           <CurriculumCard
             title="Reading & Writing"
             description="Master Japanese scripts and reading comprehension"
@@ -318,45 +288,18 @@ export default function JapaneseLanguageTraining() {
         </div>
       </section>
 
-      {/* Success Stories */}
-      {/* <section className="bg-gradient-to-r from-red-50 to-blue-50 py-20">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
-              Student Success Stories
-            </h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Hear from our students who transformed their Japanese language skills
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {successStories.map((story, index) => (
-              <div key={index} className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow">
-                <div className="mb-6">
-                  <div className="text-2xl font-bold text-red-600">{story.level}</div>
-                  <div className="text-gray-800 font-semibold mt-2">{story.name}</div>
-                  <div className="text-blue-600">{story.achievement}</div>
-                </div>
-                <p className="text-gray-600 italic">"{story.quote}"</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section> */}
-
       {/* CTA Section */}
-      <section className="max-w-7xl mx-auto px-6 py-20">
-        <div className="bg-gradient-to-r from-red-600 to-blue-900 rounded-3xl p-12 text-center text-white">
-          <h3 className="text-3xl font-bold mb-6">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-12 md:py-16 lg:py-20 overflow-x-hidden">
+        <div className="bg-gradient-to-r from-red-600 to-blue-900 rounded-2xl md:rounded-3xl p-6 md:p-8 lg:p-12 text-center text-white w-full">
+          <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 md:mb-6 px-4">
             Start Your Japanese Journey Today
           </h3>
-          <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl mb-6 md:mb-8 opacity-90 max-w-2xl mx-auto px-4">
             Join our next batch and get one step closer to your Japanese dreams
           </p>
-          <div className="">
+          <div className="px-4">
             <Link
-              className="px-8 py-4 bg-white text-red-600 font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
+              className="inline-block px-6 md:px-8 py-3 md:py-4 bg-white text-red-600 font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 text-sm md:text-base"
               href="/contact"
             >
               Join Us Now!!!

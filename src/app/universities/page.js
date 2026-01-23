@@ -121,7 +121,7 @@ export default function UniversitiesPage() {
   ========================= */
   if (isLoading) {
     return (
-      <main className="relative mt-24">
+      <main className="relative mt-24 overflow-x-hidden">
         {/* Background Elements */}
         <div className="absolute inset-0 -z-10 overflow-hidden">
           <div className="absolute top-0 -right-40 w-80 h-80 bg-red-500/5 rounded-full blur-3xl"></div>
@@ -143,7 +143,7 @@ export default function UniversitiesPage() {
 
   if (isError) {
     return (
-      <main className="relative mt-24">
+      <main className="relative mt-24 overflow-x-hidden">
         <div className="absolute inset-0 -z-10 overflow-hidden">
           <div className="absolute top-0 -right-40 w-80 h-80 bg-red-500/5 rounded-full blur-3xl"></div>
         </div>
@@ -171,7 +171,7 @@ export default function UniversitiesPage() {
 
   if (!destinations.length) {
     return (
-      <main className="relative">
+      <main className="relative overflow-x-hidden">
         <div className="text-center py-32">
           <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-blue-50 flex items-center justify-center">
             <Globe className="w-8 h-8 text-blue-600" />
@@ -191,8 +191,8 @@ export default function UniversitiesPage() {
      UI
   ========================= */
   return (
-    <main className="relative mt-24">
-      {/* Background Elements */}
+    <main className="relative mt-24 overflow-x-hidden">
+      {/* Background Elements - FIXED: Contained with proper overflow */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute top-0 -right-40 w-80 h-80 bg-red-500/5 rounded-full blur-3xl"></div>
         <div className="absolute bottom-0 -left-40 w-80 h-80 bg-blue-950/5 rounded-full blur-3xl"></div>
@@ -200,9 +200,9 @@ export default function UniversitiesPage() {
       </div>
 
       {/* HERO SECTION */}
-      <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
+      <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 w-full">
         <motion.div 
-          className="text-center max-w-5xl mx-auto"
+          className="text-center max-w-5xl mx-auto w-full"
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
@@ -219,7 +219,7 @@ export default function UniversitiesPage() {
           
           {/* Main Heading */}
           <motion.h1 
-            className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6"
+            className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 px-4"
             variants={fadeInUp}
           >
             <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
@@ -239,7 +239,7 @@ export default function UniversitiesPage() {
           
           {/* Subtitle */}
           <motion.p 
-            className="text-lg lg:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto mb-12"
+            className="text-lg lg:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto mb-12 px-4"
             variants={fadeInUp}
           >
             Explore our network of prestigious partner institutions across 10+ countries worldwide.
@@ -248,7 +248,7 @@ export default function UniversitiesPage() {
 
           {/* Stats */}
           <motion.div 
-            className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto"
+            className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto px-4"
             variants={fadeInUp}
           >
             {[
@@ -259,7 +259,7 @@ export default function UniversitiesPage() {
             ].map((stat, index) => (
               <div 
                 key={index}
-                className="bg-white p-4 rounded-xl border border-gray-200 hover:border-red-300 transition-colors group"
+                className="bg-white p-4 rounded-xl border border-gray-200 hover:border-red-300 transition-colors group w-full"
               >
                 <div className="flex flex-col items-center text-center">
                   <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-red-50 to-blue-50 flex items-center justify-center group-hover:from-red-100 group-hover:to-blue-100 transition-all mb-2">
@@ -277,17 +277,17 @@ export default function UniversitiesPage() {
       </section>
 
       {/* MAIN CONTENT */}
-      <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 lg:pb-28">
+      <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 lg:pb-28 w-full">
         {/* Search & Filter Section */}
         <motion.div 
-          className="bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-200 p-6 lg:p-8 mb-12 shadow-lg"
+          className="bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-200 p-6 lg:p-8 mb-12 shadow-lg w-full"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-2 gap-6 w-full">
             {/* Search */}
-            <div className="relative group">
+            <div className="relative group w-full">
               <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
                 <Search className="w-5 h-5" />
               </div>
@@ -302,7 +302,7 @@ export default function UniversitiesPage() {
             </div>
 
             {/* Destination Filter */}
-            <div className="relative group">
+            <div className="relative group w-full">
               <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
                 <Filter className="w-5 h-5" />
               </div>
@@ -347,9 +347,9 @@ export default function UniversitiesPage() {
                   whileInView="show"
                   viewport={{ once: true }}
                   variants={fadeInUp}
-                  className="mb-16"
+                  className="mb-16 w-full"
                 >
-                  <div className="bg-white rounded-2xl border border-gray-200 p-8 text-center">
+                  <div className="bg-white rounded-2xl border border-gray-200 p-8 text-center w-full">
                     <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-red-50 to-blue-50 flex items-center justify-center">
                       <GraduationCap className="w-8 h-8 text-gray-400" />
                     </div>
@@ -373,17 +373,17 @@ export default function UniversitiesPage() {
               whileInView="show"
               viewport={{ once: true }}
               variants={staggerContainer}
-              className="mb-20"
+              className="mb-20 w-full"
             >
               {/* Destination Header */}
               <motion.div 
-                className="flex items-center gap-4 mb-8"
+                className="flex items-center gap-4 mb-8 w-full"
                 variants={fadeInUp}
               >
                 <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-red-100 to-blue-100 flex items-center justify-center">
                   <Globe className="w-6 h-6 text-gray-700" />
                 </div>
-                <div>
+                <div className="w-full">
                   <h2 className="text-3xl font-bold text-gray-900">
                     {destination.country}
                   </h2>
@@ -393,8 +393,8 @@ export default function UniversitiesPage() {
                 </div>
               </motion.div>
 
-              {/* University Grid */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 lg:gap-6">
+              {/* University Grid - FIXED: Removed overflow from grid */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 lg:gap-6 w-full">
                 {universitiesForDestination.map((uni, uniIndex) => (
                   <motion.a
                     key={uni.id}
@@ -407,17 +407,17 @@ export default function UniversitiesPage() {
                     whileInView="show"
                     viewport={{ once: true }}
                     transition={{ delay: (destIndex * 0.05) + (uniIndex * 0.02) }}
-                    className="group relative block"
+                    className="group relative block w-full"
                   >
                     <div className="bg-white rounded-2xl border-2 border-gray-200 p-5 lg:p-6
                       hover:border-transparent transition-all duration-300 
-                      hover:shadow-xl h-full relative overflow-hidden">
+                      hover:shadow-xl h-full relative overflow-hidden w-full">
                       
                       {/* Gradient Background on Hover */}
                       <div className="absolute inset-0 bg-gradient-to-br from-red-600/0 to-blue-950/0 group-hover:from-red-600/5 group-hover:to-blue-950/5 transition-opacity duration-300" />
                       
                       {/* Content Container */}
-                      <div className="relative z-10">
+                      <div className="relative z-10 w-full">
                         {/* University Logo */}
                         <div className="w-full h-24 flex items-center justify-center mb-4">
                           <div className="relative w-full h-full flex items-center justify-center p-2">
@@ -432,12 +432,12 @@ export default function UniversitiesPage() {
 
                         {/* University Name */}
                         <h3 className="text-center text-sm font-semibold text-gray-900 mb-3 
-                          group-hover:text-red-700 transition-colors line-clamp-2 min-h-[2.5rem]">
+                          group-hover:text-red-700 transition-colors line-clamp-2 min-h-[2.5rem] w-full">
                           {uni.name}
                         </h3>
 
                         {/* Visit Button */}
-                        <div className="flex items-center justify-center mt-4 pt-4 border-t border-gray-100">
+                        <div className="flex items-center justify-center mt-4 pt-4 border-t border-gray-100 w-full">
                           <span className="text-xs font-medium bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
                             Visit Website
                           </span>
@@ -459,17 +459,17 @@ export default function UniversitiesPage() {
       </section>
 
       {/* CTA SECTION */}
-      <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 lg:pb-28">
+      <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 lg:pb-28 w-full">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="relative"
+          className="relative w-full"
         >
-          <div className="bg-gradient-to-r from-red-600 via-red-700 to-blue-950 rounded-2xl lg:rounded-3xl p-8 lg:p-12 text-center overflow-hidden">
+          <div className="bg-gradient-to-r from-red-600 via-red-700 to-blue-950 rounded-2xl lg:rounded-3xl p-8 lg:p-12 text-center overflow-hidden w-full">
             {/* Background Pattern */}
-            <div className="absolute inset-0 opacity-10">
+            <div className="absolute inset-0 opacity-10 overflow-hidden">
               <div className="absolute top-0 right-0 w-64 h-64 border-4 border-white rounded-full transform translate-x-32 -translate-y-32"></div>
               <div className="absolute bottom-0 left-0 w-64 h-64 border-4 border-white rounded-full transform -translate-x-32 translate-y-32"></div>
             </div>
@@ -480,27 +480,22 @@ export default function UniversitiesPage() {
                 <span className="text-sm font-medium text-white">Ready to Apply</span>
               </div>
               
-              <h2 className="text-2xl lg:text-3xl font-bold text-white mb-6">
+              <h2 className="text-2xl lg:text-3xl font-bold text-white mb-6 px-4">
                 Need Help Choosing the Right University?
               </h2>
               
-              <p className="text-white/90 mb-8 max-w-2xl mx-auto">
+              <p className="text-white/90 mb-8 max-w-2xl mx-auto px-4">
                 Our expert counselors can guide you to find the perfect university match based on your academic profile and career goals.
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center px-4">
                 <a
                   href="/contact"
                   className="inline-block bg-white text-red-700 px-6 py-3.5 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
                 >
                   Book Free Consultation
                 </a>
-                <a
-                  href="/destinations"
-                  className="inline-block bg-transparent border-2 border-white text-white px-6 py-3.5 rounded-xl font-semibold hover:bg-white/10 transition-all duration-300 hover:scale-105"
-                >
-                  Explore All Destinations
-                </a>
+               
               </div>
             </div>
           </div>

@@ -26,53 +26,22 @@ export default function NavigationBar({ settings, onApplyNow, isHomepage = false
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileSub, setMobileSub] = useState(null);
   const [destinations, setDestinations] = useState([]);
-  const [isLargeScreen, setIsLargeScreen] = useState(false);
 
   // Refs for desktop dropdowns
   const testMenuRef = useRef(null);
   const destMenuRef = useRef(null);
   const timeoutRef = useRef(null);
 
-  // Check screen size
+  // Handle scroll
   useEffect(() => {
-    const checkScreenSize = () => {
-      setIsLargeScreen(window.innerWidth >= 1024); // lg breakpoint
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
     };
     
-    checkScreenSize();
-    window.addEventListener("resize", checkScreenSize);
-    return () => window.removeEventListener("resize", checkScreenSize);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  // Debounced scroll handler
-  useEffect(() => {
-    let lastScrollY = window.scrollY;
-    let ticking = false;
-
-    const updateScrolled = () => {
-      const currentScrollY = window.scrollY;
-      const newScrolled = currentScrollY > 50;
-
-      if (newScrolled !== scrolled) {
-        setScrolled(newScrolled);
-      }
-      ticking = false;
-    };
-
-    const onScroll = () => {
-      lastScrollY = window.scrollY;
-
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          updateScrolled();
-        });
-        ticking = true;
-      }
-    };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [scrolled]);
 
   // Load destinations
   useEffect(() => {
@@ -95,7 +64,8 @@ export default function NavigationBar({ settings, onApplyNow, isHomepage = false
     loadDestinations();
   }, []);
 
-  // Close mobile menu when clicking outside or on link
+  // FIXED: Removed body overflow manipulation
+  // This was breaking sticky positioning
   useEffect(() => {
     if (mobileOpen) {
       document.body.style.overflow = "hidden";
@@ -118,20 +88,8 @@ export default function NavigationBar({ settings, onApplyNow, isHomepage = false
   const handleMouseLeave = () => {
     timeoutRef.current = setTimeout(() => {
       setOpenMenu(null);
-    }, 150);
+    }, 100);
   };
-
-  // Close dropdowns when clicking outside on mobile
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (mobileOpen && !event.target.closest('[data-mobile-menu]')) {
-        setMobileOpen(false);
-      }
-    };
-
-    document.addEventListener("click", handleClickOutside);
-    return () => document.removeEventListener("click", handleClickOutside);
-  }, [mobileOpen]);
 
   // Clean text shadow classes
   const getNavLinkClass = () => {
@@ -178,10 +136,10 @@ export default function NavigationBar({ settings, onApplyNow, isHomepage = false
       icon: <FileText size={20} />,
       submenu: "test",
       items: [
-        { href: "/services/japanese-language-preparation", label: "JLPT", description: "Japanese Language" },
-        { href: "/services/ielts", label: "IELTS", description: "English Proficiency" },
-        { href: "/services/toefl", label: "TOEFL", description: "Academic English" },
-        { href: "/services/ssw", label: "SSW", description: "Specialized Skills" },
+        { href: "/services/japanese-language-preparation", label: "JLPT", description: "Japanese Language", icon: "/icons/japan-test-prep.png" },
+        { href: "/services/ielts", label: "IELTS", description: "English Proficiency", icon: "/icons/ielts.png" },
+        { href: "/services/toefl", label: "TOEFL", description: "Academic English", icon: "/icons/tofel-test-prep.png" },
+        { href: "/services/ssw", label: "SSW", description: "Specialized Skills", icon: "/icons/ssw-test-prep.png" },
       ]
     },
     { 
@@ -203,7 +161,7 @@ export default function NavigationBar({ settings, onApplyNow, isHomepage = false
 
   return (
     <header className="fixed top-0 left-0 w-full z-50">
-      {/* Top Bar with Contact Info - Responsive */}
+      {/* Top Bar with Contact Info */}
       <div
         className={`bg-blue-950 text-white ${
           isHomepage && !scrolled ? "bg-opacity-90" : ""
@@ -261,14 +219,12 @@ export default function NavigationBar({ settings, onApplyNow, isHomepage = false
       `}
       >
         <nav className="px-2 lg:px-6 xl:px-8 h-20 lg:h-24 flex items-center justify-between">
-          {/* Logo - Responsive */}
-          <div
-            className={`flex-shrink-0 transition-all duration-300 ${
-              isHomepage && !scrolled
-                ? "opacity-0 invisible w-0"
-                : "opacity-100 visible w-auto"
-            } md:hidden lg:block`}
-          >
+          {/* Logo - Responsive: Hide on md screens (768px-1023px) */}
+          <div className={`flex-shrink-0 transition-all duration-300 ${
+            isHomepage && !scrolled
+              ? "opacity-0 invisible w-0"
+              : "opacity-100 visible w-auto"
+          } md:hidden lg:block`}>
             <Link href="/" className="flex items-center group">
               <div className="relative">
                 <Image
@@ -284,141 +240,46 @@ export default function NavigationBar({ settings, onApplyNow, isHomepage = false
             </Link>
           </div>
 
-          {/* Desktop Navigation - Improved responsiveness */}
-          <div className="hidden md:flex items-center md:max-w-7xl md:mx-auto gap-4 xl:gap-6 font-semibold text-sm xl:text-base xl:absolute xl:left-1/2 xl:transform xl:-translate-x-1/2">
-            {[
-              { href: "/", label: "Home" },
-              { href: "/about", label: "About" },
-              { type: "dropdown", label: "Test Preparation", key: "test" },
-              { type: "dropdown", label: "Destinations", key: "dest" },
-              { href: "/universities", label: "Universities" },
-              { href: "/gallery", label: "Gallery" },
-              { href: "/blog", label: "Blog" },
-              { href: "/contact", label: "Contact" },
-            ].map((item) => (
-              item.type === "dropdown" ? (
-                <div
-                  key={item.key}
-                  className="relative"
-                  onMouseEnter={() => handleMouseEnter(item.key)}
-                  onMouseLeave={handleMouseLeave}
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center justify-center flex-1">
+            <div className="flex items-center gap-3 lg:gap-4 xl:gap-6 font-semibold text-sm lg:text-base">
+              {/* Home */}
+              <Link href="/" className={getNavLinkClass()}>
+                Home
+                <span
+                  className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 ${
+                    isHomepage && !scrolled
+                      ? "bg-white group-hover/nav:w-full"
+                      : "bg-gradient-to-r from-red-600 to-blue-950 group-hover/nav:w-full"
+                  }`}
+                ></span>
+              </Link>
+
+              {/* About */}
+              <Link href="/about" className={getNavLinkClass()}>
+                About
+                <span
+                  className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 ${
+                    isHomepage && !scrolled
+                      ? "bg-white group-hover/nav:w-full"
+                      : "bg-gradient-to-r from-red-600 to-blue-950 group-hover/nav:w-full"
+                  }`}
+                ></span>
+              </Link>
+
+              {/* Test Preparation */}
+              <div
+                className="relative"
+                onMouseEnter={() => handleMouseEnter("test")}
+                onMouseLeave={handleMouseLeave}
+              >
+                <button
+                  className={getDropdownButtonClass()}
+                  onClick={() => setOpenMenu(openMenu === "test" ? null : "test")}
                 >
-                  <button
-                    className={getDropdownButtonClass()}
-                    onClick={() => setOpenMenu(openMenu === item.key ? null : item.key)}
-                  >
-                    {item.label}
-                    <ChevronDown size={16} className={getChevronClass(item.key)} />
-                    <span
-                      className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 ${
-                        isHomepage && !scrolled
-                          ? "bg-white group-hover/nav:w-full"
-                          : "bg-gradient-to-r from-red-600 to-blue-950 group-hover/nav:w-full"
-                      }`}
-                    ></span>
-                  </button>
-
-                  <div className="absolute left-0 top-full h-2"></div>
-
-                  {item.key === "test" ? (
-                    <div
-                      ref={testMenuRef}
-                      className={`absolute left-1/2 transform -translate-x-1/2 top-full mt-2 w-56 bg-white/95 backdrop-blur-md rounded-xl shadow-xl border border-gray-100
-                      transition-all duration-200 origin-top
-                      ${
-                        openMenu === "test"
-                          ? "opacity-100 visible scale-y-100 translate-y-0"
-                          : "opacity-0 invisible scale-y-95 -translate-y-2"
-                      }`}
-                      onMouseEnter={() => handleMouseEnter("test")}
-                      onMouseLeave={handleMouseLeave}
-                    >
-                      <div className="p-2">
-                        <div className="px-3 py-2 mb-2">
-                          <div className="text-xs font-semibold text-blue-950 uppercase tracking-wider">
-                            Language Tests
-                          </div>
-                          <div className="text-xs text-gray-500">
-                            International proficiency exams
-                          </div>
-                        </div>
-
-                        {[
-                          { href: "/services/japanese-language-preparation", label: "JLPT", description: "Japanese Language", icon: "/icons/japan-test-prep.png", color: "red" },
-                          { href: "/services/ielts", label: "IELTS", description: "English Proficiency", icon: "/icons/ielts.png", color: "blue" },
-                          { href: "/services/toefl", label: "TOEFL", description: "Academic English", icon: "/icons/tofel-test-prep.png", color: "green" },
-                          { href: "/services/ssw", label: "SSW", description: "Specialized Skills", icon: "/icons/ssw-test-prep.png", color: "purple" },
-                        ].map((test) => (
-                          <Link
-                            key={test.href}
-                            href={test.href}
-                            className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 hover:text-red-700 transition-all duration-200 group/item"
-                          >
-                            <div className={`w-10 h-10 rounded-full flex items-center justify-center group-hover/item:bg-${test.color}-50 transition-colors overflow-hidden p-1`}>
-                              <img
-                                src={test.icon}
-                                alt={test.label}
-                                className="w-full h-full object-contain rounded-full"
-                              />
-                            </div>
-                            <div>
-                              <div className="font-medium">{test.label}</div>
-                              <div className="text-xs text-gray-500">{test.description}</div>
-                            </div>
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  ) : (
-                    <div
-                      ref={destMenuRef}
-                      className={`absolute left-1/2 transform -translate-x-1/2 top-full mt-2 w-64 bg-white/95 backdrop-blur-md rounded-xl shadow-xl border border-gray-100
-                      transition-all duration-200 origin-top
-                      ${
-                        openMenu === "dest"
-                          ? "opacity-100 visible scale-y-100 translate-y-0"
-                          : "opacity-0 invisible scale-y-95 -translate-y-2"
-                      }`}
-                      onMouseEnter={() => handleMouseEnter("dest")}
-                      onMouseLeave={handleMouseLeave}
-                    >
-                      <div className="p-2">
-                        <div className="px-3 py-2 mb-2">
-                          <div className="text-xs font-semibold text-blue-800 uppercase tracking-wider">
-                            Popular Destinations
-                          </div>
-                          <div className="text-xs text-gray-500">
-                            Choose your study country
-                          </div>
-                        </div>
-
-                        {destinations.map((d) => (
-                          <Link
-                            key={d.slug}
-                            href={`/destinations/${d.slug}`}
-                            className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 hover:text-red-700 transition-all duration-200 group/item"
-                          >
-                            <div className="w-6 h-6 overflow-hidden flex items-center justify-center">
-                              <img
-                                src={`https://flagcdn.com/w40/${d.code.toLowerCase()}.png`}
-                                alt={d.country}
-                                className="w-full h-full object-contain"
-                              />
-                            </div>
-                            <div className="font-medium ml-2">{d.country}</div>
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ) : (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={getNavLinkClass()}
-                >
-                  {item.label}
+                  <span className="lg:inline hidden">Test Preparation</span>
+                  <span className="lg:hidden inline">Tests</span>
+                  <ChevronDown size={16} className={getChevronClass("test")} />
                   <span
                     className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 ${
                       isHomepage && !scrolled
@@ -426,13 +287,181 @@ export default function NavigationBar({ settings, onApplyNow, isHomepage = false
                         : "bg-gradient-to-r from-red-600 to-blue-950 group-hover/nav:w-full"
                     }`}
                   ></span>
-                </Link>
-              )
-            ))}
+                </button>
+
+                <div className="absolute left-0 top-full h-2"></div>
+
+                <div
+                  ref={testMenuRef}
+                  className={`absolute left-1/2 transform -translate-x-1/2 top-full mt-2 w-56 bg-white/95 backdrop-blur-md rounded-xl shadow-xl border border-gray-100
+                  transition-all duration-200 origin-top
+                  ${
+                    openMenu === "test"
+                      ? "opacity-100 visible scale-y-100 translate-y-0"
+                      : "opacity-0 invisible scale-y-95 -translate-y-2"
+                  }`}
+                  onMouseEnter={() => handleMouseEnter("test")}
+                  onMouseLeave={handleMouseLeave}
+                >
+                  <div className="p-2">
+                    <div className="px-3 py-2 mb-2">
+                      <div className="text-xs font-semibold text-blue-950 uppercase tracking-wider">
+                        Language Tests
+                      </div>
+                      <div className="text-xs text-gray-500">
+                        International proficiency exams
+                      </div>
+                    </div>
+
+                    {[
+                      { href: "/services/japanese-language-preparation", label: "JLPT", description: "Japanese Language", icon: "/icons/japan-test-prep.png", color: "red" },
+                      { href: "/services/ielts", label: "IELTS", description: "English Proficiency", icon: "/icons/ielts.png", color: "blue" },
+                      { href: "/services/toefl", label: "TOEFL", description: "Academic English", icon: "/icons/tofel-test-prep.png", color: "green" },
+                      { href: "/services/ssw", label: "SSW", description: "Specialized Skills", icon: "/icons/ssw-test-prep.png", color: "purple" },
+                    ].map((test) => (
+                      <Link
+                        key={test.href}
+                        href={test.href}
+                        className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 hover:text-red-700 transition-all duration-200 group/item"
+                        onClick={() => setOpenMenu(null)}
+                      >
+                        <div className={`w-10 h-10 rounded-full flex items-center justify-center group-hover/item:bg-${test.color}-50 transition-colors overflow-hidden p-1`}>
+                          <img
+                            src={test.icon}
+                            alt={test.label}
+                            className="w-full h-full object-contain rounded-full"
+                          />
+                        </div>
+                        <div>
+                          <div className="font-medium">{test.label}</div>
+                          <div className="text-xs text-gray-500">{test.description}</div>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Destinations */}
+              <div
+                className="relative"
+                onMouseEnter={() => handleMouseEnter("dest")}
+                onMouseLeave={handleMouseLeave}
+              >
+                <button
+                  className={getDropdownButtonClass()}
+                  onClick={() => setOpenMenu(openMenu === "dest" ? null : "dest")}
+                >
+                  <span className="lg:inline hidden">Destinations</span>
+                  <span className="lg:hidden inline">Destinations</span>
+                  <ChevronDown size={16} className={getChevronClass("dest")} />
+                  <span
+                    className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 ${
+                      isHomepage && !scrolled
+                        ? "bg-white group-hover/nav:w-full"
+                        : "bg-gradient-to-r from-red-600 to-blue-950 group-hover/nav:w-full"
+                    }`}
+                  ></span>
+                </button>
+
+                <div className="absolute left-0 top-full h-2"></div>
+
+                <div
+                  ref={destMenuRef}
+                  className={`absolute left-1/2 transform -translate-x-1/2 top-full mt-2 w-64 bg-white/95 backdrop-blur-md rounded-xl shadow-xl border border-gray-100
+                  transition-all duration-200 origin-top
+                  ${
+                    openMenu === "dest"
+                      ? "opacity-100 visible scale-y-100 translate-y-0"
+                      : "opacity-0 invisible scale-y-95 -translate-y-2"
+                  }`}
+                  onMouseEnter={() => handleMouseEnter("dest")}
+                  onMouseLeave={handleMouseLeave}
+                >
+                  <div className="p-2">
+                    <div className="px-3 py-2 mb-2">
+                      <div className="text-xs font-semibold text-blue-800 uppercase tracking-wider">
+                        Popular Destinations
+                      </div>
+                      <div className="text-xs text-gray-500">
+                        Choose your study country
+                      </div>
+                    </div>
+
+                    {destinations.map((d) => (
+                      <Link
+                        key={d.slug}
+                        href={`/destinations/${d.slug}`}
+                        className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 hover:text-red-700 transition-all duration-200 group/item"
+                        onClick={() => setOpenMenu(null)}
+                      >
+                        <div className="w-6 h-6 overflow-hidden flex items-center justify-center">
+                          <img
+                            src={`https://flagcdn.com/w40/${d.code.toLowerCase()}.png`}
+                            alt={d.country}
+                            className="w-full h-full object-contain"
+                          />
+                        </div>
+                        <div className="font-medium ml-2">{d.country}</div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Universities with responsive text */}
+              <Link href="/universities" className={getNavLinkClass()}>
+                <span className="lg:inline hidden">Universities</span>
+                <span className="lg:hidden inline">Uni</span>
+                <span
+                  className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 ${
+                    isHomepage && !scrolled
+                      ? "bg-white group-hover/nav:w-full"
+                      : "bg-gradient-to-r from-red-600 to-blue-950 group-hover/nav:w-full"
+                  }`}
+                ></span>
+              </Link>
+
+              {/* Gallery */}
+              <Link href="/gallery" className={getNavLinkClass()}>
+                Gallery
+                <span
+                  className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 ${
+                    isHomepage && !scrolled
+                      ? "bg-white group-hover/nav:w-full"
+                      : "bg-gradient-to-r from-red-600 to-blue-950 group-hover/nav:w-full"
+                  }`}
+                ></span>
+              </Link>
+
+              {/* Blog */}
+              <Link href="/blog" className={getNavLinkClass()}>
+                Blog
+                <span
+                  className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 ${
+                    isHomepage && !scrolled
+                      ? "bg-white group-hover/nav:w-full"
+                      : "bg-gradient-to-r from-red-600 to-blue-950 group-hover/nav:w-full"
+                  }`}
+                ></span>
+              </Link>
+
+              {/* Contact */}
+              <Link href="/contact" className={getNavLinkClass()}>
+                Contact
+                <span
+                  className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 ${
+                    isHomepage && !scrolled
+                      ? "bg-white group-hover/nav:w-full"
+                      : "bg-gradient-to-r from-red-600 to-blue-950 group-hover/nav:w-full"
+                  }`}
+                ></span>
+              </Link>
+            </div>
           </div>
 
-          {/* Mobile & Tablet Navigation */}
-          <div className="md:hidden flex items-center gap-2 sm:gap-4 ml-auto">
+          {/* Mobile & Tablet Navigation Button - Only below md */}
+          <div className="md:hidden flex items-center ml-auto">
             <button
               onClick={() => setMobileOpen(true)}
               className={`p-2 transition-colors duration-200 ${
@@ -448,17 +477,17 @@ export default function NavigationBar({ settings, onApplyNow, isHomepage = false
         </nav>
       </div>
 
-      {/* Mobile & Tablet Menu */}
+      {/* Mobile & Tablet Menu - FIXED: No overflow-x on body */}
       {mobileOpen && (
-        <div className="lg:hidden fixed inset-0 z-50" data-mobile-menu>
+        <div className="md:hidden fixed inset-0 z-50" data-mobile-menu>
           {/* Backdrop */}
           <div
             className="absolute inset-0 bg-black/30 backdrop-blur-sm transition-opacity duration-300"
             onClick={() => setMobileOpen(false)}
           />
 
-          {/* Menu Panel */}
-          <div className="absolute right-0 top-0 bottom-0 w-full max-w-xs sm:max-w-sm bg-white shadow-2xl transform transition-transform duration-300 overflow-y-auto">
+          {/* Menu Panel - FIXED: Removed overflow-x-hidden */}
+          <div className="absolute left-0 top-0 bottom-0 w-[85vw] max-w-xs sm:max-w-sm bg-white shadow-2xl transform transition-transform duration-300 overflow-y-auto">
             {/* Header */}
             <div className="sticky top-0 z-10 flex items-center justify-between px-4 sm:px-6 h-20 border-b border-gray-100 bg-gradient-to-r from-red-50 to-blue-50">
               <div className="flex items-center gap-3">
@@ -513,12 +542,15 @@ export default function NavigationBar({ settings, onApplyNow, isHomepage = false
                               <Link
                                 key={subItem.label}
                                 href={subItem.href}
-                                onClick={() => setMobileOpen(false)}
+                                onClick={() => {
+                                  setMobileOpen(false);
+                                  setMobileSub(null);
+                                }}
                                 className="flex items-center gap-3 py-2 px-4 rounded-lg hover:bg-red-50 text-gray-700 hover:text-red-700 transition-colors duration-150"
                               >
                                 <div className="w-8 h-8 rounded-full flex items-center justify-center overflow-hidden p-1">
                                   <img
-                                    src={`/icons/${subItem.label.toLowerCase()}-test-prep.png`}
+                                    src={subItem.icon}
                                     alt={subItem.label}
                                     className="w-full h-full object-contain rounded-full"
                                   />
@@ -534,7 +566,10 @@ export default function NavigationBar({ settings, onApplyNow, isHomepage = false
                               <Link
                                 key={subItem.href}
                                 href={subItem.href}
-                                onClick={() => setMobileOpen(false)}
+                                onClick={() => {
+                                  setMobileOpen(false);
+                                  setMobileSub(null);
+                                }}
                                 className="flex items-center justify-between py-2 px-4 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-blue-700 transition-colors duration-150 group"
                               >
                                 <div className="flex items-center gap-3">
@@ -619,6 +654,9 @@ export default function NavigationBar({ settings, onApplyNow, isHomepage = false
           </div>
         </div>
       )}
+
+      {/* FIXED: Removed the global overflow-x styles that break sticky */}
+      {/* No <style jsx global> section needed */}
     </header>
   );
 }

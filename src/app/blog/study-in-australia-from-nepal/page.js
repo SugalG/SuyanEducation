@@ -74,7 +74,7 @@ export default function StudyAustraliaMinimalPage() {
       {/* Main Content */}
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         {/* Introduction */}
-        <AnimatedSection animation="fade-up" className="mb-12">
+        <AnimatedSection animation="fade-up" className="mb-12" animateImmediately>
           <div className="prose prose-lg max-w-none">
             <p className="text-gray-700 mb-6">
               Australia has become one of the most popular destinations for Nepali students seeking international education. 

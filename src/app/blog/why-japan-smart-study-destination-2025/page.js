@@ -185,7 +185,7 @@ export default function WhyJapanSmartDestinationPage() {
         </div>
 
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
-          <AnimatedSection animation="fade-up">
+          <AnimatedSection animation="fade-up" animateImmediately>
             <div className="text-center text-white">
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full mb-6">
                 <Target className="w-5 h-5" />
@@ -221,6 +221,7 @@ export default function WhyJapanSmartDestinationPage() {
         animation="fade-up"
         delay={0.2}
         className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-10"
+        animateImmediately
       >
         <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
           <div className="text-center max-w-4xl mx-auto">

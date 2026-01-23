@@ -140,7 +140,7 @@ body {
   padding: 0;
   width: 100%;
   min-height: 100%;
-  overflow-x: hidden; /* ADDED: Prevent horizontal scroll */
+  overflow-x: hidden;
 }
 
 .site-frame {

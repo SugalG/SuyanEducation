@@ -23,7 +23,7 @@ const blogMeta = {
 
 export default function IeltsVsPteBlogPage() {
   return (
-    <article className="min-h-screen bg-white">
+    <article className="min-h-screen bg-white mt-24">
       {/* Simple Hero */}
       <section className="relative">
         <div className="relative h-[50vh] min-h-[400px] w-full overflow-hidden">
@@ -75,7 +75,7 @@ export default function IeltsVsPteBlogPage() {
       {/* Main Content */}
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         {/* Introduction */}
-        <AnimatedSection animation="fade-up" className="mb-12">
+        <AnimatedSection animation="fade-up" className="mb-12" animateImmediately>
           <div className="prose prose-lg max-w-none">
             <p className="text-gray-700 mb-6">
               As a Nepali student planning to study abroad, one of the first major decisions you'll face is choosing 
