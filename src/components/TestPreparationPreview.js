@@ -247,7 +247,7 @@ export default function ServicesPreview() {
                 <AnimatedSection
                   key={service.slug}
                   animation={isMobile ? "fade-up" : "zoom-in"}
-                  delay={isMobile ? index * 0.05 : service.animationDelay}
+                  delay={isMobile ? index * 0.1 : service.animationDelay}
                   once={true}
                 >
                   <div
