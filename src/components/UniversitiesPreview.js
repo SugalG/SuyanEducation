@@ -44,12 +44,11 @@ export default function UniversitiesPreview() {
   const isScrollingRef = useRef(false);
   const isAutoScrollRef = useRef(true);
   const cardWidthRef = useRef(320);
-  const scrollPosRef = useRef(0); // Keep ref for animation but update state for render
+  const scrollPosRef = useRef(0);
 
   // Set universities from query data - duplicate for seamless loop
   useEffect(() => {
     if (data.length > 0) {
-      // Duplicate universities 3 times for better seamless effect
       setUniversities([...data, ...data, ...data, ...data]);
     }
   }, [data]);
@@ -71,24 +70,11 @@ export default function UniversitiesPreview() {
     }
   }, []);
 
-  // Update scroll position for rendering
-  useEffect(() => {
-    const updateScrollPos = () => {
-      setScrollPos(scrollPosRef.current);
-    };
-    
-    // Update scroll position periodically for smoother rendering
-    const interval = setInterval(updateScrollPos, 16);
-    
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
-
   // Smooth auto-scroll with seamless loop
-  const startAutoScroll = useCallback(() => {
-    if (!scrollerRef.current || universities.length === 0) return;
-    
+  const animateRef = useRef(null);
+
+  // Setup animation when dependencies change
+  useEffect(() => {
     const animate = (timestamp) => {
       if (!lastTimeRef.current) lastTimeRef.current = timestamp;
       const delta = timestamp - lastTimeRef.current;
@@ -97,11 +83,9 @@ export default function UniversitiesPreview() {
       if (isAutoScrollRef.current && !isScrollingRef.current) {
         scrollPosRef.current -= (scrollSpeed * delta) / 16;
         
-        // Calculate total width of one set of universities
         const cardWidth = cardWidthRef.current;
-        const totalWidth = (universities.length * cardWidth) / 4; // Since we have 4 duplicates
+        const totalWidth = (universities.length * cardWidth) / 4;
         
-        // When we've scrolled past one set of universities, reset to start
         if (Math.abs(scrollPosRef.current) >= totalWidth) {
           scrollPosRef.current = 0;
         }
@@ -113,14 +97,8 @@ export default function UniversitiesPreview() {
       
       animationFrameRef.current = requestAnimationFrame(animate);
     };
-    
-    animationFrameRef.current = requestAnimationFrame(animate);
-    
-    return () => {
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
-    };
+
+    animateRef.current = animate;
   }, [universities.length]);
 
   // Start auto-scroll
@@ -132,18 +110,17 @@ export default function UniversitiesPreview() {
     
     window.addEventListener('resize', handleResize);
     
-    if (universities.length > 0) {
-      const cleanup = startAutoScroll();
-      return () => {
-        cleanup?.();
-        window.removeEventListener('resize', handleResize);
-      };
+    if (universities.length > 0 && animateRef.current) {
+      animationFrameRef.current = requestAnimationFrame(animateRef.current);
     }
     
     return () => {
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
       window.removeEventListener('resize', handleResize);
     };
-  }, [universities.length, startAutoScroll, updateCardWidth]);
+  }, [universities.length, updateCardWidth]);
 
   // Handle manual scroll with loop
   const handleManualScroll = useCallback((direction) => {
@@ -157,14 +134,13 @@ export default function UniversitiesPreview() {
     isAutoScrollRef.current = false;
     
     const cardWidth = cardWidthRef.current;
-    const scrollAmount = cardWidth * 3; // Scroll 3 cards at a time
+    const scrollAmount = cardWidth * 3;
     let targetPos = direction === 'left' 
       ? scrollPosRef.current + scrollAmount
       : scrollPosRef.current - scrollAmount;
     
     const totalWidth = (universities.length * cardWidth) / 4;
     
-    // Handle loop - if we go too far left, jump to equivalent position
     if (targetPos > 0) {
       targetPos = -totalWidth + (targetPos % totalWidth);
     }
@@ -185,7 +161,6 @@ export default function UniversitiesPreview() {
       
       scrollPosRef.current = startPos + (distance * easeProgress);
       
-      // Handle seamless loop during manual scroll
       if (Math.abs(scrollPosRef.current) >= totalWidth) {
         scrollPosRef.current = scrollPosRef.current % totalWidth;
       }
@@ -200,13 +175,15 @@ export default function UniversitiesPreview() {
         setTimeout(() => {
           isScrollingRef.current = false;
           isAutoScrollRef.current = true;
-          startAutoScroll();
+          if (animateRef.current) {
+            animationFrameRef.current = requestAnimationFrame(animateRef.current);
+          }
         }, 300);
       }
     };
     
     requestAnimationFrame(animateManual);
-  }, [universities.length, startAutoScroll]);
+  }, [universities.length]);
 
   // Handle container hover
   const handleContainerHover = useCallback((hovering) => {
@@ -314,13 +291,12 @@ export default function UniversitiesPreview() {
           <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
           <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
           
-          {/* Scroller - Now will scroll indefinitely */}
+          {/* Scroller */}
           <div className="flex overflow-visible">
             <div 
               ref={scrollerRef}
               className="flex will-change-transform"
               style={{ 
-                // transform is handled by ref manipulation, not state
                 transition: isScrollingRef.current ? 'none' : 'transform 0.1s linear'
               }}
             >
@@ -397,7 +373,7 @@ function UniversityCard({ university, index, isHovered }) {
       }`}
     >
       <motion.div
-        className="relative bg-white rounded-xl sm:rounded-2xl overflow-hidden border border-gray-200 shadow-sm p-8 h-full flex flex-col items-center justify-center"
+        className="relative bg-white rounded-xl sm:rounded-2xl overflow-hidden border border-gray-200 shadow-sm p-8 h-[300px] flex flex-col items-center justify-center" // Fixed height
         animate={cardControls}
         initial={false}
         transition={{
@@ -406,8 +382,8 @@ function UniversityCard({ university, index, isHovered }) {
           damping: 20
         }}
       >
-        {/* Logo Container */}
-        <div className="relative w-full h-32 flex items-center justify-center mb-6">
+        {/* Logo Container - Fixed height */}
+        <div className="relative w-full h-48 flex items-center justify-center mb-4"> {/* Increased height */}
           <motion.div
             className="relative w-full h-full flex items-center justify-center p-4"
             animate={{
@@ -428,10 +404,10 @@ function UniversityCard({ university, index, isHovered }) {
           </motion.div>
         </div>
         
-        {/* University Name */}
-        <div className="text-center w-full">
+        {/* University Name and Location - Fixed position at bottom */}
+        <div className="text-center w-full mt-auto">
           <motion.h3 
-            className="text-xl sm:text-2xl md:text-2xl font-bold text-gray-900 mb-2"
+            className="text-xl sm:text-2xl md:text-2xl font-bold text-gray-900 mb-2 line-clamp-2 min-h-[3.5rem]"
             animate={{
               y: isHovered ? -2 : 0
             }}
@@ -446,7 +422,7 @@ function UniversityCard({ university, index, isHovered }) {
           {/* Location */}
           {university.location && (
             <motion.p 
-              className="text-gray-600 text-sm mb-4 flex items-center justify-center gap-2"
+              className="text-gray-600 text-sm flex items-center justify-center gap-2"
               animate={{
                 opacity: isHovered ? 0.9 : 0.7
               }}
@@ -463,57 +439,28 @@ function UniversityCard({ university, index, isHovered }) {
             </motion.p>
           )}
           
-          {/* Click Indicator */}
+          {/* Click Indicator - Removed "Visit Website" text */}
           {university.websiteUrl && (
             <motion.div 
-              className="mt-4 pt-4 border-t border-gray-100 w-full"
+              className="mt-4 w-full flex justify-center"
               animate={{
-                borderColor: isHovered ? "#fecaca" : "#f3f4f6"
+                opacity: isHovered ? 1 : 0.7
               }}
               transition={{
                 duration: 0.2,
                 ease: smoothEase
               }}
             >
-              <motion.span 
-                className="text-red-600 font-semibold text-sm flex items-center justify-center gap-2"
+              <motion.div
+                className="w-10 h-1 bg-gradient-to-r from-red-500 to-red-600 rounded-full"
                 animate={{
-                  gap: isHovered ? 8 : 4
+                  width: isHovered ? 60 : 40
                 }}
                 transition={{
-                  duration: 0.2,
+                  duration: 0.3,
                   ease: smoothEase
                 }}
-              >
-                <span>Visit Website</span>
-                <motion.svg 
-                  className="w-4 h-4"
-                  animate={{
-                    x: isHovered ? 4 : 0,
-                    scale: isHovered ? 1.1 : 1
-                  }}
-                  transition={{
-                    x: {
-                      duration: 0.2,
-                      ease: smoothEase
-                    },
-                    scale: {
-                      duration: 0.2,
-                      ease: smoothEase
-                    }
-                  }}
-                  fill="none" 
-                  stroke="currentColor" 
-                  viewBox="0 0 24 24"
-                >
-                  <path 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round" 
-                    strokeWidth={2.5} 
-                    d="M14 5l7 7m0 0l-7 7m7-7H3" 
-                  />
-                </motion.svg>
-              </motion.span>
+              />
             </motion.div>
           )}
         </div>
