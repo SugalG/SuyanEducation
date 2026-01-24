@@ -21,7 +21,7 @@ export default async function HomePage() {
       {/* <Navbar settings={settings} /> */}
       {/* <Hero /> */}
    
-      {/* <GlobalReachSection /> */}
+      <GlobalReachSection />
       <TestPreparationPreview />
       {/* <DestinationPreview /> */}
       {/* <SuccessStoriesPreview /> */}
