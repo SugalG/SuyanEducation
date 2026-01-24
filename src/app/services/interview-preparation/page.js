@@ -289,19 +289,6 @@ export default function InterviewPreparation() {
                   coaching.
                 </p>
               </AnimatedSection>
-
-              {/* <AnimatedSection animation="fade-up" delay={0.5}>
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <button className="group relative px-8 py-4 bg-gradient-to-r from-blue-600 to-red-600 rounded-xl font-semibold text-white overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
-                    <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-red-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <span className="relative">Book Free Assessment</span>
-                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-white to-transparent transform translate-y-1 group-hover:translate-y-0 transition-transform duration-300"></div>
-                  </button>
-                  <button className="px-8 py-4 bg-white border-2 border-blue-500 text-blue-600 rounded-xl font-semibold hover:bg-blue-50 transition-all duration-300 shadow-md hover:shadow-lg">
-                    View Program Details
-                  </button>
-                </div>
-              </AnimatedSection> */}
             </div>
 
             {/* Right Column - Stats Grid */}
