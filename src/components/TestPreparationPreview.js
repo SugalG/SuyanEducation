@@ -44,7 +44,7 @@ const SERVICES = [
     stat: "98% Success Rate",
     iconStat: CheckCircle,
     highlight: "Most Popular",
-    animationDelay: 0,
+    animationDelay: 0.1,
   },
   {
     title: "Japanese Language Preparation",
@@ -65,7 +65,7 @@ const SERVICES = [
     stat: "500+ Students Trained",
     iconStat: Users,
     highlight: "Specialized",
-    animationDelay: 0.05,
+    animationDelay: 0.2,
   },
   {
     title: "University Placement",
@@ -86,7 +86,7 @@ const SERVICES = [
     stat: "100+ Partner Universities",
     iconStat: Globe,
     highlight: "Global Network",
-    animationDelay: 0.1,
+    animationDelay: 0.3,
   },
   {
     title: "Documentation Support",
@@ -107,7 +107,7 @@ const SERVICES = [
     stat: "Zero Error Guarantee",
     iconStat: Shield,
     highlight: "Quality Assured",
-    animationDelay: 0.15,
+    animationDelay: 0.4,
   },
   {
     title: "Interview Preparation",
@@ -128,7 +128,7 @@ const SERVICES = [
     stat: "95% Success Rate",
     iconStat: Target,
     highlight: "High Success",
-    animationDelay: 0.2,
+    animationDelay: 0.5,
   },
   {
     title: "Pre-Departure Guidance",
@@ -149,7 +149,7 @@ const SERVICES = [
     stat: "24/7 Support",
     iconStat: Clock,
     highlight: "All-round Support",
-    animationDelay: 0.25,
+    animationDelay: 0.6,
   },
 ];
 
