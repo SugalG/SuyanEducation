@@ -251,7 +251,7 @@ export default function ServicesPreview() {
                   once={true}
                 >
                   <div
-                    className="relative group w-full cursor-pointer"
+                    className="relative group w-full cursor-pointer select-none touch-manipulation"
                     onClick={(e) => handleCardClick(service.slug, e)}
                   >
                     {/* Highlight badge - SIMPLER */}

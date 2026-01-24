@@ -366,28 +366,3 @@ body {
   }
 }
 
-/* Prevent text selection on tap */
-.no-select {
-  -webkit-user-select: none; /* Safari */
-  -moz-user-select: none;    /* Firefox */
-  -ms-user-select: none;     /* IE/Edge */
-  user-select: none;         /* Standard */
-  -webkit-tap-highlight-color: transparent; /* Remove tap highlight */
-}
-
-/* Apply to all interactive elements */
-a, button, .clickable-card, .nav-item {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  -webkit-tap-highlight-color: transparent;
-}
-
-/* Allow text selection only where needed */
-.allow-select {
-  -webkit-user-select: text;
-  -moz-user-select: text;
-  -ms-user-select: text;
-  user-select: text;
-}
