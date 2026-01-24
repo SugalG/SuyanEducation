@@ -243,7 +243,7 @@ export default function ServicesPreview() {
                   key={service.slug}
                   animation="fade-up"
                   delay={service.animationDelay}
-                  once={false}
+                  
                 >
                   <div
                     className="relative group w-full cursor-pointer"
@@ -374,7 +374,7 @@ export default function ServicesPreview() {
           <AnimatedSection animation="fade-left" delay={0.8}>
             <div className="sticky top-24 bg-gradient-to-b from-white to-gray-50/50 rounded-2xl sm:rounded-3xl border border-gray-200/80 p-4 sm:p-6 md:p-8 shadow-xl sm:shadow-2xl backdrop-blur-sm w-full">
               {/* Header */}
-              <AnimatedSection animation="fade-down" delay={0.3} once={false}>
+              <AnimatedSection animation="fade-down" delay={0.3} >
                 <div className="text-center mb-6 sm:mb-10">
                   <div className="relative inline-block mb-4 sm:mb-6">
                     <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br from-red-600 to-blue-800 flex items-center justify-center shadow-lg">
@@ -422,7 +422,7 @@ export default function ServicesPreview() {
                     key={index}
                     animation="fade-right"
                     delay={index * 0.2}
-                    once={false}
+                    
                   >
                     <div
                       key={index}
@@ -462,7 +462,7 @@ export default function ServicesPreview() {
                       animation="zoom-in"
                       key={i}
                       delay={i * 0.05}
-                      once={false} // Optional: keep visible after animation
+                       // Optional: keep visible after animation
                     >
                       <div className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-full bg-gradient-to-r from-red-400/80 to-blue-600/80 shadow-lg" />
                     </AnimatedSection>

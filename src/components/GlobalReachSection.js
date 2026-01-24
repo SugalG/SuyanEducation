@@ -9,7 +9,7 @@ export default function MessageFromCEOSection() {
         {/* Mobile Layout */}
         <div className="md:hidden space-y-6 sm:space-y-8">
           {/* Badge */}
-          <AnimatedSection animation="fade-up" delay={0.1} once={false}>
+          <AnimatedSection animation="fade-up" delay={0.1}>
             <div className="flex justify-center">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-red-50 to-blue-50 border border-red-100">
                 <Star className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-red-600" />
@@ -21,7 +21,7 @@ export default function MessageFromCEOSection() {
           </AnimatedSection>
 
           {/* Title */}
-          <AnimatedSection animation="fade-up" delay={0.2} animateImmediately once={false}>
+          <AnimatedSection animation="fade-up" delay={0.2} animateImmediately>
             <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-center">
               <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
                 Building Global Futures with Purpose
@@ -30,7 +30,7 @@ export default function MessageFromCEOSection() {
           </AnimatedSection>
 
           {/* CEO Image */}
-          <AnimatedSection animation="fade-up" delay={0.3} once={false}>
+          <AnimatedSection animation="fade-up" delay={0.3}>
             <div className="flex flex-col items-center">
               <div className="relative w-full max-w-[280px] sm:max-w-[320px] h-[260px] sm:h-[300px] rounded-xl sm:rounded-2xl overflow-hidden shadow-lg sm:shadow-xl">
                 <Image
@@ -55,7 +55,7 @@ export default function MessageFromCEOSection() {
           </AnimatedSection>
 
           {/* Text Content */}
-          <AnimatedSection animation="fade-up" delay={0.4} once={false}>
+          <AnimatedSection animation="fade-up" delay={0.4}>
             <div className="space-y-3 sm:space-y-4 text-center">
               {[
                 "At Suyan Education, we believe that studying abroad is more than an academic journey — it is a transformational step toward a student's future and global perspective.",
@@ -73,7 +73,7 @@ export default function MessageFromCEOSection() {
           </AnimatedSection>
 
           {/* Video */}
-          <AnimatedSection animation="fade-up" delay={0.5} once={false}>
+          <AnimatedSection animation="fade-up" delay={0.5}>
             <div className="relative h-[260px] sm:h-[300px] overflow-hidden rounded-xl sm:rounded-2xl">
               <video
                 src="https://res.cloudinary.com/dvx9dcap6/video/upload/v1768546068/FLAGANIMATION2_k5xkt0.webm"
@@ -99,7 +99,6 @@ export default function MessageFromCEOSection() {
               animation="fade-right"
               delay={0.2}
               className="hidden lg:flex flex-col items-center justify-center"
-              once={false}
             >
               <div className="relative w-full max-w-[320px] xl:max-w-[380px] h-[400px] lg:h-[450px] xl:h-[500px] rounded-2xl overflow-hidden shadow-xl">
                 <Image
@@ -126,7 +125,7 @@ export default function MessageFromCEOSection() {
             <div className="md:col-span-1 lg:col-span-1">
               <div className="space-y-4 lg:space-y-6 xl:space-y-8 h-full flex flex-col justify-center">
                 {/* Badge */}
-                <AnimatedSection animation="fade-up" delay={0.1} once={false}>
+                <AnimatedSection animation="fade-up" delay={0.1}>
                   <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-red-50 to-blue-50 border border-red-100">
                     <Star className="w-4 h-4 text-red-600" />
                     <span className="text-sm font-semibold tracking-wide text-gray-800">
@@ -136,7 +135,7 @@ export default function MessageFromCEOSection() {
                 </AnimatedSection>
 
                 {/* Title */}
-                <AnimatedSection animation="fade-up" delay={0.2} once={false}>
+                <AnimatedSection animation="fade-up" delay={0.2}>
                   <h2 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold">
                     <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
                       Building Global Futures with Purpose
@@ -145,7 +144,7 @@ export default function MessageFromCEOSection() {
                 </AnimatedSection>
 
                 {/* Text Content */}
-                <AnimatedSection animation="fade-up" delay={0.3} once={false}>
+                <AnimatedSection animation="fade-up" delay={0.3}>
                   <div className="space-y-3 lg:space-y-4">
                     {[
                       "At Suyan Education, we believe that studying abroad is more than an academic journey — it is a transformational step toward a student's future and global perspective.",
@@ -172,7 +171,7 @@ export default function MessageFromCEOSection() {
                   animation="fade-up"
                   delay={0.4}
                   className="block lg:hidden"
-                  once={false}
+                  
                 >
                   <div className="flex flex-col items-center">
                     <div className="relative w-full max-w-[320px] h-[300px] rounded-2xl overflow-hidden shadow-xl">
@@ -198,7 +197,7 @@ export default function MessageFromCEOSection() {
                 </AnimatedSection>
 
                 {/* Video - Always shown */}
-                <AnimatedSection animation="fade-left" delay={0.5} once={false}>
+                <AnimatedSection animation="fade-left" delay={0.5}>
                   <div className="relative w-full h-[400px] md:h-[440px] lg:h-[500px] xl:h-[550px] rounded-2xl overflow-hidden">
                     <video
                       src="https://res.cloudinary.com/dvx9dcap6/video/upload/v1768546068/FLAGANIMATION2_k5xkt0.webm"
