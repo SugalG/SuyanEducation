@@ -42,12 +42,10 @@ const FALLBACK_DESTINATIONS = [
 
 export default function DestinationsPreview() {
   const [destinations, setDestinations] = useState([]);
-  const [isHovering, setIsHovering] = useState(false);
-  const [isManualScroll, setIsManualScroll] = useState(false);
-  const scrollContainerRef = useRef(null);
-  const scrollAnimationRef = useRef(null);
-  const scrollPositionRef = useRef(0);
-  const scrollSpeedRef = useRef(0.8); // Pixels per frame
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAutoScroll, setIsAutoScroll] = useState(true);
+  const scrollerRef = useRef(null);
+  const autoScrollRef = useRef(null);
   
   // Load destinations with fallback
   useEffect(() => {
@@ -62,143 +60,89 @@ export default function DestinationsPreview() {
         }
       } catch (err) {
         console.log("Using fallback destinations data");
+        setDestinations(FALLBACK_DESTINATIONS);
       }
     }
     load();
   }, []);
 
-  // Calculate responsive card width
-  const getCardWidth = useCallback(() => {
-    if (typeof window === 'undefined') return 320;
+  // Get visible cards based on screen size
+  const getVisibleCards = useCallback(() => {
+    if (typeof window === 'undefined') return 1;
     const width = window.innerWidth;
-    if (width < 640) return 280;
-    if (width < 768) return 300;
-    if (width < 1024) return 340;
-    if (width < 1280) return 360;
-    return 380;
+    if (width < 640) return 1;  // mobile
+    if (width < 768) return 2;  // small tablet
+    if (width < 1024) return 2; // tablet
+    if (width < 1280) return 3; // small desktop
+    return 3; // large desktop
   }, []);
 
-  // Smooth continuous scroll animation (60fps)
-  const startAutoScroll = useCallback(() => {
-    if (!scrollContainerRef.current || destinations.length === 0 || isHovering || isManualScroll) return;
+  // Calculate max index
+  const maxIndex = Math.max(0, destinations.length - getVisibleCards());
+
+  // Handle scroll with CSS animations instead of RAF
+  const scrollToIndex = useCallback((index) => {
+    if (!scrollerRef.current || destinations.length === 0) return;
     
-    const animate = (timestamp) => {
-      if (!scrollAnimationRef.current.lastTime) {
-        scrollAnimationRef.current.lastTime = timestamp;
-      }
-      
-      const delta = timestamp - scrollAnimationRef.current.lastTime;
-      scrollAnimationRef.current.lastTime = timestamp;
-      
-      // Update scroll position
-      scrollPositionRef.current -= (scrollSpeedRef.current * delta) / 16;
-      
-      // Calculate total width (cards + duplicates for seamless loop)
-      const cardWidth = getCardWidth();
-      const gap = window.innerWidth < 640 ? 16 : 24;
-      const totalCards = destinations.length * 3; // Triplicate for seamless loop
-      const totalWidth = totalCards * (cardWidth + gap);
-      
-      // Reset position when scrolled through one full set
-      if (Math.abs(scrollPositionRef.current) >= totalWidth / 3) {
-        scrollPositionRef.current += totalWidth / 3;
-      }
-      
-      // Apply transform
-      if (scrollContainerRef.current) {
-        scrollContainerRef.current.style.transform = `translate3d(${scrollPositionRef.current}px, 0, 0)`;
-      }
-      
-      scrollAnimationRef.current.frameId = requestAnimationFrame(animate);
-    };
+    // Clamp index
+    const clampedIndex = Math.max(0, Math.min(index, maxIndex));
+    setCurrentIndex(clampedIndex);
     
-    // Initialize animation object
-    scrollAnimationRef.current = {
-      frameId: null,
-      lastTime: null
-    };
+    // Calculate scroll position
+    const cardWidth = getVisibleCards() === 1 ? 280 : 340;
+    const scrollPosition = -clampedIndex * cardWidth;
     
-    scrollAnimationRef.current.frameId = requestAnimationFrame(animate);
+    scrollerRef.current.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)';
+    scrollerRef.current.style.transform = `translateX(${scrollPosition}px)`;
+  }, [destinations.length, maxIndex, getVisibleCards]);
+
+  // Auto scroll effect with interval (less intensive than RAF)
+  useEffect(() => {
+    if (!isAutoScroll || destinations.length <= getVisibleCards()) return;
+    
+    autoScrollRef.current = setInterval(() => {
+      setCurrentIndex(prev => (prev >= maxIndex ? 0 : prev + 1));
+    }, 4000);
     
     return () => {
-      if (scrollAnimationRef.current?.frameId) {
-        cancelAnimationFrame(scrollAnimationRef.current.frameId);
+      if (autoScrollRef.current) {
+        clearInterval(autoScrollRef.current);
       }
     };
-  }, [destinations.length, getCardWidth, isHovering, isManualScroll]);
+  }, [isAutoScroll, destinations.length, maxIndex, getVisibleCards]);
 
-  // Start/stop auto scroll based on hover and manual scroll
+  // Handle scroll on index change
   useEffect(() => {
-    const cleanup = startAutoScroll();
-    return cleanup;
-  }, [startAutoScroll]);
+    scrollToIndex(currentIndex);
+  }, [currentIndex, scrollToIndex]);
 
-  // Handle manual navigation
-  const handleManualScroll = useCallback((direction) => {
-    if (!scrollContainerRef.current || destinations.length === 0) return;
+  // Manual navigation
+  const handlePrev = useCallback(() => {
+    setIsAutoScroll(false);
+    setCurrentIndex(prev => (prev <= 0 ? maxIndex : prev - 1));
     
-    // Stop auto scroll temporarily
-    setIsManualScroll(true);
-    if (scrollAnimationRef.current?.frameId) {
-      cancelAnimationFrame(scrollAnimationRef.current.frameId);
-    }
-    
-    const cardWidth = getCardWidth();
-    const gap = window.innerWidth < 640 ? 16 : 24;
-    const scrollAmount = (cardWidth + gap) * 2; // Scroll 2 cards at a time
-    
-    // Calculate target position
-    const startPos = scrollPositionRef.current;
-    const targetPos = direction === 'left' 
-      ? startPos + scrollAmount 
-      : startPos - scrollAmount;
-    
-    const duration = 600;
-    const startTime = performance.now();
-    
-    const animateScroll = (currentTime) => {
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      
-      // Cubic easing
-      const easeProgress = progress < 0.5 
-        ? 4 * progress * progress * progress 
-        : 1 - Math.pow(-2 * progress + 2, 3) / 2;
-      
-      scrollPositionRef.current = startPos + (targetPos - startPos) * easeProgress;
-      
-      if (scrollContainerRef.current) {
-        scrollContainerRef.current.style.transform = `translate3d(${scrollPositionRef.current}px, 0, 0)`;
-      }
-      
-      if (progress < 1) {
-        requestAnimationFrame(animateScroll);
-      } else {
-        // Resume auto scroll after a delay
-        setTimeout(() => {
-          setIsManualScroll(false);
-        }, 1000);
-      }
-    };
-    
-    requestAnimationFrame(animateScroll);
-  }, [destinations.length, getCardWidth]);
+    // Restart auto scroll after manual interaction
+    setTimeout(() => setIsAutoScroll(true), 5000);
+  }, [maxIndex]);
 
-  // Handle container hover
-  const handleContainerHover = useCallback((hovering) => {
-    setIsHovering(hovering);
-  }, []);
+  const handleNext = useCallback(() => {
+    setIsAutoScroll(false);
+    setCurrentIndex(prev => (prev >= maxIndex ? 0 : prev + 1));
+    
+    // Restart auto scroll after manual interaction
+    setTimeout(() => setIsAutoScroll(true), 5000);
+  }, [maxIndex]);
 
   if (!destinations.length) return null;
 
   return (
-    <section className="relative w-full py-12 md:py-16 lg:py-20 overflow-hidden bg-gradient-to-b from-white to-gray-50/50">
-      <div className=" px-4 sm:px-6 lg:px-8">
+    <section className="relative w-full py-12 md:py-16 lg:py-20 bg-gradient-to-b from-white to-gray-50/50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-12 lg:mb-16">
+        <div className="text-center mb-8 sm:mb-12 lg:mb-16">
           <AnimatedSection animation="fade-up" delay={0.1}>
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-red-50 to-blue-50 border border-red-100 mb-4">
-              <div className="w-2 h-2 bg-red-600 rounded-full animate-pulse"></div>
+              <div className="w-2 h-2 bg-red-600 rounded-full"></div>
               <span className="text-sm font-medium text-gray-700">
                 Global Education Network
               </span>
@@ -227,80 +171,98 @@ export default function DestinationsPreview() {
           </AnimatedSection>
         </div>
 
-        {/* Carousel Container */}
-        <div 
-          className="relative"
-          onMouseEnter={() => handleContainerHover(true)}
-          onMouseLeave={() => handleContainerHover(false)}
-        >
+        {/* Carousel Container - Simplified */}
+        <div className="relative">
           {/* Navigation Buttons */}
           <button
-            onClick={() => handleManualScroll('left')}
-            className="absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full shadow-lg border border-gray-200 hover:border-red-500 hover:shadow-xl transition-all duration-300 group flex items-center justify-center"
+            onClick={handlePrev}
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 sm:translate-x-0 z-20 w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full shadow-lg border border-gray-200 hover:border-red-500 hover:shadow-xl transition-all duration-300 group flex items-center justify-center"
             aria-label="Previous destinations"
           >
             <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-gray-700 group-hover:text-red-600 transition-colors" />
           </button>
 
           <button
-            onClick={() => handleManualScroll('right')}
-            className="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full shadow-lg border border-gray-200 hover:border-red-500 hover:shadow-xl transition-all duration-300 group flex items-center justify-center"
+            onClick={handleNext}
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 sm:translate-x-0 z-20 w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full shadow-lg border border-gray-200 hover:border-red-500 hover:shadow-xl transition-all duration-300 group flex items-center justify-center"
             aria-label="Next destinations"
           >
             <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-gray-700 group-hover:text-red-600 transition-colors" />
           </button>
 
           {/* Cards Container */}
-          <div className="px-12 sm:px-16 md:px-20 lg:px-24 overflow-hidden">
+          <div className="px-8 sm:px-12 md:px-16 lg:px-20 overflow-hidden">
             <div className="overflow-visible">
               <div 
-                ref={scrollContainerRef}
-                className="flex will-change-transform"
-                style={{ 
-                  transform: `translate3d(${scrollPositionRef.current}px, 0, 0)`,
-                  gap: "1.5rem"
-                }}
+                ref={scrollerRef}
+                className="flex transition-transform duration-500 ease-out gap-4 sm:gap-6 md:gap-8"
               >
-                {/* Triplicate cards for seamless loop */}
-                {[...destinations, ...destinations, ...destinations].map((destination, index) => (
+                {destinations.map((destination, index) => (
                   <div 
-                    key={`${destination.slug}-${index}`}
-                    className="flex-shrink-0"
+                    key={destination.slug}
+                    className="flex-shrink-0 w-[280px] sm:w-[320px] md:w-[340px] lg:w-[360px]"
                   >
                     <DestinationCard 
                       destination={destination}
-                      index={index % destinations.length}
+                      index={index}
+                      currentIndex={currentIndex}
                     />
                   </div>
                 ))}
               </div>
             </div>
           </div>
+
+          {/* Dots Indicator */}
+          {destinations.length > 1 && (
+            <div className="flex justify-center gap-2 mt-8">
+              {Array.from({ length: maxIndex + 1 }).map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => {
+                    setIsAutoScroll(false);
+                    setCurrentIndex(index);
+                    setTimeout(() => setIsAutoScroll(true), 5000);
+                  }}
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                    currentIndex === index 
+                      ? 'bg-red-600 w-8' 
+                      : 'bg-gray-300 hover:bg-gray-400'
+                  }`}
+                  aria-label={`Go to destination ${index + 1}`}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </section>
   );
 }
 
-// Destination Card Component
-function DestinationCard({ destination, index }) {
+// Destination Card Component - Simplified
+function DestinationCard({ destination, index, currentIndex }) {
   const [isHovered, setIsHovered] = useState(false);
+  const isActive = Math.floor(currentIndex) === index;
 
   return (
-    <div 
-      className="w-[280px] sm:w-[300px] md:w-[340px] lg:w-[360px] xl:w-[380px] transition-all duration-300"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+    <AnimatedSection 
+      animation="fade-up" 
+      delay={index * 0.05} // Faster stagger
+      className="h-full"
     >
       <Link
         href={`/destinations/${destination.slug}`}
-        className="block focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 rounded-xl sm:rounded-2xl"
+        className="block h-full focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 rounded-xl sm:rounded-2xl"
         prefetch={false}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
       >
         <div className={`
-          relative bg-white rounded-xl sm:rounded-2xl overflow-hidden border shadow-sm h-full
+          relative bg-white rounded-xl overflow-hidden border shadow-sm h-full
           transition-all duration-300
-          ${isHovered ? 'border-red-500 shadow-lg -translate-y-2' : 'border-gray-200 shadow-sm'}
+          ${isHovered ? 'border-red-500 shadow-lg -translate-y-1' : 'border-gray-200'}
+          ${isActive ? 'ring-1 ring-red-500/20' : ''}
         `}>
           {/* Image Container */}
           <div className="relative h-48 sm:h-56 md:h-60 lg:h-64 overflow-hidden">
@@ -312,12 +274,12 @@ function DestinationCard({ destination, index }) {
                 alt={`Study in ${destination.country}`}
                 fill
                 className={`
-                  object-cover transition-transform duration-700
-                  ${isHovered ? 'scale-110' : 'scale-100'}
+                  object-cover transition-transform duration-300
+                  ${isHovered ? 'scale-105' : 'scale-100'}
                 `}
-                sizes="(max-width: 640px) 280px, (max-width: 768px) 300px, (max-width: 1024px) 340px, (max-width: 1280px) 360px, 380px"
-                priority={index < 3}
-                loading={index < 3 ? "eager" : "lazy"}
+                sizes="(max-width: 640px) 280px, (max-width: 768px) 320px, (max-width: 1024px) 340px, 360px"
+                priority={index < 2}
+                loading={index < 2 ? "eager" : "lazy"}
                 quality={85}
               />
             ) : (
@@ -326,16 +288,10 @@ function DestinationCard({ destination, index }) {
               </div>
             )}
             
-            {/* Gradient Overlay */}
+            {/* Country Name Overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-            
-            {/* Country Name */}
             <div className="absolute bottom-4 left-4 right-4">
-              <h3 className={`
-                text-xl sm:text-2xl md:text-2xl lg:text-3xl font-bold text-white drop-shadow-lg
-                transition-transform duration-300
-                ${isHovered ? 'translate-y-0' : 'translate-y-0'}
-              `}>
+              <h3 className="text-xl sm:text-2xl md:text-2xl lg:text-3xl font-bold text-white drop-shadow-lg">
                 {destination.country}
               </h3>
             </div>
@@ -350,12 +306,12 @@ function DestinationCard({ destination, index }) {
             {/* CTA Section */}
             <div className="mt-4 pt-4 border-t border-gray-100">
               <div className="flex items-center justify-between">
-                <span className="text-red-600 font-semibold text-sm sm:text-base flex items-center gap-2">
+                <span className="text-red-600 font-semibold text-sm sm:text-base flex items-center gap-2 group">
                   Explore Destination
                   <svg 
                     className={`
                       w-4 h-4 transition-transform duration-300
-                      ${isHovered ? 'translate-x-1 scale-110' : ''}
+                      ${isHovered ? 'translate-x-1' : ''}
                     `}
                     fill="none" 
                     stroke="currentColor" 
@@ -374,6 +330,6 @@ function DestinationCard({ destination, index }) {
           </div>
         </div>
       </Link>
-    </div>
+    </AnimatedSection>
   );
 }
