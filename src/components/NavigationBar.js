@@ -279,7 +279,7 @@ export default function NavigationBar({
                   <Image
                     src="/suyan_desc.png"
                     alt="Suyan Education - Global Education Consultants"
-                    width={256} // High resolution
+                    width={240} // High resolution
                     height={64}
                     priority
                     quality={100} // Maximum quality

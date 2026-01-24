@@ -7,11 +7,11 @@ const animations = {
   "fade-up": (delay) => ({
     hidden: {
       opacity: 0,
-      transform: "translate3d(0, 40px, 0)",
+      transform: "translateY(40px)",
     },
     show: {
       opacity: 1,
-      transform: "translate3d(0, 0, 0)",
+      transform: "translateY(0px)",
       transition: {
         duration: 0.6,
         ease: "easeOut",
@@ -23,11 +23,11 @@ const animations = {
   "fade-down": (delay) => ({
     hidden: {
       opacity: 0,
-      transform: "translate3d(0, -40px, 0)",
+      transform: "translateY(-40px)",
     },
     show: {
       opacity: 1,
-      transform: "translate3d(0, 0, 0)",
+      transform: "translateY(0px)",
       transition: {
         duration: 0.6,
         ease: "easeOut",
@@ -39,11 +39,11 @@ const animations = {
   "fade-left": (delay) => ({
     hidden: {
       opacity: 0,
-      transform: "translate3d(40px, 0, 0)",
+      transform: "translateX(40px)",
     },
     show: {
       opacity: 1,
-      transform: "translate3d(0, 0, 0)",
+      transform: "translateX(0px)",
       transition: {
         duration: 0.6,
         ease: "easeOut",
@@ -55,11 +55,11 @@ const animations = {
   "fade-right": (delay) => ({
     hidden: {
       opacity: 0,
-      transform: "translate3d(-40px, 0, 0)",
+      transform: "translateX(-40px)",
     },
     show: {
       opacity: 1,
-      transform: "translate3d(0, 0, 0)",
+      transform: "translateX(0px)",
       transition: {
         duration: 0.6,
         ease: "easeOut",
@@ -106,6 +106,7 @@ export default function AnimatedSection({
       style={{
         willChange: "transform, opacity",
         backfaceVisibility: "hidden",
+        transformStyle: "preserve-3d", // Add this for better performance
       }}
       initial="hidden"
       animate={animateImmediately ? "show" : undefined}
@@ -113,7 +114,6 @@ export default function AnimatedSection({
       viewport={{
         once,
         margin: "-100px",
-        initialInView: true,
       }}
       variants={getAnimation(delay)}
     >
