@@ -4,6 +4,7 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
+import AnimatedSection from "./universityPlacement/AnimatedSection";
 
 export default function UniversitiesPreview() {
   const {
@@ -197,30 +198,38 @@ export default function UniversitiesPreview() {
       <div className="w-full px-4 sm:px-6 lg:px-8">
         {/* Header - SIMILAR BUT FOR UNIVERSITIES */}
         <div className="text-center mb-8 sm:mb-12 lg:mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-red-50 to-blue-50 border border-red-100 mb-4">
-            <div className="w-2 h-2 bg-red-600 rounded-full"></div>
-            <span className="text-sm font-medium text-gray-700">
-              Trusted Academic Partners
-            </span>
-          </div>
+          <AnimatedSection animation="fade-up" delay={0.1}>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-red-50 to-blue-50 border border-red-100 mb-4">
+              <div className="w-2 h-2 bg-red-600 rounded-full"></div>
+              <span className="text-sm font-medium text-gray-700">
+                Trusted Academic Partners
+              </span>
+            </div>
+          </AnimatedSection>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-            <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
-              Partner Universities
-            </span>
-          </h2>
+          <AnimatedSection animation="fade-up" delay={0.2}>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+              <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
+                Partner Universities
+              </span>
+            </h2>
+          </AnimatedSection>
 
-          <div className="flex justify-center">
-            <div className="w-48 h-1.5 bg-gradient-to-r from-red-600 to-blue-800 rounded-full"></div>
-          </div>
+          <AnimatedSection animation="zoom-in" delay={0.3}>
+            <div className="flex justify-center">
+              <div className="w-48 h-1.5 bg-gradient-to-r from-red-600 to-blue-800 rounded-full"></div>
+            </div>
+          </AnimatedSection>
 
-          <p className="mt-6 text-lg sm:text-xl md:text-2xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
-            We collaborate with{" "}
-            <span className="font-semibold text-red-600">
-              globally recognized universities
-            </span>{" "}
-            to ensure quality education pathways for our students
-          </p>
+          <AnimatedSection animation="fade-up" delay={0.4}>
+            <p className="mt-6 text-lg sm:text-xl md:text-2xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
+              We collaborate with{" "}
+              <span className="font-semibold text-red-600">
+                globally recognized universities
+              </span>{" "}
+              to ensure quality education pathways for our students
+            </p>
+          </AnimatedSection>
         </div>
 
         {/* Carousel Container - EXACT SAME */}
