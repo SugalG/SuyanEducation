@@ -2,469 +2,374 @@
 
 import { useEffect, useState, useRef, useCallback } from "react";
 import Link from "next/link";
-import { motion, useAnimation } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 
-const smoothEase = [0.4, 0, 0.2, 1];
-
-// Animation variants for header - EXACTLY like testimonials
-const fadeInUp = {
-  hidden: { opacity: 0, y: 20 },
-  show: { 
-    opacity: 1, 
-    y: 0, 
-    transition: { duration: 0.6 } 
-  }
-};
-
 export default function UniversitiesPreview() {
-  const { data = [], isLoading, isError } = useQuery({
+  const {
+    data: universities = [],
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: ["home-universities"],
     queryFn: async () => {
       const res = await fetch("/api/universities");
-      const json = await res.json();
-      if (!res.ok || !json.success) {
-        throw new Error("Failed to load universities");
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success && data.items?.length > 0) {
+          return data.items;
+        }
       }
-      return json.items;
+      throw new Error("Failed to load universities");
     },
     staleTime: 10 * 60 * 1000,
   });
 
-  const [universities, setUniversities] = useState([]);
-  const [isHoveringContainer, setIsHoveringContainer] = useState(false);
-  const [hoveredCard, setHoveredCard] = useState(null);
-  const [scrollPos, setScrollPos] = useState(0);
-  
-  const scrollerRef = useRef(null);
-  const animationFrameRef = useRef(null);
+  const [isPaused, setIsPaused] = useState(false);
+  const scrollRef = useRef(null);
+  const animationRef = useRef(null);
   const lastTimeRef = useRef(0);
-  const scrollSpeed = 0.5;
-  const isScrollingRef = useRef(false);
-  const isAutoScrollRef = useRef(true);
-  const cardWidthRef = useRef(320);
   const scrollPosRef = useRef(0);
+  const speedRef = useRef(0.5);
 
-  // Set universities from query data - duplicate for seamless loop
-  useEffect(() => {
-    if (data.length > 0) {
-      setUniversities([...data, ...data, ...data, ...data]);
-    }
-  }, [data]);
-
-  // Update card width on resize
-  const updateCardWidth = useCallback(() => {
-    if (typeof window === 'undefined') return 320;
+  // Get card width - EXACT SAME
+  // Get card width - SMALLER CARD SIZE
+  const getCardWidth = useCallback(() => {
+    if (typeof window === "undefined") return 200;
     const width = window.innerWidth;
-    if (width < 640) {
-      cardWidthRef.current = 280;
-    } else if (width < 768) {
-      cardWidthRef.current = 320;
-    } else if (width < 1024) {
-      cardWidthRef.current = 360;
-    } else if (width < 1280) {
-      cardWidthRef.current = 400;
-    } else {
-      cardWidthRef.current = 420;
-    }
+    if (width < 640) return 160; // Mobile: 160px
+    if (width < 768) return 180; // Small tablet: 180px
+    if (width < 1024) return 200; // Tablet: 200px
+    if (width < 1280) return 220; // Desktop: 220px
+    return 240; // Large desktop: 240px
   }, []);
 
-  // Smooth auto-scroll with seamless loop
-  const animateRef = useRef(null);
+  // Get gap - SMALLER GAP
+  const getGap = useCallback(() => {
+    if (typeof window === "undefined") return 16;
+    return window.innerWidth < 640 ? 12 : 16;
+  }, []);
 
-  // Setup animation when dependencies change
-  useEffect(() => {
-    const animate = (timestamp) => {
+  // CRITICAL: Seamless infinite loop animation - EXACT SAME LOGIC
+  const animate = useCallback(
+    (timestamp) => {
       if (!lastTimeRef.current) lastTimeRef.current = timestamp;
+
       const delta = timestamp - lastTimeRef.current;
       lastTimeRef.current = timestamp;
-      
-      if (isAutoScrollRef.current && !isScrollingRef.current) {
-        scrollPosRef.current -= (scrollSpeed * delta) / 16;
-        
-        const cardWidth = cardWidthRef.current;
-        const totalWidth = (universities.length * cardWidth) / 4;
-        
-        if (Math.abs(scrollPosRef.current) >= totalWidth) {
-          scrollPosRef.current = 0;
-        }
-        
-        if (scrollerRef.current) {
-          scrollerRef.current.style.transform = `translate3d(${scrollPosRef.current}px, 0, 0)`;
-        }
-      }
-      
-      animationFrameRef.current = requestAnimationFrame(animate);
-    };
 
-    animateRef.current = animate;
-  }, [universities.length]);
+      const cappedDelta = Math.min(delta, 32);
 
-  // Start auto-scroll
-  useEffect(() => {
-    updateCardWidth();
-    const handleResize = () => {
-      updateCardWidth();
-    };
-    
-    window.addEventListener('resize', handleResize);
-    
-    if (universities.length > 0 && animateRef.current) {
-      animationFrameRef.current = requestAnimationFrame(animateRef.current);
-    }
-    
-    return () => {
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [universities.length, updateCardWidth]);
+      if (!isPaused && scrollRef.current) {
+        scrollPosRef.current -= (speedRef.current * cappedDelta) / 16;
 
-  // Handle manual scroll with loop
-  const handleManualScroll = useCallback((direction) => {
-    if (!scrollerRef.current || universities.length === 0) return;
-    
-    if (animationFrameRef.current) {
-      cancelAnimationFrame(animationFrameRef.current);
-    }
-    
-    isScrollingRef.current = true;
-    isAutoScrollRef.current = false;
-    
-    const cardWidth = cardWidthRef.current;
-    const scrollAmount = cardWidth * 3;
-    let targetPos = direction === 'left' 
-      ? scrollPosRef.current + scrollAmount
-      : scrollPosRef.current - scrollAmount;
-    
-    const totalWidth = (universities.length * cardWidth) / 4;
-    
-    if (targetPos > 0) {
-      targetPos = -totalWidth + (targetPos % totalWidth);
-    }
-    
-    const startPos = scrollPosRef.current;
-    const distance = targetPos - startPos;
-    const duration = 800;
-    let startTime = null;
-    
-    const animateManual = (timestamp) => {
-      if (!startTime) startTime = timestamp;
-      const elapsed = timestamp - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      
-      const easeProgress = progress < 0.5 
-        ? 2 * progress * progress 
-        : 1 - Math.pow(-2 * progress + 2, 2) / 2;
-      
-      scrollPosRef.current = startPos + (distance * easeProgress);
-      
-      if (Math.abs(scrollPosRef.current) >= totalWidth) {
-        scrollPosRef.current = scrollPosRef.current % totalWidth;
-      }
-      
-      if (scrollerRef.current) {
-        scrollerRef.current.style.transform = `translate3d(${scrollPosRef.current}px, 0, 0)`;
-      }
-      
-      if (progress < 1) {
-        requestAnimationFrame(animateManual);
-      } else {
-        setTimeout(() => {
-          isScrollingRef.current = false;
-          isAutoScrollRef.current = true;
-          if (animateRef.current) {
-            animationFrameRef.current = requestAnimationFrame(animateRef.current);
+        const cardWidth = getCardWidth();
+        const gap = getGap();
+        const totalCards = universities.length;
+        const totalWidth = totalCards * (cardWidth + gap);
+
+        if (scrollPosRef.current <= -totalWidth) {
+          scrollPosRef.current += totalWidth;
+
+          requestAnimationFrame(() => {
+            if (scrollRef.current) {
+              scrollRef.current.style.transition = "none";
+              scrollRef.current.style.transform = `translateX(${scrollPosRef.current}px)`;
+
+              scrollRef.current.offsetHeight;
+
+              requestAnimationFrame(() => {
+                if (scrollRef.current) {
+                  scrollRef.current.style.transition = "transform 0.1s linear";
+                }
+              });
+            }
+          });
+        } else {
+          if (scrollRef.current) {
+            scrollRef.current.style.transition = "transform 0.1s linear";
+            scrollRef.current.style.transform = `translateX(${scrollPosRef.current}px)`;
           }
-        }, 300);
+        }
+      }
+
+      animationRef.current = requestAnimationFrame(animate);
+    },
+    [isPaused, universities.length, getCardWidth, getGap]
+  );
+
+  // Start animation - EXACT SAME
+  useEffect(() => {
+    if (universities.length > 0) {
+      animationRef.current = requestAnimationFrame(animate);
+    }
+
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
       }
     };
-    
-    requestAnimationFrame(animateManual);
-  }, [universities.length]);
+  }, [animate, universities.length]);
 
-  // Handle container hover
-  const handleContainerHover = useCallback((hovering) => {
-    setIsHoveringContainer(hovering);
-    isAutoScrollRef.current = !hovering;
-  }, []);
+  // Manual navigation with loop awareness - EXACT SAME
+  const handleManualScroll = useCallback(
+    (direction) => {
+      if (!scrollRef.current || universities.length === 0) return;
 
-  // Handle card hover
-  const handleCardHover = useCallback((index) => {
-    setHoveredCard(index);
-  }, []);
+      const wasPaused = isPaused;
+      setIsPaused(true);
 
-  const handleCardLeave = useCallback(() => {
-    setHoveredCard(null);
-  }, []);
+      const cardWidth = getCardWidth();
+      const gap = getGap();
+      const scrollAmount = (cardWidth + gap) * 2;
 
+      const startPos = scrollPosRef.current;
+      let targetPos =
+        direction === "left"
+          ? startPos + scrollAmount
+          : startPos - scrollAmount;
+
+      const totalWidth = universities.length * (cardWidth + gap);
+      if (Math.abs(targetPos) >= totalWidth) {
+        if (direction === "right") {
+          targetPos += totalWidth;
+        } else {
+          targetPos -= totalWidth;
+        }
+      }
+
+      const duration = 500;
+      const startTime = performance.now();
+
+      const animateScroll = (currentTime) => {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+
+        const easeProgress = 1 - Math.pow(1 - progress, 3);
+
+        scrollPosRef.current = startPos + (targetPos - startPos) * easeProgress;
+
+        const currentAbsPos = Math.abs(scrollPosRef.current);
+        if (currentAbsPos >= totalWidth) {
+          if (direction === "right") {
+            scrollPosRef.current += totalWidth;
+          } else {
+            scrollPosRef.current -= totalWidth;
+          }
+
+          scrollRef.current.style.transition = "none";
+          scrollRef.current.style.transform = `translateX(${scrollPosRef.current}px)`;
+          scrollRef.current.offsetHeight;
+
+          requestAnimationFrame(() => {
+            if (scrollRef.current) {
+              scrollRef.current.style.transition = "transform 0.5s ease";
+            }
+          });
+        } else {
+          if (scrollRef.current) {
+            scrollRef.current.style.transform = `translateX(${scrollPosRef.current}px)`;
+          }
+        }
+
+        if (progress < 1) {
+          requestAnimationFrame(animateScroll);
+        } else {
+          if (!wasPaused) {
+            setTimeout(() => setIsPaused(false), 1000);
+          }
+        }
+      };
+
+      requestAnimationFrame(animateScroll);
+    },
+    [universities.length, getCardWidth, getGap, isPaused]
+  );
+
+  // Return null for loading/error/empty states - EXACT SAME PATTERN
   if (isLoading || isError || !universities.length) return null;
 
+  const cardWidth = getCardWidth();
+  const gap = getGap();
+
   return (
-    <section className="relative w-full mt-16 sm:mt-16 md:mt-20 lg:mt-24 xl:mt-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
-        <motion.div 
-          className="text-center max-w-4xl mx-auto px-4 mb-16"
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-50px" }}
-          variants={fadeInUp}
-        >
-          <motion.div 
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-red-50 to-blue-50 border border-red-100"
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2 }}
-          >
-            <div className="w-2 h-2 bg-red-600 rounded-full animate-pulse"></div>
+    <section className="relative w-full py-12 md:py-16 lg:py-20 bg-gradient-to-b from-white to-gray-50/50">
+      <div className="w-full px-4 sm:px-6 lg:px-8">
+        {/* Header - SIMILAR BUT FOR UNIVERSITIES */}
+        <div className="text-center mb-8 sm:mb-12 lg:mb-16">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-red-50 to-blue-50 border border-red-100 mb-4">
+            <div className="w-2 h-2 bg-red-600 rounded-full"></div>
             <span className="text-sm font-medium text-gray-700">
               Trusted Academic Partners
             </span>
-          </motion.div>
-          
-          <h2 className="mt-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold">
+          </div>
+
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
             <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
               Partner Universities
             </span>
           </h2>
-          
-          <div className="flex justify-center mt-4">
-            <motion.div 
-              className="w-48 h-1.5 bg-gradient-to-r from-red-600 to-blue-800 rounded-full"
-              initial={{ width: 0 }}
-              whileInView={{ width: 192 }}
-              transition={{ delay: 0.3, duration: 0.8 }}
-            />
+
+          <div className="flex justify-center">
+            <div className="w-48 h-1.5 bg-gradient-to-r from-red-600 to-blue-800 rounded-full"></div>
           </div>
-          
-          <motion.p 
-            className="mt-8 text-lg sm:text-xl md:text-2xl text-gray-600 leading-relaxed"
-            variants={fadeInUp}
-          >
+
+          <p className="mt-6 text-lg sm:text-xl md:text-2xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
             We collaborate with{" "}
-            <span className="font-semibold text-red-600">globally recognized universities</span>{" "}
+            <span className="font-semibold text-red-600">
+              globally recognized universities
+            </span>{" "}
             to ensure quality education pathways for our students
-          </motion.p>
-        </motion.div>
-      </div>
+          </p>
+        </div>
 
-      {/* Main Container */}
-      <div className="relative w-full px-2 sm:px-4">
-        {/* Navigation Buttons */}
-        <motion.button
-          onClick={() => handleManualScroll('left')}
-          onMouseEnter={() => handleContainerHover(true)}
-          onMouseLeave={() => handleContainerHover(false)}
-          className="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full shadow-lg border border-gray-200 hover:border-red-500 hover:shadow-xl active:scale-95 transition-all duration-300 group flex items-center justify-center ml-2 sm:ml-4"
-          aria-label="Scroll left"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-          transition={{ type: "spring", stiffness: 400, damping: 25 }}
+        {/* Carousel Container - EXACT SAME */}
+        <div
+          className="relative"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onTouchStart={() => setIsPaused(true)}
+          onTouchEnd={() => setTimeout(() => setIsPaused(false), 300)}
         >
-          <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-gray-700 group-hover:text-red-600 transition-colors duration-200" />
-        </motion.button>
+          {/* Navigation Buttons - EXACT SAME */}
+          <button
+            onClick={() => handleManualScroll("left")}
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 sm:translate-x-0 z-20 w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full shadow-lg border border-gray-200 hover:border-red-500 hover:shadow-xl transition-all duration-300 group flex items-center justify-center"
+            aria-label="Previous universities"
+          >
+            <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-gray-700 group-hover:text-red-600 transition-colors" />
+          </button>
 
-        <motion.button
-          onClick={() => handleManualScroll('right')}
-          onMouseEnter={() => handleContainerHover(true)}
-          onMouseLeave={() => handleContainerHover(false)}
-          className="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full shadow-lg border border-gray-200 hover:border-red-500 hover:shadow-xl active:scale-95 transition-all duration-300 group flex items-center justify-center mr-2 sm:mr-4"
-          aria-label="Scroll right"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-          transition={{ type: "spring", stiffness: 400, damping: 25 }}
-        >
-          <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-gray-700 group-hover:text-red-600 transition-colors duration-200" />
-        </motion.button>
+          <button
+            onClick={() => handleManualScroll("right")}
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 sm:translate-x-0 z-20 w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full shadow-lg border border-gray-200 hover:border-red-500 hover:shadow-xl transition-all duration-300 group flex items-center justify-center"
+            aria-label="Next universities"
+          >
+            <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-gray-700 group-hover:text-red-600 transition-colors" />
+          </button>
 
-        {/* Scroller Container */}
-        <div 
-          className="relative w-full py-6 sm:py-8 overflow-hidden"
-          onMouseEnter={() => handleContainerHover(true)}
-          onMouseLeave={() => handleContainerHover(false)}
-          onTouchStart={() => handleContainerHover(true)}
-          onTouchEnd={() => setTimeout(() => handleContainerHover(false), 300)}
-        >
-          {/* Gradient fade edges */}
-          <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
-          <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
-          
-          {/* Scroller */}
-          <div className="flex overflow-visible">
-            <div 
-              ref={scrollerRef}
-              className="flex will-change-transform"
-              style={{ 
-                transition: isScrollingRef.current ? 'none' : 'transform 0.1s linear'
-              }}
-            >
-              {universities.map((university, index) => (
-                <div
-                  key={`${university.id}-${index}`}
-                  className="flex-shrink-0 px-2 sm:px-3 md:px-4"
-                  onMouseEnter={() => handleCardHover(index)}
-                  onMouseLeave={handleCardLeave}
-                >
-                  <div className="w-[280px] sm:w-[320px] md:w-[360px] lg:w-[400px] xl:w-[420px]">
-                    <UniversityCard 
-                      university={university} 
-                      index={index}
-                      isHovered={hoveredCard === index}
+          {/* Cards Container - EXACT SAME */}
+          <div className="px-8 sm:px-12 md:px-16 lg:px-20 overflow-hidden">
+            <div className="overflow-visible">
+              <div
+                ref={scrollRef}
+                className="flex will-change-transform"
+                style={{
+                  transform: `translateX(${scrollPosRef.current}px)`,
+                  gap: `${gap}px`,
+                  minWidth: `${universities.length * 2 * (cardWidth + gap)}px`,
+                }}
+              >
+                {/* Render duplicated cards - EXACT SAME */}
+                {[...universities, ...universities].map((university, index) => (
+                  <div
+                    key={`${university.id || university.slug}-${index}`}
+                    className="flex-shrink-0"
+                    style={{ width: `${cardWidth}px` }}
+                  >
+                    <UniversityCard
+                      university={university}
+                      index={index % universities.length}
                     />
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* CTA */}
-      <div className="text-center mt-12">
-        <Link
-          href="/universities"
-          className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-red-600 to-red-500 text-white rounded-2xl font-semibold hover:shadow-xl hover:scale-105 transition-all"
-        >
-          View All Universities
-        </Link>
+        {/* CTA - SIMILAR BUT DIFFERENT LINK */}
+        <div className="text-center mt-12">
+          <Link
+            href="/universities"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-red-600 to-red-500 text-white rounded-2xl font-semibold hover:shadow-xl hover:scale-105 transition-all"
+          >
+            View All Universities
+          </Link>
+        </div>
       </div>
     </section>
   );
 }
 
-function UniversityCard({ university, index, isHovered }) {
-  const cardControls = useAnimation();
-  
-  // Handle hover animation
-  useEffect(() => {
-    if (isHovered) {
-      cardControls.start({
-        scale: 1.05,
-        y: -8,
-        borderColor: "#ef4444",
-        boxShadow: "0 20px 40px -15px rgba(239, 68, 68, 0.15), 0 10px 20px -5px rgba(0, 0, 0, 0.08)"
-      });
-    } else {
-      cardControls.start({
-        scale: 1,
-        y: 0,
-        borderColor: "#e5e7eb",
-        boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.1)"
-      });
-    }
-  }, [isHovered, cardControls]);
+// University Card Component - DIFFERENT DESIGN
+function UniversityCard({ university, index }) {
+  const [isHovered, setIsHovered] = useState(false);
 
-  // Make entire card clickable to university website
   const handleCardClick = (e) => {
     if (university.websiteUrl) {
       e.preventDefault();
       e.stopPropagation();
-      window.open(university.websiteUrl, '_blank', 'noopener,noreferrer');
+      window.open(university.websiteUrl, "_blank", "noopener,noreferrer");
     }
   };
 
   return (
-    <div 
-      onClick={handleCardClick}
-      className={`block focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 rounded-2xl cursor-pointer ${
-        university.websiteUrl ? 'hover:cursor-pointer' : 'hover:cursor-default'
-      }`}
-    >
-      <motion.div
-        className="relative bg-white rounded-xl sm:rounded-2xl overflow-hidden border border-gray-200 shadow-sm p-8 h-[300px] flex flex-col items-center justify-center" // Fixed height
-        animate={cardControls}
-        initial={false}
-        transition={{
-          type: "spring",
-          stiffness: 300,
-          damping: 20
-        }}
+    <div className="h-full">
+      <div
+        onClick={handleCardClick}
+        className={`block h-full focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 rounded-lg sm:rounded-xl ${
+          university.websiteUrl ? "cursor-pointer" : "cursor-default"
+        }`}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        onTouchStart={() => setIsHovered(true)}
+        onTouchEnd={() => setIsHovered(false)}
       >
-        {/* Logo Container - Fixed height */}
-        <div className="relative w-full h-48 flex items-center justify-center mb-4"> {/* Increased height */}
-          <motion.div
-            className="relative w-full h-full flex items-center justify-center p-4"
-            animate={{
-              scale: isHovered ? 1.1 : 1
-            }}
-            transition={{
-              duration: 0.4,
-              ease: smoothEase
-            }}
-          >
-            <img
-              src={university.imageUrl}
-              alt={university.name}
-              loading="lazy"
-              className="max-h-full max-w-full object-contain transition duration-300"
-              style={{ filter: isHovered ? 'none' : 'grayscale(0.1)' }}
-            />
-          </motion.div>
-        </div>
-        
-        {/* University Name and Location - Fixed position at bottom */}
-        <div className="text-center w-full mt-auto">
-          <motion.h3 
-            className="text-xl sm:text-2xl md:text-2xl font-bold text-gray-900 mb-2 line-clamp-2 min-h-[3.5rem]"
-            animate={{
-              y: isHovered ? -2 : 0
-            }}
-            transition={{
-              duration: 0.3,
-              ease: smoothEase
-            }}
-          >
-            {university.name}
-          </motion.h3>
-          
-          {/* Location */}
-          {university.location && (
-            <motion.p 
-              className="text-gray-600 text-sm flex items-center justify-center gap-2"
-              animate={{
-                opacity: isHovered ? 0.9 : 0.7
-              }}
-              transition={{
-                duration: 0.3,
-                ease: smoothEase
-              }}
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-              <span>{university.location}</span>
-            </motion.p>
-          )}
-          
-          {/* Click Indicator - Removed "Visit Website" text */}
-          {university.websiteUrl && (
-            <motion.div 
-              className="mt-4 w-full flex justify-center"
-              animate={{
-                opacity: isHovered ? 1 : 0.7
-              }}
-              transition={{
-                duration: 0.2,
-                ease: smoothEase
-              }}
-            >
-              <motion.div
-                className="w-10 h-1 bg-gradient-to-r from-red-500 to-red-600 rounded-full"
-                animate={{
-                  width: isHovered ? 60 : 40
-                }}
-                transition={{
-                  duration: 0.3,
-                  ease: smoothEase
+        <div
+          className={`
+          relative bg-white rounded-lg overflow-hidden border shadow-sm h-full
+          transition-all duration-300 p-4 sm:p-5 flex flex-col items-center justify-center
+          ${
+            isHovered
+              ? "border-red-500 shadow-lg -translate-y-1"
+              : "border-gray-200"
+          }
+        `}
+        >
+          {/* Logo Container - 70% of card */}
+          <div className="relative w-full h-32 sm:h-36 md:h-40 flex items-center justify-center mb-3 sm:mb-4">
+            {university.imageUrl ? (
+              <img
+                src={university.imageUrl}
+                alt={university.name}
+                loading="lazy"
+                className={`
+                  max-h-full max-w-full object-contain transition-transform duration-300
+                  ${isHovered ? "scale-110" : "scale-100"}
+                `}
+                style={{
+                  filter: isHovered ? "none" : "grayscale(0.1)",
+                  opacity: isHovered ? 1 : 0.9,
                 }}
               />
-            </motion.div>
-          )}
+            ) : (
+              <div className="text-gray-400 text-sm">University Logo</div>
+            )}
+          </div>
+
+          {/* University Name - 30% of card */}
+          <div className="w-full text-center">
+            <h3 className="text-base sm:text-lg font-semibold text-gray-800 line-clamp-2 leading-tight">
+              {university.name}
+            </h3>
+
+            {/* Location (Optional - small text) */}
+            {university.location && (
+              <p className="text-xs text-gray-500 mt-1 line-clamp-1">
+                {university.location}
+              </p>
+            )}
+
+            {/* Hover indicator - subtle */}
+            {university.websiteUrl && isHovered && (
+              <div className="mt-2">
+                <div className="h-0.5 w-8 mx-auto bg-gradient-to-r from-red-500 to-red-600 rounded-full"></div>
+              </div>
+            )}
+          </div>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }

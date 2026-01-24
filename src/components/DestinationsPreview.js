@@ -7,38 +7,6 @@ import AnimatedSection from "./universityPlacement/AnimatedSection";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 // Static fallback data
-const FALLBACK_DESTINATIONS = [
-  {
-    slug: "japan",
-    country: "Japan",
-    description: "World-class education with rich cultural experiences and strong employment prospects.",
-    heroImage: "https://res.cloudinary.com/dvx9dcap6/image/upload/v1768487249/japan_z7x8p0.jpg"
-  },
-  {
-    slug: "australia",
-    country: "Australia",
-    description: "High-quality education system with excellent post-study work opportunities.",
-    heroImage: "https://res.cloudinary.com/dvx9dcap6/image/upload/v1768487249/australia_w9b4jz.jpg"
-  },
-  {
-    slug: "canada",
-    country: "Canada",
-    description: "Affordable education with pathways to permanent residency and multicultural environment.",
-    heroImage: "https://res.cloudinary.com/dvx9dcap6/image/upload/v1768487249/canada_rnnyzq.jpg"
-  },
-  {
-    slug: "united-kingdom",
-    country: "United Kingdom",
-    description: "Prestigious universities with rich academic heritage and global recognition.",
-    heroImage: "https://res.cloudinary.com/dvx9dcap6/image/upload/v1768487249/uk_hnf4c0.jpg"
-  },
-  {
-    slug: "united-states",
-    country: "United States",
-    description: "Top-ranked universities with cutting-edge research and diverse programs.",
-    heroImage: "https://res.cloudinary.com/dvx9dcap6/image/upload/v1768487249/usa_xzb01v.jpg"
-  }
-];
 
 export default function DestinationsPreview() {
   const [destinations, setDestinations] = useState([]);
