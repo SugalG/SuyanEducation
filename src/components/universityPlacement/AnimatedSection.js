@@ -5,83 +5,24 @@ import React from "react";
 
 const animations = {
   "fade-up": (delay) => ({
-    hidden: {
-      opacity: 0,
-      transform: "translateY(40px)",
-    },
-    show: {
-      opacity: 1,
-      transform: "translateY(0px)",
-      transition: {
-        duration: 0.6,
-        ease: "easeOut",
-        delay,
-      },
-    },
+    hidden: { opacity: 0, y: 40 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut", delay } },
   }),
-
   "fade-down": (delay) => ({
-    hidden: {
-      opacity: 0,
-      transform: "translateY(-40px)",
-    },
-    show: {
-      opacity: 1,
-      transform: "translateY(0px)",
-      transition: {
-        duration: 0.6,
-        ease: "easeOut",
-        delay,
-      },
-    },
+    hidden: { opacity: 0, y: -40 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut", delay } },
   }),
-
   "fade-left": (delay) => ({
-    hidden: {
-      opacity: 0,
-      transform: "translateX(40px)",
-    },
-    show: {
-      opacity: 1,
-      transform: "translateX(0px)",
-      transition: {
-        duration: 0.6,
-        ease: "easeOut",
-        delay,
-      },
-    },
+    hidden: { opacity: 0, x: 40 },
+    show: { opacity: 1, x: 0, transition: { duration: 0.6, ease: "easeOut", delay } },
   }),
-
   "fade-right": (delay) => ({
-    hidden: {
-      opacity: 0,
-      transform: "translateX(-40px)",
-    },
-    show: {
-      opacity: 1,
-      transform: "translateX(0px)",
-      transition: {
-        duration: 0.6,
-        ease: "easeOut",
-        delay,
-      },
-    },
+    hidden: { opacity: 0, x: -40 },
+    show: { opacity: 1, x: 0, transition: { duration: 0.6, ease: "easeOut", delay } },
   }),
-
   "zoom-in": (delay) => ({
-    hidden: {
-      opacity: 0,
-      transform: "scale(0.95)",
-    },
-    show: {
-      opacity: 1,
-      transform: "scale(1)",
-      transition: {
-        duration: 0.5,
-        ease: "easeOut",
-        delay,
-      },
-    },
+    hidden: { opacity: 0, scale: 0.95 },
+    show: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: "easeOut", delay } },
   }),
 };
 
@@ -93,29 +34,16 @@ export default function AnimatedSection({
   animateImmediately = false,
   once = true,
 }) {
-  // 🔒 fallback protection
-  const getAnimation =
-    typeof animations[animation] === "function"
-      ? animations[animation]
-      : animations["fade-up"];
-
+  const anim = animations[animation] || animations["fade-up"];
+  
   return (
     <motion.div
       className={className}
-      layout={false}
-      style={{
-        willChange: "transform, opacity",
-        backfaceVisibility: "hidden",
-        transformStyle: "preserve-3d", // Add this for better performance
-      }}
       initial="hidden"
       animate={animateImmediately ? "show" : undefined}
       whileInView={!animateImmediately ? "show" : undefined}
-      viewport={{
-        once,
-        margin: "-100px",
-      }}
-      variants={getAnimation(delay)}
+      viewport={{ once, margin: "-50px" }}
+      variants={anim(delay)}
     >
       {children}
     </motion.div>
