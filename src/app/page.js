@@ -19,7 +19,7 @@ export default async function HomePage() {
   return (
     <>
       {/* <Navbar settings={settings} /> */}
-      {/* <Hero /> */}
+      <Hero />
    
       <GlobalReachSection />
       <TestPreparationPreview />
