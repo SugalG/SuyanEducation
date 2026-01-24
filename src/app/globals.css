@@ -339,3 +339,29 @@ body {
   }
 }
 
+
+/* Add these critical mobile optimizations */
+
+/* 1. Improve touch scrolling */
+html {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* 2. Prevent tap highlight */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 3. Improve font rendering */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* 4. Prevent animation jank during scrolling */
+@media (max-width: 767px) {
+  * {
+    animation-play-state: running !important;
+  }
+}
