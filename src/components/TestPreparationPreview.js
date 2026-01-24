@@ -1,10 +1,8 @@
-
-
 "use client";
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AnimatedSection from "./universityPlacement/AnimatedSection";
 import {
   GraduationCap,
@@ -20,7 +18,6 @@ import {
   Clock,
   Shield,
   Sparkles,
-  ArrowRight,
   BookOpen,
   MessageSquare,
   Heart,
@@ -47,7 +44,7 @@ const SERVICES = [
     stat: "98% Success Rate",
     iconStat: CheckCircle,
     highlight: "Most Popular",
-    animationDelay: 0.1,
+    animationDelay: 0,
   },
   {
     title: "Japanese Language Preparation",
@@ -68,7 +65,7 @@ const SERVICES = [
     stat: "500+ Students Trained",
     iconStat: Users,
     highlight: "Specialized",
-    animationDelay: 0.2,
+    animationDelay: 0.05,
   },
   {
     title: "University Placement",
@@ -89,7 +86,7 @@ const SERVICES = [
     stat: "100+ Partner Universities",
     iconStat: Globe,
     highlight: "Global Network",
-    animationDelay: 0.3,
+    animationDelay: 0.1,
   },
   {
     title: "Documentation Support",
@@ -110,7 +107,7 @@ const SERVICES = [
     stat: "Zero Error Guarantee",
     iconStat: Shield,
     highlight: "Quality Assured",
-    animationDelay: 0.4,
+    animationDelay: 0.15,
   },
   {
     title: "Interview Preparation",
@@ -131,7 +128,7 @@ const SERVICES = [
     stat: "95% Success Rate",
     iconStat: Target,
     highlight: "High Success",
-    animationDelay: 0.5,
+    animationDelay: 0.2,
   },
   {
     title: "Pre-Departure Guidance",
@@ -152,13 +149,24 @@ const SERVICES = [
     stat: "24/7 Support",
     iconStat: Clock,
     highlight: "All-round Support",
-    animationDelay: 0.6,
+    animationDelay: 0.25,
   },
 ];
 
 export default function ServicesPreview() {
   const [expandedCard, setExpandedCard] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
   const router = useRouter();
+
+  // Detect mobile early
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Handle expand/collapse
   const handleExpandClick = (index, e) => {
@@ -181,47 +189,44 @@ export default function ServicesPreview() {
   };
 
   return (
-    <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 mb-8 overflow-hidden w-full">
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-r from-red-100 to-blue-100 rounded-full blur-3xl opacity-30"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-r from-blue-100 to-red-100 rounded-full blur-3xl opacity-30"></div>
+    <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 mb-8 w-full">
+      {/* Background decorative elements - SIMPLIFIED */}
+      <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-r from-red-100 to-blue-100 rounded-full blur-3xl opacity-20"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-r from-blue-100 to-red-100 rounded-full blur-3xl opacity-20"></div>
       </div>
 
-      {/* Header - SIMPLIFIED: No nested animations */}
+      {/* Header - FASTER animations */}
       <div className="text-center max-w-4xl mx-auto px-4 mb-12 sm:mb-16 md:mb-20 w-full">
         {/* Badge */}
-        <AnimatedSection animation="fade-up" delay={0.1}>
-          <div className="inline-flex items-center gap-3 px-4 sm:px-6 py-2 sm:py-3 rounded-full bg-gradient-to-r from-red-50 to-blue-50 border border-red-100 shadow-sm mb-6">
-            <div className="relative">
-              <div className="w-2 h-2 bg-red-600 rounded-full"></div>
-            </div>
-            <span className="text-sm font-semibold text-gray-800 tracking-wide">
+        <AnimatedSection animation="fade-up" delay={0.1} once={true}>
+          <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-gradient-to-r from-red-50 to-blue-50 border border-red-100 mb-4 sm:mb-6">
+            <div className="w-1.5 h-1.5 bg-red-600 rounded-full"></div>
+            <span className="text-xs sm:text-sm font-medium text-gray-800 tracking-wide">
               Comprehensive Solutions
             </span>
-            <Sparkles className="w-4 h-4 text-blue-600" />
           </div>
         </AnimatedSection>
 
         {/* Main Heading */}
-        <AnimatedSection animation="fade-up" delay={0.2}>
-          <h2 className="mt-2 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight px-2">
+        <AnimatedSection animation="fade-up" delay={0.2} once={true}>
+          <h2 className="mt-2 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">
             <span className="bg-gradient-to-r from-red-600 via-red-500 to-blue-900 bg-clip-text text-transparent">
               Our Premium Services
             </span>
           </h2>
         </AnimatedSection>
 
-        {/* Underline - REMOVED separate animation, included with heading */}
-        <div className="flex justify-center mt-6 sm:mt-8">
-          <div className="h-1.5 w-40 sm:w-48 md:w-64 rounded-full bg-gradient-to-r from-red-600 via-red-500 to-blue-800"></div>
+        {/* Simple Underline */}
+        <div className="flex justify-center mt-4 sm:mt-6">
+          <div className="h-1 w-32 sm:w-40 md:w-48 rounded-full bg-gradient-to-r from-red-600 via-red-500 to-blue-800"></div>
         </div>
 
         {/* Subtitle */}
-        <AnimatedSection animation="fade-up" delay={0.3}>
-          <p className="mt-6 sm:mt-8 text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto px-2">
+        <AnimatedSection animation="fade-up" delay={0.3} once={true}>
+          <p className="mt-4 sm:mt-6 text-sm sm:text-base md:text-lg text-gray-600 leading-relaxed max-w-3xl mx-auto">
             End-to-end guidance with{" "}
-            <span className="font-bold bg-gradient-to-r from-red-600 to-blue-800 bg-clip-text text-transparent">
+            <span className="font-semibold text-red-600">
               specialized focus on Japan
             </span>{" "}
             and global education destinations
@@ -230,10 +235,10 @@ export default function ServicesPreview() {
       </div>
 
       {/* Interactive Cards Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 w-full">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 w-full">
         {/* Left Column - Main Services */}
         <div className="lg:col-span-2 w-full">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 w-full">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:gap-8 w-full">
             {SERVICES.map((service, index) => {
               const Icon = service.icon;
               const StatIcon = service.iconStat;
@@ -241,91 +246,77 @@ export default function ServicesPreview() {
               return (
                 <AnimatedSection
                   key={service.slug}
-                  animation="fade-up"
-                  delay={0.4 + index * 0.1} // Start after header + stagger
+                  animation={isMobile ? "fade-up" : "zoom-in"}
+                  delay={isMobile ? index * 0.05 : service.animationDelay}
+                  once={true}
                 >
                   <div
                     className="relative group w-full cursor-pointer"
                     onClick={(e) => handleCardClick(service.slug, e)}
                   >
-                    {/* Highlight badge */}
+                    {/* Highlight badge - SIMPLER */}
                     {service.highlight && (
-                      <div className="absolute -top-3 left-4 sm:left-6 z-10">
-                        <div className="px-3 sm:px-4 py-1 bg-gradient-to-r from-red-600 to-blue-700 text-white text-xs font-bold rounded-full shadow-lg flex items-center gap-1.5 whitespace-nowrap">
-                          <Sparkles className="w-3 h-3 flex-shrink-0" />
-                          <span className="truncate">{service.highlight}</span>
+                      <div className="absolute -top-2 left-3 sm:left-4 z-10">
+                        <div className="px-2 sm:px-3 py-0.5 sm:py-1 bg-gradient-to-r from-red-600 to-blue-700 text-white text-xs font-semibold rounded-full shadow">
+                          {service.highlight}
                         </div>
                       </div>
                     )}
 
-                    {/* Main Card */}
+                    {/* Main Card - SIMPLER hover effect */}
                     <div
-                      className={`relative h-full rounded-xl sm:rounded-2xl overflow-hidden border border-gray-200/80 backdrop-blur-sm transform-gpu transition-transform duration-300 hover:-translate-y-2 hover:shadow-xl sm:hover:shadow-2xl ${service.gradient} w-full flex flex-col`}
-                      style={{ minHeight: "300px" }}
+                      className={`relative h-full rounded-lg sm:rounded-xl overflow-hidden border border-gray-200 ${service.gradient} w-full flex flex-col transition-all duration-200 hover:border-red-400 hover:shadow-md`}
                     >
                       {/* Card content */}
-                      <div className="relative p-4 sm:p-6 md:p-8 h-full flex flex-col w-full flex-grow">
+                      <div className="relative p-3 sm:p-4 md:p-6 h-full flex flex-col w-full flex-grow">
                         {/* Header with icon and stat */}
-                        <div className="flex items-start justify-between mb-4 sm:mb-6">
+                        <div className="flex items-start justify-between mb-3 sm:mb-4">
                           {/* Icon */}
-                          <div className="relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl sm:rounded-2xl bg-gradient-to-br from-white to-gray-50 border border-gray-200/50 shadow-lg flex items-center justify-center flex-shrink-0">
+                          <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-white border border-gray-200 shadow-sm flex items-center justify-center">
                             <Icon
-                              className={`w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 ${service.iconColor}`}
+                              className={`w-5 h-5 sm:w-6 sm:h-6 ${service.iconColor}`}
                             />
                           </div>
 
                           {/* Stat badge */}
-                          <div className="flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-white/90 backdrop-blur-sm border border-gray-200 shadow-sm ml-2">
-                            <StatIcon className="w-3 h-3 sm:w-4 sm:h-4 text-blue-700 flex-shrink-0" />
-                            <span className="text-xs sm:text-sm font-bold text-gray-900 truncate">
+                          <div className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-white border border-gray-200 shadow-sm ml-2">
+                            <StatIcon className="w-3 h-3 text-blue-700" />
+                            <span className="text-xs font-semibold text-gray-900">
                               {service.stat}
                             </span>
                           </div>
                         </div>
 
                         {/* Title and description */}
-                        <div className="mb-4 sm:mb-6 flex-shrink-0 min-h-[120px]">
-                          <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-2 sm:mb-3 line-clamp-2">
+                        <div className="mb-3 sm:mb-4 flex-shrink-0">
+                          <h3 className="text-sm sm:text-base font-bold text-gray-900 mb-1.5 sm:mb-2 line-clamp-2">
                             {service.title}
                           </h3>
-                          <p className="text-sm sm:text-base text-gray-600 leading-relaxed line-clamp-3">
+                          <p className="text-xs sm:text-sm text-gray-600 leading-relaxed line-clamp-3">
                             {service.desc}
                           </p>
                         </div>
 
-                        {/* Features list - Expandable */}
+                        {/* Features list - Expandable - CSS only */}
                         <div
-                          className="features-list transition-all duration-300 ease-in-out w-full overflow-hidden flex-grow"
+                          className="features-list w-full overflow-hidden transition-all duration-200 ease-out"
                           style={{
-                            maxHeight: expandedCard === index ? "300px" : "0px",
+                            maxHeight: expandedCard === index ? "200px" : "0px",
                             opacity: expandedCard === index ? 1 : 0,
-                            marginBottom:
-                              expandedCard === index ? "1rem" : "0px",
                           }}
                         >
-                          <div className="pt-3 sm:pt-4 border-t border-gray-200/50 w-full">
-                            <p className="text-xs sm:text-sm font-semibold text-gray-700 mb-2 sm:mb-3 flex items-center gap-2">
-                              <BookOpen className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
+                          <div className="pt-3 border-t border-gray-200/50 w-full">
+                            <p className="text-xs font-medium text-gray-700 mb-2 flex items-center gap-1.5">
+                              <BookOpen className="w-3 h-3" />
                               <span>What's included:</span>
                             </p>
-                            <ul className="grid grid-cols-2 sm:grid-cols-1 gap-2 w-full">
+                            <ul className="grid grid-cols-2 gap-1.5 w-full">
                               {service.features.map((feature, i) => (
                                 <li
                                   key={i}
-                                  className="flex items-center gap-2 text-xs sm:text-sm text-gray-600 p-2 rounded-lg bg-white/50 transition-all duration-300 w-full"
-                                  style={{
-                                    opacity: expandedCard === index ? 1 : 0,
-                                    transform:
-                                      expandedCard === index
-                                        ? "translateX(0)"
-                                        : "translateX(-10px)",
-                                    transitionDelay:
-                                      expandedCard === index
-                                        ? `${i * 50}ms`
-                                        : "0ms",
-                                  }}
+                                  className="flex items-center gap-1.5 text-xs text-gray-600 p-1.5 rounded bg-white/70"
                                 >
-                                  <div className="w-2 h-2 rounded-full bg-gradient-to-r from-red-500 to-blue-600 flex-shrink-0"></div>
+                                  <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-red-500 to-blue-600"></div>
                                   <span className="break-words">{feature}</span>
                                 </li>
                               ))}
@@ -333,15 +324,15 @@ export default function ServicesPreview() {
                           </div>
                         </div>
 
-                        {/* Footer with CTA and expand button */}
-                        <div className="mt-auto pt-4 sm:pt-6 border-t border-gray-200/50 w-full">
-                          <div className="flex items-center justify-end">
+                        {/* Footer with expand button */}
+                        <div className="mt-auto pt-3 border-t border-gray-200/50 w-full">
+                          <div className="flex items-center justify-between">
                             <button
                               data-expand
                               onClick={(e) => handleExpandClick(index, e)}
-                              className="expand-indicator flex-shrink-0 flex items-center gap-1 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-gradient-to-r from-red-50 to-blue-50 border border-gray-200 hover:border-gray-300 text-gray-700 font-medium text-xs sm:text-sm transition-all hover:shadow-md whitespace-nowrap"
+                              className="expand-indicator flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-red-50 to-blue-50 border border-gray-200 text-gray-700 font-medium text-xs transition-colors hover:border-gray-300"
                             >
-                              <MessageSquare className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
+                              <MessageSquare className="w-3 h-3" />
                               <span>
                                 {expandedCard === index
                                   ? "Show Less"
@@ -351,9 +342,6 @@ export default function ServicesPreview() {
                           </div>
                         </div>
                       </div>
-
-                      {/* Hover gradient overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-red-500/5 to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
                     </div>
                   </div>
                 </AnimatedSection>
@@ -362,100 +350,96 @@ export default function ServicesPreview() {
           </div>
         </div>
 
-        {/* Right Column - Interactive Info Panel - SIMPLIFIED: Single animation wrapper */}
-        <AnimatedSection animation="fade-left" delay={1.0}>
-          <div className="sticky top-24 bg-gradient-to-b from-white to-gray-50/50 rounded-2xl sm:rounded-3xl border border-gray-200/80 p-4 sm:p-6 md:p-8 shadow-xl sm:shadow-2xl backdrop-blur-sm w-full">
-            {/* Header - NO NESTED ANIMATION */}
-            <div className="text-center mb-6 sm:mb-10">
-              <div className="relative inline-block mb-4 sm:mb-6">
-                <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br from-red-600 to-blue-800 flex items-center justify-center shadow-lg">
-                  <Heart className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
+        {/* Right Column - Simplified */}
+        <div className="lg:col-span-1 w-full">
+          <AnimatedSection animation="fade-left" delay={0.4} once={true}>
+            <div className="sticky top-24 bg-white rounded-xl sm:rounded-2xl border border-gray-200 p-4 sm:p-6 shadow-sm w-full">
+              {/* Header */}
+              <div className="text-center mb-6 sm:mb-8">
+                <div className="relative inline-block mb-3 sm:mb-4">
+                  <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-red-600 to-blue-800 flex items-center justify-center">
+                    <Heart className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
+                  </div>
                 </div>
+                <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1.5 sm:mb-2">
+                  Why Students <span className="text-red-600">Trust</span> Us
+                </h3>
+                <p className="text-sm text-gray-600">
+                  Your success is our commitment
+                </p>
               </div>
-              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-2 sm:mb-3">
-                Why Students <span className="text-red-600">Trust</span> Us
-              </h3>
-              <p className="text-gray-600 text-sm sm:text-base md:text-lg">
-                Your success is our commitment
-              </p>
-            </div>
 
-            {/* Interactive Stats - NO NESTED ANIMATIONS */}
-            <div className="space-y-4 sm:space-y-6 mb-6 sm:mb-10">
-              {[
-                {
-                  value: "7+",
-                  label: "Years Experience",
-                  sublabel: "In education consulting",
-                  color: "from-red-500 to-red-600",
-                  icon: <Zap className="w-4 h-4 sm:w-5 sm:h-5 text-white" />,
-                },
-                {
-                  value: "2000+",
-                  label: "Students Helped",
-                  sublabel: "Successful global placements",
-                  color: "from-blue-600 to-blue-700",
-                  icon: <Users className="w-4 h-4 sm:w-5 sm:h-5 text-white" />,
-                },
-                {
-                  value: "100+",
-                  label: "Global Network",
-                  sublabel: "Partner institutions worldwide",
-                  color: "from-purple-600 to-purple-700",
-                  icon: <Globe className="w-4 h-4 sm:w-5 sm:h-5 text-white" />,
-                },
-              ].map((stat, index) => (
-                <div
-                  key={index}
-                  className="group relative p-4 sm:p-6 bg-white/80 rounded-xl sm:rounded-2xl border border-gray-200/80 shadow-sm hover:shadow-xl sm:hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 cursor-pointer w-full"
-                >
-                  <div className="flex items-center gap-3 sm:gap-4">
-                    <div
-                      className={`relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl sm:rounded-2xl bg-gradient-to-br ${stat.color} flex items-center justify-center shadow-lg transition-transform duration-300 group-hover:scale-105`}
-                    >
-                      {stat.icon}
-                    </div>
-                    <div className="flex-1">
-                      <div className="text-2xl sm:text-3xl font-bold text-gray-900 mb-0.5 sm:mb-1">
-                        {stat.value}
+              {/* Stats - Simplified */}
+              <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
+                {[
+                  {
+                    value: "7+",
+                    label: "Years Experience",
+                    color: "from-red-500 to-red-600",
+                    icon: <Zap className="w-4 h-4 text-white" />,
+                  },
+                  {
+                    value: "2000+",
+                    label: "Students Helped",
+                    color: "from-blue-600 to-blue-700",
+                    icon: <Users className="w-4 h-4 text-white" />,
+                  },
+                  {
+                    value: "100+",
+                    label: "Global Network",
+                    color: "from-purple-600 to-purple-700",
+                    icon: <Globe className="w-4 h-4 text-white" />,
+                  },
+                ].map((stat, index) => (
+                  <div
+                    key={index}
+                    className="p-3 sm:p-4 bg-gray-50 rounded-lg sm:rounded-xl border border-gray-100"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div
+                        className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center`}
+                      >
+                        {stat.icon}
                       </div>
-                      <div className="font-semibold text-gray-900 text-sm sm:text-base">
-                        {stat.label}
-                      </div>
-                      <div className="text-xs sm:text-sm text-gray-500">
-                        {stat.sublabel}
+                      <div>
+                        <div className="text-xl sm:text-2xl font-bold text-gray-900">
+                          {stat.value}
+                        </div>
+                        <div className="text-xs sm:text-sm font-medium text-gray-700">
+                          {stat.label}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Trust Badge - SIMPLIFIED */}
-            <div className="pt-6 sm:pt-8 border-t border-gray-200/80">
-              <p className="text-center text-gray-600 text-sm sm:text-base mb-3 sm:mb-4">
-                Trusted by students from 15+ countries
-              </p>
-              <div className="flex justify-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-                {[1, 2, 3, 4, 5].map((i) => (
-                  <div
-                    key={i}
-                    className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-full bg-gradient-to-r from-red-400/80 to-blue-600/80 shadow-lg"
-                  />
                 ))}
               </div>
-              <div className="text-center">
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 rounded-full bg-gradient-to-r from-red-600 to-blue-800 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] text-sm sm:text-base"
-                >
-                  <MessageSquare className="w-4 h-4 sm:w-5 sm:h-5" />
-                  Start Your Journey Today
-                </Link>
+
+              {/* Trust Badge - Simplified */}
+              <div className="pt-4 sm:pt-6 border-t border-gray-100">
+                <p className="text-center text-xs sm:text-sm text-gray-600 mb-3">
+                  Trusted by students from 15+ countries
+                </p>
+                <div className="flex justify-center gap-1.5 sm:gap-2 mb-3 sm:mb-4">
+                  {[1, 2, 3, 4, 5].map((i) => (
+                    <div
+                      key={i}
+                      className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-gradient-to-r from-red-400/80 to-blue-600/80"
+                    />
+                  ))}
+                </div>
+                <div className="text-center">
+                  <Link
+                    href="/contact"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-gradient-to-r from-red-600 to-blue-800 text-white font-medium text-sm shadow-sm hover:shadow transition-shadow"
+                  >
+                    <MessageSquare className="w-4 h-4" />
+                    Start Your Journey Today
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
-        </AnimatedSection>
+          </AnimatedSection>
+        </div>
       </div>
     </section>
   );
