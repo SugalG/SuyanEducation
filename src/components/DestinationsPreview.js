@@ -42,10 +42,12 @@ const FALLBACK_DESTINATIONS = [
 
 export default function DestinationsPreview() {
   const [destinations, setDestinations] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAutoScroll, setIsAutoScroll] = useState(true);
-  const scrollerRef = useRef(null);
-  const autoScrollRef = useRef(null);
+  const [isPaused, setIsPaused] = useState(false);
+  const scrollRef = useRef(null);
+  const animationRef = useRef(null);
+  const lastTimeRef = useRef(0);
+  const scrollPosRef = useRef(0);
+  const speedRef = useRef(0.5); // Even slower for better control
   
   // Load destinations with fallback
   useEffect(() => {
@@ -66,78 +68,174 @@ export default function DestinationsPreview() {
     load();
   }, []);
 
-  // Get visible cards based on screen size
-  const getVisibleCards = useCallback(() => {
-    if (typeof window === 'undefined') return 1;
+  // Get card width
+  const getCardWidth = useCallback(() => {
+    if (typeof window === 'undefined') return 320;
     const width = window.innerWidth;
-    if (width < 640) return 1;  // mobile
-    if (width < 768) return 2;  // small tablet
-    if (width < 1024) return 2; // tablet
-    if (width < 1280) return 3; // small desktop
-    return 3; // large desktop
+    if (width < 640) return 280;
+    if (width < 768) return 300;
+    if (width < 1024) return 340;
+    if (width < 1280) return 360;
+    return 380;
   }, []);
 
-  // Calculate max index
-  const maxIndex = Math.max(0, destinations.length - getVisibleCards());
+  // Get gap
+  const getGap = useCallback(() => {
+    if (typeof window === 'undefined') return 24;
+    return window.innerWidth < 640 ? 16 : 24;
+  }, []);
 
-  // Handle scroll with CSS animations instead of RAF
-  const scrollToIndex = useCallback((index) => {
-    if (!scrollerRef.current || destinations.length === 0) return;
+  // CRITICAL: Seamless infinite loop animation
+  const animate = useCallback((timestamp) => {
+    if (!lastTimeRef.current) lastTimeRef.current = timestamp;
     
-    // Clamp index
-    const clampedIndex = Math.max(0, Math.min(index, maxIndex));
-    setCurrentIndex(clampedIndex);
+    const delta = timestamp - lastTimeRef.current;
+    lastTimeRef.current = timestamp;
     
-    // Calculate scroll position
-    const cardWidth = getVisibleCards() === 1 ? 280 : 340;
-    const scrollPosition = -clampedIndex * cardWidth;
+    // Cap delta to prevent large jumps
+    const cappedDelta = Math.min(delta, 32); // ~30fps min
     
-    scrollerRef.current.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)';
-    scrollerRef.current.style.transform = `translateX(${scrollPosition}px)`;
-  }, [destinations.length, maxIndex, getVisibleCards]);
+    if (!isPaused && scrollRef.current) {
+      scrollPosRef.current -= (speedRef.current * cappedDelta) / 16;
+      
+      const cardWidth = getCardWidth();
+      const gap = getGap();
+      const totalCards = destinations.length;
+      const totalWidth = totalCards * (cardWidth + gap);
+      
+      // SEAMLESS LOOP: When a card moves completely out of view on left,
+      // we instantly reposition it to the right side
+      if (scrollPosRef.current <= -totalWidth) {
+        scrollPosRef.current += totalWidth;
+        
+        // This is the magic trick: We reposition all cards instantly
+        // This happens so fast (1 frame) that it's invisible to the user
+        requestAnimationFrame(() => {
+          if (scrollRef.current) {
+            scrollRef.current.style.transition = 'none'; // No transition for instant reposition
+            scrollRef.current.style.transform = `translateX(${scrollPosRef.current}px)`;
+            
+            // Force reflow
+            scrollRef.current.offsetHeight;
+            
+            // Restore transition
+            requestAnimationFrame(() => {
+              if (scrollRef.current) {
+                scrollRef.current.style.transition = 'transform 0.1s linear';
+              }
+            });
+          }
+        });
+      } else {
+        // Normal smooth scrolling
+        if (scrollRef.current) {
+          scrollRef.current.style.transition = 'transform 0.1s linear';
+          scrollRef.current.style.transform = `translateX(${scrollPosRef.current}px)`;
+        }
+      }
+    }
+    
+    // Continue animation
+    animationRef.current = requestAnimationFrame(animate);
+  }, [isPaused, destinations.length, getCardWidth, getGap]);
 
-  // Auto scroll effect with interval (less intensive than RAF)
+  // Start animation
   useEffect(() => {
-    if (!isAutoScroll || destinations.length <= getVisibleCards()) return;
-    
-    autoScrollRef.current = setInterval(() => {
-      setCurrentIndex(prev => (prev >= maxIndex ? 0 : prev + 1));
-    }, 4000);
+    if (destinations.length > 0) {
+      animationRef.current = requestAnimationFrame(animate);
+    }
     
     return () => {
-      if (autoScrollRef.current) {
-        clearInterval(autoScrollRef.current);
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [isAutoScroll, destinations.length, maxIndex, getVisibleCards]);
+  }, [animate, destinations.length]);
 
-  // Handle scroll on index change
-  useEffect(() => {
-    scrollToIndex(currentIndex);
-  }, [currentIndex, scrollToIndex]);
-
-  // Manual navigation
-  const handlePrev = useCallback(() => {
-    setIsAutoScroll(false);
-    setCurrentIndex(prev => (prev <= 0 ? maxIndex : prev - 1));
+  // Manual navigation with loop awareness
+  const handleManualScroll = useCallback((direction) => {
+    if (!scrollRef.current || destinations.length === 0) return;
     
-    // Restart auto scroll after manual interaction
-    setTimeout(() => setIsAutoScroll(true), 5000);
-  }, [maxIndex]);
-
-  const handleNext = useCallback(() => {
-    setIsAutoScroll(false);
-    setCurrentIndex(prev => (prev >= maxIndex ? 0 : prev + 1));
+    const wasPaused = isPaused;
+    setIsPaused(true);
     
-    // Restart auto scroll after manual interaction
-    setTimeout(() => setIsAutoScroll(true), 5000);
-  }, [maxIndex]);
+    const cardWidth = getCardWidth();
+    const gap = getGap();
+    const scrollAmount = (cardWidth + gap) * 2;
+    
+    const startPos = scrollPosRef.current;
+    let targetPos = direction === 'left' 
+      ? startPos + scrollAmount 
+      : startPos - scrollAmount;
+    
+    // Handle loop boundaries
+    const totalWidth = destinations.length * (cardWidth + gap);
+    if (Math.abs(targetPos) >= totalWidth) {
+      if (direction === 'right') {
+        targetPos += totalWidth;
+      } else {
+        targetPos -= totalWidth;
+      }
+    }
+    
+    const duration = 500;
+    const startTime = performance.now();
+    
+    const animateScroll = (currentTime) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      
+      // Smooth easing
+      const easeProgress = 1 - Math.pow(1 - progress, 3);
+      
+      scrollPosRef.current = startPos + (targetPos - startPos) * easeProgress;
+      
+      // Handle loop during manual scroll
+      const currentAbsPos = Math.abs(scrollPosRef.current);
+      if (currentAbsPos >= totalWidth) {
+        if (direction === 'right') {
+          scrollPosRef.current += totalWidth;
+        } else {
+          scrollPosRef.current -= totalWidth;
+        }
+        
+        // Instant reposition without transition
+        scrollRef.current.style.transition = 'none';
+        scrollRef.current.style.transform = `translateX(${scrollPosRef.current}px)`;
+        scrollRef.current.offsetHeight; // Force reflow
+        
+        requestAnimationFrame(() => {
+          if (scrollRef.current) {
+            scrollRef.current.style.transition = 'transform 0.5s ease';
+          }
+        });
+      } else {
+        if (scrollRef.current) {
+          scrollRef.current.style.transform = `translateX(${scrollPosRef.current}px)`;
+        }
+      }
+      
+      if (progress < 1) {
+        requestAnimationFrame(animateScroll);
+      } else {
+        // Resume auto-scroll
+        if (!wasPaused) {
+          setTimeout(() => setIsPaused(false), 1000);
+        }
+      }
+    };
+    
+    requestAnimationFrame(animateScroll);
+  }, [destinations.length, getCardWidth, getGap, isPaused]);
 
   if (!destinations.length) return null;
 
+  const cardWidth = getCardWidth();
+  const gap = getGap();
+
   return (
     <section className="relative w-full py-12 md:py-16 lg:py-20 bg-gradient-to-b from-white to-gray-50/50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-8 sm:mb-12 lg:mb-16">
           <AnimatedSection animation="fade-up" delay={0.1}>
@@ -171,11 +269,17 @@ export default function DestinationsPreview() {
           </AnimatedSection>
         </div>
 
-        {/* Carousel Container - Simplified */}
-        <div className="relative">
+        {/* Carousel Container */}
+        <div 
+          className="relative"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onTouchStart={() => setIsPaused(true)}
+          onTouchEnd={() => setTimeout(() => setIsPaused(false), 300)}
+        >
           {/* Navigation Buttons */}
           <button
-            onClick={handlePrev}
+            onClick={() => handleManualScroll('left')}
             className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 sm:translate-x-0 z-20 w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full shadow-lg border border-gray-200 hover:border-red-500 hover:shadow-xl transition-all duration-300 group flex items-center justify-center"
             aria-label="Previous destinations"
           >
@@ -183,86 +287,67 @@ export default function DestinationsPreview() {
           </button>
 
           <button
-            onClick={handleNext}
+            onClick={() => handleManualScroll('right')}
             className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 sm:translate-x-0 z-20 w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full shadow-lg border border-gray-200 hover:border-red-500 hover:shadow-xl transition-all duration-300 group flex items-center justify-center"
             aria-label="Next destinations"
           >
             <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-gray-700 group-hover:text-red-600 transition-colors" />
           </button>
 
-          {/* Cards Container */}
+          {/* Cards Container - With duplicate for visual continuity */}
           <div className="px-8 sm:px-12 md:px-16 lg:px-20 overflow-hidden">
             <div className="overflow-visible">
               <div 
-                ref={scrollerRef}
-                className="flex transition-transform duration-500 ease-out gap-4 sm:gap-6 md:gap-8"
+                ref={scrollRef}
+                className="flex will-change-transform"
+                style={{ 
+                  transform: `translateX(${scrollPosRef.current}px)`,
+                  gap: `${gap}px`,
+                  // Make container wide enough for seamless transition
+                  minWidth: `${(destinations.length * 2) * (cardWidth + gap)}px`
+                }}
               >
-                {destinations.map((destination, index) => (
+                {/* Render enough cards to cover viewport + buffer */}
+                {[...destinations, ...destinations].map((destination, index) => (
                   <div 
-                    key={destination.slug}
-                    className="flex-shrink-0 w-[280px] sm:w-[320px] md:w-[340px] lg:w-[360px]"
+                    key={`${destination.slug}-${index}`}
+                    className="flex-shrink-0"
+                    style={{ width: `${cardWidth}px` }}
                   >
                     <DestinationCard 
                       destination={destination}
-                      index={index}
-                      currentIndex={currentIndex}
+                      index={index % destinations.length}
                     />
                   </div>
                 ))}
               </div>
             </div>
           </div>
-
-          {/* Dots Indicator */}
-          {destinations.length > 1 && (
-            <div className="flex justify-center gap-2 mt-8">
-              {Array.from({ length: maxIndex + 1 }).map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => {
-                    setIsAutoScroll(false);
-                    setCurrentIndex(index);
-                    setTimeout(() => setIsAutoScroll(true), 5000);
-                  }}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                    currentIndex === index 
-                      ? 'bg-red-600 w-8' 
-                      : 'bg-gray-300 hover:bg-gray-400'
-                  }`}
-                  aria-label={`Go to destination ${index + 1}`}
-                />
-              ))}
-            </div>
-          )}
         </div>
       </div>
     </section>
   );
 }
 
-// Destination Card Component - Simplified
-function DestinationCard({ destination, index, currentIndex }) {
+// Destination Card Component
+function DestinationCard({ destination, index }) {
   const [isHovered, setIsHovered] = useState(false);
-  const isActive = Math.floor(currentIndex) === index;
 
   return (
-    <AnimatedSection 
-      animation="fade-up" 
-      delay={index * 0.05} // Faster stagger
-      className="h-full"
-    >
+    <div className="h-full">
       <Link
         href={`/destinations/${destination.slug}`}
         className="block h-full focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 rounded-xl sm:rounded-2xl"
         prefetch={false}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
+        onTouchStart={() => setIsHovered(true)}
+        onTouchEnd={() => setIsHovered(false)}
       >
         <div className={`
           relative bg-white rounded-xl overflow-hidden border shadow-sm h-full
           transition-all duration-300
           ${isHovered ? 'border-red-500 shadow-lg -translate-y-1' : 'border-gray-200'}
-          ${isActive ? 'ring-1 ring-red-500/20' : ''}
         `}>
           {/* Image Container */}
           <div className="relative h-48 sm:h-56 md:h-60 lg:h-64 overflow-hidden">
@@ -277,7 +362,7 @@ function DestinationCard({ destination, index, currentIndex }) {
                   object-cover transition-transform duration-300
                   ${isHovered ? 'scale-105' : 'scale-100'}
                 `}
-                sizes="(max-width: 640px) 280px, (max-width: 768px) 320px, (max-width: 1024px) 340px, 360px"
+                sizes="(max-width: 640px) 280px, (max-width: 768px) 300px, (max-width: 1024px) 340px, 360px"
                 priority={index < 2}
                 loading={index < 2 ? "eager" : "lazy"}
                 quality={85}
@@ -330,6 +415,6 @@ function DestinationCard({ destination, index, currentIndex }) {
           </div>
         </div>
       </Link>
-    </AnimatedSection>
+    </div>
   );
 }
