@@ -23,9 +23,9 @@ export default async function HomePage() {
    
       <GlobalReachSection />
       <TestPreparationPreview />
-      {/* <DestinationPreview /> */}
+      <DestinationPreview />
       {/* <SuccessStoriesPreview /> */}
-      {/* <UniversitiesPreview/> */}
+      <UniversitiesPreview/>
       {/* <Testimonials/> */}
       <BlogsPreview/>
       
