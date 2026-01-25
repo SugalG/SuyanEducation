@@ -34,13 +34,16 @@ export default function MessageFromCEOSection() {
             <div className="flex flex-col items-center">
               <div className="relative w-full max-w-[280px] sm:max-w-[320px] h-[260px] sm:h-[300px] rounded-xl sm:rounded-2xl overflow-hidden shadow-lg sm:shadow-xl">
                 <Image
-                  src="https://res.cloudinary.com/dvx9dcap6/image/upload/v1768383148/ceo1_sut1bx.jpg"
+                  src="https://res.cloudinary.com/dvx9dcap6/image/upload/q_100,f_auto,e_sharpen:60,w_700/ceo1_sut1bx.jpg"
                   alt="Sunil Maharjan - Founder & CEO"
                   fill
                   priority
-                  quality={85}
+                  quality={100}
                   className="object-cover object-[42%_12%]"
-                  sizes="(max-width: 640px) 280px, 320px"
+                  sizes="
+(max-width: 640px) 560px,
+100vw
+"
                 />
               </div>
               <div className="mt-3 sm:mt-4 text-center">
@@ -102,13 +105,17 @@ export default function MessageFromCEOSection() {
             >
               <div className="relative w-full max-w-[320px] xl:max-w-[380px] h-[400px] lg:h-[450px] xl:h-[500px] rounded-2xl overflow-hidden shadow-xl">
                 <Image
-                  src="https://res.cloudinary.com/dvx9dcap6/image/upload/v1768383148/ceo1_sut1bx.jpg"
+                  src="https://res.cloudinary.com/dvx9dcap6/image/upload/q_100,f_auto,e_sharpen:80,w_1200/ceo1_sut1bx.jpg"
                   alt="Sunil Maharjan - Founder & CEO"
                   fill
                   priority
-                  quality={90}
+                  quality={100}
                   className="object-cover object-[42%_center]"
-                  sizes="(min-width: 1024px) 320px, (min-width: 1280px) 380px"
+                  sizes="
+    (min-width: 1280px) 760px,
+    (min-width: 1024px) 640px,
+    100vw
+  "
                 />
               </div>
               <div className="mt-4 xl:mt-6 text-center">
@@ -171,18 +178,20 @@ export default function MessageFromCEOSection() {
                   animation="fade-up"
                   delay={0.4}
                   className="block lg:hidden"
-                  
                 >
                   <div className="flex flex-col items-center">
                     <div className="relative w-full max-w-[320px] h-[300px] rounded-2xl overflow-hidden shadow-xl">
                       <Image
-                        src="https://res.cloudinary.com/dvx9dcap6/image/upload/v1768383148/ceo1_sut1bx.jpg"
+                        src="https://res.cloudinary.com/dvx9dcap6/image/upload/q_100,f_auto,e_sharpen:80,w_900/ceo1_sut1bx.jpg"
                         alt="Sunil Maharjan - Founder & CEO"
                         fill
                         priority
-                        quality={85}
+                        quality={100}
                         className="object-cover object-[42%_center]"
-                        sizes="(min-width: 768px) 320px, 100vw"
+                        sizes="
+    (min-width: 768px) 640px,
+    100vw
+  "
                       />
                     </div>
                     <div className="mt-4 text-center">
