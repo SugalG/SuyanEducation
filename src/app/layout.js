@@ -45,11 +45,11 @@ export default async function RootLayout({ children }) {
           <div className="site-frame" />
 
           <div className="site-content">
-            <NavbarApplyWrapper
+            {/* <NavbarApplyWrapper
               settings={settings}
               destinations={destinations}
-            />
-            {/* <TestNavbar/> */}
+            /> */}
+            <TestNavbar/>
 
             <main className="min-h-screen">
               {children}
