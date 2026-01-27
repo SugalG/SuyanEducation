@@ -107,7 +107,7 @@ export default function AnimatedSection({
       whileInView={!animateImmediately ? "show" : undefined}
       viewport={{
         once,
-        margin: "-50px", // Reduced from -100px for better mobile performance
+        margin: "0px", // Reduced from -100px for better mobile performance
       }}
       variants={getAnimation(delay)}
     >

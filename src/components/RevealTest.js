@@ -19,7 +19,7 @@ export default function RevealTest({ children, className = "", animateImmediatel
       initial="hidden"
       animate={animateImmediately ? "show" : undefined}
       whileInView={!animateImmediately ? "show" : undefined}
-      viewport={{ once: true, margin: "-100px", initialInView: true }}
+      viewport={{ once: true, margin: "0px", initialInView: true }}
       variants={getFadeUp(delay)}
     >
       {children}

@@ -366,3 +366,33 @@ body {
   }
 }
 
+/* =========================
+   Tablet-specific optimizations
+   ========================= */
+   @media (hover: none) and (pointer: coarse) {
+    /* Reduce GPU-heavy effects */
+    .content-block {
+      backdrop-filter: none !important;
+      background: rgba(255, 255, 255, 0.98);
+    }
+  
+    .shadow-cta,
+    .shadow-cta-hover {
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1) !important;
+    }
+  
+    /* Reduce complex backgrounds */
+    .site-frame {
+      background:
+        radial-gradient(400px 300px at 12% -12%, rgba(251, 243, 230, 0.95), transparent 80%),
+        radial-gradient(400px 300px at 88% 108%, rgba(30, 64, 175, 0.06), transparent 80%),
+        linear-gradient(to bottom, #ffffff, #ffffff);
+    }
+  
+    /* Force GPU acceleration for motion elements */
+    .motion-element {
+      will-change: transform, opacity;
+      backface-visibility: hidden;
+      transform: translateZ(0);
+    }
+  }

@@ -17,7 +17,7 @@ export default function Reveal({ children, className = "" }) {
       className={className}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, margin: "-100px" }}
+      viewport={{ once: true, margin: "0px" }}
       variants={fadeUp}
     >
       {children}
