@@ -130,7 +130,7 @@ export default function StudentVisaLifecycle() {
                       title={step.title}
                       description={step.description}
                       features={step.features}
-                      delay={index * 0.1}
+                      delay={0.1}
                       isLeft={isLeft}
                     />
                   </div>

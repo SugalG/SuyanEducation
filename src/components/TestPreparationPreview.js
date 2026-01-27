@@ -212,7 +212,7 @@ export default function ServicesPreview() {
                 >
                   <Link
                     className="relative group w-full cursor-pointer select-none touch-manipulation"
-                    href={service.slug}
+                    href={`/services/${service.slug}`}
                   >
                     {/* Highlight badge - SIMPLER */}
                     {service.highlight && (

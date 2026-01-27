@@ -1,9 +1,7 @@
-// components/StatsSection.tsx
-"use client";
 
-import { motion } from "framer-motion";
+
 import { Users, Globe, Award, Clock } from "lucide-react";
-
+import AnimatedSection from "./universityPlacement/AnimatedSection";
 
 export default function StatsSection({ stats }) {
   const icons = [Users, Globe, Award, Clock];
@@ -13,15 +11,14 @@ export default function StatsSection({ stats }) {
       {stats.map((stat, index) => {
         const Icon = icons[index];
         return (
-          <motion.div
+          <AnimatedSection
             key={index}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
-            className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow"
+            animation="zoom-in"
+            delay={index * 0.1}
+            className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow hover:-translate-y-2 duration-300"
           >
             <div className="flex flex-col items-center text-center">
-              <div className="p-3 rounded-full bg-gradient-to-r from-red-100 to-blue-100 mb-4">
+              <div className="p-3 rounded-full bg-gradient-to-r from-red-100 to-blue-100 mb-4 hover:scale-110 transition-transform duration-300">
                 <Icon className="w-8 h-8 text-red-600" />
               </div>
               <div className="text-3xl font-bold bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
@@ -29,7 +26,7 @@ export default function StatsSection({ stats }) {
               </div>
               <div className="text-gray-600 mt-2 font-medium">{stat.label}</div>
             </div>
-          </motion.div>
+          </AnimatedSection>
         );
       })}
     </div>

@@ -242,19 +242,6 @@ export default function PreDepartureGuidance() {
                 Complete support system for your study abroad journey - from travel arrangements to cultural orientation and emergency assistance.
               </p>
             </AnimatedSection>
-
-            {/* <AnimatedSection animation="zoom-in" delay={0.5}>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button className="group relative px-8 py-4 bg-gradient-to-r from-blue-600 to-green-600 rounded-xl font-semibold text-white overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-green-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <span className="relative">Get Pre-Departure Checklist</span>
-                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-white to-transparent transform translate-y-1 group-hover:translate-y-0 transition-transform duration-300"></div>
-                </button>
-                <button className="px-8 py-4 bg-white border-2 border-blue-500 text-blue-600 rounded-xl font-semibold hover:bg-blue-50 transition-all duration-300 shadow-md hover:shadow-lg">
-                  Schedule Orientation Session
-                </button>
-              </div>
-            </AnimatedSection> */}
           </div>
 
           {/* Stats Bar */}
