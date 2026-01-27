@@ -10,6 +10,7 @@ import dynamic from "next/dynamic";
 import GlobalReachSection from "@/components/GlobalReachSection";
 import BlogsPreview from "@/components/BlogsPreview";
 import UniversitiesPreview from "@/components/UniversitiesPreview";
+import Philosophy from "@/components/Philosophy";
 
 
 
@@ -22,6 +23,7 @@ export default async function HomePage() {
       <Hero />
    
       <GlobalReachSection />
+      
       <TestPreparationPreview />
       <DestinationPreview />
       {/* <SuccessStoriesPreview /> */}

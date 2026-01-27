@@ -34,7 +34,7 @@ export default function MessageFromCEOSection() {
             <div className="flex flex-col items-center">
               <div className="relative w-full max-w-[280px] sm:max-w-[320px] h-[260px] sm:h-[300px] rounded-xl sm:rounded-2xl overflow-hidden shadow-lg sm:shadow-xl">
                 <Image
-                  src="https://res.cloudinary.com/dvx9dcap6/image/upload/q_100,f_auto,e_sharpen:60,w_700/ceo1_sut1bx.jpg"
+                  src="/team-members/ceo.jpeg"
                   alt="Sunil Maharjan - Founder & CEO"
                   fill
                   priority
@@ -79,7 +79,7 @@ export default function MessageFromCEOSection() {
           <AnimatedSection animation="fade-up" delay={0.5}>
             <div className="relative h-[260px] sm:h-[300px] overflow-hidden rounded-xl sm:rounded-2xl">
               <video
-                src="https://res.cloudinary.com/dvx9dcap6/video/upload/v1768546068/FLAGANIMATION2_k5xkt0.webm"
+                src="/flagLady.mp4"
                 autoPlay
                 muted
                 loop
@@ -105,7 +105,7 @@ export default function MessageFromCEOSection() {
             >
               <div className="relative w-full max-w-[320px] xl:max-w-[380px] h-[400px] lg:h-[450px] xl:h-[500px] rounded-2xl overflow-hidden shadow-xl">
                 <Image
-                  src="https://res.cloudinary.com/dvx9dcap6/image/upload/q_100,f_auto,e_sharpen:80,w_1200/ceo1_sut1bx.jpg"
+                  src="/team-members/ceo.jpeg"
                   alt="Sunil Maharjan - Founder & CEO"
                   fill
                   priority
@@ -182,7 +182,7 @@ export default function MessageFromCEOSection() {
                   <div className="flex flex-col items-center">
                     <div className="relative w-full max-w-[320px] h-[300px] rounded-2xl overflow-hidden shadow-xl">
                       <Image
-                        src="https://res.cloudinary.com/dvx9dcap6/image/upload/q_100,f_auto,e_sharpen:80,w_900/ceo1_sut1bx.jpg"
+                        src="/team-members/ceo.jpeg"
                         alt="Sunil Maharjan - Founder & CEO"
                         fill
                         priority
@@ -209,7 +209,7 @@ export default function MessageFromCEOSection() {
                 <AnimatedSection animation="fade-left" delay={0.5}>
                   <div className="relative w-full h-[400px] md:h-[440px] lg:h-[500px] xl:h-[550px] rounded-2xl overflow-hidden">
                     <video
-                      src="https://res.cloudinary.com/dvx9dcap6/video/upload/v1768546068/FLAGANIMATION2_k5xkt0.webm"
+                      src="/flagLady.mp4"
                       autoPlay
                       muted
                       loop

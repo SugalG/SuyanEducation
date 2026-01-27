@@ -1,4 +1,3 @@
-
 import Image from "next/image";
 import Reveal from "@/components/Reveal";
 
@@ -38,10 +37,10 @@ export default function AboutTeamSection() {
               </h2>
 
               <p className="text-lg text-gray-700 leading-relaxed">
-                At Suyan Education, our role goes beyond processing applications.
-                We focus on understanding each student’s goals, background, and
-                aspirations to guide them toward the most suitable global
-                education pathway.
+                At Suyan Education, our role goes beyond processing
+                applications. We focus on understanding each student’s goals,
+                background, and aspirations to guide them toward the most
+                suitable global education pathway.
               </p>
 
               <p className="text-lg text-gray-700 leading-relaxed">
@@ -82,36 +81,54 @@ export default function AboutTeamSection() {
               </span>
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Meet the professionals who guide students toward successful
-              global education opportunities.
+              Meet the professionals who guide students toward successful global
+              education opportunities.
             </p>
           </div>
         </Reveal>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-          <Reveal>
-            <TeamCard
-              name="Jasmina Nakarmi"
-              role="Counselor – Australia, USA"
-              image="https://res.cloudinary.com/dvx9dcap6/image/upload/v1768379826/jasminanakarmi_l9a1db.jpg"
-            />
-          </Reveal>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10">
+          {/* Top row – single centered card */}
+          <div className="lg:col-span-12 flex justify-center">
+            <Reveal>
+              <TeamCard
+                name="Jasmina Nakarmi"
+                role="Counselor – Australia, USA"
+                image="/team-members/jasmina_nakarmi.jpeg"
+              />
+            </Reveal>
+          </div>
 
-          <Reveal>
-            <TeamCard
-              name="Sharmila Shrestha"
-              role="Counselor – Europe"
-              image="https://res.cloudinary.com/dvx9dcap6/image/upload/v1768379825/sharmilashrestha_uxvfl8.jpg"
-            />
-          </Reveal>
+          {/* Bottom row – three cards */}
+          <div className="lg:col-span-4">
+            <Reveal>
+              <TeamCard
+                name="Sharmila Shrestha"
+                role="Counselor – Europe"
+                image="/team-members/Sharmila.png"
+              />
+            </Reveal>
+          </div>
 
-          <Reveal>
-            <TeamCard
-              name="Armita Chandrabansi"
-              role="Counselor – Japan"
-              image="https://res.cloudinary.com/dvx9dcap6/image/upload/v1768379827/amritachandrabansi_geetz2.jpg"
-            />
-          </Reveal>
+          <div className="lg:col-span-4">
+            <Reveal>
+              <TeamCard
+                name="Armita Chandrabansi"
+                role="Counselor – Japan"
+                image="https://res.cloudinary.com/dvx9dcap6/image/upload/v1768379827/amritachandrabansi_geetz2.jpg"
+              />
+            </Reveal>
+          </div>
+
+          <div className="lg:col-span-4">
+            <Reveal>
+              <TeamCard
+                name="Sadika Maharjan"
+                role="Reception Officer"
+                image="/team-members/sadika_maharjan.jpeg"
+              />
+            </Reveal>
+          </div>
         </div>
       </div>
     </section>

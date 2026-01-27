@@ -1,4 +1,5 @@
 import AboutTeamSection from "@/components/AboutTeamSection";
+import Philosophy from "@/components/Philosophy";
 import AnimatedSection from "@/components/universityPlacement/AnimatedSection";
 import {
   Target,
@@ -414,6 +415,7 @@ export default async function AboutPage() {
                 </div>
               </AnimatedSection>
             </div>
+            
 
             {/* Right Content - Global Destinations - FIXED: Removed mx-4 on desktop */}
             <AnimatedSection animation="fade-left" delay={0.4} once={true}>
@@ -452,7 +454,7 @@ export default async function AboutPage() {
             </AnimatedSection>
           </div>
         </section>
-
+        <Philosophy/>
         <AboutTeamSection />
 
         {/* COMPREHENSIVE SERVICES - FIXED: Added w-full */}
