@@ -1,9 +1,8 @@
 // components/TeachingMethodology.tsx
 "use client";
 
-import { motion } from "framer-motion";
 import { Users, Monitor, Globe, Target } from "lucide-react";
-
+import AnimatedSection from "../universityPlacement/AnimatedSection";
 
 export default function TeachingMethodology({ methods }) {
   const icons = [Users, Monitor, Globe, Target];
@@ -11,7 +10,11 @@ export default function TeachingMethodology({ methods }) {
   return (
     <section className="bg-gradient-to-b from-white to-gray-50 py-20">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-16">
+        <AnimatedSection
+          animation="fade-up"
+          delay={0.2}
+          className="text-center mb-16"
+        >
           <h2 className="text-4xl font-bold mb-4">
             <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
               Our Teaching Methodology
@@ -20,21 +23,22 @@ export default function TeachingMethodology({ methods }) {
           <p className="text-gray-600 text-lg max-w-2xl mx-auto">
             A proven approach that combines traditional teaching with modern technology
           </p>
-        </div>
+        </AnimatedSection>
 
         <div className="grid md:grid-cols-2 gap-8">
           {methods.map((method, index) => {
             const Icon = icons[index];
+            const isLeft = index % 2 === 0;
+            
             return (
-              <motion.div
+              <AnimatedSection
                 key={index}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
+                animation={isLeft ? "fade-right" : "fade-left"}
+                delay={index * 0.1}
                 className="group"
+                once={true}
               >
-                <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 h-full">
+                <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 h-full hover:-translate-y-2">
                   <div className="flex items-start gap-6">
                     <div className="p-4 rounded-xl bg-gradient-to-r from-red-100 to-blue-100 group-hover:scale-110 transition-transform duration-300">
                       <Icon className="w-8 h-8 text-red-600" />
@@ -54,7 +58,7 @@ export default function TeachingMethodology({ methods }) {
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </AnimatedSection>
             );
           })}
         </div>

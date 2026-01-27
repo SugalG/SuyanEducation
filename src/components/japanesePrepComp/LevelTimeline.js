@@ -1,8 +1,6 @@
-// components/LevelTimeline.tsx
-"use client";
 
-import { motion } from "framer-motion";
 
+import AnimatedSection from "../universityPlacement/AnimatedSection";
 
 export default function LevelTimeline({ levels }) {
   return (
@@ -12,18 +10,17 @@ export default function LevelTimeline({ levels }) {
 
       <div className="grid lg:grid-cols-5 gap-8">
         {levels.map((level, index) => (
-          <motion.div
+          <AnimatedSection
             key={index}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: index * 0.1 }}
+            animation="fade-up"
+            delay={index * 0.1}
             className="relative"
+            once={true}
           >
             {/* Level Card */}
-            <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 h-full">
+            <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 h-full hover:-translate-y-2">
               {/* Level Badge */}
-              <div className={`inline-block px-4 py-2 rounded-full bg-gradient-to-r ${level.color} text-white font-bold mb-4`}>
+              <div className={`inline-block px-4 py-2 rounded-full bg-gradient-to-r ${level.color} text-white font-bold mb-4 hover:scale-105 transition-transform duration-300`}>
                 {level.level}
               </div>
               
@@ -49,7 +46,7 @@ export default function LevelTimeline({ levels }) {
 
             {/* Timeline Dot */}
             <div className="hidden lg:block absolute top-1/2 -right-4 w-8 h-8 rounded-full bg-white border-4 border-red-500 z-10 -translate-y-1/2"></div>
-          </motion.div>
+          </AnimatedSection>
         ))}
       </div>
     </div>

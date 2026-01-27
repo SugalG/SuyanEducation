@@ -1,9 +1,7 @@
-// components/WhyLearnJapanese.tsx
-"use client";
 
-import { motion } from "framer-motion";
+
 import { GraduationCap, Briefcase, Globe, Home } from "lucide-react";
-import RevealTest from "../RevealTest";
+import AnimatedSection from "../universityPlacement/AnimatedSection";
 
 export default function WhyLearnJapanese() {
   const benefits = [
@@ -36,32 +34,33 @@ export default function WhyLearnJapanese() {
   return (
     <section className="bg-white py-20">
       <div className="max-w-7xl mx-auto px-6">
-        <RevealTest delay={0.2}>
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">
-              <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
-                Why Learn Japanese?
-              </span>
-            </h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Beyond language - a gateway to education, career, and life
-              opportunities in Japan
-            </p>
-          </div>
-        </RevealTest>
+        <AnimatedSection
+          animation="fade-up"
+          delay={0.2}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl font-bold mb-4">
+            <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
+              Why Learn Japanese?
+            </span>
+          </h2>
+          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+            Beyond language - a gateway to education, career, and life
+            opportunities in Japan
+          </p>
+        </AnimatedSection>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {benefits.map((benefit, index) => {
             const Icon = benefit.icon;
             return (
-              <motion.div
+              <AnimatedSection
                 key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
+                animation="zoom-in"
+                delay={index * 0.1}
                 className="group"
+                once={true}
               >
-                <div className="bg-gradient-to-br from-red-50 to-blue-50 rounded-2xl p-8 h-full hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+                <div className="bg-gradient-to-br from-red-50 to-blue-50 rounded-2xl p-8 h-full hover:shadow-xl transition-all duration-300 border border-gray-100 hover:-translate-y-2">
                   <div className="w-16 h-16 rounded-xl bg-gradient-to-r from-red-500 to-blue-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                     <Icon className="w-8 h-8 text-white" />
                   </div>
@@ -70,7 +69,7 @@ export default function WhyLearnJapanese() {
                   </h3>
                   <p className="text-gray-600">{benefit.description}</p>
                 </div>
-              </motion.div>
+              </AnimatedSection>
             );
           })}
         </div>
