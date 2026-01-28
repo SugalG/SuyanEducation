@@ -41,11 +41,11 @@ async function getAlbums() {
 
 export default async function GalleryPage() {
   const albums = await getAlbums();
-  if (albums.length === 0){
-    return (
-      <div>No albums found</div>
-    )
-  }
+  // if (albums.length === 0){
+  //   return (
+  //     <div>No albums found</div>
+  //   )
+  // }
   return (
     <main className="w-full overflow-hidden mt-24">
       {/* Hero Section */}

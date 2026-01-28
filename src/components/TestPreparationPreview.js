@@ -203,7 +203,7 @@ export default function ServicesPreview() {
                       color: "bg-red-500",
                     },
                     {
-                      value: "2000+",
+                      value: "200+",
                       label: "Students Helped",
                       icon: <Users className="w-4 h-4 text-white" />,
                       color: "bg-blue-600",

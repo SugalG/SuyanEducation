@@ -306,13 +306,13 @@ export default async function AboutPage() {
                 {[
                   {
                     icon: Globe,
-                    value: "10+",
+                    value: "11+",
                     label: "Countries",
                     color: "text-red-600",
                   },
                   {
                     icon: Users,
-                    value: "100+",
+                    value: "200+",
                     label: "Students Guided",
                     color: "text-blue-950",
                   },
@@ -624,7 +624,7 @@ export default async function AboutPage() {
                         <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-white"></div>
                       </div>
                       <span className="text-gray-700 text-xs sm:text-sm lg:text-base">
-                        Expand to 100+ global destinations by 2025
+                        Expand to 100+ global destinations by 2026
                       </span>
                     </div>
                     <div className="flex items-start gap-2">
