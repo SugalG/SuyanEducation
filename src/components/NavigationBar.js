@@ -257,38 +257,18 @@ export default function NavigationBar({
                 : "opacity-100 visible w-auto"
             } md:hidden xl:block`}
           >
-            <Link href="/" className="flex items-center group">
-              {/* No gap, items aligned to center */}
-              <div className="relative flex items-center -space-x-8 lg:-space-x-12">
-                {/* Main Logo with high quality */}
-                <div className="relative">
-                  <Image
-                    src="/suyan_logo.png"
-                    alt="Suyan Education"
-                    width={240} // High resolution source
-                    height={240}
-                    priority
-                    quality={100} // Maximum quality
-                    className="h-20 sm:h-20 lg:h-24 w-auto transition-transform duration-300 group-hover:scale-105 object-contain"
-                    sizes="(max-width: 640px) 64px, (max-width: 1024px) 80px, 96px"
-                  />
-                </div>
-
-                {/* Sub-logo directly adjacent */}
-                <div className="relative w-48 sm:w-56 lg:w-64">
-                  <Image
-                    src="/suyan_desc.png"
-                    alt="Suyan Education - Global Education Consultants"
-                    width={240} // High resolution
-                    height={64}
-                    priority
-                    quality={100} // Maximum quality
-                    className="w-full h-8 sm:h-10 lg:h-12 object-contain transition-opacity duration-300 group-hover:opacity-90"
-                    sizes="(max-width: 640px) 192px, (max-width: 1024px) 224px, 256px"
-                  />
-                </div>
-              </div>
-            </Link>
+            {(!isHomepage || scrolled) && (
+              <Link href="/" className="flex items-center group">
+                <Image
+                  src="/suyan_logo_final.png"
+                  alt="Suyan Education"
+                  width={420}
+                  height={105}
+                  priority
+                  className="h-16 w-auto"
+                />
+              </Link>
+            )}
           </div>
 
           {/* Desktop Navigation */}
@@ -557,6 +537,11 @@ export default function NavigationBar({
               <Menu size={28} />
             </button>
           </div>
+          {
+            (!isHomepage || scrolled) && (
+              <div></div>
+            )
+          }
         </nav>
       </div>
 
@@ -575,7 +560,7 @@ export default function NavigationBar({
             <div className="sticky top-0 z-10 flex items-center justify-between px-4 sm:px-6 h-20 border-b border-gray-100 bg-gradient-to-r from-red-50 to-blue-50">
               <div className="flex items-center gap-3">
                 <Image
-                  src="/suyan_logo.png"
+                  src="/suyan_logo_final.png"
                   alt="Suyan Education"
                   width={240}
                   height={240}
