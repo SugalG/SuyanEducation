@@ -255,7 +255,7 @@ export default function NavigationBar({
               isHomepage && !scrolled
                 ? "opacity-0 invisible w-auto"
                 : "opacity-100 visible w-auto"
-            } md:hidden lg:block`}
+            } md:hidden xl:block`}
           >
             <Link href="/" className="flex items-center group">
               {/* No gap, items aligned to center */}
@@ -494,8 +494,8 @@ export default function NavigationBar({
 
               {/* Universities with responsive text */}
               <Link href="/universities" className={getNavLinkClass()}>
-                <span className="lg:inline hidden">Universities</span>
-                <span className="lg:hidden inline">Uni</span>
+                <span className="inline">Universities</span>
+                {/* <span className="lg:hidden inline">Uni</span> */}
                 <span
                   className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 ${
                     isHomepage && !scrolled

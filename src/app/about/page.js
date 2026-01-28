@@ -266,7 +266,7 @@ export default async function AboutPage() {
         </div>
 
         {/* HERO SECTION - FIXED: Added w-full and removed excessive padding */}
-        <AnimatedSection animation="fade-up" delay={0.1} once={true}>
+        <AnimatedSection animation="fade-up" delay={0.1} once={true} animateImmediately>
           <section className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 lg:py-32">
             <div className="text-center w-full max-w-5xl mx-auto">
               {/* Badge */}
