@@ -101,9 +101,9 @@ export default function ServicesPreview() {
             </span>
           </h2>
 
-          <div className="flex justify-center mt-4 sm:mt-6">
-            <div className="h-1 w-32 sm:w-40 md:w-48 rounded-full bg-gray-300"></div>
-          </div>
+          <div className="flex justify-center mt-4">
+              <div className="w-48 h-1.5 bg-gradient-to-r from-red-600 to-blue-800 rounded-full"></div>
+            </div>
 
           <p className="mt-4 sm:mt-6 text-sm sm:text-base md:text-lg text-gray-600 leading-relaxed max-w-3xl mx-auto">
             End-to-end guidance with{" "}
