@@ -110,8 +110,9 @@ export default function ApplyNowModal({ open, onClose }) {
           <button
             type="submit"
             className="w-full bg-blue-600 text-white py-3 rounded-lg font-medium"
+            disabled = {emailMutation.isPending}
           >
-            Submit
+            {emailMutation.isPending ? "Submitting" : "Submit"}
           </button>
 
           <button
