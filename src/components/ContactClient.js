@@ -170,7 +170,7 @@ export default function ContactClient() {
               icon: Phone,
               title: "Call Us",
               value: "+977 1 5445099",
-              hint: "Sun–Fri, 10AM–6PM",
+              hint: "Sun–Fri, 7AM–3PM",
               color: "from-red-500 to-red-400",
               action: "tel:+97715445099",
             },
@@ -286,7 +286,7 @@ export default function ContactClient() {
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     fill="currentColor"
-                    className="w-8 h-8"
+                    className="w-8 lg:w-12 h-8 lg:h-12"
                   >
                     <path d="M19.589 6.686a4.793 4.793 0 0 1-3.77-4.245V2h-3.445v13.672a2.896 2.896 0 0 1-5.201 1.743l-.002-.001.002.001a2.895 2.895 0 0 1 3.183-4.51v-3.5a6.329 6.329 0 0 0-5.394 10.692 6.33 6.33 0 0 0 10.857-4.424V8.687a8.182 8.182 0 0 0 4.773 1.526V6.79a4.831 4.831 0 0 1-1.003-.104z" />
                   </svg>
@@ -331,7 +331,11 @@ export default function ContactClient() {
                           : "group-hover:scale-110 group-hover:rotate-5"
                       } transition-transform duration-300`}
                     >
-                      <Icon />
+                      {typeof Icon === 'function' ? (
+                        <Icon />
+                      ) : (
+                        <Icon className="w-8 lg:w-12 h-8 lg:h-12" />
+                      )}
                     </div>
                     <div className="text-white font-semibold text-base lg:text-lg text-center">
                       {social.label}

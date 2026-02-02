@@ -28,7 +28,7 @@ export default function GoogleTranslate() {
   }, []);
 
   return (
-    <div className="fixed bottom-6 right-4 z-[9999]">
+    <div className="fixed bottom-24 right-6 z-[9999]">
       <div className="relative flex flex-col items-end">
         <button
           onClick={() => setOpen((v) => !v)}
@@ -37,7 +37,8 @@ export default function GoogleTranslate() {
             rounded-full
             font-semibold
             text-white
-            bg-blue-950 hover:bg-blue-900
+            bg-gradient-to-r from-red-500 to-red-700
+            hover:from-red-600 hover:to-red-800
             shadow-lg
             hover:shadow-xl
             hover:scale-105
@@ -56,9 +57,11 @@ export default function GoogleTranslate() {
             transition-all
             duration-300
             origin-bottom-right
-            ${open
-              ? "opacity-100 scale-100"
-              : "opacity-0 scale-95 pointer-events-none"}
+            ${
+              open
+                ? "opacity-100 scale-100"
+                : "opacity-0 scale-95 pointer-events-none"
+            }
           `}
         >
           <div id="google_translate_element" className="min-w-[180px]" />
