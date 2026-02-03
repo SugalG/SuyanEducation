@@ -421,11 +421,11 @@ export default function UniversitiesPage() {
                 className="flex items-center gap-4 mb-8 w-full"
                 variants={fadeInUp}
               >
-                <div className="w-12 h-12 rounded-full bg-gradient-to-r from-red-100 to-blue-100 flex items-center justify-center overflow-hidden">
+                <div className="w-12 h-12 overflow-hidden flex items-center justify-center">
                   <img
-                    src={`https://flagcdn.com/w80/${destination.code.toLowerCase()}.png`}
+                    src={`https://flagcdn.com/w40/${destination.code.toLowerCase()}.png`}
                     alt={destination.country}
-                    className="w-full h-full object-fit"
+                    className="w-full h-full object-contain"
                   />
                 </div>
                 <div className="w-full">
