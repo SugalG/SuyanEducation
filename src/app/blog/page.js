@@ -150,7 +150,7 @@ export default function BlogPage() {
         <AnimatedSection animation="fade-up" delay={0.1} animateImmediately>
           <div className="mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-8">All Articles</h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-2 gap-8">
               {allBlogs.map((blog, index) => (
                 <AnimatedSection 
                   key={blog.id} 
