@@ -338,7 +338,14 @@ export default function UniversitiesPage() {
                 placeholder="Search university by name..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all duration-300 bg-white"
+                className="
+  w-full pl-12 pr-4 py-3.5 rounded-xl
+  bg-white
+  border border-gray-300
+  focus:outline-none
+  focus:border-gray-400
+  transition-colors duration-200
+"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-red-600/0 to-blue-950/0 group-hover:from-red-600/5 group-hover:to-blue-950/5 rounded-xl pointer-events-none transition-all duration-300"></div>
             </div>
@@ -351,7 +358,15 @@ export default function UniversitiesPage() {
               <select
                 value={selectedDestination}
                 onChange={(e) => setSelectedDestination(e.target.value)}
-                className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-300 bg-white appearance-none cursor-pointer"
+                className="
+  w-full pl-12 pr-4 py-3.5 rounded-xl
+  bg-white
+  border border-gray-300
+  focus:outline-none
+  focus:border-gray-400
+  transition-colors duration-200 cursor-pointer
+"
+
               >
                 <option value="all" className="text-gray-600">
                   All Destinations
