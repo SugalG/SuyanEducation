@@ -3,23 +3,33 @@
 import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { Search, Globe, GraduationCap, Building, Filter, ChevronRight, Star, MapPin, ExternalLink } from "lucide-react";
+import {
+  Search,
+  Globe,
+  GraduationCap,
+  Building,
+  Filter,
+  ChevronRight,
+  Star,
+  MapPin,
+  ExternalLink,
+} from "lucide-react";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
   show: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: "easeOut" }
-  }
+    transition: { duration: 0.6, ease: "easeOut" },
+  },
 };
 
 const staggerContainer = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    transition: { staggerChildren: 0.1 }
-  }
+    transition: { staggerChildren: 0.1 },
+  },
 };
 
 const cardVariants = {
@@ -27,8 +37,8 @@ const cardVariants = {
   show: {
     opacity: 1,
     scale: 1,
-    transition: { duration: 0.4, ease: "easeOut" }
-  }
+    transition: { duration: 0.4, ease: "easeOut" },
+  },
 };
 
 export default function UniversitiesPage() {
@@ -156,7 +166,8 @@ export default function UniversitiesPage() {
             Unable to load universities
           </h3>
           <p className="text-gray-600 max-w-md mx-auto">
-            Please try refreshing the page or contact us if the problem persists.
+            Please try refreshing the page or contact us if the problem
+            persists.
           </p>
           <button
             onClick={() => window.location.reload()}
@@ -201,7 +212,7 @@ export default function UniversitiesPage() {
 
       {/* HERO SECTION */}
       <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 w-full">
-        <motion.div 
+        <motion.div
           className="text-center max-w-5xl mx-auto w-full"
           initial="hidden"
           whileInView="show"
@@ -209,16 +220,18 @@ export default function UniversitiesPage() {
           variants={staggerContainer}
         >
           {/* Badge */}
-          <motion.div 
+          <motion.div
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-red-50 to-blue-50 border border-red-100 mb-8"
             variants={fadeInUp}
           >
             <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
-            <span className="text-sm font-medium text-gray-700">Global University Partners</span>
+            <span className="text-sm font-medium text-gray-700">
+              Global University Partners
+            </span>
           </motion.div>
-          
+
           {/* Main Heading */}
-          <motion.h1 
+          <motion.h1
             className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 px-4"
             variants={fadeInUp}
           >
@@ -226,38 +239,59 @@ export default function UniversitiesPage() {
               Our Partner Universities
             </span>
           </motion.h1>
-          
+
           {/* Animated Underline */}
           <div className="flex justify-center mb-8">
-            <motion.div 
+            <motion.div
               className="w-24 h-1 bg-gradient-to-r from-red-600 to-blue-950 rounded-full"
               initial={{ width: 0 }}
               whileInView={{ width: 96 }}
               transition={{ delay: 0.3, duration: 0.8 }}
             />
           </div>
-          
+
           {/* Subtitle */}
-          <motion.p 
+          <motion.p
             className="text-lg lg:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto mb-12 px-4"
             variants={fadeInUp}
           >
-            Explore our network of prestigious partner institutions across 10+ countries worldwide.
-            We maintain strong relationships with universities to ensure smooth admissions for our students.
+            Explore our network of prestigious partner institutions across 10+
+            countries worldwide. We maintain strong relationships with
+            universities to ensure smooth admissions for our students.
           </motion.p>
 
           {/* Stats */}
-          <motion.div 
+          <motion.div
             className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto px-4"
             variants={fadeInUp}
           >
             {[
-              { icon: Globe, value: `${destinations.length}+`, label: "Countries", color: "text-red-600" },
-              { icon: GraduationCap, value: `${universities.length}+`, label: "Universities", color: "text-blue-950" },
-              { icon: Building, value: "Top 500", label: "Ranked Globally", color: "text-green-600" },
-              { icon: Star, value: "95%", label: "Admission Rate", color: "text-purple-600" },
+              {
+                icon: Globe,
+                value: `${destinations.length}+`,
+                label: "Countries",
+                color: "text-red-600",
+              },
+              {
+                icon: GraduationCap,
+                value: `${universities.length}+`,
+                label: "Universities",
+                color: "text-blue-950",
+              },
+              {
+                icon: Building,
+                value: "Top 500",
+                label: "Ranked Globally",
+                color: "text-green-600",
+              },
+              {
+                icon: Star,
+                value: "95%",
+                label: "Admission Rate",
+                color: "text-purple-600",
+              },
             ].map((stat, index) => (
-              <div 
+              <div
                 key={index}
                 className="bg-white p-4 rounded-xl border border-gray-200 hover:border-red-300 transition-colors group w-full"
               >
@@ -266,7 +300,9 @@ export default function UniversitiesPage() {
                     <stat.icon className={`w-5 h-5 ${stat.color}`} />
                   </div>
                   <div>
-                    <div className="text-2xl font-bold text-gray-900">{stat.value}</div>
+                    <div className="text-2xl font-bold text-gray-900">
+                      {stat.value}
+                    </div>
                     <div className="text-sm text-gray-600">{stat.label}</div>
                   </div>
                 </div>
@@ -279,7 +315,7 @@ export default function UniversitiesPage() {
       {/* MAIN CONTENT */}
       <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 lg:pb-28 w-full">
         {/* Search & Filter Section */}
-        <motion.div 
+        <motion.div
           className="bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-200 p-6 lg:p-8 mb-12 shadow-lg w-full"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -311,7 +347,9 @@ export default function UniversitiesPage() {
                 onChange={(e) => setSelectedDestination(e.target.value)}
                 className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-300 bg-white appearance-none cursor-pointer"
               >
-                <option value="all" className="text-gray-600">All Destinations</option>
+                <option value="all" className="text-gray-600">
+                  All Destinations
+                </option>
                 {destinations.map((d) => (
                   <option key={d.id} value={d.id} className="text-gray-700">
                     {d.country}
@@ -339,7 +377,10 @@ export default function UniversitiesPage() {
             filteredUniversitiesByDestination[destination.id] || [];
 
           if (!universitiesForDestination.length) {
-            if (selectedDestination === destination.id || selectedDestination === "all") {
+            if (
+              selectedDestination === destination.id ||
+              selectedDestination === "all"
+            ) {
               return (
                 <motion.div
                   key={destination.id}
@@ -376,12 +417,16 @@ export default function UniversitiesPage() {
               className="mb-20 w-full"
             >
               {/* Destination Header */}
-              <motion.div 
+              <motion.div
                 className="flex items-center gap-4 mb-8 w-full"
                 variants={fadeInUp}
               >
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-red-100 to-blue-100 flex items-center justify-center">
-                  <Globe className="w-6 h-6 text-gray-700" />
+                <div className="w-12 h-12 rounded-full bg-gradient-to-r from-red-100 to-blue-100 flex items-center justify-center overflow-hidden">
+                  <img
+                    src={`https://flagcdn.com/w80/${destination.code.toLowerCase()}.png`}
+                    alt={destination.country}
+                    className="w-full h-full object-fit"
+                  />
                 </div>
                 <div className="w-full">
                   <h2 className="text-3xl font-bold text-gray-900">
@@ -406,16 +451,17 @@ export default function UniversitiesPage() {
                     initial="hidden"
                     whileInView="show"
                     viewport={{ once: true }}
-                    transition={{ delay: (destIndex * 0.05) + (uniIndex * 0.02) }}
+                    transition={{ delay: destIndex * 0.05 + uniIndex * 0.02 }}
                     className="group relative block w-full"
                   >
-                    <div className="bg-white rounded-2xl border-2 border-gray-200 p-5 lg:p-6
+                    <div
+                      className="bg-white rounded-2xl border-2 border-gray-200 p-5 lg:p-6
                       hover:border-transparent transition-all duration-300 
-                      hover:shadow-xl h-full relative overflow-hidden w-full">
-                      
+                      hover:shadow-xl h-full relative overflow-hidden w-full"
+                    >
                       {/* Gradient Background on Hover */}
                       <div className="absolute inset-0 bg-gradient-to-br from-red-600/0 to-blue-950/0 group-hover:from-red-600/5 group-hover:to-blue-950/5 transition-opacity duration-300" />
-                      
+
                       {/* Content Container */}
                       <div className="relative z-10 w-full">
                         {/* University Logo */}
@@ -431,8 +477,10 @@ export default function UniversitiesPage() {
                         </div>
 
                         {/* University Name */}
-                        <h3 className="text-center text-sm font-semibold text-gray-900 mb-3 
-                          group-hover:text-red-700 transition-colors line-clamp-2 min-h-[2.5rem] w-full">
+                        <h3
+                          className="text-center text-sm font-semibold text-gray-900 mb-3 
+                          group-hover:text-red-700 transition-colors line-clamp-2 min-h-[2.5rem] w-full"
+                        >
                           {uni.name}
                         </h3>
 
@@ -473,21 +521,25 @@ export default function UniversitiesPage() {
               <div className="absolute top-0 right-0 w-64 h-64 border-4 border-white rounded-full transform translate-x-32 -translate-y-32"></div>
               <div className="absolute bottom-0 left-0 w-64 h-64 border-4 border-white rounded-full transform -translate-x-32 translate-y-32"></div>
             </div>
-            
+
             <div className="relative z-10">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm mb-6">
                 <GraduationCap className="w-4 h-4 text-white" />
-                <span className="text-sm font-medium text-white">Ready to Apply</span>
+                <span className="text-sm font-medium text-white">
+                  Ready to Apply
+                </span>
               </div>
-              
+
               <h2 className="text-2xl lg:text-3xl font-bold text-white mb-6 px-4">
                 Need Help Choosing the Right University?
               </h2>
-              
+
               <p className="text-white/90 mb-8 max-w-2xl mx-auto px-4">
-                Our expert counselors can guide you to find the perfect university match based on your academic profile and career goals.
+                Our expert counselors can guide you to find the perfect
+                university match based on your academic profile and career
+                goals.
               </p>
-              
+
               <div className="flex flex-col sm:flex-row gap-4 justify-center px-4">
                 <a
                   href="/contact"
@@ -495,7 +547,6 @@ export default function UniversitiesPage() {
                 >
                   Book Free Consultation
                 </a>
-               
               </div>
             </div>
           </div>
