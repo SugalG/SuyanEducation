@@ -483,7 +483,7 @@ export default function NavigationBar({
                       : "bg-gradient-to-r from-red-600 to-blue-950 group-hover/nav:w-full"
                   }`}
                 ></span>
-              </Link>
+              </Link>href="mailto:info@suyan.com.np"7
 
               {/* Gallery */}
               <Link href="/gallery" className={getNavLinkClass()}>
