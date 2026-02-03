@@ -18,6 +18,17 @@ export default function GoogleTranslate() {
         },
         "google_translate_element"
       );
+
+      // 🔽 Watch for language selection and auto-close
+      const interval = setInterval(() => {
+        const select = document.querySelector(".goog-te-combo");
+        if (select) {
+          select.addEventListener("change", () => {
+            setOpen(false);
+          });
+          clearInterval(interval);
+        }
+      }, 300);
     };
 
     const script = document.createElement("script");
