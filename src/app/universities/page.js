@@ -358,15 +358,7 @@ export default function UniversitiesPage() {
               <select
                 value={selectedDestination}
                 onChange={(e) => setSelectedDestination(e.target.value)}
-                className="
-  w-full pl-12 pr-4 py-3.5 rounded-xl
-  bg-white
-  border border-gray-300
-  focus:outline-none
-  focus:border-gray-400
-  transition-colors duration-200 cursor-pointer
-"
-
+                className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-gray-300 focus:outline-none focus:border-gray-400 transition-all duration-300 bg-white appearance-none cursor-pointer"
               >
                 <option value="all" className="text-gray-600">
                   All Destinations
