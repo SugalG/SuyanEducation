@@ -202,7 +202,7 @@ export default function UniversitiesPage() {
      UI
   ========================= */
   return (
-    <main className="relative mt-24 overflow-x-hidden">
+    <main className="relative mt-24 overflow-x-hidden bg-gray-200">
       {/* Background Elements - FIXED: Contained with proper overflow */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute top-0 -right-40 w-80 h-80 bg-red-500/5 rounded-full blur-3xl"></div>
@@ -421,11 +421,11 @@ export default function UniversitiesPage() {
                 className="flex items-center gap-4 mb-8 w-full"
                 variants={fadeInUp}
               >
-                <div className="w-12 h-12 overflow-hidden flex items-center justify-center">
+                <div className="w-16 h-8 overflow-hidden flex items-center justify-center">
                   <img
                     src={`https://flagcdn.com/w40/${destination.code.toLowerCase()}.png`}
                     alt={destination.country}
-                    className="w-full h-full object-contain"
+                    className="w-full h-full object-cover"
                   />
                 </div>
                 <div className="w-full">
