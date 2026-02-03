@@ -202,7 +202,13 @@ export default function UniversitiesPage() {
      UI
   ========================= */
   return (
-    <main className="relative mt-24 overflow-x-hidden bg-gray-200">
+    <main className="relative mt-24 overflow-x-hidde">
+      <div className="absolute inset-0 bg-gradient-to-br from-white via-red-50 to-blue-50" />
+      <div className="absolute top-0 left-0 w-1/3 h-full bg-gradient-to-r from-red-100/30 to-transparent" />
+      <div className="absolute bottom-0 right-0 w-1/3 h-full bg-gradient-to-l from-blue-100/30 to-transparent" />
+
+      <div className="absolute top-20 left-10 w-80 h-80 bg-gradient-to-r from-red-200/20 to-pink-200/10 rounded-full blur-3xl animate-pulse"></div>
+      <div className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-l from-blue-200/20 to-cyan-200/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
       {/* Background Elements - FIXED: Contained with proper overflow */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute top-0 -right-40 w-80 h-80 bg-red-500/5 rounded-full blur-3xl"></div>
