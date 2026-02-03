@@ -260,7 +260,7 @@ export default function NavigationBar({
             {(!isHomepage || scrolled) && (
               <Link href="/" className="flex items-center group">
                 <Image
-                  src="/logo_finalized.png"
+                  src="/logo_fi.png"
                   alt="Suyan Education"
                   width={420}
                   height={105}
@@ -560,7 +560,7 @@ export default function NavigationBar({
             <div className="sticky top-0 z-10 flex items-center justify-between px-4 sm:px-6 h-20 border-b border-gray-100 bg-gradient-to-r from-red-50 to-blue-50">
               <div className="flex items-center gap-3">
                 <Image
-                  src="/logo_finalized.png"
+                  src="/logo_fi.png"
                   alt="Suyan Education"
                   width={240}
                   height={240}
