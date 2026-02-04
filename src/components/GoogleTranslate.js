@@ -18,6 +18,17 @@ export default function GoogleTranslate() {
         },
         "google_translate_element"
       );
+
+      // 🔽 Watch for language selection and auto-close
+      const interval = setInterval(() => {
+        const select = document.querySelector(".goog-te-combo");
+        if (select) {
+          select.addEventListener("change", () => {
+            setOpen(false);
+          });
+          clearInterval(interval);
+        }
+      }, 300);
     };
 
     const script = document.createElement("script");
@@ -28,7 +39,7 @@ export default function GoogleTranslate() {
   }, []);
 
   return (
-    <div className="fixed bottom-24 right-6 z-[9999]">
+    <div className="fixed bottom-24 right-4 z-[9999]">
       <div className="relative flex flex-col items-end">
         <button
           onClick={() => setOpen((v) => !v)}
@@ -37,8 +48,7 @@ export default function GoogleTranslate() {
             rounded-full
             font-semibold
             text-white
-            bg-gradient-to-r from-red-500 to-red-700
-            hover:from-red-600 hover:to-red-800
+            bg-blue-950 hover:bg-blue-900
             shadow-lg
             hover:shadow-xl
             hover:scale-105
@@ -57,11 +67,9 @@ export default function GoogleTranslate() {
             transition-all
             duration-300
             origin-bottom-right
-            ${
-              open
-                ? "opacity-100 scale-100"
-                : "opacity-0 scale-95 pointer-events-none"
-            }
+            ${open
+              ? "opacity-100 scale-100"
+              : "opacity-0 scale-95 pointer-events-none"}
           `}
         >
           <div id="google_translate_element" className="min-w-[180px]" />

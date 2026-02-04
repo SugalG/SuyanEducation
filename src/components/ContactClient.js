@@ -14,6 +14,7 @@ import {
   Users,
   Target,
 } from "lucide-react";
+import ApplyNowModal from "./ApplyNowModal";
 
 const cardVariants = {
   hidden: { opacity: 0, y: 30 },
@@ -27,6 +28,7 @@ const cardVariants = {
 export default function ContactClient() {
   const [activeCard, setActiveCard] = useState(null);
   const [activeSocial, setActiveSocial] = useState(null);
+  const [isEmailModalOpen, setEmailModalOpen] = useState(false);
 
   return (
     <main className="w-full overflow-hidden">
@@ -127,17 +129,17 @@ export default function ContactClient() {
                       +977 1 5445099
                     </div>
                     <p className="text-sm lg:text-base text-gray-600">
-                      Sun–Fri, 10AM–6PM
+                      Sun–Fri, 7AM–3PM
                     </p>
                   </div>
 
-                  <a
-                    href="mailto:info@suyan.com.np"
-                    className="block bg-gradient-to-r from-red-600 to-red-500 text-white rounded-xl lg:rounded-2xl p-4 lg:p-6 text-center font-semibold active:scale-95 active:shadow-lg transition-all duration-200"
+                  <button
+                    onClick={() => setEmailModalOpen(true)}
+                    className="block w-full bg-gradient-to-r from-red-600 to-red-500 text-white rounded-xl lg:rounded-2xl p-4 lg:p-6 text-center font-semibold active:scale-95 active:shadow-lg transition-all duration-200"
                   >
                     <Mail className="w-6 lg:w-8 h-6 lg:h-8 mx-auto mb-2 lg:mb-3" />
                     Send Email
-                  </a>
+                  </button>
                 </div>
               </div>
             </motion.div>
@@ -462,6 +464,11 @@ export default function ContactClient() {
           </div>
         </motion.div>
       </section>
+      {
+        isEmailModalOpen && (
+          <ApplyNowModal onClose={() => setEmailModalOpen(false)} open={isEmailModalOpen}/>
+        )
+      }
     </main>
   );
 }

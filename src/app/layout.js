@@ -59,8 +59,8 @@ export default async function RootLayout({ children }) {
             <Footer settings={settings} />
           </div>
 
-          <WhatsAppFloat />
           <GoogleTranslate />
+          <WhatsAppFloat />
         </Providers>
       </body>
     </html>
