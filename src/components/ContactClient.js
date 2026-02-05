@@ -174,7 +174,7 @@ export default function ContactClient() {
               value: "+977 1 5445099",
               hint: "Sun–Fri, 7AM–3PM",
               color: "from-red-500 to-red-400",
-              action: "tel:+97715445099",
+              action: null,
             },
             {
               icon: Mail,
@@ -182,7 +182,7 @@ export default function ContactClient() {
               value: "info@suyan.com.np",
               hint: "We reply within 24 hours",
               color: "from-blue-500 to-blue-400",
-              action: "mailto:info@suyan.com.np",
+              action: null,
             },
             {
               icon: MapPin,

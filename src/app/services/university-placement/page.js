@@ -246,7 +246,7 @@ export default function UniversityPlacement() {
     {
       value: "98%",
       label: "Admission Success",
-      description: "At our partner universities",
+      description: "Across our partner universities",
     },
     {
       value: "70%",
@@ -292,7 +292,7 @@ export default function UniversityPlacement() {
     },
     {
       country: "New Zealand",
-      focus: ["Work while study", "Post-study work visa", "PR pathways"],
+      focus: ["Work while study", "Post-study work visa", "Permanent residency pathways"],
       timeline: "4-6 Weeks",
       cost: "NZ$20K-$30K/year",
       advantage: "Open work permit for partners",

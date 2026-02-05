@@ -12,7 +12,7 @@ export default function DocumentationSupport() {
   const services = [
     {
       title: "Visa Documentation",
-      description: "Complete assistance with all visa-related documents including financial proofs, sponsorship letters, and embassy requirements.",
+      description: "End-to-end support for visa documentation, financial proofs, and embassy requirements.",
       icon: "FileCheck",
       features: ["Financial Documentation", "Sponsorship Letters", "Embassy Requirements", "Document Verification"]
     },

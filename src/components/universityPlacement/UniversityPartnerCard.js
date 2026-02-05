@@ -59,15 +59,7 @@ export default function UniversityPartnerCard({
                   <span className="font-medium text-gray-700 group-hover/uni:text-blue-600 transition-colors duration-300">{uni}</span>
                 </div>
               ))}
-              {universities.length > 3 && (
-                <button
-                  onClick={() => setExpanded(!expanded)}
-                  className="flex items-center gap-2 text-blue-600 hover:text-blue-800 text-sm font-medium mt-2 group/btn"
-                >
-                  <ChevronDown className={`w-4 h-4 transition-all duration-300 ${expanded ? 'rotate-180' : ''} group-hover/btn:scale-125`} />
-                  {expanded ? 'Show Less' : `Show ${universities.length - 3} More`}
-                </button>
-              )}
+        
             </div>
           </div>
 

@@ -213,8 +213,7 @@ const fallbackDestinations = [
 async function getDestinations() {
   try {
     const res = await fetch(
-      `${
-        process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000"
+      `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000"
       }/api/destinations`,
       {
         next: { revalidate: 3600 }, // Revalidate every hour
@@ -267,90 +266,85 @@ export default async function AboutPage() {
 
         {/* HERO SECTION - FIXED: Added w-full and removed excessive padding */}
         <AnimatedSection animation="fade-up" delay={0.1} once={true} animateImmediately>
-          <section className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 lg:py-32">
-            <div className="text-center w-full max-w-5xl mx-auto">
-              {/* Badge */}
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-red-50 to-blue-50 border border-red-100 mb-6 sm:mb-8">
+          <section className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
+
+            {/* Header unchanged */}
+            <div className="text-center mb-12 sm:mb-16 lg:mb-20">
+              <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-red-50 to-blue-50 border border-red-100 shadow-sm">
                 <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
-                <span className="text-sm font-medium text-gray-700">
+                <span className="text-base sm:text-lg font-semibold text-gray-800">
                   Global Education Experts
                 </span>
               </div>
+            </div>
 
-              {/* Main Heading - FIXED: Added text-balance and removed hard padding */}
+            <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-start">
 
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 sm:mb-8 px-2 text-balance">
-                <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
-                  About Suyan Education
-                </span>
-              </h1>
+              {/* VIDEO COLUMN */}
+              <AnimatedSection animation="fade-right" delay={0.1} once={true}>
+                <div className="w-full max-w-3xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-6xl mx-auto">
+                  <div className="relative aspect-[5/6] filter drop-shadow-[0_12px_28px_rgba(0,0,0,0.22)]">
+                    <video
+                      className="absolute inset-0 w-full h-full object-contain"
+                      src="https://res.cloudinary.com/dvx9dcap6/video/upload/v1770190910/SUYANFULLFORM_wat6p2.mp4"
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                    />
+                  </div>
+                </div>
+              </AnimatedSection>
 
-              {/* Animated Underline */}
-              <div className="flex justify-center mb-6 sm:mb-8">
-                <div className="w-24 h-1 bg-gradient-to-r from-red-600 to-blue-950 rounded-full"></div>
-              </div>
+              {/* TEXT COLUMN */}
+              <div className="flex flex-col justify-start text-center lg:text-left lg:py-4">
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 sm:mb-8 text-balance">
+                  <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
+                    About Suyan Education
+                  </span>
+                </h1>
 
-              {/* Subtitle - FIXED: Added text-balance */}
+                <div className="flex lg:justify-start justify-center mb-6 sm:mb-8">
+                  <div className="w-24 h-1 bg-gradient-to-r from-red-600 to-blue-950 rounded-full"></div>
+                </div>
 
-              <p className="text-base sm:text-lg lg:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto mb-8 sm:mb-12 px-4 text-balance">
-                Your trusted partner for global education opportunities with{" "}
-                <span className="font-semibold text-red-600">
-                  specialized expertise in Japan
-                </span>{" "}
-                and comprehensive support for destinations worldwide.
-              </p>
+                <p className="text-base sm:text-lg lg:text-xl text-gray-600 leading-relaxed max-w-3xl mb-8 sm:mb-12 text-balance">
+                  Your trusted partner for global education opportunities with{" "}
+                  <span className="font-semibold text-red-600">
+                    specialized expertise in Japan
+                  </span>{" "}
+                  and comprehensive support for destinations worldwide.
+                </p>
 
-              {/* Global Stats - FIXED: Added w-full and responsive grid */}
-
-              <div className="grid grid-cols-2 gap-3 sm:gap-4 max-w-3xl mx-auto w-full px-2">
-                {[
-                  {
-                    icon: Globe,
-                    value: "11+",
-                    label: "Countries",
-                    color: "text-red-600",
-                  },
-                  {
-                    icon: Users,
-                    value: "200+",
-                    label: "Students Guided",
-                    color: "text-blue-950",
-                  },
-                  {
-                    icon: Award,
-                    value: "95%",
-                    label: "Visa Success",
-                    color: "text-green-600",
-                  },
-                  {
-                    icon: Clock,
-                    value: "2018",
-                    label: "Since Year",
-                    color: "text-purple-600",
-                  },
-                ].map((stat, index) => (
-                  <div
-                    key={index}
-                    className="bg-white p-3 sm:p-4 rounded-xl border border-gray-200 hover:border-red-300 transition-colors group w-full"
-                  >
-                    <div className="flex items-center gap-2 sm:gap-3">
-                      <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-lg bg-gradient-to-r from-red-50 to-blue-50 flex items-center justify-center group-hover:from-red-100 group-hover:to-blue-100 transition-all flex-shrink-0">
-                        <stat.icon
-                          className={`w-3 h-3 sm:w-4 sm:h-4 ${stat.color}`}
-                        />
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <div className="text-lg sm:text-xl font-bold text-gray-900 truncate">
-                          {stat.value}
+                <div className="grid grid-cols-2 gap-4 sm:gap-6 max-w-3xl w-full">
+                  {[
+                    { icon: Globe, value: "11+", label: "Countries", color: "text-red-600" },
+                    { icon: Users, value: "200+", label: "Students Guided", color: "text-blue-950" },
+                    { icon: Award, value: "95%", label: "Visa Success", color: "text-green-600" },
+                    { icon: Clock, value: "2018", label: "Since Year", color: "text-purple-600" },
+                  ].map((stat, index) => (
+                    <div
+                      key={index}
+                      className="bg-white p-4 sm:p-5 rounded-xl border border-gray-200 hover:border-red-300 transition-all group shadow-sm"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-red-50 to-blue-50 flex items-center justify-center">
+                          <stat.icon className={`w-5 h-5 ${stat.color}`} />
                         </div>
-                        <div className="text-xs sm:text-sm text-gray-600 truncate">
-                          {stat.label}
+                        <div>
+                          <div className="text-xl sm:text-2xl font-bold text-gray-900">
+                            {stat.value}
+                          </div>
+                          <div className="text-sm text-gray-600">
+                            {stat.label}
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
+
             </div>
           </section>
         </AnimatedSection>
@@ -415,7 +409,7 @@ export default async function AboutPage() {
                 </div>
               </AnimatedSection>
             </div>
-            
+
 
             {/* Right Content - Global Destinations - FIXED: Removed mx-4 on desktop */}
             <AnimatedSection animation="fade-left" delay={0.4} once={true}>
@@ -454,7 +448,7 @@ export default async function AboutPage() {
             </AnimatedSection>
           </div>
         </section>
-        <Philosophy/>
+        <Philosophy />
         <AboutTeamSection />
 
         {/* COMPREHENSIVE SERVICES - FIXED: Added w-full */}
