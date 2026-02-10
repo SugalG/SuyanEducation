@@ -70,7 +70,7 @@ export default function UniversityPartnerCard({
               Popular Programs
             </div>
             <div className="flex flex-wrap gap-2">
-              {programs.slice(0, 3).map((program, i) => (
+              {programs.map((program, i) => (
                 <span 
                   key={i} 
                   className="px-3 py-1 bg-gradient-to-r from-blue-50 to-red-50 text-blue-700 rounded-full text-sm hover:scale-105 transition-transform duration-300"
@@ -78,11 +78,11 @@ export default function UniversityPartnerCard({
                   {program}
                 </span>
               ))}
-              {programs.length > 3 && (
+              {/* {programs.length > 3 && (
                 <span className="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm">
                   +{programs.length - 3} more
                 </span>
-              )}
+              )} */}
             </div>
           </div>
 
