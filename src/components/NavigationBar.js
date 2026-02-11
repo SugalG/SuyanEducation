@@ -204,7 +204,7 @@ export default function NavigationBar({
               </div>
               <div className="hidden sm:flex items-center gap-1 sm:gap-2">
                 <Mail size={12} className="flex-shrink-0" />
-                <span className="truncate">info@suyan.edu.np</span>
+                <span className="truncate">info@suyan.com.np</span>
               </div>
             </div>
 
@@ -718,7 +718,7 @@ export default function NavigationBar({
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     <Mail size={16} className="text-blue-600 flex-shrink-0" />
-                    <span>info@suyan.edu.np</span>
+                    <span>info@suyan.com.np</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     <MapPin
