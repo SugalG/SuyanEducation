@@ -30,7 +30,6 @@ export default function DestinationsPreview() {
         }
       } catch (err) {
         console.log("Using fallback destinations data");
-        setDestinations(FALLBACK_DESTINATIONS);
       }
     }
     load();
