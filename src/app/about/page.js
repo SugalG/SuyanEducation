@@ -286,7 +286,7 @@ export default async function AboutPage() {
                   <div className="relative aspect-[5/6] filter drop-shadow-[0_12px_28px_rgba(0,0,0,0.22)]">
                     <video
                       className="absolute inset-0 w-full h-full object-contain"
-                      src="https://res.cloudinary.com/dvx9dcap6/video/upload/v1770190910/SUYANFULLFORM_wat6p2.mp4"
+                      src="/suyan_fullform.mp4"
                       autoPlay
                       muted
                       loop
