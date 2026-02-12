@@ -44,7 +44,7 @@ export default function Hero() {
         className="absolute inset-0 w-full h-full object-cover"
       >
         {/* <source src={HERO_VIDEO_URL} type="video/webm" /> */}
-        <source src={HERO_VIDEO_URL_MP4} type="video/mp4" />
+        <source src="/hero_video.mp4" type="video/mp4" />
       </video>
 
       {/* Optional fade overlay */}
