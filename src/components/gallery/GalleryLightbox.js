@@ -83,10 +83,11 @@ export default function GalleryLightbox({ photos }) {
 
           <div className="relative w-[90vw] h-[80vh]">
             <Image
-              src={photos[active].imageUrl}
+              src={`${process.env.NEXT_PUBLIC_BASE_URL}${photos[active].imageUrl}`} 
               alt={photos[active].caption || ""}
               fill
               className="object-contain"
+              unoptimized={process.env.NODE_ENV !== "production"}
             />
 
             {photos[active].caption && (
