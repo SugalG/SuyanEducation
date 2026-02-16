@@ -68,10 +68,11 @@ export default async function AdminGalleryAlbumPage(props) {
                 {/* Image */}
                 <div className="relative aspect-square">
                   <Image
-                    src={photo.imageUrl}
+                    src={`${process.env.NEXT_PUBLIC_BASE_URL}${photo.imageUrl}`} 
                     alt={photo.caption || ""}
                     fill
                     className="object-cover"
+                    unoptimized={process.env.NODE_ENV !== "production"}
                   />
                 </div>
 

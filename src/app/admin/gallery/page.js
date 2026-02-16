@@ -52,10 +52,11 @@ export default async function AdminGalleryPage() {
                 <div className="relative h-44 bg-gray-100 cursor-pointer overflow-hidden">
                   {album.coverImage ? (
                     <Image
-                      src={album.coverImage}
+                      src={`${process.env.NEXT_PUBLIC_BASE_URL}${album.coverImage}`} 
                       alt={album.title}
                       fill
                       className="object-cover hover:scale-105 transition-transform duration-300"
+                      unoptimized={process.env.NODE_ENV !== "production"}
                     />
                   ) : (
                     <div className="flex items-center justify-center h-full text-sm text-gray-400">

@@ -146,7 +146,7 @@ export default async function GalleryPage() {
                 <div className="relative aspect-[4/3] bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden">
                   {album.coverImage ? (
                     <Image
-                      src={album.coverImage}
+                      src={`${process.env.NEXT_PUBLIC_BASE_URL}${album.coverImage}`} 
                       alt={album.title}
                       fill
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

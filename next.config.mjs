@@ -12,6 +12,15 @@ const nextConfig = {
       },
       {
         protocol: "https",
+        hostname: "suyan.com.np",
+      },
+      {
+        protocol: "http",
+        hostname: "192.168.1.68",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
         hostname: "res.cloudinary.com", // ✅ ADD THIS
       },
       {

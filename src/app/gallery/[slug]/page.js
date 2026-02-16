@@ -130,6 +130,7 @@ export default async function GalleryAlbumPage(props) {
               <div className="flex items-center gap-3">
                 <Users className="w-5 h-5 text-red-500" />
                 <div className="text-left">
+
                   <div className="text-sm font-medium text-gray-600">Memories</div>
                   <div className="font-semibold text-gray-900">
                     {album.photos.length}+ moments

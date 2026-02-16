@@ -175,7 +175,7 @@ model GalleryAlbum {
 model GalleryPhoto {
   id        String   @id @default(uuid())
   imageUrl  String   // Cloudinary secure_url
-  publicId  String   // Cloudinary public_id (needed for deletion)
+  publicId  String?   // Cloudinary public_id (needed for deletion)
   createdAt DateTime @default(now())
   caption   String? 
   albumId   String

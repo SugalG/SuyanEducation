@@ -41,10 +41,11 @@ export default function GalleryLightbox({ photos }) {
             className="relative aspect-square overflow-hidden rounded-lg bg-gray-100"
           >
             <Image
-              src={photo.imageUrl}
+              src={`${process.env.NEXT_PUBLIC_BASE_URL}${photo.imageUrl}`} 
               alt={photo.caption || ""}
               fill
               className="object-cover hover:opacity-90 transition"
+              unoptimized={process.env.NODE_ENV !== "production"}
             />
 
             {photo.caption && (
