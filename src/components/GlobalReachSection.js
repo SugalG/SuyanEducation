@@ -32,14 +32,14 @@ export default function MessageFromCEOSection() {
           {/* CEO Image */}
           <AnimatedSection animation="fade-up" delay={0.3}>
             <div className="flex flex-col items-center">
-              <div className="relative w-full max-w-[280px] sm:max-w-[320px] h-[260px] sm:h-[300px] rounded-xl sm:rounded-2xl overflow-hidden shadow-lg sm:shadow-xl">
+              <div className="relative w-full max-w-[240px] sm:max-w-[280px] h-[520px] sm:h-[600px] rounded-xl sm:rounded-2xl overflow-hidden shadow-lg sm:shadow-xl">
                 <Image
-                  src="/team-members/ceo.jpeg"
+                  src="/team-members/final_ceo.jpeg"
                   alt="Sunil Maharjan - Founder & CEO"
                   fill
                   priority
                   quality={100}
-                  className="object-cover object-[42%_12%]"
+                  className="object-fill"
                   sizes="
 (max-width: 640px) 560px,
 100vw
@@ -77,7 +77,7 @@ export default function MessageFromCEOSection() {
 
           {/* Video */}
           <AnimatedSection animation="fade-up" delay={0.5}>
-            <div className="relative h-[260px] sm:h-[300px] overflow-hidden rounded-xl sm:rounded-2xl">
+            <div className="relative w-full mx-auto max-w-[240px] sm:max-w-[280px] h-[500px] sm:h-[600px] overflow-hidden rounded-xl sm:rounded-2xl">
               <video
                 src="/flagLady.mp4"
                 autoPlay
@@ -85,7 +85,7 @@ export default function MessageFromCEOSection() {
                 loop
                 playsInline
                 preload="auto"
-                className="w-full h-full object-contain"
+                className="object-fill"
               />
             </div>
           </AnimatedSection>
@@ -103,14 +103,14 @@ export default function MessageFromCEOSection() {
               delay={0.2}
               className="hidden lg:flex flex-col items-center justify-center"
             >
-              <div className="relative w-full max-w-[320px] xl:max-w-[380px] h-[400px] lg:h-[450px] xl:h-[500px] rounded-2xl overflow-hidden shadow-xl">
+              <div className="relative w-full max-w-[270px] xl:max-w-[300px] h-[400px] lg:h-[600px] xl:h-[700px] rounded-2xl overflow-hidden shadow-xl">
                 <Image
-                  src="/team-members/ceo.jpeg"
+                  src="/team-members/final_ceo.jpeg"
                   alt="Sunil Maharjan - Founder & CEO"
                   fill
                   priority
                   quality={100}
-                  className="object-cover object-[42%_center]"
+                  className="object-fill"
                   sizes="
     (min-width: 1280px) 760px,
     (min-width: 1024px) 640px,
@@ -130,7 +130,7 @@ export default function MessageFromCEOSection() {
 
             {/* Middle Column - Content (full width on tablet, middle on desktop) */}
             <div className="md:col-span-1 lg:col-span-1">
-              <div className="space-y-4 lg:space-y-6 xl:space-y-8 h-full flex flex-col justify-center">
+              <div className="space-y-4 lg:space-y-6 xl:space-y-8 h-full flex flex-col">
                 {/* Badge */}
                 <AnimatedSection animation="fade-up" delay={0.1}>
                   <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-red-50 to-blue-50 border border-red-100">
@@ -172,7 +172,7 @@ export default function MessageFromCEOSection() {
 
             {/* Right Column - Video & Tablet CEO Image */}
             <div className="md:col-span-1 lg:col-span-1">
-              <div className="space-y-8 h-full flex flex-col justify-center">
+              <div className="space-y-8 h-full flex flex-col">
                 {/* CEO Image - Only shown on tablet (md), hidden on desktop (lg) */}
                 <AnimatedSection
                   animation="fade-up"
@@ -180,14 +180,14 @@ export default function MessageFromCEOSection() {
                   className="block lg:hidden"
                 >
                   <div className="flex flex-col items-center">
-                    <div className="relative w-full max-w-[320px] h-[300px] rounded-2xl overflow-hidden shadow-xl">
+                    <div className="relative w-full max-w-[260px] h-[500px] rounded-2xl overflow-hidden shadow-xl">
                       <Image
-                        src="/team-members/ceo.jpeg"
+                        src="/team-members/final_ceo.jpeg"
                         alt="Sunil Maharjan - Founder & CEO"
                         fill
                         priority
                         quality={100}
-                        className="object-cover object-[42%_center]"
+                        className="object-fill"
                         sizes="
     (min-width: 768px) 640px,
     100vw
@@ -207,7 +207,7 @@ export default function MessageFromCEOSection() {
 
                 {/* Video - Always shown */}
                 <AnimatedSection animation="fade-left" delay={0.5}>
-                  <div className="relative w-full h-[400px] md:h-[440px] lg:h-[500px] xl:h-[550px] rounded-2xl overflow-hidden">
+                  <div className="relative mx-auto w-full h-[400px] md:h-[500px] md:max-w-[300px] lg:h-[600px] lg:max-w-[350px] xl:h-[700px] xl:max-w-[400px] rounded-2xl overflow-hidden">
                     <video
                       src="/flagLady.mp4"
                       autoPlay
@@ -215,7 +215,7 @@ export default function MessageFromCEOSection() {
                       loop
                       playsInline
                       preload="auto"
-                      className="w-full h-full object-contain"
+                      className="w-full h-full object-fill"
                     />
                   </div>
                 </AnimatedSection>
