@@ -8,16 +8,16 @@ export default function AboutTeamSection() {
           COORDINATOR MESSAGE
       =============================== */}
       <div>
-        <div className="grid lg:grid-cols-[1fr_1.5fr] gap-12 items-center">
+        <div className="grid md:grid-cols-[1fr_1.5fr] gap-12 items-center">
           {/* Coordinator Image */}
+          
           <Reveal className="flex justify-center">
-            <div className="relative w-64 h-64 rounded-full overflow-hidden border-8 border-white shadow-2xl">
+            <div className="relative w-[60vw] max-w-[260px] aspect-[2/5] overflow-hidden border-8 border-white shadow-2xl">
               <Image
-                src="https://res.cloudinary.com/dvx9dcap6/image/upload/v1768379825/yangchensherpa1_akjlem.jpg"
+                src="/team-members/Yangchen_Sherpa.jpeg"
                 alt="Mrs. Yangchen Sherpa - Coordinator, Suyan Education"
                 fill
-                className="object-cover"
-                sizes="256px"
+                className="object-contain"
                 priority
               />
             </div>
