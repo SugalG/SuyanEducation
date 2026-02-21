@@ -2,8 +2,11 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getAdmin } from "@/lib/auth";
 import cloudinary from "@/lib/cloudinary";
+import path from "path";
+import fs from "fs";
 
 /* ---------------- DELETE PHOTO ---------------- */
+const IMAGE_DIR = "/var/www/suyan/images"
 
 export async function DELETE(req, context) {
   try {
@@ -33,7 +36,16 @@ export async function DELETE(req, context) {
         { status: 404 }
       );
     }
-
+    
+    const filePath = path.join(IMAGE_DIR, path.basename(photo.imageUrl));
+    try {
+      if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+    } catch {
+      return NextResponse.json(
+        { error: "File doesn't exist!!!" },
+        { status: 400 }
+      );
+    }
     // 🔥 Delete from Cloudinary
     if (photo.publicId) {
       await cloudinary.uploader.destroy(photo.publicId);

@@ -2,8 +2,12 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getAdmin } from "@/lib/auth";
 import cloudinary from "@/lib/cloudinary";
+import path from "path";
+import fs from "fs";
 
 /* ---------------- DELETE ALBUM ---------------- */
+
+const IMAGE_DIR = "/var/www/suyan/images";
 
 export async function DELETE(req, context) {
   try {
@@ -34,12 +38,24 @@ export async function DELETE(req, context) {
       );
     }
 
-    // 🔥 Delete photos from Cloudinary
     for (const photo of album.photos) {
-      if (photo.publicId) {
-        await cloudinary.uploader.destroy(photo.publicId);
+      const filePath = path.join(IMAGE_DIR, path.basename(photo.imageUrl));
+      try {
+        if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+      } catch {
+        return NextResponse.json(
+          { error: "Photo Doesn't exist" },
+          { status: 400 }
+        );
       }
     }
+
+    // 🔥 Delete photos from Cloudinary
+    // for (const photo of album.photos) {
+    //   if (photo.publicId) {
+    //     await cloudinary.uploader.destroy(photo.publicId);
+    //   }
+    // }
 
     // 🔥 Delete album (DB cascade deletes photos)
     await prisma.galleryAlbum.delete({
