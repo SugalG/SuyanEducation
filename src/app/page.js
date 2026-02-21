@@ -5,12 +5,13 @@ import TestPreparationPreview from "@/components/TestPreparationPreview";
 import Footer from "@/components/Footer";
 import DestinationPreview from "@/components/DestinationsPreview";
 import SuccessStoriesPreview from "@/components/SuccessStoriesPreview";
-import Testimonials from "@/components/Testimonials";
+
 import dynamic from "next/dynamic";
 import GlobalReachSection from "@/components/GlobalReachSection";
 import BlogsPreview from "@/components/BlogsPreview";
 import UniversitiesPreview from "@/components/UniversitiesPreview";
 import Philosophy from "@/components/Philosophy";
+import Testimonials from "@/components/Testimonials";
 
 
 

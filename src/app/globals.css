@@ -411,3 +411,19 @@ body {
   .animate-fade-up {
     animation: fade-up 0.6s ease-out forwards;
   }
+
+  /* for testimonials */
+  @keyframes marquee-left {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  
+  .marquee {
+    display: flex;
+    width: max-content;
+    animation: marquee-left 35s linear infinite;
+  }
+  
+  .marquee:hover {
+    animation-play-state: paused;
+  }

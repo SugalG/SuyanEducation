@@ -1,326 +1,181 @@
-"use client";
-
-import { useEffect, useState, useRef } from "react";
-import { GraduationCap, Star, Plane, CheckCircle, ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { GraduationCap, Plane, CheckCircle, Star } from "lucide-react";
+import prisma from "@/lib/prisma";
 
-// Animation variants
-const fadeInUp = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6 } }
-};
+async function getTestimonials() {
+  const items = await prisma.testimonial.findMany({
+    orderBy: { createdAt: "desc" },
+    take: 4,
+  });
+  return items;
+}
 
-const slideUp = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5 } }
-};
+function initialsFromName(name) {
+  return (name || "ST")
+    .split(" ")
+    .map((n) => n?.[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+}
 
-const staggerChildren = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1
-    }
-  }
-};
+function TestimonialCard({ t }) {
+  const initials = initialsFromName(t?.name);
 
-const fadeIn = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { duration: 0.4 } }
-};
+  return (
+    <article className="group relative w-[320px] sm:w-[360px] lg:w-[420px] flex-shrink-0 overflow-hidden rounded-3xl border border-gray-200 bg-white/80 backdrop-blur shadow-sm hover:shadow-xl transition-all duration-300">
+      {/* Top gradient line */}
+      <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-red-600 to-blue-900 opacity-80" />
 
-export default function Testimonials() {
-  const [items, setItems] = useState([]);
-  const [page, setPage] = useState(0);
-  const [hoveredCard, setHoveredCard] = useState(null);
-  const [selectedCard, setSelectedCard] = useState(null);
+      {/* Hover glow */}
+      <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br from-red-50/70 via-white/30 to-blue-50/70" />
 
-  const ITEMS_PER_PAGE = 3;
+      <div className="relative p-6">
+        {/* Header */}
+        <div className="flex items-start gap-4">
+          {/* Avatar */}
+          <div className="relative flex-shrink-0">
+            <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-red-600 to-blue-800 opacity-20 blur-md group-hover:opacity-30 transition-opacity" />
+            <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden border-2 border-white shadow-md bg-white">
+              {t?.imageUrl ? (
+                <Image
+                  src={`${process.env.NEXT_PUBLIC_BASE_URL}/${t.imageUrl}`}
+                  alt={t.name || "Student"}
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform duration-500"
+                  sizes="64px"
+                  unoptimized={process.env.NODE_ENV !== "production"}
+                />
+              ) : (
+                <div className="w-full h-full bg-gradient-to-br from-red-50 to-blue-50 flex items-center justify-center">
+                  <span className="font-bold text-lg text-gray-700">{initials}</span>
+                </div>
+              )}
+            </div>
+          </div>
 
-  useEffect(() => {
-    fetch("/api/testimonials")
-      .then((res) => res.json())
-      .then((data) => {
-        setItems(Array.isArray(data) ? data : []);
-        setPage(0);
-      });
-  }, []);
+          {/* Name / meta */}
+          <div className="flex-1 min-w-0">
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <h3 className="font-semibold text-gray-900 leading-tight truncate">
+                  {t?.name}
+                </h3>
 
-  if (!items.length) return null;
+                <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-gray-600">
+                  {t?.country && (
+                    <span className="inline-flex items-center gap-1.5">
+                      <Plane className="w-3.5 h-3.5 text-red-500" />
+                      <span className="truncate">{t.country}</span>
+                    </span>
+                  )}
+                  {t?.year && (
+                    <span className="text-gray-500">Class of {t.year}</span>
+                  )}
+                </div>
+              </div>
 
-  const totalPages = Math.ceil(items.length / ITEMS_PER_PAGE);
-  const visibleItems = items.slice(
-    page * ITEMS_PER_PAGE,
-    page * ITEMS_PER_PAGE + ITEMS_PER_PAGE
+              <span className="inline-flex items-center gap-1.5 text-xs font-medium text-green-700 bg-green-50 border border-green-200 px-2.5 py-1 rounded-full">
+                <CheckCircle className="w-3.5 h-3.5" />
+                Verified
+              </span>
+            </div>
+
+            {/* Program */}
+            {t?.program && (
+              <div className="mt-2 inline-flex items-center gap-1.5 text-xs text-gray-600 bg-gray-50 border border-gray-200 rounded-full px-3 py-1">
+                <GraduationCap className="w-3.5 h-3.5" />
+                <span className="truncate max-w-[260px]">{t.program}</span>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Stars */}
+        <div className="mt-5 flex items-center gap-1 text-yellow-500">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <Star key={i} className="w-4 h-4 fill-current opacity-90" />
+          ))}
+          <span className="ml-2 text-xs text-gray-500">5.0</span>
+        </div>
+
+        {/* Quote */}
+        <div className="mt-4">
+          <p className="text-gray-800 leading-relaxed text-[15px] sm:text-base">
+            <span className="text-gray-300 text-2xl font-bold mr-1">“</span>
+            <span className="font-medium">{t?.message}</span>
+            <span className="text-gray-300 text-2xl font-bold ml-1">”</span>
+          </p>
+        </div>
+
+        {/* Footer */}
+        <div className="mt-6 pt-4 border-t border-gray-200/70 flex items-center justify-between">
+          <span className="text-xs text-gray-500">Guided by Suyan Education</span>
+          <span className="h-2 w-2 rounded-full bg-gradient-to-r from-red-600 to-blue-800 opacity-70" />
+        </div>
+      </div>
+    </article>
   );
+}
+
+export default async function Testimonials() {
+  const items = await getTestimonials();
+  console.log(items);
+  if (!items?.length) return null;
+  
+  // Duplicate for seamless marquee
+  const track = [...items, ...items, ...items];
 
   return (
     <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 sm:mt-16 md:mt-20 lg:mt-24 xl:mt-16">
+      {/* Background accents */}
+      <div className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-gradient-to-br from-red-200/30 to-blue-300/20 blur-3xl" />
+        <div className="absolute bottom-0 right-0 w-[420px] h-[420px] rounded-full bg-gradient-to-br from-blue-200/25 to-red-200/20 blur-3xl" />
+      </div>
+
       {/* Header */}
-      <motion.div 
-        className="text-center max-w-4xl mx-auto px-4 mb-16"
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, margin: "-50px" }}
-        variants={fadeInUp}
-      >
-        {/* Badge */}
-        <motion.div 
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-red-50 to-blue-50 border border-red-100"
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.2 }}
-        >
-          <div className="w-2 h-2 bg-red-600 rounded-full animate-pulse"></div>
+      <div className="text-center max-w-4xl mx-auto px-4 mb-10 sm:mb-12">
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/70 backdrop-blur border border-gray-200 shadow-sm">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-30" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-red-600" />
+          </span>
           <span className="text-sm font-medium text-gray-700">Student Voices</span>
-        </motion.div>
-        
-        {/* Main Heading */}
-        <h2 className="mt-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold">
+        </div>
+
+        <h2 className="mt-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
           <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
             Success Stories
           </span>
         </h2>
-        
-        {/* Animated Underline - Made longer */}
+
         <div className="flex justify-center mt-4">
-          <motion.div 
-            className="w-48 h-1.5 bg-gradient-to-r from-red-600 to-blue-800 rounded-full"
-            initial={{ width: 0 }}
-            whileInView={{ width: 192 }}
-            transition={{ delay: 0.3, duration: 0.8 }}
-          />
+          <div className="w-44 sm:w-52 h-1.5 bg-gradient-to-r from-red-600 to-blue-800 rounded-full" />
         </div>
-        
-        {/* Subtitle */}
-        <motion.p 
-          className="mt-8 text-lg sm:text-xl md:text-2xl text-gray-600 leading-relaxed"
-          variants={fadeInUp}
-        >
+
+        <p className="mt-7 text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed">
           Real experiences from students who secured admissions with{" "}
-          <span className="font-semibold text-red-600">our expert guidance</span> worldwide
-        </motion.p>
-      </motion.div>
+          <span className="font-semibold text-red-600">our expert guidance</span> worldwide.
+        </p>
+      </div>
 
-      {/* Cards Grid */}
-      <div className="relative">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <AnimatePresence mode="wait">
-            {visibleItems.map((t, index) => {
-              const initials = t.name
-                .split(" ")
-                .map((n) => n[0])
-                .join("")
-                .slice(0, 2);
+      {/* Marquee */}
+      <div className="relative overflow-hidden rounded-[28px]">
+        {/* Edge fades */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-white via-white/70 to-transparent z-10" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-white via-white/70 to-transparent z-10" />
 
-              return (
-                <motion.div
-                  key={t.id}
-                  initial="hidden"
-                  whileInView="show"
-                  viewport={{ once: true }}
-                  variants={slideUp}
-                  transition={{ delay: index * 0.1 }}
-                  onMouseEnter={() => setHoveredCard(t.id)}
-                  onMouseLeave={() => setHoveredCard(null)}
-                  onClick={() => setSelectedCard(selectedCard === t.id ? null : t.id)}
-                  className={`relative group cursor-pointer bg-white rounded-2xl overflow-hidden border-2 transition-all duration-300 ${
-                    selectedCard === t.id 
-                      ? 'border-red-500 shadow-2xl' 
-                      : 'border-gray-100 hover:border-red-300'
-                  }`}
-                >
-                  {/* Gradient Background */}
-                  <div className={`absolute inset-0 bg-gradient-to-br from-red-50 to-blue-50 opacity-5 group-hover:opacity-10 transition-opacity duration-300`} />
-                  
-                  {/* Content */}
-                  <div className="relative p-6">
-                    {/* Top Section with LARGER Avatar */}
-                    <div className="flex items-start gap-4 mb-6">
-                      {/* LARGER Avatar Container */}
-                      <div className="relative">
-                        <div className="absolute -inset-1 bg-gradient-to-r from-red-600 to-blue-800 rounded-full opacity-0 group-hover:opacity-20 blur transition-opacity duration-500" />
-                        <div className="relative w-24 h-24 rounded-full overflow-hidden border-3 border-white shadow-xl">
-                          {t.imageUrl ? (
-                            <Image
-                              src={t.imageUrl}
-                              alt={t.name}
-                              width={96}
-                              height={96}
-                              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                              priority={index === 0}
-                            />
-                          ) : (
-                            <div className="w-full h-full bg-gradient-to-br from-red-50 to-blue-50 flex items-center justify-center">
-                              <span className="font-bold text-2xl text-gray-700">
-                                {initials}
-                              </span>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-
-                      {/* Name and Details */}
-                      <div className="flex-1">
-                        <div className="flex items-start justify-between">
-                          <div>
-                            <h3 className="font-bold text-gray-900">{t.name}</h3>
-                            {t.country && (
-                              <div className="flex items-center gap-1.5 mt-1 text-xs text-gray-600">
-                                <Plane className="w-3.5 h-3.5 text-red-500" />
-                                <span>{t.country}</span>
-                              </div>
-                            )}
-                          </div>
-                          <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
-                        </div>
-
-                        {/* Program & Year - Small */}
-                        <div className="mt-2 space-y-1 text-xs text-gray-500">
-                          {t.program && (
-                            <div className="flex items-center gap-1">
-                              <GraduationCap className="w-3.5 h-3.5" />
-                              <span className="truncate">{t.program}</span>
-                            </div>
-                          )}
-                          {t.year && (
-                            <p>Class of {t.year}</p>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* QUOTE - PROMINENT & LARGE - Main Focus */}
-                    <motion.div
-                      className="relative mb-4"
-                      animate={{ 
-                        scale: hoveredCard === t.id || selectedCard === t.id ? 1.02 : 1 
-                      }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <div className="absolute -top-4 -left-4 text-5xl text-red-100 opacity-0 group-hover:opacity-100 transition-opacity">
-                        "
-                      </div>
-                      <p className="text-xl font-semibold text-gray-900 leading-relaxed tracking-tight">
-                        "{t.message}"
-                      </p>
-                      <div className="absolute -bottom-4 -right-4 text-5xl text-red-100 opacity-0 group-hover:opacity-100 transition-opacity rotate-180">
-                        "
-                      </div>
-                    </motion.div>
-
-                    {/* Success Journey - Animated Reveal */}
-                    <AnimatePresence>
-                      {(hoveredCard === t.id || selectedCard === t.id) && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: "auto" }}
-                          exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.3 }}
-                          className="overflow-hidden"
-                        >
-                          <div className="pt-4 border-t border-gray-100">
-                            <h4 className="text-sm font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                              <div className="w-2 h-2 bg-red-600 rounded-full" />
-                              Success Journey
-                            </h4>
-
-                            <motion.div 
-                              className="flex flex-wrap gap-2 mb-4"
-                              variants={staggerChildren}
-                              initial="hidden"
-                              animate="show"
-                            >
-                              {[
-                                "Personalized Counseling",
-                                "Documentation Support",
-                                "Visa Assistance",
-                                "University Admission",
-                                "Pre-Departure Guidance"
-                              ].map((step, i) => (
-                                <motion.span
-                                  key={i}
-                                  variants={fadeIn}
-                                  className="inline-block text-xs px-3 py-1.5 bg-gradient-to-r from-red-50 to-blue-50 
-                                    text-gray-700 rounded-full border border-red-100"
-                                >
-                                  {step}
-                                </motion.span>
-                              ))}
-                            </motion.div>
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-
-                    {/* Expand/Collapse Indicator */}
-                    <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
-                      <div className="text-xs text-gray-500">
-                        {hoveredCard === t.id || selectedCard === t.id ? 'Click to collapse' : 'Click to expand'}
-                      </div>
-                      <div className={`w-2 h-2 rounded-full transition-colors ${
-                        selectedCard === t.id ? 'bg-red-600' : 'bg-gray-300'
-                      }`} />
-                    </div>
-                  </div>
-
-                  {/* Hover/Active Indicator */}
-                  <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-red-600 to-blue-800 transition-all duration-300 ${
-                    selectedCard === t.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
-                  }`} />
-                </motion.div>
-              );
-            })}
-          </AnimatePresence>
+        <div className="marquee gap-6 py-2">
+          {track.map((t, idx) => (
+            <TestimonialCard key={`${t.id ?? "t"}-${idx}`} t={t} />
+          ))}
         </div>
       </div>
 
-      {/* Pagination */}
-      <div className="flex justify-center items-center gap-4 mt-12">
-        <div className="flex items-center gap-2">
-          <motion.button
-            whileHover={{ scale: page > 0 ? 1.1 : 1 }}
-            whileTap={{ scale: page > 0 ? 0.95 : 1 }}
-            onClick={() => setPage((p) => Math.max(p - 1, 0))}
-            disabled={page === 0}
-            className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center 
-              disabled:opacity-30 disabled:cursor-not-allowed hover:border-red-500 hover:bg-red-50 
-              transition-all duration-200"
-          >
-            <ChevronLeft className="w-5 h-5 text-gray-600" />
-          </motion.button>
-
-          <div className="flex items-center gap-1">
-            {Array.from({ length: totalPages }).map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setPage(i)}
-                className={`w-8 h-8 rounded-full text-sm font-medium transition-all duration-200
-                  ${page === i 
-                    ? 'bg-gradient-to-r from-red-600 to-blue-800 text-white' 
-                    : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
-                  }`}
-              >
-                {i + 1}
-              </button>
-            ))}
-          </div>
-
-          <motion.button
-            whileHover={{ scale: page < totalPages - 1 ? 1.1 : 1 }}
-            whileTap={{ scale: page < totalPages - 1 ? 0.95 : 1 }}
-            onClick={() => setPage((p) => Math.min(p + 1, totalPages - 1))}
-            disabled={page === totalPages - 1}
-            className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center 
-              disabled:opacity-30 disabled:cursor-not-allowed hover:border-red-500 hover:bg-red-50 
-              transition-all duration-200"
-          >
-            <ChevronRight className="w-5 h-5 text-gray-600" />
-          </motion.button>
-        </div>
-      </div>
+      <p className="text-center text-xs text-gray-500 mt-5">
+        Hover over the carousel to pause.
+      </p>
     </section>
   );
 }
