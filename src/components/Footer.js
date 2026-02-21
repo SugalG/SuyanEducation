@@ -80,7 +80,6 @@ export default function Footer({ settings }) {
       <div className="relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
-
             {/* Brand */}
             <div className="space-y-6">
               <div className="items-center justify-items-center gap-4">
@@ -220,15 +219,52 @@ export default function Footer({ settings }) {
             </div>
           </div>
 
-          <div className="mt-12 pt-6 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4">
+          {/* <div className="mt-12 pt-6 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-gray-400 text-sm">
               © {currentYear} {settings?.siteName || "Suyan Education Pvt. Ltd."}. All rights reserved.
             </p>
 
             <div className="flex gap-6 text-sm text-gray-400">
-              <Link href="/privacy" className="hover:text-white">Privacy Policy</Link>
-              <Link href="/terms" className="hover:text-white">Terms of Service</Link>
-              <Link href="/faq" className="hover:text-white">FAQ</Link>
+              <Link href="#" className="hover:text-white">Privacy Policy</Link>
+              <Link href="#" className="hover:text-white">Terms of Service</Link>
+              <Link href="#" className="hover:text-white">FAQ</Link>
+            </div>
+          </div> */}
+          <div className="mt-12 pt-6 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-6">
+            {/* Left Side */}
+            <div className="text-center md:text-left space-y-2">
+              <p className="text-gray-400 text-sm">
+                © {currentYear}{" "}
+                {settings?.siteName || "Suyan Education Pvt. Ltd."}. All rights
+                reserved.
+              </p>
+
+              {/* Developer Credit */}
+              <p className="text-xs text-gray-500">
+                Developed by{" "}
+                <a
+                  href="https://niceitsolution.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition"
+                >
+                  Nice IT Solution Pvt. Ltd.
+                </a>{" "}
+                • Powered by Stack Hook
+              </p>
+            </div>
+
+            {/* Right Side */}
+            <div className="flex gap-6 text-sm text-gray-400">
+              <Link href="#" className="hover:text-white">
+                Privacy Policy
+              </Link>
+              <Link href="#" className="hover:text-white">
+                Terms of Service
+              </Link>
+              <Link href="#" className="hover:text-white">
+                FAQ
+              </Link>
             </div>
           </div>
         </div>
