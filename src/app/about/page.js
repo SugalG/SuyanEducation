@@ -1,4 +1,5 @@
 import AboutTeamSection from "@/components/AboutTeamSection";
+import CertificatesSection from "@/components/CertificatesSection";
 import Philosophy from "@/components/Philosophy";
 import AnimatedSection from "@/components/universityPlacement/AnimatedSection";
 import {
@@ -644,6 +645,9 @@ export default async function AboutPage() {
             </div>
           </div>
         </section>
+
+
+        <CertificatesSection/>
 
         {/* CTA - FIXED: Added w-full */}
         <section className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
