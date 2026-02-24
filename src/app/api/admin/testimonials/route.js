@@ -53,6 +53,7 @@ export async function GET() {
 }
 
 export async function POST(req) {
+  console.log("Getting Admin")
   const admin = await getAdmin();
   if (!admin) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
