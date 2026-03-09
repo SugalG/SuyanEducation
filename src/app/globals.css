@@ -413,17 +413,28 @@ body {
   }
 
   /* for testimonials */
-  @keyframes marquee-left {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+ @keyframes marquee-left {
+  from {
+    transform: translate3d(0, 0, 0);
   }
-  
-  .marquee {
-    display: flex;
-    width: max-content;
-    animation: marquee-left 35s linear infinite;
+  to {
+    transform: translate3d(-33.3333%, 0, 0);
   }
-  
-  .marquee:hover {
-    animation-play-state: paused;
-  }
+}
+
+.marquee-viewport {
+  width: 100%;
+  overflow: hidden;
+}
+
+.marquee {
+  display: flex;
+  align-items: stretch;
+  width: max-content;
+  will-change: transform;
+  animation: marquee-left 40s linear infinite;
+}
+
+.marquee:hover {
+  animation-play-state: paused;
+}
