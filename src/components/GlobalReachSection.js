@@ -32,14 +32,14 @@ export default function MessageFromCEOSection() {
           {/* CEO Image */}
           <AnimatedSection animation="fade-up" delay={0.3}>
             <div className="flex flex-col items-center">
-              <div className="relative w-full max-w-[240px] sm:max-w-[280px] h-[520px] sm:h-[600px] rounded-xl sm:rounded-2xl overflow-hidden shadow-lg sm:shadow-xl">
+              <div className="relative w-full max-w-[280px] sm:max-w-[300px] h-[520px] sm:h-[600px] rounded-xl sm:rounded-2xl overflow-hidden shadow-lg sm:shadow-xl">
                 <Image
-                  src="/team-members/final_ceo.jpeg"
+                  src="/team-members/ceo.jpeg"
                   alt="Sunil Maharjan - Founder & CEO"
                   fill
                   priority
                   quality={100}
-                  className="object-fill"
+                  className="object-cover"
                   sizes="
 (max-width: 640px) 560px,
 100vw
@@ -103,14 +103,14 @@ export default function MessageFromCEOSection() {
               delay={0.2}
               className="hidden lg:flex flex-col items-center justify-center"
             >
-              <div className="relative w-full max-w-[270px] xl:max-w-[300px] h-[400px] lg:h-[600px] xl:h-[700px] rounded-2xl overflow-hidden shadow-xl">
+              <div className="relative w-full max-w-[350px] xl:max-w-[400px] h-[400px] lg:h-[600px] xl:h-[700px] rounded-2xl overflow-hidden shadow-xl">
                 <Image
-                  src="/team-members/final_ceo.jpeg"
+                  src="/team-members/ceo.jpeg"
                   alt="Sunil Maharjan - Founder & CEO"
                   fill
                   priority
                   quality={100}
-                  className="object-fill"
+                  className="object-cover"
                   sizes="
     (min-width: 1280px) 760px,
     (min-width: 1024px) 640px,
@@ -180,14 +180,14 @@ export default function MessageFromCEOSection() {
                   className="block lg:hidden"
                 >
                   <div className="flex flex-col items-center">
-                    <div className="relative w-full max-w-[260px] h-[500px] rounded-2xl overflow-hidden shadow-xl">
+                    <div className="relative w-full max-w-[300px] h-[500px] rounded-2xl overflow-hidden shadow-xl">
                       <Image
-                        src="/team-members/final_ceo.jpeg"
+                        src="/team-members/ceo.jpeg"
                         alt="Sunil Maharjan - Founder & CEO"
                         fill
                         priority
                         quality={100}
-                        className="object-fill"
+                        className="object-cover"
                         sizes="
     (min-width: 768px) 640px,
     100vw
