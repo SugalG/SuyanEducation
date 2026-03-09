@@ -130,10 +130,10 @@ export default function TestimonialsMarquee({ items }) {
 
   return (
     <section className="relative mx-auto mt-16 max-w-[1400px] overflow-x-hidden px-4 sm:mt-16 sm:px-6 md:mt-20 lg:mt-24 lg:px-8 xl:mt-16">
-      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+      {/* <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute left-1/2 top-[-96px] h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-gradient-to-br from-red-200/30 to-blue-300/20 blur-3xl" />
         <div className="absolute bottom-0 right-0 h-[420px] w-[420px] rounded-full bg-gradient-to-br from-blue-200/25 to-red-200/20 blur-3xl" />
-      </div>
+      </div> */}
 
       <div className="mx-auto mb-10 max-w-4xl px-4 text-center sm:mb-12">
         <div className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white/70 px-4 py-2 shadow-sm backdrop-blur">
