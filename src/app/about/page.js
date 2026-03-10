@@ -604,23 +604,23 @@ export default async function AboutPage() {
                   </div>
                 </AnimatedSection>
 
-                {/* <AnimatedSection animation="fade-up" delay={0.2} once={true}>
+                <AnimatedSection animation="fade-up" delay={0.2} once={true}>
                   <p className="text-sm sm:text-base lg:text-lg text-gray-600 leading-relaxed">
                     To be Nepal's most trusted global education consultancy,
                     recognized for excellence in creating successful
                     international pathways while maintaining our specialized
                     expertise in Japanese education.
                   </p>
-                </AnimatedSection> */}
+                </AnimatedSection>
 
-                <AnimatedSection animation="fade-up" delay={0.3} once={true}>
+               <AnimatedSection animation="fade-up" delay={0.3} once={true}>
                   <div className="space-y-2 sm:space-y-3">
                     <div className="flex items-start gap-2">
                       <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-gradient-to-r from-red-500 to-blue-500 flex items-center justify-center flex-shrink-0 mt-0.5">
                         <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-white"></div>
                       </div>
                       <span className="text-gray-700 text-xs sm:text-sm lg:text-base">
-                         We make decision keeping students on first priority, which drives their success. 
+                        Expand to 100+ global destinations by 2026
                       </span>
                     </div>
                     <div className="flex items-start gap-2">
@@ -628,7 +628,7 @@ export default async function AboutPage() {
                         <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-white"></div>
                       </div>
                       <span className="text-gray-700 text-xs sm:text-sm lg:text-base">
-                        We believe education builds confidence, character, and well-rounded individuals.
+                        Guide 1000+ students to global education success
                       </span>
                     </div>
                     <div className="flex items-start gap-2">
@@ -636,23 +636,7 @@ export default async function AboutPage() {
                         <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-white"></div>
                       </div>
                       <span className="text-gray-700 text-xs sm:text-sm lg:text-base">
-                         We operate with integrity, sincerity, and strong ethical values.
-                      </span>
-                    </div>
-                    <div className="flex items-start gap-2">
-                      <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-gradient-to-r from-red-500 to-blue-500 flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-white"></div>
-                      </div>
-                      <span className="text-gray-700 text-xs sm:text-sm lg:text-base">
-                         We continuously improve to understand and develop each student’s unique potential.
-                      </span>
-                    </div>
-                    <div className="flex items-start gap-2">
-                      <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-gradient-to-r from-red-500 to-blue-500 flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-white"></div>
-                      </div>
-                      <span className="text-gray-700 text-xs sm:text-sm lg:text-base">
-                         We are committed to long-term growth, trust, and excellence at Suyan Education.
+                        Establish 200+ institutional partnerships worldwide
                       </span>
                     </div>
                   </div>

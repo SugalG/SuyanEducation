@@ -1,6 +1,6 @@
 "use client";
 import AnimatedSection from "./universityPlacement/AnimatedSection";
-import { HeartHandshake, Sparkles, Target, Users, Brain, Star } from "lucide-react";
+import { HeartHandshake, Sparkles, Target, Users, Brain, Star, GraduationCap, ShieldCheck, UserSearch, TrendingUp } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export default function Philosophy() {
@@ -183,10 +183,11 @@ export default function Philosophy() {
 
 const philosophyPoints = [
   {
-    icon: <Users className="w-6 h-6 text-red-600" />,
+    icon: <GraduationCap className="w-6 h-6 text-red-600" />,
     text: (
       <>
-        <span className="">Students are our first priority</span> in every decision we make, ensuring their success guides our every action.
+        We make decisions keeping students as our first priority, which drives
+        their success.
       </>
     ),
   },
@@ -194,37 +195,34 @@ const philosophyPoints = [
     icon: <Brain className="w-6 h-6 text-red-600" />,
     text: (
       <>
-        We believe education should create{" "}
-        <span className="">confidence, smiles, and humanity</span>, fostering well-rounded individuals.
+        We believe education builds confidence, character, and well-rounded
+        individuals.
       </>
     ),
   },
   {
-    icon: <HeartHandshake className="w-6 h-6 text-red-600" />,
+    icon: <ShieldCheck className="w-6 h-6 text-red-600" />,
     text: (
       <>
-        We work with{" "}
-        <span>love, sincerity, and ethical values</span>{" "}
-        — never greed, always integrity.
+        We operate with integrity, sincerity, and strong ethical values.
       </>
     ),
   },
   {
-    icon: <Target className="w-6 h-6 text-red-600" />,
+    icon: <UserSearch className="w-6 h-6 text-red-600" />,
     text: (
       <>
-        We continuously research and improve to understand{" "}
-        <span>each student's unique potential</span> and learning journey.
+        We continuously improve to understand and develop each student’s unique
+        potential.
       </>
     ),
   },
   {
-    icon: <Sparkles className="w-6 h-6 text-red-600" />,
+    icon: <TrendingUp className="w-6 h-6 text-red-600" />,
     text: (
       <>
-        We strive to guide students toward{" "}
-        <span>continuous growth</span> while strengthening the{" "}
-        <span>trust and value of Suyan Education</span>.
+        We are committed to long-term growth, trust, and excellence at Suyan
+        Education.
       </>
     ),
   },

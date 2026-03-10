@@ -22,6 +22,7 @@ const certificates = [
     { src: "/certificates/JALSAN_CERTIFICATE.jpg", title: "JALSAN CERTIFICATE" },
     { src: "/certificates/MOE Certificate.jpg", title: "MOE Certificate" },
     { src: "/certificates/CTEVT_single.jpg", title: "CTEVT_single" },
+    { src: "/certificates/ashmita_titi.png", title: "Ashmita_TITI_CERTIFICATE" },
 ];
 
 export default function CertificatesSection() {
