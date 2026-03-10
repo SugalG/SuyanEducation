@@ -153,10 +153,10 @@ export default function NavigationBar({
           icon: "/icons/ielts.png",
         },
         {
-          href: "/services/toefl",
-          label: "TOEFL",
+          href: "/services/pte",
+          label: "PTE",
           description: "Academic English",
-          icon: "/icons/tofel-test-prep.png",
+          icon: "/icons/pte.png",
         },
         {
           href: "/services/ssw",
@@ -243,8 +243,8 @@ export default function NavigationBar({
           !isHomepage
             ? "bg-white/95 backdrop-blur-md shadow-sm"
             : scrolled
-            ? "bg-white/95 backdrop-blur-md shadow-sm"
-            : "bg-transparent"
+              ? "bg-white/95 backdrop-blur-md shadow-sm"
+              : "bg-transparent"
         }
       `}
       >
@@ -362,11 +362,10 @@ export default function NavigationBar({
                         color: "blue",
                       },
                       {
-                        href: "/services/toefl",
-                        label: "TOEFL",
+                        href: "/services/pte",
+                        label: "PTE",
                         description: "Academic English",
-                        icon: "/icons/tofel-test-prep.png",
-                        color: "green",
+                        icon: "/icons/pte.png",
                       },
                       {
                         href: "/services/ssw",
@@ -537,11 +536,7 @@ export default function NavigationBar({
               <Menu size={28} />
             </button>
           </div>
-          {
-            (!isHomepage || scrolled) && (
-              <div></div>
-            )
-          }
+          {(!isHomepage || scrolled) && <div></div>}
         </nav>
       </div>
 
@@ -589,7 +584,7 @@ export default function NavigationBar({
                       <button
                         onClick={() =>
                           setMobileSub(
-                            mobileSub === item.submenu ? null : item.submenu
+                            mobileSub === item.submenu ? null : item.submenu,
                           )
                         }
                         className="w-full flex items-center justify-between py-3 px-4 rounded-xl hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 text-gray-800 transition-all duration-200 group"
@@ -691,7 +686,7 @@ export default function NavigationBar({
                       </div>
                       <span className="font-semibold">{item.label}</span>
                     </Link>
-                  )
+                  ),
                 )}
               </div>
 
