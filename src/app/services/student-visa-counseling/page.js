@@ -66,9 +66,9 @@ export default function StudentVisaLifecycle() {
 
   const stats = [
     { value: "98%", label: "Visa Success Rate" },
-    { value: "500+", label: "Universities Partners" },
+    { value: "100+", label: "Universities Partners" },
     { value: "24/7", label: "Support Available" },
-    { value: "50+", label: "Countries Covered" }
+    { value: "11+", label: "Countries Covered" }
   ];
 
   return (
