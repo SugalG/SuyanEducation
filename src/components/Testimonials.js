@@ -13,7 +13,7 @@ async function getTestimonials() {
 
 export default async function Testimonials() {
   const items = await getTestimonials();
-  console.log(items);
+
 
   if (!items?.length) return null;
 

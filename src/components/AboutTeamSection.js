@@ -3,64 +3,70 @@ import Reveal from "@/components/Reveal";
 
 export default function AboutTeamSection() {
   return (
-    <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+    <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
       {/* ===============================
           COORDINATOR MESSAGE
       =============================== */}
-      <div>
-        <div className="grid md:grid-cols-[1fr_1.5fr] gap-12 items-center">
-          {/* Coordinator Image */}
-          
-          <Reveal className="flex justify-center">
-            <div className="relative w-[60vw] max-w-[260px] aspect-[2/5] overflow-hidden border-8 border-white shadow-2xl">
-              <Image
-                src="/team-members/Yangchen_Sherpa.jpeg"
-                alt="Mrs. Yangchen Sherpa - Coordinator, Suyan Education"
-                fill
-                className="object-contain"
-                priority
-              />
-            </div>
-          </Reveal>
+      <div className="grid md:grid-cols-[1fr_1.5fr] gap-12 items-center">
+  {/* Mobile only badge */}
+  <Reveal className="md:hidden flex justify-center">
+    <span className="inline-flex px-4 py-2 rounded-full border border-gray-300 text-sm font-semibold text-gray-700">
+      Message from the Coordinator
+    </span>
+  </Reveal>
 
-          {/* Coordinator Message */}
-          <Reveal>
-            <div className="space-y-6">
-              <span className="inline-flex px-4 py-2 rounded-full border border-gray-300 text-sm font-semibold text-gray-700">
-                Message from the Coordinator
-              </span>
+  {/* Coordinator Image */}
+  <Reveal className="flex justify-center">
+    <div className="relative w-48 sm:w-64 md:w-72 lg:w-80 xl:w-[400px] aspect-square max-w-[500px] overflow-hidden border-8 rounded-full border-white shadow-2xl">
+      <Image
+        src="/team-members/yangchen.png"
+        alt="Mrs. Yangchen Sherpa - Coordinator, Suyan Education"
+        fill
+        quality={100}
+        className="object-cover"
+        priority
+      />
+    </div>
+  </Reveal>
 
-              <h2 className="text-3xl sm:text-4xl font-bold">
-                <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
-                  Guiding Students with Care & Clarity
-                </span>
-              </h2>
+  {/* Coordinator Message */}
+  <Reveal>
+    <div className="space-y-6 text-center md:text-left">
+      {/* Desktop only badge */}
+      <span className="hidden md:inline-flex px-4 py-2 rounded-full border border-gray-300 text-sm font-semibold text-gray-700">
+        Message from the Coordinator
+      </span>
 
-              <p className="text-lg text-gray-700 leading-relaxed">
-                At Suyan Education, our role goes beyond processing
-                applications. We focus on understanding each student’s goals,
-                background, and aspirations to guide them toward the most
-                suitable global education pathway.
-              </p>
+      <h2 className="text-3xl sm:text-4xl font-bold">
+        <span className="bg-gradient-to-r from-red-600 to-blue-950 bg-clip-text text-transparent">
+          Guiding Students with Care & Clarity
+        </span>
+      </h2>
 
-              <p className="text-lg text-gray-700 leading-relaxed">
-                With a dedicated counseling team and transparent guidance, we
-                ensure every student receives honest advice, proper preparation,
-                and continuous support throughout their study abroad journey.
-              </p>
+      <p className="text-lg text-gray-700 leading-relaxed">
+        At Suyan Education, our role goes beyond processing
+        applications. We focus on understanding each student’s goals,
+        background, and aspirations to guide them toward the most
+        suitable global education pathway.
+      </p>
 
-              <div className="pt-4">
-                <div className="font-bold text-gray-900 text-lg">
-                  Mrs. Yangchen Sherpa
-                </div>
-                <div className="text-sm text-gray-600">
-                  Coordinator, Suyan Education
-                </div>
-              </div>
-            </div>
-          </Reveal>
+      <p className="text-lg text-gray-700 leading-relaxed">
+        With a dedicated counseling team and transparent guidance, we
+        ensure every student receives honest advice, proper preparation,
+        and continuous support throughout their study abroad journey.
+      </p>
+
+      <div className="pt-4">
+        <div className="font-bold text-gray-900 text-lg">
+          Mrs. Yangchen Sherpa
+        </div>
+        <div className="text-sm text-gray-600">
+          Coordinator, Suyan Education
         </div>
       </div>
+    </div>
+  </Reveal>
+</div>
 
       {/* ===============================
           SUBTLE SEPARATOR

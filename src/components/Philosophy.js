@@ -186,7 +186,7 @@ const philosophyPoints = [
     icon: <Users className="w-6 h-6 text-red-600" />,
     text: (
       <>
-        <span className="font-bold text-gray-900">Students are our first priority</span> in every decision we make, ensuring their success guides our every action.
+        <span className="">Students are our first priority</span> in every decision we make, ensuring their success guides our every action.
       </>
     ),
   },
@@ -195,7 +195,7 @@ const philosophyPoints = [
     text: (
       <>
         We believe education should create{" "}
-        <span className="font-bold text-red-600">confidence, smiles, and humanity</span>, fostering well-rounded individuals.
+        <span className="">confidence, smiles, and humanity</span>, fostering well-rounded individuals.
       </>
     ),
   },
@@ -204,7 +204,7 @@ const philosophyPoints = [
     text: (
       <>
         We work with{" "}
-        <span className="font-bold text-gray-900">love, sincerity, and ethical values</span>{" "}
+        <span>love, sincerity, and ethical values</span>{" "}
         — never greed, always integrity.
       </>
     ),
@@ -214,7 +214,7 @@ const philosophyPoints = [
     text: (
       <>
         We continuously research and improve to understand{" "}
-        <span className="font-bold text-gray-900">each student's unique potential</span> and learning journey.
+        <span>each student's unique potential</span> and learning journey.
       </>
     ),
   },
@@ -223,8 +223,8 @@ const philosophyPoints = [
     text: (
       <>
         We strive to guide students toward{" "}
-        <span className="font-bold text-blue-700">continuous growth</span> while strengthening the{" "}
-        <span className="font-bold text-gray-900">trust and value of Suyan Education</span>.
+        <span>continuous growth</span> while strengthening the{" "}
+        <span>trust and value of Suyan Education</span>.
       </>
     ),
   },
