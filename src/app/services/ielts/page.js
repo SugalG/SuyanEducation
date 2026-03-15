@@ -101,7 +101,7 @@ const stats = [
   { label: "Countries Accepting IELTS", value: 140, icon: <Globe />, suffix: "+" },
   { label: "Test Centers Worldwide", value: 1600, icon: <Award />, suffix: "+" },
   { label: "Tests Taken Yearly", value: 3.5, icon: <Users />, suffix: "M+" },
-  { label: "Success Rate", value: 92, icon: <TrendingUp />, suffix: "%" },
+  { label: "Success Rate", value: 98, icon: <TrendingUp />, suffix: "%" },
 ];
 
 export default function MagicalIELTSPage() {

@@ -103,9 +103,9 @@ const services = [
   {
     icon: Globe,
     title: "Global Destinations",
-    description: "10+ countries with diverse educational opportunities",
+    description: "11+ countries with diverse educational opportunities",
     color: "from-red-500 to-red-600",
-    stat: "10+ Countries",
+    stat: "11+ Countries",
   },
   {
     icon: GraduationCap,
@@ -119,7 +119,7 @@ const services = [
     title: "Language Training",
     description: "Comprehensive preparation for language proficiency tests",
     color: "from-green-500 to-green-600",
-    stat: "100+ Trained",
+    stat: "1000+ Trained"
   },
   {
     icon: FileText,
@@ -321,7 +321,7 @@ export default async function AboutPage() {
                 <div className="grid grid-cols-2 gap-4 sm:gap-6 max-w-3xl w-full">
                   {[
                     { icon: Globe, value: "11+", label: "Countries", color: "text-red-600" },
-                    { icon: Users, value: "200+", label: "Students Guided", color: "text-blue-950" },
+                    { icon: Users, value: "2000+", label: "Students Guided", color: "text-blue-950" },
                     { icon: Award, value: "95%", label: "Visa Success", color: "text-green-600" },
                     { icon: Clock, value: "2018", label: "Since Year", color: "text-purple-600" },
                   ].map((stat, index) => (

@@ -103,7 +103,7 @@ export default function Footer({ settings }) {
                 </div>
                 <div className="h-8 w-px bg-gray-700" />
                 <div className="text-center">
-                  <div className="text-2xl font-bold">200+</div>
+                  <div className="text-2xl font-bold">2000+</div>
                   <div className="text-xs text-gray-400">Students</div>
                 </div>
                 <div className="h-8 w-px bg-gray-700" />
