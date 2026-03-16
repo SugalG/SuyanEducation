@@ -23,6 +23,7 @@ export default function AdminDestinations() {
     education: "",
     popularFields: "",
     visaUpdates: "",
+    
   };
 
   const [form, setForm] = useState(emptyForm);

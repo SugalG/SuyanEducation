@@ -19,7 +19,7 @@ export default function AboutTeamSection() {
   <Reveal className="flex justify-center">
     <div className="relative w-48 sm:w-64 md:w-72 lg:w-80 xl:w-[400px] aspect-square max-w-[500px] overflow-hidden border-8 rounded-full border-white shadow-2xl">
       <Image
-        src="/team-members/yangchen.png"
+        src="/team-members/yanchen_sherpa_final.png"
         alt="Mrs. Yangchen Sherpa - Coordinator, Suyan Education"
         fill
         quality={100}
@@ -121,7 +121,7 @@ export default function AboutTeamSection() {
               <TeamCard
                 name="Armita Chandrabansi"
                 role="Counselor – Japan"
-                image="https://res.cloudinary.com/dvx9dcap6/image/upload/v1768379827/amritachandrabansi_geetz2.jpg"
+                image="/team-members/amrita_chandrabansi.jpeg"
               />
             </Reveal>
           </div>
