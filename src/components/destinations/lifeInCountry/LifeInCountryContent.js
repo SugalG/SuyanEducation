@@ -29,14 +29,14 @@ export default function LifeInCountryContent({ lifeInfo }) {
   ];
 
   const LIFE_SECTION_IMAGES = {
-    livingCost: "https://www.instarem.com/wp-content/uploads/2024/03/Cost-of-living-Perth.jpg",
-    accommodation:"https://www.rmit.edu.au/content/dam/rmit/au/en/students/images/student-life/accommodation/housing-options-promo.jpg",
-    insurance:"https://t3.ftcdn.net/jpg/02/04/40/28/360_F_204402874_0gGy7GH5WAE6y6gtKa6dAnw8ZdY1anRQ.jpg",
-    transportation: "https://media.istockphoto.com/id/2151733424/photo/students-waiting-at-the-bus-stop.jpg?s=612x612&w=0&k=20&c=6-CAhx9N0wIiFQYEoIVr1w_HAvuj3-Ib24VwNOWMATg=",
-    foodLifestyle: "https://thumbs.dreamstime.com/b/young-people-eating-brunch-drinking-smoothies-bowl-eco-bar-restaurant-healthy-lifestyle-food-trends-concept-focus-178020277.jpg",
-    safety:"https://media.istockphoto.com/id/483960569/photo/school-crossing-guard.jpg?s=612x612&w=0&k=20&c=n1bRoh4Nof75WiFH7dLq6cgCH6cu9sxZhQ_p-p0HOzU=",
-    workLifeBalance: "https://media.istockphoto.com/id/1304715784/vector/work-and-life-balance-tiny-woman-sitting-in-lotus-position-and-keep-harmony-choose-between.jpg?s=612x612&w=0&k=20&c=2oEMNKI8TuqE0QvetiK0_6xWI1ut3VwheOzqNZYG9kg="
-  }
+    livingCost: "/life/Cost-of-living-Perth",
+    accommodation: "/life/accommodation",
+    insurance: "/life/insurance",
+    transportation: "/life/transportation",
+    foodLifestyle: "/life/food_lifestyle",
+    safety: "/life/safety",
+    workLifeBalance: "/life/work_life_balance",
+  };
 
   const livingPoints = lifeInfo.lifeInCountry?.livingCost.split("\n") || [];
   const accommodationPoints =

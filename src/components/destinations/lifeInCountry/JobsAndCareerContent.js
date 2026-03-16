@@ -31,20 +31,13 @@ export default function JobsAndCareerContent({ jobsInfo }) {
     { id: "demandJobs", label: "High Demand Jobs", icon: TrendingUp },
   ];
   const JOB_SECTION_IMAGES = {
-    partTimeRules:
-      "https://img.freepik.com/premium-vector/cartoon-woman-explaining-rules_112255-3552.jpg?semt=ais_hybrid&w=740&q=80",
-    partTimeSectors:
-      "https://media.istockphoto.com/id/829281632/vector/people-of-various-professions-in-overalls-and-with-tools-in-hand-vector-colored-sketch-of-a.jpg?s=612x612&w=0&k=20&c=YUmNyfNPAKX1g9qF0lNigtf-bUxz8q0JCDwiBcHMD7Y=",
-    avgWage:
-      "https://cdn-icons-png.flaticon.com/512/10695/10695051.png",
-    internshipInfo:
-      "https://media.istockphoto.com/id/1478060507/photo/internship-programs-concept-chart-with-keywords-and-icons-on-white-background.jpg?s=612x612&w=0&k=20&c=l0dK2VDQ0GMe-vBkPRcKGIx1digRhCZm69BBrfh3xHc=",
-    postStudyWork:
-      "https://cdn.alboompro.com/67a5b18fc04e4900013932f3_68020008296bb60001e2ec38/original_size/post-study-work-visas.png?v=1",
-    prPathways:
-      "https://cdn-adcof.nitrocdn.com/yyMKDqkMalJVeGfTMCuRkQuJKuApyAxA/assets/images/optimized/rev-d755d8e/www.3ecpa.co.id/wp-content/uploads/2024/07/photo-permanent-resident-pr-400x300-1.jpg",
-    demandJobs:
-      "https://media.licdn.com/dms/image/v2/D5612AQEka2BBRL7ORQ/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1690984447232?e=2147483647&v=beta&t=vzUiQGuWRJ1gEGEin8M4aogFUPb7FaEM70s-pHfNO4M",
+    partTimeRules: "/jobsandcareer/part_time_rules.png",
+    partTimeSectors: "/jobsandcareer/part_time_opportunities",
+    avgWage: "/jobsandcareer/average_wages",
+    internshipInfo: "/jobsandcareer/internships",
+    postStudyWork: "/jobsandcareer/post_study_work",
+    prPathways: "/jobsandcareer/pr_pathways.jpg",
+    demandJobs: "/jobsandcareer/high_demand_jobs",
   };
   
 
