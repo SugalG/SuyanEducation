@@ -20,6 +20,7 @@ export async function PUT(req, { params }) {
         education: body.education,
         popularFields: body.popularFields,
         visaUpdates: body.visaUpdates,
+        code:body.code
       },
     });
 

@@ -37,6 +37,7 @@ export async function POST(req) {
         education: body.education ?? null,
         popularFields: body.popularFields ?? null,
         visaUpdates: body.visaUpdates ?? null,
+        code:body.code ?? null
       },
     });
 

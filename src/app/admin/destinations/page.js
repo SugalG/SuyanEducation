@@ -23,7 +23,7 @@ export default function AdminDestinations() {
     education: "",
     popularFields: "",
     visaUpdates: "",
-    
+    code:""
   };
 
   const [form, setForm] = useState(emptyForm);
@@ -132,6 +132,7 @@ export default function AdminDestinations() {
       education: dest.education || "",
       popularFields: dest.popularFields || "",
       visaUpdates: dest.visaUpdates || "",
+      code:dest.code || ""
     });
 
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -188,11 +189,20 @@ export default function AdminDestinations() {
             Destination Image
           </label>
 
-          <ImageUpload
-            label="Upload Image"
-            type="destinations"
-            onUpload={(url) => setForm((prev) => ({ ...prev, heroImage: url }))}
-          />
+          <input
+          className="w-full border rounded-lg p-3"
+          placeholder="Link to hero image"
+          value={form.heroImage}
+          disabled={!!editingId}
+          onChange={(e) => {
+            const heroImage = e.target.value;
+            setForm({
+              ...form,
+              heroImage,
+            });
+          }}
+          required
+        />
 
           {form.heroImage && (
             <img
@@ -222,6 +232,22 @@ export default function AdminDestinations() {
         <p className="text-sm text-gray-500">
           URL: /destinations/{form.slug || "country-name"}
         </p>
+
+        <input
+          className="w-full border rounded-lg p-3"
+          placeholder="Country code"
+          value={form.code}
+          disabled={!!editingId}
+          onChange={(e) => {
+            const code = e.target.value;
+            setForm({
+              ...form,
+              code
+              
+            });
+          }}
+          required
+        />
 
         {[
           ["description", "Intro description", 3],
