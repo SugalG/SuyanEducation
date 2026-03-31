@@ -1,21 +1,28 @@
-import prisma from "@/lib/prisma";
 import TestimonialsMarquee from "./TestimonialsMarquee";
 
+const videoTestimonials = [
+  {
+    id: "yt-1",
+    title: "Student Testimonial 1",
+    youtubeUrl: "https://www.youtube.com/shorts/UqaF_htJCnU",
+  },
+  {
+    id: "yt-2",
+    title: "Student Testimonial 2",
+    youtubeUrl: "https://www.youtube.com/shorts/KtGnd98c6OM",
+  },
+  {
+    id: "yt-3",
+    title: "Student Testimonial 3",
+    youtubeUrl: "https://www.youtube.com/shorts/LPT9-vdXCP4",
+  },
+  {
+    id: "yt-4",
+    title: "Student Testimonial 4",
+    youtubeUrl: "https://www.youtube.com/shorts/pDhhjiU_rm8",
+  },
+];
 
-async function getTestimonials() {
-  const items = await prisma.testimonial.findMany({
-    orderBy: { createdAt: "desc" },
-    take: 6,
-  });
-
-  return items;
-}
-
-export default async function Testimonials() {
-  const items = await getTestimonials();
-
-
-  if (!items?.length) return null;
-
-  return <TestimonialsMarquee items={items} />;
+export default function Testimonials() {
+  return <TestimonialsMarquee items={videoTestimonials} />;
 }
