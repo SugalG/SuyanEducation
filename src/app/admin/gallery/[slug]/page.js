@@ -6,6 +6,7 @@ import PhotoUploader from "@/components/admin/PhotoUploader";
 import DeletePhotoButton from "@/components/admin/DeletePhotoButton";
 import DeleteAlbumButton from "@/components/admin/DeleteAlbumButton";
 import SetCoverButton from "@/components/admin/SetCoverButton";
+import EditAlbumTitleForm from "@/components/admin/EditAlbumTitleForm";
 import { getAdmin } from "@/lib/auth";
 import { imageUrl } from "@/lib/imageUrl";
 
@@ -55,6 +56,7 @@ export default async function AdminGalleryAlbumPage(props) {
             {new Date(album.albumDate).toLocaleDateString()} ·{" "}
             {album.photos.length} photos
           </p>
+          <EditAlbumTitleForm slug={album.slug} title={album.title} />
         </div>
 
         <div className="flex flex-wrap items-center gap-3">

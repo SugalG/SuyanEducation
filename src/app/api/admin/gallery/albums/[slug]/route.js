@@ -9,6 +9,58 @@ import fs from "fs";
 
 const IMAGE_DIR = "/var/www/suyan/images";
 
+export async function PATCH(req, context) {
+  try {
+    const admin = await getAdmin();
+    if (!admin) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const { slug } = await context.params;
+    if (!slug) {
+      return NextResponse.json(
+        { error: "Invalid album slug" },
+        { status: 400 }
+      );
+    }
+
+    const body = await req.json();
+    const title = body?.title?.trim();
+
+    if (!title) {
+      return NextResponse.json(
+        { error: "Album title is required" },
+        { status: 400 }
+      );
+    }
+
+    const album = await prisma.galleryAlbum.findUnique({
+      where: { slug },
+      select: { id: true },
+    });
+
+    if (!album) {
+      return NextResponse.json(
+        { error: "Album not found" },
+        { status: 404 }
+      );
+    }
+
+    const updatedAlbum = await prisma.galleryAlbum.update({
+      where: { slug },
+      data: { title },
+    });
+
+    return NextResponse.json(updatedAlbum, { status: 200 });
+  } catch (error) {
+    console.error("Update gallery album error:", error);
+    return NextResponse.json(
+      { error: "Failed to update album" },
+      { status: 500 }
+    );
+  }
+}
+
 export async function DELETE(req, context) {
   try {
     const admin = await getAdmin();
