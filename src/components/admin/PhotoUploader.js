@@ -5,35 +5,70 @@ import { useRef, useState } from "react";
 export default function PhotoUploader({ albumId }) {
   const fileRef = useRef(null);
   const [uploading, setUploading] = useState(false);
+  const [progress, setProgress] = useState({ current: 0, total: 0 });
 
-  async function handleFiles(files) {
-    if (!files.length) return;
+  async function getUploadError(res) {
+    try {
+      const data = await res.json();
+      return data?.error || data?.message || "Failed to upload photos";
+    } catch {
+      return "Failed to upload photos";
+    }
+  }
 
-    setUploading(true);
-
+  async function uploadFile(file) {
     const formData = new FormData();
     formData.append("albumId", albumId);
-
-    for (const file of files) {
-      formData.append("images", file);
-    }
+    formData.append("images", file);
 
     const res = await fetch("/api/admin/gallery/photos", {
       method: "POST",
       body: formData,
     });
 
-    setUploading(false);
+    if (!res.ok) {
+      throw new Error(await getUploadError(res));
+    }
+  }
 
-    if (res.ok) {
+  async function handleFiles(files) {
+    const selectedFiles = Array.from(files || []);
+    if (!selectedFiles.length) return;
+
+    setUploading(true);
+    setProgress({ current: 0, total: selectedFiles.length });
+
+    let uploadedCount = 0;
+
+    try {
+      for (const [index, file] of selectedFiles.entries()) {
+        setProgress({ current: index + 1, total: selectedFiles.length });
+        await uploadFile(file);
+        uploadedCount += 1;
+      }
+
       location.reload();
-    } else {
-      alert("Failed to upload photos");
+    } catch (error) {
+      console.error("Gallery photo upload failed:", error);
+      const prefix =
+        uploadedCount > 0
+          ? `${uploadedCount} of ${selectedFiles.length} photos uploaded. `
+          : "";
+
+      alert(`${prefix}${error.message || "Failed to upload photos"}`);
+
+      if (uploadedCount > 0) {
+        location.reload();
+      }
+    } finally {
+      setUploading(false);
+      setProgress({ current: 0, total: 0 });
+      if (fileRef.current) fileRef.current.value = "";
     }
   }
 
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex flex-wrap items-center gap-4">
       {/* Hidden input */}
       <input
         ref={fileRef}
@@ -61,7 +96,11 @@ export default function PhotoUploader({ albumId }) {
           disabled:cursor-not-allowed
         "
       >
-        {uploading ? "Uploading..." : "Upload Photos"}
+        {uploading && progress.total > 1
+          ? `Uploading ${progress.current}/${progress.total}...`
+          : uploading
+          ? "Uploading..."
+          : "Upload Photos"}
       </button>
 
       <span className="text-sm text-gray-500">

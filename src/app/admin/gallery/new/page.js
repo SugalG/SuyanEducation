@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -34,11 +35,17 @@ export default function NewAlbumPage() {
     <section className="max-w-2xl mx-auto px-6 pt-32 pb-20">
       {/* Header */}
       <div className="mb-10">
-        <h1 className="text-3xl font-bold text-gray-900">
+        <Link
+          href="/admin/gallery"
+          className="text-sm text-gray-500 hover:text-gray-800"
+        >
+          Back to Albums
+        </Link>
+        <h1 className="text-3xl font-bold text-gray-900 mt-4">
           Create Gallery Album
         </h1>
         <p className="text-gray-500 mt-2">
-          Create a new photo album and upload images inside it.
+          Create a new photo album, then add photos on the next screen.
         </p>
       </div>
 
@@ -115,7 +122,7 @@ export default function NewAlbumPage() {
                 disabled:opacity-50 disabled:cursor-not-allowed
               "
             >
-              {loading ? "Creating..." : "Create Album"}
+              {loading ? "Creating..." : "Create Album & Add Photos"}
             </button>
 
             <button

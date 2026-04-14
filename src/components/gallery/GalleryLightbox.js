@@ -1,23 +1,24 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import { imageUrl } from "@/lib/imageUrl";
 
 export default function GalleryLightbox({ photos }) {
   const [active, setActive] = useState(null);
 
-  function close() {
+  const close = useCallback(() => {
     setActive(null);
-  }
+  }, []);
 
-  function prev() {
+  const prev = useCallback(() => {
     setActive((i) => (i > 0 ? i - 1 : photos.length - 1));
-  }
+  }, [photos.length]);
 
-  function next() {
+  const next = useCallback(() => {
     setActive((i) => (i < photos.length - 1 ? i + 1 : 0));
-  }
+  }, [photos.length]);
 
   useEffect(() => {
     function onKey(e) {
@@ -28,7 +29,7 @@ export default function GalleryLightbox({ photos }) {
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [active]);
+  }, [active, close, next, prev]);
 
   return (
     <>
@@ -41,7 +42,7 @@ export default function GalleryLightbox({ photos }) {
             className="relative aspect-square overflow-hidden rounded-lg bg-gray-100"
           >
             <Image
-              src={`${process.env.NEXT_PUBLIC_BASE_URL}${photo.imageUrl}`} 
+              src={imageUrl(photo.imageUrl)}
               alt={photo.caption || ""}
               fill
               className="object-cover hover:opacity-90 transition"
@@ -83,7 +84,7 @@ export default function GalleryLightbox({ photos }) {
 
           <div className="relative w-[90vw] h-[80vh]">
             <Image
-              src={`${process.env.NEXT_PUBLIC_BASE_URL}${photos[active].imageUrl}`} 
+              src={imageUrl(photos[active].imageUrl)}
               alt={photos[active].caption || ""}
               fill
               className="object-contain"
