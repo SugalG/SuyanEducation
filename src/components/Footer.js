@@ -171,23 +171,6 @@ export default function Footer({ settings }) {
                     <span>+977-1-5445099 / 9864-261-506</span>
                   </div>
                 </div>
-
-                <div>
-                  <p className="font-semibold text-white mb-1">
-                    Branch Office – Chabahil
-                  </p>
-                  <div className="flex gap-2">
-                    <MapPin className="w-4 h-4 text-red-500 mt-1" />
-                    <span>
-                      Kathmandu Metropolitan City Ward No. 7, Chabahil,
-                      Kathmandu, Nepal – 44600
-                    </span>
-                  </div>
-                  <div className="flex gap-2 mt-1">
-                    <Phone className="w-4 h-4 text-red-500" />
-                    <span>+977-1-5911820 / 9864-261-505</span>
-                  </div>
-                </div>
               </div>
 
               <div className="flex gap-3 mt-6">
