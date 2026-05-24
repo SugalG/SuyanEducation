@@ -12,6 +12,7 @@ import BlogsPreview from "@/components/BlogsPreview";
 import UniversitiesPreview from "@/components/UniversitiesPreview";
 import Philosophy from "@/components/Philosophy";
 import Testimonials from "@/components/Testimonials";
+import AccreditationHighlights from "@/components/AccreditationHighlights";
 
 
 
@@ -22,6 +23,7 @@ export default async function HomePage() {
     <>
       {/* <Navbar settings={settings} /> */}
       <Hero />
+      <AccreditationHighlights />
    
       <GlobalReachSection />
       
