@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { Award, CheckCircle2, ShieldCheck, UsersRound } from "lucide-react";
 
 const accreditations = [
   {
@@ -7,36 +6,28 @@ const accreditations = [
     detail: "Government-approved education consultancy",
     image: "/accreditations/nepal-emblem.png",
     imageAlt: "Emblem of Nepal",
-    icon: ShieldCheck,
-    accent: "text-blue-700",
-    imageClassName: "p-2.5",
+    imageClassName: "p-3",
   },
   {
     title: "Member of ECAN",
     detail: "Educational Consultancy Association of Nepal",
-    image: "/accreditations/ecan-logo.png",
+    image: "/accreditations/ecan-logo.jpg",
     imageAlt: "ECAN logo",
-    icon: CheckCircle2,
-    accent: "text-red-600",
-    imageClassName: "p-2",
+    imageClassName: "p-4",
   },
   {
     title: "Executive Member of JALSAN",
     detail: "Japanese Language School Association of Nepal",
-    image: "/accreditations/jalsan-logo.png",
+    image: "/accreditations/jalsan-mark.png",
     imageAlt: "JALSAN logo",
-    icon: Award,
-    accent: "text-emerald-700",
-    imageClassName: "p-2",
+    imageClassName: "p-4",
   },
   {
     title: "Member of NECSA",
-    detail: "Recognized professional association member",
-    image: "/accreditations/necsa-logo.png",
+    detail: "Nepal Educational Counseling Services Association",
+    image: "/accreditations/necsa-mark.png",
     imageAlt: "NECSA logo",
-    icon: UsersRound,
-    accent: "text-amber-700",
-    imageClassName: "p-2.5",
+    imageClassName: "p-4",
   },
 ];
 
@@ -59,36 +50,29 @@ export default function AccreditationHighlights() {
           </div>
 
           <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-            {accreditations.map((item) => {
-              const Icon = item.icon;
+            {accreditations.map((item) => (
+              <article
+                key={item.title}
+                className="min-h-[245px] rounded-[8px] border border-gray-200 bg-gray-50 p-4 text-center"
+              >
+                <div className="relative h-32 overflow-hidden rounded-[6px] bg-white ring-1 ring-gray-200">
+                  <Image
+                    src={item.image}
+                    alt={item.imageAlt}
+                    fill
+                    sizes="(min-width: 1280px) 210px, (min-width: 640px) 45vw, 90vw"
+                    className={`object-contain ${item.imageClassName}`}
+                  />
+                </div>
 
-              return (
-                <article
-                  key={item.title}
-                  className="min-h-[210px] rounded-[8px] border border-gray-200 bg-gray-50 p-4"
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="relative h-24 min-w-0 flex-1 overflow-hidden rounded-[6px] bg-white ring-1 ring-gray-200">
-                      <Image
-                        src={item.image}
-                        alt={item.imageAlt}
-                        fill
-                        sizes="(min-width: 1280px) 210px, (min-width: 640px) 45vw, 90vw"
-                        className={`object-contain ${item.imageClassName}`}
-                      />
-                    </div>
-                    <Icon className={`h-6 w-6 shrink-0 ${item.accent}`} />
-                  </div>
-
-                  <h3 className="mt-4 text-sm font-bold leading-5 text-gray-950">
-                    {item.title}
-                  </h3>
-                  <p className="mt-2 text-xs leading-5 text-gray-600">
-                    {item.detail}
-                  </p>
-                </article>
-              );
-            })}
+                <h3 className="mt-4 text-sm font-bold leading-5 text-gray-950">
+                  {item.title}
+                </h3>
+                <p className="mt-2 text-xs leading-5 text-gray-600">
+                  {item.detail}
+                </p>
+              </article>
+            ))}
           </div>
         </div>
       </div>
