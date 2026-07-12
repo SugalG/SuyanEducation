@@ -98,9 +98,9 @@ export default function AboutTeamSection() {
           <div className="lg:col-span-12 flex justify-center">
             <Reveal>
               <TeamCard
-                name="Jasmina Nakarmi"
-                role="Counselor – Australia, USA"
-                image="/team-members/jasmina_nakarmi.jpeg"
+                name="Ashmita Shrestha"
+                role="Counselor"
+                image="/team-members/fuji-cutout.jpg"
               />
             </Reveal>
           </div>
@@ -109,9 +109,9 @@ export default function AboutTeamSection() {
           <div className="lg:col-span-4">
             <Reveal>
               <TeamCard
-                name="Sharmila Shrestha"
-                role="Counselor – Europe"
-                image="/team-members/Sharmila.png"
+                name=""
+                role="Counselor"
+                image="/team-members/hiringnow.png"
               />
             </Reveal>
           </div>
@@ -119,9 +119,9 @@ export default function AboutTeamSection() {
           <div className="lg:col-span-4">
             <Reveal>
               <TeamCard
-                name="Armita Chandrabansi"
-                role="Counselor – Japan"
-                image="/team-members/amrita_chandrabansi.jpeg"
+                name=""
+                role="Counselor"
+                image="/team-members/hiringnow.png"
               />
             </Reveal>
           </div>
@@ -129,9 +129,9 @@ export default function AboutTeamSection() {
           <div className="lg:col-span-4">
             <Reveal>
               <TeamCard
-                name="Sadika Maharjan"
+                name=""
                 role="Reception Officer"
-                image="/team-members/sadika_maharjan.jpeg"
+                image="/team-members/hiringnow.png"
               />
             </Reveal>
           </div>
